@@ -25,7 +25,7 @@ The model implemented here is a non-centered parameterization for a logistic mod
 
 ```{r rsetup, include=FALSE,eval=TRUE}
 library(reticulate)
-use_virtualenv("/Users/work/tfp")
+use_virtualenv("/home/domino/gnn", required = TRUE)
 ```
 
 ## Data set

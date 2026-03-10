@@ -17,7 +17,7 @@ vignette: >
 #| include: true
 #| eval: true
 library(reticulate)
-use_virtualenv("/Users/work/pyollama", required = TRUE)
+use_virtualenv("/home/domino/gnn", required = TRUE)
 ```
 
 ```{r}

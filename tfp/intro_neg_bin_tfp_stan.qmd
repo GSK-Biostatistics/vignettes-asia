@@ -29,7 +29,7 @@ knitr::opts_chunk$set(
 ```{r rsetup, include=FALSE}
 #library(tfclinical)
 library(reticulate)
-use_virtualenv("/Users/work/tfp")
+use_virtualenv("/home/domino/gnn")
 library(rstanarm)
 library(tfprobability)
 #library(reticulate)

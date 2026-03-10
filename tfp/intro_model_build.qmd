@@ -60,7 +60,7 @@ $$
 #library(tfclinical)
 library(reticulate)
 if(Sys.info()["sysname"]!="Windows"){
-use_virtualenv("/Users/work/tfp")}
+use_virtualenv("/home/domino/gnn")}
 library(tfprobability)
 library(kableExtra)
 #reticulate::py_install("bash") # just a test

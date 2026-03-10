@@ -55,7 +55,7 @@ $$
 ```{r rsetup, include=FALSE,eval=TRUE}
 #library(tfclinical)
 library(reticulate)
-use_virtualenv("/Users/work/tfp")
+use_virtualenv("/home/domino/gnn")
 library(tfprobability)
 #library(reticulate)
 library(kableExtra)
