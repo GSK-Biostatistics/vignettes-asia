@@ -746,7 +746,7 @@ tf.Tensor(
 <span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>t1 <span class="op">=</span> time.time()</span>
 <span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Inference ran in </span><span class="sc">{:.2f}</span><span class="st">s."</span>.<span class="bu">format</span>(t1<span class="op">-</span>t0))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Inference ran in 10.51s.</code></pre>
+<pre><code>Inference ran in 10.63s.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">## there is a trailing dimension of 1 so need to squeeze to get each col is chain, and each row is parameter sample</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>samplesflat <span class="op">=</span> <span class="bu">list</span>(<span class="bu">map</span>(<span class="kw">lambda</span> x: tf.squeeze(x).numpy(), samples))</span>
