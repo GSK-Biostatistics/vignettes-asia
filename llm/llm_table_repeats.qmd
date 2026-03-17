@@ -17,7 +17,7 @@ vignette: >
 #| include: true
 #| eval: true
 library(reticulate)
-use_virtualenv("/Users/work/pyollama", required = TRUE)
+use_virtualenv("/Users/gogol/py_env/pyollama", required = TRUE)
 ```
 
 ```{r}

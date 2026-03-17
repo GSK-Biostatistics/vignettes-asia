@@ -1,0 +1,50 @@
+This is a collection of heavily documented quarto vignettes demonstrating how to perform numerical integration for Bayesian inference in [RStudio](https://posit.co/downloads/) using [JAX](https://docs.jax.dev/en/latest/) and [MLX](https://mlx-framework.org) computational frameworks. The vignettes mix and match R and Python. The  [RStan](https://mc-stan.org/rstan/) features in many of these for comparison. The application focus is **model building and trial simulation for clinical research and drug development**.
+
+
+-  **Bayesian Inference using Vegas, JAX and GPU**
+
+Markov chain Monte Carlo (MCMC) sampling is the default approach for most Bayesian modelling, made accessible via tools such as [RStan](https://mc-stan.org/rstan/). A drawback of MCMC is that considerable effort is needed, especially in clinical trials and regulated environments, to demonstrate that results are numerically robust. MCMC can also be computationally challenging especially in tasks such as computing operating characteristics for Bayesian clinical trial designs as models may need to be fitted many times. An alternative to MCMC is direct approaches such as numerical integration, e.g. [Vegas](https://github.com/gplepage/vegas). Historically, direct integration has not been computationally practical for all but the simplest models. The development of new general purpose computation frameworks such as [JAX](https://docs.jax.dev/en/latest/) and [MLX](https://mlx-framework.org) makes direct integration attractive beyond only the simplest models as the core calculations are often readily parallelization with thousands of evaluations done simulateneously, for example on a GPU.  
+
+
+## Running the Vignettes 
+<!--  url needs updated -->
+The raw quarto files are available on GitHub [here](https://github.com/fraseriainlewis/asia.git)
+
+### Installation details for Linux
+<!-- <to be updated - this is tensorflow - vegas and jax could be added but a bit of a hack> -->
+```r
+##########################################################
+# in RStudio Terminal (not R Console) or in Bash
+sudo apt-get update
+sudo apt-get install python3-venv python3-pip python3-dev
+##########################################################
+# in RStudio console
+install.packages("tensorflow")
+library(tensorflow)
+install_tensorflow(extra_packages = c("tf_keras", "tensorflow", "tensorflow-probability","pandas","matplotlib"))
+# note - matplotlib is not essential, and may be removed or added later via py_install()
+#restart session
+install.packages("tfprobability")
+library(tensorflow)
+library(tfprobability)
+d <- tfd_binomial(total_count = 7, probs = 0.3) # if this works then tensorflow us correctly installed
+##########################################################
+```
+### Installation details for Windows
+On Windows the key part is to have a suitable Python installation and also that RStudio can locate this. Once this is in place then the installation process is as above for the Linux case. 
+
+### Advanced: Installation of separate Python venv
+The instructions below setup an appropriate venv
+```bash
+# in bash
+python3 -m venv gnn
+source gnn/bin/activate
+# now install via pip the specific library versions needed
+pip install tensorflow==2.16.2 tf_keras==2.16.0 tensorflow-gnn
+```
+The second part below in the R Console is to instruct [reticulate](https://rstudio.github.io/reticulate/) to use this Python venv rather than one of the existing virtualenv environments, otherwise reticulate may use, e.g. the tensorflow venv created when doing the above install, which will likely not contain a compatible tensorflow version.
+```r
+# in RStudio console
+library(reticulate)
+use_virtualenv("/mydir/gnn", required = TRUE) # tell R to use the python interpreter and libraries in here
+```
