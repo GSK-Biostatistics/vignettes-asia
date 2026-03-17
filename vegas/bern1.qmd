@@ -25,7 +25,7 @@ The model implemented here is a non-centered parameterization for a logistic mod
 
 ```{r rsetup, include=FALSE,eval=TRUE}
 library(reticulate)
-use_virtualenv("/home/domino/gnn", required = TRUE)
+use_virtualenv("/Users/gogol/py_env/bayes", required = TRUE)
 ```
 
 ## Data set
@@ -316,7 +316,7 @@ myX2=np.array(jac_trans(searchPts2))
 
 ```
 
-```{r onevarR,include=TRUE,eval=TRUE}
+```{r onevarR2,include=TRUE,eval=TRUE}
 
 par(mfrow=c(1,2))
 plot(py$myX,py$mydens,type="l")
