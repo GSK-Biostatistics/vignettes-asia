@@ -1,24 +1,102 @@
 project:
   type: website
+  output-dir: _site
 
 execute:
   freeze: true
 
 website:
   title: "asia"
+  #site-url: 
   navbar:
+    logo: "GSK_logo_2022.svg"
+    background: "black" # Can also use "#000000" or "dark"
+    foreground: "white"   # Ensures text/icons are visible
+    search: true
+    #background: primary  # In 'United' theme, this is the signature Orange
     left:
-      - href: index.qmd
-        text: Home
-      - about.qmd
+      - icon: house-fill
+        text: "Home"
+        file: index.qmd
 
+      - text: "Bayesian Tensorflow"
+        icon: bezier2 # Bootstrap icon for strategy/flow
+        menu:
+          - text: "Getting Started"
+            file: tfp/index_tfp.qmd
+          - text: "---" # Separator line
+          - text: "Ex.1.1 Two Arm RCT, BHM, No U-Turn"
+            file: tfp/intro_model_build.qmd
+          - text: "Ex.1.2: Ex.1.2 v RStan"
+            file: tfp/intro_2armstan.qmd
+          - text: "Ex.1.3: Gaussian Regression"
+            file: tfp/intro_normal_tf_stan.qmd
+          - text: "Ex.1.3: Negative Binomial Regression"
+            file: tfp/intro_neg_bin_tfp_stan.qmd
+            
+      - text: "Bayesian Direct Estimation"
+        icon: bezier2 # Bootstrap icon for strategy/flow
+        menu:
+          - text: "Getting Started"
+            file: vegas/index_vegas.qmd
+          - text: "---" # Separator line
+          - text: "Ex.1.1 Vegas Intro"
+            file: vegas/bern1.qmd
+          - text: "Ex.1.2: BHM Basket Vegas"
+            file: vegas/basket1.qmd
+          - text: "Ex.1.3: BHM Basket Stan vs Vegas"
+            file: vegas/stanvegas1.qmd
+
+
+      - text: "Machine Learning"
+        icon: cpu # Icon for computing/TensorFlow
+        menu:
+          - text: "Graphical Neural Networks"
+            file: ml/ml_gnn_building_blocks.qmd
+          - text: "---" # Separator line
+          - text: "Basic example from TF GNN"
+            file: ml/ml_gnn_example1.qmd
+
+      - text: "LLMs"
+        icon: stars
+        menu:
+          - text: "Prompt Engineering for Biostatistics"
+            file: llm/llm_table_repeats.qmd
+
+    right:
+      - icon: github
+        href: https://github.com/Your-Org-Name/tf-clinical-site
+      - icon: linkedin
+        href: https://linkedin.com/in/yourprofile
+
+  # --- SIDEBAR (Appears only in Vignettes section) ---
+  sidebar:
+    - id: vignettes-sidebar
+      title: "User Documentation"
+      style: "docked"
+      collapse-level: 2
+      contents:
+        - vignettes/index.qmd
+        - section: "Getting Started"
+          contents:
+            - vignettes/installation.qmd
+            - vignettes/basic-workflow.qmd
+        - section: "Advanced Topics"
+          contents:
+            - vignettes/tf-optimization.qmd
+            - vignettes/api-reference.qmd
+
+# --- GLOBAL FORMATTING ---
 format:
   html:
-    theme:
-      - cosmo
-      - brand
+    theme: united           # Bootswatch United (Orange/White)
+    html-math-method: mathjax # High-quality math rendering
     css: styles.css
     toc: true
+    toc-location: right
+    code-fold: true         # Hides code by default, allows user to expand
+    code-copy: true         # Adds a copy button to code blocks
+    code-tools: true        # Adds 'View Source' button
 
-
-
+#execute:
+ # freeze: auto              # Saves your TensorFlow results locally

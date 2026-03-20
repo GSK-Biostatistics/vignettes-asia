@@ -75,7 +75,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-5b4ad623e5705c0698d39aec6f10cf02.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-bcf0aec2e27a285c23a1d33ca6c45a71.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -147,6 +147,8 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../GSK_logo_2022.svg" alt="" class="navbar-logo light-content">
+    <img src="../GSK_logo_2022.svg" alt="" class="navbar-logo dark-content">
     </a>
     <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">asia</span>
@@ -159,12 +161,108 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html"> 
+    <a class="nav-link" href="../index.html"> <i class="bi bi-house-fill" role="img">
+</i> 
 <span class="menu-text">Home</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../about.html"> 
-<span class="menu-text">About</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-bayesian-tensorflow" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-bezier2" role="img">
+</i> 
+ <span class="menu-text">Bayesian Tensorflow</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-bayesian-tensorflow">    
+        <li>
+    <a class="dropdown-item" href="../tfp/index_tfp.html">
+ <span class="dropdown-text">Getting Started</span></a>
+  </li>  
+        <li><hr class="dropdown-divider"></li>
+        <li>
+    <a class="dropdown-item" href="../tfp/intro_model_build.html">
+ <span class="dropdown-text">Ex.1.1 Two Arm RCT, BHM, No U-Turn</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../tfp/intro_2armstan.html">
+ <span class="dropdown-text">Ex.1.2: Ex.1.2 v RStan</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../tfp/intro_normal_tf_stan.html">
+ <span class="dropdown-text">Ex.1.3: Gaussian Regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../tfp/intro_neg_bin_tfp_stan.html">
+ <span class="dropdown-text">Ex.1.3: Negative Binomial Regression</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-bayesian-direct-estimation" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-bezier2" role="img">
+</i> 
+ <span class="menu-text">Bayesian Direct Estimation</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-bayesian-direct-estimation">    
+        <li>
+    <a class="dropdown-item" href="../vegas/index_vegas.html">
+ <span class="dropdown-text">Getting Started</span></a>
+  </li>  
+        <li><hr class="dropdown-divider"></li>
+        <li>
+    <a class="dropdown-item" href="../vegas/bern1.html">
+ <span class="dropdown-text">Ex.1.1 Vegas Intro</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../vegas/basket1.html">
+ <span class="dropdown-text">Ex.1.2: BHM Basket Vegas</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../vegas/stanvegas1.html">
+ <span class="dropdown-text">Ex.1.3: BHM Basket Stan vs Vegas</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-machine-learning" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-cpu" role="img">
+</i> 
+ <span class="menu-text">Machine Learning</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-machine-learning">    
+        <li>
+    <a class="dropdown-item" href="../ml/ml_gnn_building_blocks.html">
+ <span class="dropdown-text">Graphical Neural Networks</span></a>
+  </li>  
+        <li><hr class="dropdown-divider"></li>
+        <li>
+    <a class="dropdown-item" href="../ml/ml_gnn_example1.html">
+ <span class="dropdown-text">Basic example from TF GNN</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-llms" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-stars" role="img">
+</i> 
+ <span class="menu-text">LLMs</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-llms">    
+        <li>
+    <a class="dropdown-item" href="../llm/llm_table_repeats.html">
+ <span class="dropdown-text">Prompt Engineering for Biostatistics</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/Your-Org-Name/tf-clinical-site"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://linkedin.com/in/yourprofile"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -216,7 +314,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Two-arm trial with No U-Turn sampling</h1>
+<div class="quarto-title-block"><div><h1 class="title">Two-arm trial with No U-Turn sampling</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -293,6 +391,8 @@ y_i &amp;\sim \text{Bernoulli}(p_i)
 </ul>
 <p>The basket ID is currently set fixed at 1, denoting there is only one basket in this trial, i.e.&nbsp;a classical two arm randomized trial design. Baskets will be added in other vignettes.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Prepare model inputs</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">9999</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up data</span></span>
@@ -320,12 +420,16 @@ y_i &amp;\sim \text{Bernoulli}(p_i)
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>py<span class="sc">$</span>thedata<span class="ot">&lt;-</span><span class="fu">r_to_py</span>(thedata) <span class="co"># THE KEY LINE - makes data available to Python</span></span>
 <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>                             <span class="co"># this is converted into a pandas dataframe object in Python</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>my_table1_object <span class="ot">&lt;-</span> <span class="fu">head</span>(thedata) <span class="sc">%&gt;%</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>() <span class="sc">%&gt;%</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">full_width =</span> F) <span class="sc">%&gt;%</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">column_spec</span>(<span class="dv">1</span>, <span class="at">bold =</span> T, <span class="at">color =</span> <span class="st">"blue"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: 'xfun::attr()' is deprecated.
 Use 'xfun::attr2()' instead.
@@ -335,7 +439,10 @@ Warning: 'xfun::attr()' is deprecated.
 Use 'xfun::attr2()' instead.
 See help("Deprecated")</code></pre>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>my_table1_object</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output-display">
 <table class="table caption-top table-sm table-striped small">
 <thead>
@@ -379,8 +486,11 @@ See help("Deprecated")</code></pre>
 </tbody>
 </table>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the object</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#saveRDS(my_table1_object, "precomputed/table1.rds")</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 </section>
 </section>
@@ -388,14 +498,19 @@ See help("Deprecated")</code></pre>
 <h2 class="anchored" data-anchor-id="setup-python-and-get-data-from-r">Setup python and get data from R</h2>
 <p>We first load in the necessary libraries for TFP and then convert the dataset passed from R into tensors. Note that as tensors are strongly typed we explicitly define the storage type (dtype).</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> keras</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>/Users/gogol/py_env/gnn/lib/python3.9/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
   warnings.warn(</code></pre>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow <span class="im">as</span> tf</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow_probability <span class="im">as</span> tfp</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow_probability <span class="im">import</span> distributions <span class="im">as</span> tfd</span>
@@ -412,6 +527,7 @@ See help("Deprecated")</code></pre>
 <span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>z_vec<span class="op">=</span>tf.convert_to_tensor(thedata.iloc[:,<span class="dv">2</span>], dtype <span class="op">=</span> tf.float32)</span>
 <span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co">#print(f"y={z_vec}") #if using locally this prints out to R console</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 </section>
 <section id="defining-the-model" class="level2">
@@ -420,6 +536,8 @@ See help("Deprecated")</code></pre>
 <section id="define-the-likelihood" class="level3">
 <h3 class="anchored" data-anchor-id="define-the-likelihood">Define the likelihood</h3>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define LIKELIHOOD - this is defined first, as functions need defined before used</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># The arguments in our function are in the REVERSE ORDER that the parameters</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># appear in JointDistrbutionSequential this is essential</span></span>
@@ -438,12 +556,15 @@ See help("Deprecated")</code></pre>
 <span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>                                      <span class="co"># equal to sum of individual log_probs, a vector</span></span>
 <span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>                                      <span class="co"># this is usual when defining a data likelihood</span></span>
 <span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    ))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 </section>
 <section id="define-the-full-model" class="level3">
 <h3 class="anchored" data-anchor-id="define-the-full-model">Define the full model</h3>
 <p>This is straightforward provided it’s done in sequence. Care is needed in understanding whether parameters are scalars or vectors, especially in more complex models which feature a design matrix and matrix algebra. Simulating a realization from the model is a simple way to see what the structure of the <em>state</em> variable of the model is. In more complex models simulating multiple values is useful to check the structure is as expected.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># DEFINE FULL MODEL - hyperparams hard coded</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># model is y[i] = Bernoulli(p[i]) where logit(p[i]) = intercept + treatment*z[i]</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> tfd.JointDistributionSequentialAutoBatched([</span>
@@ -463,6 +584,7 @@ See help("Deprecated")</code></pre>
 <span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co"># produces/needs. i.e. what the state variable of the model looks like in TF</span></span>
 <span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>mysample<span class="op">=</span>model.sample(<span class="dv">1</span>) <span class="co"># 1 = one random variate</span></span>
 <span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>mysample<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[&lt;tf.Tensor: shape=(1,), dtype=float32, numpy=array([-1.0810314], dtype=float32)&gt;, &lt;tf.Tensor: shape=(1,), dtype=float32, numpy=array([0.47621235], dtype=float32)&gt;, &lt;tf.Tensor: shape=(1,), dtype=float32, numpy=array([0.5767661], dtype=float32)&gt;, &lt;tf.Tensor: shape=(1,), dtype=float32, numpy=array([3.9815397], dtype=float32)&gt;, &lt;tf.Tensor: shape=(1, 2), dtype=float32, numpy=array([[ 0.0181222 , -0.39404973]], dtype=float32)&gt;, &lt;tf.Tensor: shape=(1, 500), dtype=int32, numpy=
 array([[0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0,
@@ -491,7 +613,10 @@ array([[0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0,
 </div>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(py<span class="sc">$</span>mysample)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
 tf.Tensor([-1.0810314], shape=(1), dtype=float32)
@@ -531,6 +656,8 @@ tf.Tensor(
 <h3 class="anchored" data-anchor-id="define-the-log_prog_fn">Define the log_prog_fn</h3>
 <p>To use the various MCMC samplers provided in TFP we need to explicitly provide a function which returns the log of the posterior density. This is straightforward and simply involves wrapping around the existing model method log_prob() as seen below.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the ordering of the arguments in this must match exactly the ordering used in</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># JointDistributionSequentialAutoBatched</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> log_prob_fn(mu0, sigma0, mu1,sigma1, log_odd_control_and_ratio):</span>
@@ -540,9 +667,13 @@ tf.Tensor(
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co"># useful to see how to call this. We use the simulated values above</span></span>
 <span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>mylogp<span class="op">=</span>log_prob_fn(mysample[<span class="dv">0</span>], mysample[<span class="dv">1</span>], mysample[<span class="dv">2</span>],mysample[<span class="dv">3</span>], mysample[<span class="dv">4</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(py<span class="sc">$</span>mylogp)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>tf.Tensor([-573.09534], shape=(1), dtype=float32)</code></pre>
 </div>
@@ -566,6 +697,8 @@ tf.Tensor(
 <p>The following code sets this up. <strong>The precise tensor structure needed can require some trial and error</strong>. It has to be carefully specified as the structure tells TFP how to arrange the calculations, both in terms of computational efficiency (parallelization wherever possible) and also at what level (parameter, chain, parameter*chain) to perform step size adaptation.</p>
 <p>The initial step sizes chosen here (which are then adapted) are somewhat arbitrary and making good choices here is something that could be borrowed from how RStan does this.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># bijectors which define the mapping from **unconstrained space to target space**</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># i.e. Exp() is used for scale as this maps R -&gt; R+</span></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>unconstraining_bijectors <span class="op">=</span> [</span>
@@ -596,9 +729,13 @@ tf.Tensor(
 <span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a>                 tf.expand_dims(tf.repeat(steps[<span class="dv">3</span>],repeats<span class="op">=</span>n_chains,axis<span class="op">=-</span><span class="dv">1</span>),axis<span class="op">=-</span><span class="dv">1</span>), <span class="co"># starts with shape (1,)</span></span>
 <span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a>                 tf.expand_dims(tf.tile(steps[<span class="dv">4</span>],[n_chains,<span class="dv">1</span>]),axis<span class="op">=</span><span class="dv">1</span>) <span class="co"># starts with shape (1,2) i.e. [[a, b]]</span></span>
 <span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a>                 ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(py<span class="sc">$</span>steps_chains)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
 tf.Tensor(
@@ -632,6 +769,8 @@ tf.Tensor(
 <h3 class="anchored" data-anchor-id="no-u-turn-sampler">No U-Turn Sampler</h3>
 <p>Now define the No U-Turn sampler, which needs several steps: - define the parameters in the No U-Turn sampler, - then wrap this inside the TransformedTransitionKernel which tell the NUTS what transformations (bijectors - as defined above) to use - then wrap the NUTS and TransformedTransitionKernel inside the adaptive step size routine</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>num_results<span class="op">=</span><span class="dv">1000</span> <span class="co"># number of steps to run each chain for AFTER burn-in</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>num_burnin_steps<span class="op">=</span><span class="dv">100</span> <span class="co"># this is discarded (currently not other option in TPF)</span></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -656,6 +795,7 @@ tf.Tensor(
 <span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>                                          <span class="co"># adaptation across chains</span></span>
 <span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>    <span class="co">#reduce_fn=tfp.math.reduce_log_harmonic_mean_exp, # might be better if difficult chains</span></span>
 <span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>    target_accept_prob<span class="op">=</span>tf.cast(<span class="fl">0.95</span>, tf.float32)) <span class="co"># this is a key parameter to get good mixing</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 </section>
 </section>
@@ -663,6 +803,8 @@ tf.Tensor(
 <h2 class="anchored" data-anchor-id="define-starting-point-for-chains">Define starting point for chains</h2>
 <p>Explicit initial conditions are needed for each parameter in each chain. This is currently done very simply via hard coding. See RStan manual for a fairly simple way to generate random conditions that often works well. The key point here is that the initial conditions must be again in a specific tensor structure.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>istate<span class="op">=</span>[tf.constant([<span class="fl">0.0</span>]),</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>        tf.constant([<span class="fl">0.5</span>]),</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                   tf.constant([<span class="fl">0.0</span>]),</span>
@@ -676,6 +818,7 @@ tf.Tensor(
 <span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>                 tf.expand_dims(tf.tile(istate[<span class="dv">4</span>],[n_chains,<span class="dv">1</span>]),axis<span class="op">=</span><span class="dv">1</span>) <span class="co"># starts with shape (1,2) i.e. [[a, b]]</span></span>
 <span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>                 ]</span>
 <span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(current_state)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[&lt;tf.Tensor: shape=(2, 1), dtype=float32, numpy=
 array([[0.],
@@ -692,7 +835,10 @@ array([[[ 1., -1.]],
 </div>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(py<span class="sc">$</span>current_state)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
 tf.Tensor(
@@ -726,6 +872,8 @@ tf.Tensor(
 <h2 class="anchored" data-anchor-id="perform-mcmc-sampling">Perform MCMC Sampling</h2>
 <p>We are now in a position to actually sample from our model, but first we will set up a tracer function which is called at every step. This can be used either for diagnostics, such as monitor step-size changes, or else to generate custom output, such as compute log-likelihood at each step. Such a function can be computationally expensive and so it’s a trade-off as to whether to wait until the samples have been generated to compute additional functions of the parameters of interest.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> trace_fn(state, pkr):</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">'sample'</span>: state, <span class="co"># this is also pkr['all'][0].transformed_state[0]</span></span>
@@ -738,9 +886,12 @@ tf.Tensor(
 <span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">'has_divergence'</span>:pkr[<span class="dv">0</span>].inner_results.has_divergence,</span>
 <span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">'logL'</span>: log_prob_fn(state[<span class="dv">0</span>], state[<span class="dv">1</span>],state[<span class="dv">2</span>],state[<span class="dv">3</span>],state[<span class="dv">4</span>])</span>
 <span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 <p>Now run the actual sampler. The number of steps and burn-in were defined above when we setup the No U-Turn sampler.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Speed up sampling by tracing with `tf.function`.</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="at">@tf.function</span>(autograph<span class="op">=</span><span class="va">False</span>, jit_compile<span class="op">=</span><span class="va">True</span>,reduce_retracing<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> do_sampling():</span>
@@ -760,25 +911,38 @@ tf.Tensor(
 <span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a><span class="co">#[mu0, sigma0, mu1, sigma1,log_odds_control_and_ratio], results = do_sampling()</span></span>
 <span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>t1 <span class="op">=</span> time.time()</span>
 <span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Inference ran in </span><span class="sc">{:.2f}</span><span class="st">s."</span>.<span class="bu">format</span>(t1<span class="op">-</span>t0))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Inference ran in 14.39s.</code></pre>
+<pre><code>Inference ran in 7.94s.</code></pre>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">## there is a trailing dimension of 1 so need to squeeze to get each col is chain, and each row is parameter sample</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>samplesflat <span class="op">=</span> <span class="bu">list</span>(<span class="bu">map</span>(<span class="kw">lambda</span> x: tf.squeeze(x).numpy(), samples))</span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f" means for mu0, sigma0, mu1, sigma1</span><span class="ch">\n</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code> means for mu0, sigma0, mu1, sigma1</code></pre>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>themeans<span class="op">=</span>[np.mean(row) <span class="cf">for</span> row <span class="kw">in</span> samplesflat[<span class="dv">0</span>:<span class="dv">4</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># this shows how the step size changes during adaptation</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="co">#traceout['step_size']</span></span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="co">#traceout['step_size'][0][999] #step size for mu0 at iteration 999+1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(py<span class="sc">$</span>themeans)<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"mu0"</span>,<span class="st">"sigma0"</span>,<span class="st">"mu1"</span>,<span class="st">"sigma1"</span>)</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(py<span class="sc">$</span>themeans)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>$mu0
 [1] 0.341673
@@ -797,12 +961,15 @@ $sigma1
 <h3 class="anchored" data-anchor-id="some-output-plots">Some Output plots</h3>
 <p>We plot the log-likelihood over the MCMC steps (post-burn-in) using two chains, a different colour for each chain. Similarly for trace plots. These are just illustrative output examples, the number of burn-in and total chain steps here are too low for reliable estimation.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>plt.plot(tf.squeeze(traceout[<span class="st">'logL'</span>].numpy()))</span>
 <span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"log likelihood"</span>)</span>
 <span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="co">#plt.savefig(f"precomputed/vg1_loglike.png")</span></span>
 <span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -812,6 +979,8 @@ $sigma1
 </div>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>)<span class="co">#, sharex='col', sharey='col')</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>fig.set_size_inches(<span class="dv">10</span>, <span class="dv">5</span>)</span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>][<span class="dv">0</span>].plot(samplesflat[<span class="dv">0</span>]) <span class="co"># mu_b</span></span>
@@ -820,6 +989,7 @@ $sigma1
 <span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>][<span class="dv">1</span>].plot(samplesflat[<span class="dv">3</span>]) <span class="co"># tau</span></span>
 <span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="co">#plt.savefig(f"precomputed/vg1_traces.png")</span></span>
 <span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -829,6 +999,8 @@ $sigma1
 </div>
 </div>
 
+
+<!-- -->
 
 </section>
 </section>
@@ -904,6 +1076,57 @@ $sigma1
         container: window.document.getElementById('quarto-embedded-source-code-modal')
       });
       clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
@@ -1233,7 +1456,548 @@ $sigma1
       }
     }
   });
-  </script>
+  </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Two-arm trial with No U-Turn sampling"</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="an">output:</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="co">  rmarkdown::html_vignette:</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="co">    toc_depth: 2</span></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="co">    number_sections: true</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="an">vignette:</span><span class="co"> &gt;</span></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="co">  %\VignetteIndexEntry{Two-arm trial with No U-Turn sampling}</span></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="co">  %\VignetteEngine{knitr::rmarkdown}</span></span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a><span class="co">  %\VignetteEncoding{UTF-8}</span></span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a><span class="fu">## Key features covered in vignette</span></span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>how to **pass data sets** from R to TFP (Python)</span>
+<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>how to build a simple **hierarchical Bayesian model**</span>
+<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>setup the priors</span>
+<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>define the log-likelihood</span>
+<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>generate samples from this model</span>
+<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>write a function to compute the log_posterior (needed for MCMC sampling)</span>
+<span id="cb36-22"><a href="#cb36-22" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>how setup a **NUTS MCMC sampler**</span>
+<span id="cb36-23"><a href="#cb36-23" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>with parameter specific **adaptive step-sizes**</span>
+<span id="cb36-24"><a href="#cb36-24" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**multiple chains**</span>
+<span id="cb36-25"><a href="#cb36-25" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>how to generate samples from the posterior</span>
+<span id="cb36-26"><a href="#cb36-26" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>including trace functions to compute **in-stream diagnostics and custom outputs**</span>
+<span id="cb36-27"><a href="#cb36-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-28"><a href="#cb36-28" aria-hidden="true" tabindex="-1"></a>The use case for this worked example is a two arm clinical trial with binary endpoint.</span>
+<span id="cb36-29"><a href="#cb36-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-30"><a href="#cb36-30" aria-hidden="true" tabindex="-1"></a>**Click [here](https://github.com/fraseriainlewis/tfclinical/blob/main/assets/fullcodevignettes/intro_model_build.orig.Rmd) for the full R Markdown file that generated all the outputs shown here**.</span>
+<span id="cb36-31"><a href="#cb36-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-32"><a href="#cb36-32" aria-hidden="true" tabindex="-1"></a><span class="fu">## Overview</span></span>
+<span id="cb36-33"><a href="#cb36-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-34"><a href="#cb36-34" aria-hidden="true" tabindex="-1"></a>This vignette shows some of the key building blocks in building a Bayesian hierarchical model (BHM) in TFP. The current model could be used for a two arm clinical trial with a binary endpoint. This model will be expanded to a basket trial design in a later vignette as the necessary revisions are fairly minor.</span>
+<span id="cb36-35"><a href="#cb36-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-36"><a href="#cb36-36" aria-hidden="true" tabindex="-1"></a>The focus here is on some of the key building blocks in building a Bayesian model in TFP. A mixture of R and Python Rmarkdown cells are used, where R is generally used for data set creation and generation of figures, and Python for model building in TFP. This is a general theme of the vignettes; Python is used when direct interaction with the TFP API is needed, otherwise R is used as the assumed go-to language of choice for statisticians. Currently some plots use Python matplotlib but wll be replaced in due course with ggplot2.</span>
+<span id="cb36-37"><a href="#cb36-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-38"><a href="#cb36-38" aria-hidden="true" tabindex="-1"></a><span class="fu">### Example Model - Formulation</span></span>
+<span id="cb36-39"><a href="#cb36-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-40"><a href="#cb36-40" aria-hidden="true" tabindex="-1"></a>The model implemented here as an introduction to TFP is the following non-centered parameterization for a logistic model. A non-centered parameterization can be preferable when sampling from hierarchical Bayesian models as discussed in this <span class="co">[</span><span class="ot">article</span><span class="co">](https://mc-stan.org/learn-stan/case-studies/divergences_and_bias.html)</span> on the Stan website.</span>
+<span id="cb36-41"><a href="#cb36-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-42"><a href="#cb36-42" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb36-43"><a href="#cb36-43" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
+<span id="cb36-44"><a href="#cb36-44" aria-hidden="true" tabindex="-1"></a>\mu_0 &amp;\sim \text{Normal}(0, 2.5)<span class="sc">\\</span></span>
+<span id="cb36-45"><a href="#cb36-45" aria-hidden="true" tabindex="-1"></a>\sigma_0 &amp;\sim \text{Half-Normal}(0, 2.5) <span class="sc">\\</span></span>
+<span id="cb36-46"><a href="#cb36-46" aria-hidden="true" tabindex="-1"></a>\mu_1 &amp;\sim \text{Normal}(0, 2.5) <span class="sc">\\</span></span>
+<span id="cb36-47"><a href="#cb36-47" aria-hidden="true" tabindex="-1"></a>\sigma_1 &amp;\sim \text{Half-Normal}(0, 2.5) <span class="sc">\\</span></span>
+<span id="cb36-48"><a href="#cb36-48" aria-hidden="true" tabindex="-1"></a>\tilde{\theta}_j &amp;\sim \text{Normal}(0, 1)\quad\enspace\text{for}\enspace{j=1,2}  <span class="sc">\\</span></span>
+<span id="cb36-49"><a href="#cb36-49" aria-hidden="true" tabindex="-1"></a>\beta_0 &amp;= \mu_0 + \sigma_0 \tilde{\theta}_1 <span class="sc">\\</span></span>
+<span id="cb36-50"><a href="#cb36-50" aria-hidden="true" tabindex="-1"></a>\beta_1 &amp;= \mu_1 + \sigma_1 \tilde{\theta}_2 <span class="sc">\\</span></span>
+<span id="cb36-51"><a href="#cb36-51" aria-hidden="true" tabindex="-1"></a>\text{logit(}{p_i}) &amp;= \beta_0 + \beta_1 z_i\quad\quad\enspace\enspace\text{for}\enspace{i=1,\dots,N}  <span class="sc">\\</span></span>
+<span id="cb36-52"><a href="#cb36-52" aria-hidden="true" tabindex="-1"></a>y_i &amp;\sim \text{Bernoulli}(p_i)</span>
+<span id="cb36-53"><a href="#cb36-53" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
+<span id="cb36-54"><a href="#cb36-54" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb36-55"><a href="#cb36-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-58"><a href="#cb36-58" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb36-59"><a href="#cb36-59" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: "rsetup"</span></span>
+<span id="cb36-60"><a href="#cb36-60" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
+<span id="cb36-61"><a href="#cb36-61" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb36-62"><a href="#cb36-62" aria-hidden="true" tabindex="-1"></a><span class="co">#library(tfclinical)</span></span>
+<span id="cb36-63"><a href="#cb36-63" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reticulate)</span>
+<span id="cb36-64"><a href="#cb36-64" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">Sys.info</span>()[<span class="st">"sysname"</span>]<span class="sc">!=</span><span class="st">"Windows"</span>){</span>
+<span id="cb36-65"><a href="#cb36-65" aria-hidden="true" tabindex="-1"></a><span class="fu">use_virtualenv</span>(<span class="st">"/Users/gogol/py_env/gnn"</span>)}</span>
+<span id="cb36-66"><a href="#cb36-66" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tfprobability)</span>
+<span id="cb36-67"><a href="#cb36-67" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb36-68"><a href="#cb36-68" aria-hidden="true" tabindex="-1"></a><span class="co">#reticulate::py_install("bash") # just a test</span></span>
+<span id="cb36-69"><a href="#cb36-69" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-70"><a href="#cb36-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-71"><a href="#cb36-71" aria-hidden="true" tabindex="-1"></a><span class="fu">## Make data available to TFP models</span></span>
+<span id="cb36-72"><a href="#cb36-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-73"><a href="#cb36-73" aria-hidden="true" tabindex="-1"></a>Assuming the data to be modelled, i.e. the source data from which parameters are to be estimated via model fitting, are loaded into R or generated in R then a first step is to make these data available to TFP. This functionality is readily provided by <span class="co">[</span><span class="ot">reticulate</span><span class="co">](https://rstudio.github.io/reticulate/)</span>, with one watch-out - the Python <span class="in">`pandas`</span> library is required to deal with data.frames or tibbles (see installation instructions).</span>
+<span id="cb36-74"><a href="#cb36-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-75"><a href="#cb36-75" aria-hidden="true" tabindex="-1"></a>In TFP models are written in Python but they use TF tensors as arguments, rather than more familiar Python structures such as numpy arrays. This distinction is important as tensors are strongly typed and so care is needed, including when moving back and forth to R via reticulate.</span>
+<span id="cb36-76"><a href="#cb36-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-77"><a href="#cb36-77" aria-hidden="true" tabindex="-1"></a><span class="fu">### Example data set</span></span>
+<span id="cb36-78"><a href="#cb36-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-79"><a href="#cb36-79" aria-hidden="true" tabindex="-1"></a>The R chunk below creates a simple dataset of three cols:</span>
+<span id="cb36-80"><a href="#cb36-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-81"><a href="#cb36-81" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>a binary response variable (0/1 = non-responder/responder),</span>
+<span id="cb36-82"><a href="#cb36-82" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>a binary treatment variable (0/1 = control/test treatment)</span>
+<span id="cb36-83"><a href="#cb36-83" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>and a basket ID variable. (1)</span>
+<span id="cb36-84"><a href="#cb36-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-85"><a href="#cb36-85" aria-hidden="true" tabindex="-1"></a>The basket ID is currently set fixed at 1, denoting there is only one basket in this trial, i.e. a classical two arm randomized trial design. Baskets will be added in other vignettes.</span>
+<span id="cb36-86"><a href="#cb36-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-89"><a href="#cb36-89" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb36-90"><a href="#cb36-90" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: "datasets"</span></span>
+<span id="cb36-91"><a href="#cb36-91" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: true</span></span>
+<span id="cb36-92"><a href="#cb36-92" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb36-93"><a href="#cb36-93" aria-hidden="true" tabindex="-1"></a><span class="do">### Prepare model inputs</span></span>
+<span id="cb36-94"><a href="#cb36-94" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">9999</span>)</span>
+<span id="cb36-95"><a href="#cb36-95" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up data</span></span>
+<span id="cb36-96"><a href="#cb36-96" aria-hidden="true" tabindex="-1"></a>rr_k_ctrl <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.60</span>)        <span class="co"># control response rate for each basket</span></span>
+<span id="cb36-97"><a href="#cb36-97" aria-hidden="true" tabindex="-1"></a>rr_k_trt <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.58</span>)         <span class="co"># treatment response rate for each basket</span></span>
+<span id="cb36-98"><a href="#cb36-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-99"><a href="#cb36-99" aria-hidden="true" tabindex="-1"></a>K<span class="ot">&lt;-</span><span class="fu">length</span>(rr_k_ctrl)        <span class="co"># number of baskets</span></span>
+<span id="cb36-100"><a href="#cb36-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-101"><a href="#cb36-101" aria-hidden="true" tabindex="-1"></a>N_k_ctrl <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">250</span>, K)     <span class="co"># number of control participants per basket</span></span>
+<span id="cb36-102"><a href="#cb36-102" aria-hidden="true" tabindex="-1"></a>N_k_trt <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">250</span>, K)      <span class="co"># number of treatment participants per basket</span></span>
+<span id="cb36-103"><a href="#cb36-103" aria-hidden="true" tabindex="-1"></a>N_k <span class="ot">&lt;-</span> N_k_ctrl <span class="sc">+</span> N_k_trt   <span class="co"># number of participants per basket (both arms combined)</span></span>
+<span id="cb36-104"><a href="#cb36-104" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="fu">sum</span>(N_k)               <span class="co"># total sample size</span></span>
+<span id="cb36-105"><a href="#cb36-105" aria-hidden="true" tabindex="-1"></a>k_vec <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span>K, N_k)      <span class="co"># N x 1 vector of basket indicators (1 to K)</span></span>
+<span id="cb36-106"><a href="#cb36-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-107"><a href="#cb36-107" aria-hidden="true" tabindex="-1"></a>z_vec<span class="ot">&lt;-</span><span class="cn">NULL</span>;</span>
+<span id="cb36-108"><a href="#cb36-108" aria-hidden="true" tabindex="-1"></a>y<span class="ot">&lt;-</span><span class="cn">NULL</span>;</span>
+<span id="cb36-109"><a href="#cb36-109" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>K){ <span class="co"># for each basket repeat 0-control 1-trt according to the specifc Ns</span></span>
+<span id="cb36-110"><a href="#cb36-110" aria-hidden="true" tabindex="-1"></a>  z_vec<span class="ot">&lt;-</span><span class="fu">c</span>(z_vec,<span class="fu">rep</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">1</span>,<span class="fu">c</span>(N_k_ctrl[i],N_k_trt[i]))) <span class="co"># treatment/control indicator</span></span>
+<span id="cb36-111"><a href="#cb36-111" aria-hidden="true" tabindex="-1"></a>  y<span class="ot">&lt;-</span><span class="fu">c</span>(y,</span>
+<span id="cb36-112"><a href="#cb36-112" aria-hidden="true" tabindex="-1"></a>       <span class="fu">c</span>(<span class="fu">rbinom</span>(N_k_ctrl[i],<span class="dv">1</span>,rr_k_ctrl[i]), <span class="co"># bernoulli for control</span></span>
+<span id="cb36-113"><a href="#cb36-113" aria-hidden="true" tabindex="-1"></a>         <span class="fu">rbinom</span>(N_k_trt[i],<span class="dv">1</span>,rr_k_trt[i]))) <span class="co">#           for trt</span></span>
+<span id="cb36-114"><a href="#cb36-114" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb36-115"><a href="#cb36-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-116"><a href="#cb36-116" aria-hidden="true" tabindex="-1"></a>thedata<span class="ot">&lt;-</span><span class="fu">data.frame</span>(y,<span class="at">basketID=</span>k_vec,<span class="at">Treatment=</span>z_vec)</span>
+<span id="cb36-117"><a href="#cb36-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-118"><a href="#cb36-118" aria-hidden="true" tabindex="-1"></a>py<span class="sc">$</span>thedata<span class="ot">&lt;-</span><span class="fu">r_to_py</span>(thedata) <span class="co"># THE KEY LINE - makes data available to Python</span></span>
+<span id="cb36-119"><a href="#cb36-119" aria-hidden="true" tabindex="-1"></a>                             <span class="co"># this is converted into a pandas dataframe object in Python</span></span>
+<span id="cb36-120"><a href="#cb36-120" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-121"><a href="#cb36-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-124"><a href="#cb36-124" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb36-125"><a href="#cb36-125" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: "datasetsQ"</span></span>
+<span id="cb36-126"><a href="#cb36-126" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: true</span></span>
+<span id="cb36-127"><a href="#cb36-127" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb36-128"><a href="#cb36-128" aria-hidden="true" tabindex="-1"></a>my_table1_object <span class="ot">&lt;-</span> <span class="fu">head</span>(thedata) <span class="sc">%&gt;%</span></span>
+<span id="cb36-129"><a href="#cb36-129" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb36-130"><a href="#cb36-130" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">full_width =</span> F) <span class="sc">%&gt;%</span></span>
+<span id="cb36-131"><a href="#cb36-131" aria-hidden="true" tabindex="-1"></a>  <span class="fu">column_spec</span>(<span class="dv">1</span>, <span class="at">bold =</span> T, <span class="at">color =</span> <span class="st">"blue"</span>)</span>
+<span id="cb36-132"><a href="#cb36-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-133"><a href="#cb36-133" aria-hidden="true" tabindex="-1"></a>my_table1_object</span>
+<span id="cb36-134"><a href="#cb36-134" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the object</span></span>
+<span id="cb36-135"><a href="#cb36-135" aria-hidden="true" tabindex="-1"></a><span class="co">#saveRDS(my_table1_object, "precomputed/table1.rds")</span></span>
+<span id="cb36-136"><a href="#cb36-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-137"><a href="#cb36-137" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-138"><a href="#cb36-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-141"><a href="#cb36-141" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb36-142"><a href="#cb36-142" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: "out_tableoutput"</span></span>
+<span id="cb36-143"><a href="#cb36-143" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
+<span id="cb36-144"><a href="#cb36-144" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb36-145"><a href="#cb36-145" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb36-146"><a href="#cb36-146" aria-hidden="true" tabindex="-1"></a><span class="co">#saved_table1 &lt;- readRDS("precomputed/table1.rds")</span></span>
+<span id="cb36-147"><a href="#cb36-147" aria-hidden="true" tabindex="-1"></a><span class="co">#saved_table1</span></span>
+<span id="cb36-148"><a href="#cb36-148" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-149"><a href="#cb36-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-150"><a href="#cb36-150" aria-hidden="true" tabindex="-1"></a><span class="fu">## Setup python and get data from R</span></span>
+<span id="cb36-151"><a href="#cb36-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-152"><a href="#cb36-152" aria-hidden="true" tabindex="-1"></a>We first load in the necessary libraries for TFP and then convert the dataset passed from R into tensors. Note that as tensors are strongly typed we explicitly define the storage type (dtype).</span>
+<span id="cb36-153"><a href="#cb36-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-156"><a href="#cb36-156" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb36-157"><a href="#cb36-157" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: "pysetup"</span></span>
+<span id="cb36-158"><a href="#cb36-158" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: true</span></span>
+<span id="cb36-159"><a href="#cb36-159" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb36-160"><a href="#cb36-160" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb36-161"><a href="#cb36-161" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb36-162"><a href="#cb36-162" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb36-163"><a href="#cb36-163" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> keras</span>
+<span id="cb36-164"><a href="#cb36-164" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow <span class="im">as</span> tf</span>
+<span id="cb36-165"><a href="#cb36-165" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow_probability <span class="im">as</span> tfp</span>
+<span id="cb36-166"><a href="#cb36-166" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow_probability <span class="im">import</span> distributions <span class="im">as</span> tfd</span>
+<span id="cb36-167"><a href="#cb36-167" aria-hidden="true" tabindex="-1"></a>tfb <span class="op">=</span> tfp.bijectors</span>
+<span id="cb36-168"><a href="#cb36-168" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb36-169"><a href="#cb36-169" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb36-170"><a href="#cb36-170" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb36-171"><a href="#cb36-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-172"><a href="#cb36-172" aria-hidden="true" tabindex="-1"></a><span class="co">## The data.frame passed is now a panda df but for TPF this needs to be further</span></span>
+<span id="cb36-173"><a href="#cb36-173" aria-hidden="true" tabindex="-1"></a><span class="co">## converted into tensors here we simply convert each col of the data.frame into</span></span>
+<span id="cb36-174"><a href="#cb36-174" aria-hidden="true" tabindex="-1"></a><span class="co">## a Rank 1 tensor (i.e. a vector)</span></span>
+<span id="cb36-175"><a href="#cb36-175" aria-hidden="true" tabindex="-1"></a>y_data<span class="op">=</span>tf.convert_to_tensor(thedata.iloc[:,<span class="dv">0</span>], dtype <span class="op">=</span> tf.float32)</span>
+<span id="cb36-176"><a href="#cb36-176" aria-hidden="true" tabindex="-1"></a>k_vec<span class="op">=</span>tf.convert_to_tensor(thedata.iloc[:,<span class="dv">1</span>], dtype <span class="op">=</span> tf.float32)</span>
+<span id="cb36-177"><a href="#cb36-177" aria-hidden="true" tabindex="-1"></a>z_vec<span class="op">=</span>tf.convert_to_tensor(thedata.iloc[:,<span class="dv">2</span>], dtype <span class="op">=</span> tf.float32)</span>
+<span id="cb36-178"><a href="#cb36-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-179"><a href="#cb36-179" aria-hidden="true" tabindex="-1"></a><span class="co">#print(f"y={z_vec}") #if using locally this prints out to R console</span></span>
+<span id="cb36-180"><a href="#cb36-180" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-181"><a href="#cb36-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-182"><a href="#cb36-182" aria-hidden="true" tabindex="-1"></a><span class="fu">## Defining the Model</span></span>
+<span id="cb36-183"><a href="#cb36-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-184"><a href="#cb36-184" aria-hidden="true" tabindex="-1"></a>We now fully define our model, i.e., the data likelihood and all the prior densities. We use a TFP function called JointDistributionSequentialAutoBatched. There are a number of alternative TFP functions for defining Bayesian models. This is one of the simplest but still capable of defining complex models. The model definition in JointDistributionSequentialAutoBatched **must follow a strict convention** which is explained in the comments.</span>
+<span id="cb36-185"><a href="#cb36-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-186"><a href="#cb36-186" aria-hidden="true" tabindex="-1"></a><span class="fu">### Define the likelihood</span></span>
+<span id="cb36-187"><a href="#cb36-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-190"><a href="#cb36-190" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb36-191"><a href="#cb36-191" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: "definelogL"</span></span>
+<span id="cb36-192"><a href="#cb36-192" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: true</span></span>
+<span id="cb36-193"><a href="#cb36-193" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb36-194"><a href="#cb36-194" aria-hidden="true" tabindex="-1"></a><span class="co"># Define LIKELIHOOD - this is defined first, as functions need defined before used</span></span>
+<span id="cb36-195"><a href="#cb36-195" aria-hidden="true" tabindex="-1"></a><span class="co"># The arguments in our function are in the REVERSE ORDER that the parameters</span></span>
+<span id="cb36-196"><a href="#cb36-196" aria-hidden="true" tabindex="-1"></a><span class="co"># appear in JointDistrbutionSequential this is essential</span></span>
+<span id="cb36-197"><a href="#cb36-197" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_observed_dist(log_odd_control_and_ratio,sigma1, mu1,sigma0,mu0):</span>
+<span id="cb36-198"><a href="#cb36-198" aria-hidden="true" tabindex="-1"></a>    <span class="co"># beta is a two element tensor, beta[0] parameter for the log odds of the control arm effect</span></span>
+<span id="cb36-199"><a href="#cb36-199" aria-hidden="true" tabindex="-1"></a>    <span class="co">#                               beta[1] log odds ratio of treatment to control</span></span>
+<span id="cb36-200"><a href="#cb36-200" aria-hidden="true" tabindex="-1"></a>    beta<span class="op">=</span>tf.stack([mu0 <span class="op">+</span> sigma0 <span class="op">*</span> log_odd_control_and_ratio[<span class="dv">0</span>],</span>
+<span id="cb36-201"><a href="#cb36-201" aria-hidden="true" tabindex="-1"></a>                   mu1 <span class="op">+</span> sigma1 <span class="op">*</span> log_odd_control_and_ratio[<span class="dv">1</span>]])</span>
+<span id="cb36-202"><a href="#cb36-202" aria-hidden="true" tabindex="-1"></a>                   <span class="co">#tf.stack is used to stack tensors without creating new tensors</span></span>
+<span id="cb36-203"><a href="#cb36-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-204"><a href="#cb36-204" aria-hidden="true" tabindex="-1"></a>    <span class="co"># return a vector of Bernoulli probabilities, one for each patient, and these estimates</span></span>
+<span id="cb36-205"><a href="#cb36-205" aria-hidden="true" tabindex="-1"></a>    <span class="co"># dependent on which arm the patient was randomized to, i.e. two unique values</span></span>
+<span id="cb36-206"><a href="#cb36-206" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span>(tfd.Independent(</span>
+<span id="cb36-207"><a href="#cb36-207" aria-hidden="true" tabindex="-1"></a>        tfd.Bernoulli(logits<span class="op">=</span>beta[<span class="dv">0</span>]<span class="op">+</span>beta[<span class="dv">1</span>]<span class="op">*</span>z_vec), <span class="co">#define as logits</span></span>
+<span id="cb36-208"><a href="#cb36-208" aria-hidden="true" tabindex="-1"></a>        reinterpreted_batch_ndims <span class="op">=</span> <span class="dv">1</span> <span class="co"># This tells TFP that log_prob here is a single value</span></span>
+<span id="cb36-209"><a href="#cb36-209" aria-hidden="true" tabindex="-1"></a>                                      <span class="co"># equal to sum of individual log_probs, a vector</span></span>
+<span id="cb36-210"><a href="#cb36-210" aria-hidden="true" tabindex="-1"></a>                                      <span class="co"># this is usual when defining a data likelihood</span></span>
+<span id="cb36-211"><a href="#cb36-211" aria-hidden="true" tabindex="-1"></a>    ))</span>
+<span id="cb36-212"><a href="#cb36-212" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-213"><a href="#cb36-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-214"><a href="#cb36-214" aria-hidden="true" tabindex="-1"></a><span class="fu">### Define the full model</span></span>
+<span id="cb36-215"><a href="#cb36-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-216"><a href="#cb36-216" aria-hidden="true" tabindex="-1"></a>This is straightforward provided it's done in sequence. Care is needed in understanding whether parameters are scalars or vectors, especially in more complex models which feature a design matrix and matrix algebra. Simulating a realization from the model is a simple way to see what the structure of the *state* variable of the model is. In more complex models simulating multiple values is useful to check the structure is as expected.</span>
+<span id="cb36-217"><a href="#cb36-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-220"><a href="#cb36-220" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb36-221"><a href="#cb36-221" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: "definejoint"</span></span>
+<span id="cb36-222"><a href="#cb36-222" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: true</span></span>
+<span id="cb36-223"><a href="#cb36-223" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb36-224"><a href="#cb36-224" aria-hidden="true" tabindex="-1"></a><span class="co"># DEFINE FULL MODEL - hyperparams hard coded</span></span>
+<span id="cb36-225"><a href="#cb36-225" aria-hidden="true" tabindex="-1"></a><span class="co"># model is y[i] = Bernoulli(p[i]) where logit(p[i]) = intercept + treatment*z[i]</span></span>
+<span id="cb36-226"><a href="#cb36-226" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> tfd.JointDistributionSequentialAutoBatched([</span>
+<span id="cb36-227"><a href="#cb36-227" aria-hidden="true" tabindex="-1"></a>  tfd.Normal(loc<span class="op">=</span><span class="fl">0.</span>, scale<span class="op">=</span><span class="fl">2.5</span>, name<span class="op">=</span><span class="st">"mu0"</span>),  <span class="co"># prior for mean of control arm log odds</span></span>
+<span id="cb36-228"><a href="#cb36-228" aria-hidden="true" tabindex="-1"></a>  tfd.HalfNormal(scale<span class="op">=</span><span class="fl">2.5</span>, name<span class="op">=</span><span class="st">"sigma0"</span>),   <span class="co"># prior for sd of control arm log odds</span></span>
+<span id="cb36-229"><a href="#cb36-229" aria-hidden="true" tabindex="-1"></a>  tfd.Normal(loc<span class="op">=</span><span class="fl">0.</span>, scale<span class="op">=</span><span class="fl">2.5</span>, name<span class="op">=</span><span class="st">"mu1"</span>),  <span class="co"># prior for mean of treatment log odds ratio</span></span>
+<span id="cb36-230"><a href="#cb36-230" aria-hidden="true" tabindex="-1"></a>  tfd.HalfNormal(scale<span class="op">=</span><span class="fl">2.5</span>, name<span class="op">=</span><span class="st">"sigma1"</span>),   <span class="co"># prior for sd of treatment log odds ratio</span></span>
+<span id="cb36-231"><a href="#cb36-231" aria-hidden="true" tabindex="-1"></a>  <span class="co"># now come to the standard normals resulting from non-centred parameterization</span></span>
+<span id="cb36-232"><a href="#cb36-232" aria-hidden="true" tabindex="-1"></a>  <span class="co"># define these as vector MVN with identity scale matrix</span></span>
+<span id="cb36-233"><a href="#cb36-233" aria-hidden="true" tabindex="-1"></a>  tfd.Normal(loc<span class="op">=</span>tf.zeros(<span class="dv">2</span>), scale<span class="op">=</span>tf.ones(<span class="dv">2</span>), name<span class="op">=</span><span class="st">"log_odd_control_and_ratio"</span>),</span>
+<span id="cb36-234"><a href="#cb36-234" aria-hidden="true" tabindex="-1"></a>  <span class="co"># now finally define the likelihood as we have already defined parameters in this</span></span>
+<span id="cb36-235"><a href="#cb36-235" aria-hidden="true" tabindex="-1"></a>  make_observed_dist <span class="co"># the data likelihood defined as a function above</span></span>
+<span id="cb36-236"><a href="#cb36-236" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb36-237"><a href="#cb36-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-238"><a href="#cb36-238" aria-hidden="true" tabindex="-1"></a>tf.random.set_seed(<span class="dv">9999</span>)</span>
+<span id="cb36-239"><a href="#cb36-239" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample one variate from this joint probability model - shows what structure the model</span></span>
+<span id="cb36-240"><a href="#cb36-240" aria-hidden="true" tabindex="-1"></a><span class="co"># produces/needs. i.e. what the state variable of the model looks like in TF</span></span>
+<span id="cb36-241"><a href="#cb36-241" aria-hidden="true" tabindex="-1"></a>mysample<span class="op">=</span>model.sample(<span class="dv">1</span>) <span class="co"># 1 = one random variate</span></span>
+<span id="cb36-242"><a href="#cb36-242" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>mysample<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb36-243"><a href="#cb36-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-244"><a href="#cb36-244" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-245"><a href="#cb36-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-248"><a href="#cb36-248" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb36-249"><a href="#cb36-249" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: "sampleout"</span></span>
+<span id="cb36-250"><a href="#cb36-250" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: true</span></span>
+<span id="cb36-251"><a href="#cb36-251" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb36-252"><a href="#cb36-252" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb36-253"><a href="#cb36-253" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(py<span class="sc">$</span>mysample)</span>
+<span id="cb36-254"><a href="#cb36-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-255"><a href="#cb36-255" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-256"><a href="#cb36-256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-257"><a href="#cb36-257" aria-hidden="true" tabindex="-1"></a><span class="fu">### Define the log_prog_fn</span></span>
+<span id="cb36-258"><a href="#cb36-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-259"><a href="#cb36-259" aria-hidden="true" tabindex="-1"></a>To use the various MCMC samplers provided in TFP we need to explicitly provide a function which returns the log of the posterior density. This is straightforward and simply involves wrapping around the existing model method log_prob() as seen below.</span>
+<span id="cb36-260"><a href="#cb36-260" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-263"><a href="#cb36-263" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb36-264"><a href="#cb36-264" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: "log_prob1"</span></span>
+<span id="cb36-265"><a href="#cb36-265" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: true</span></span>
+<span id="cb36-266"><a href="#cb36-266" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb36-267"><a href="#cb36-267" aria-hidden="true" tabindex="-1"></a><span class="co"># the ordering of the arguments in this must match exactly the ordering used in</span></span>
+<span id="cb36-268"><a href="#cb36-268" aria-hidden="true" tabindex="-1"></a><span class="co"># JointDistributionSequentialAutoBatched</span></span>
+<span id="cb36-269"><a href="#cb36-269" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> log_prob_fn(mu0, sigma0, mu1,sigma1, log_odd_control_and_ratio):</span>
+<span id="cb36-270"><a href="#cb36-270" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> model.log_prob((</span>
+<span id="cb36-271"><a href="#cb36-271" aria-hidden="true" tabindex="-1"></a>      mu0, sigma0, mu1,sigma1, log_odd_control_and_ratio,y_data))</span>
+<span id="cb36-272"><a href="#cb36-272" aria-hidden="true" tabindex="-1"></a>                                                         <span class="co">## last argument is the DATA (y)</span></span>
+<span id="cb36-273"><a href="#cb36-273" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-274"><a href="#cb36-274" aria-hidden="true" tabindex="-1"></a><span class="co"># useful to see how to call this. We use the simulated values above</span></span>
+<span id="cb36-275"><a href="#cb36-275" aria-hidden="true" tabindex="-1"></a>mylogp<span class="op">=</span>log_prob_fn(mysample[<span class="dv">0</span>], mysample[<span class="dv">1</span>], mysample[<span class="dv">2</span>],mysample[<span class="dv">3</span>], mysample[<span class="dv">4</span>])</span>
+<span id="cb36-276"><a href="#cb36-276" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-277"><a href="#cb36-277" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-280"><a href="#cb36-280" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb36-281"><a href="#cb36-281" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: "sampleout2"</span></span>
+<span id="cb36-282"><a href="#cb36-282" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: true</span></span>
+<span id="cb36-283"><a href="#cb36-283" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb36-284"><a href="#cb36-284" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb36-285"><a href="#cb36-285" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(py<span class="sc">$</span>mylogp)</span>
+<span id="cb36-286"><a href="#cb36-286" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-287"><a href="#cb36-287" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-288"><a href="#cb36-288" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-291"><a href="#cb36-291" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb36-292"><a href="#cb36-292" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: "out_text_image1"</span></span>
+<span id="cb36-293"><a href="#cb36-293" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: true</span></span>
+<span id="cb36-294"><a href="#cb36-294" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb36-295"><a href="#cb36-295" aria-hidden="true" tabindex="-1"></a><span class="co">#| out.width: "50%"</span></span>
+<span id="cb36-296"><a href="#cb36-296" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig.align: "center"</span></span>
+<span id="cb36-297"><a href="#cb36-297" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb36-298"><a href="#cb36-298" aria-hidden="true" tabindex="-1"></a><span class="co">#knitr::include_graphics("precomputed/vg1_text2.png")</span></span>
+<span id="cb36-299"><a href="#cb36-299" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-300"><a href="#cb36-300" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-301"><a href="#cb36-301" aria-hidden="true" tabindex="-1"></a><span class="fu">## Setup the MCMC sampler</span></span>
+<span id="cb36-302"><a href="#cb36-302" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-303"><a href="#cb36-303" aria-hidden="true" tabindex="-1"></a>TFP generally has a lower level interface to MCMC sampler routines compared to Stan, and as such requires a few more manual steps. There are also a range of different ways to setup the samplers. The API is evolving so that higher level functions are steadily being introduced.</span>
+<span id="cb36-304"><a href="#cb36-304" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-305"><a href="#cb36-305" aria-hidden="true" tabindex="-1"></a><span class="fu">### NUTS and Adaptive-Step Size</span></span>
+<span id="cb36-306"><a href="#cb36-306" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-307"><a href="#cb36-307" aria-hidden="true" tabindex="-1"></a>We use a No-u-turn sampler, and add into this dual step size adaptation for efficiency. To set this up we need to do the following:</span>
+<span id="cb36-308"><a href="#cb36-308" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-309"><a href="#cb36-309" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Define the <span class="co">[</span><span class="ot">bijectors</span><span class="co">](https://www.tensorflow.org/probability/api_docs/python/tfp/bijectors/Bijector)</span> needed for each parameter in the model (as NUTS requires unconstrained mappings)</span>
+<span id="cb36-310"><a href="#cb36-310" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Define tensors in a specific way such that we allow:</span>
+<span id="cb36-311"><a href="#cb36-311" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>each parameter to have its own step size adaptation</span>
+<span id="cb36-312"><a href="#cb36-312" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>additionally allow this tuning to be done independently for each chain</span>
+<span id="cb36-313"><a href="#cb36-313" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-314"><a href="#cb36-314" aria-hidden="true" tabindex="-1"></a>The following code sets this up. **The precise tensor structure needed can require some trial and error**. It has to be carefully specified as the structure tells TFP how to arrange the calculations, both in terms of computational efficiency (parallelization wherever possible) and also at what level (parameter, chain, parameter<span class="sc">\*</span>chain) to perform step size adaptation.</span>
+<span id="cb36-315"><a href="#cb36-315" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-316"><a href="#cb36-316" aria-hidden="true" tabindex="-1"></a>The initial step sizes chosen here (which are then adapted) are somewhat arbitrary and making good choices here is something that could be borrowed from how RStan does this.</span>
+<span id="cb36-317"><a href="#cb36-317" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-320"><a href="#cb36-320" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb36-321"><a href="#cb36-321" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: "bijectorandsteps"</span></span>
+<span id="cb36-322"><a href="#cb36-322" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb36-323"><a href="#cb36-323" aria-hidden="true" tabindex="-1"></a><span class="co"># bijectors which define the mapping from **unconstrained space to target space**</span></span>
+<span id="cb36-324"><a href="#cb36-324" aria-hidden="true" tabindex="-1"></a><span class="co"># i.e. Exp() is used for scale as this maps R -&gt; R+</span></span>
+<span id="cb36-325"><a href="#cb36-325" aria-hidden="true" tabindex="-1"></a>unconstraining_bijectors <span class="op">=</span> [</span>
+<span id="cb36-326"><a href="#cb36-326" aria-hidden="true" tabindex="-1"></a>    tfb.Identity(),  <span class="co"># mu0</span></span>
+<span id="cb36-327"><a href="#cb36-327" aria-hidden="true" tabindex="-1"></a>    tfb.Exp(),       <span class="co"># sigma0</span></span>
+<span id="cb36-328"><a href="#cb36-328" aria-hidden="true" tabindex="-1"></a>    tfb.Identity(),  <span class="co"># mu1</span></span>
+<span id="cb36-329"><a href="#cb36-329" aria-hidden="true" tabindex="-1"></a>    tfb.Exp(),       <span class="co"># sigma0</span></span>
+<span id="cb36-330"><a href="#cb36-330" aria-hidden="true" tabindex="-1"></a>    tfb.Identity()  <span class="co"># log_odd_control_and_ratio - this is a vector parameter</span></span>
+<span id="cb36-331"><a href="#cb36-331" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb36-332"><a href="#cb36-332" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-333"><a href="#cb36-333" aria-hidden="true" tabindex="-1"></a><span class="co">## Adaptive step size.</span></span>
+<span id="cb36-334"><a href="#cb36-334" aria-hidden="true" tabindex="-1"></a><span class="co">## Do in two parts, first a structure to allow step size to adapt separately for</span></span>
+<span id="cb36-335"><a href="#cb36-335" aria-hidden="true" tabindex="-1"></a><span class="co">## each parameter</span></span>
+<span id="cb36-336"><a href="#cb36-336" aria-hidden="true" tabindex="-1"></a>steps<span class="op">=</span>[tf.constant([<span class="fl">0.5</span>]),                <span class="co"># mu0</span></span>
+<span id="cb36-337"><a href="#cb36-337" aria-hidden="true" tabindex="-1"></a>        tf.constant([<span class="fl">0.05</span>]),              <span class="co"># sigma0</span></span>
+<span id="cb36-338"><a href="#cb36-338" aria-hidden="true" tabindex="-1"></a>        tf.constant([<span class="fl">0.5</span>]),               <span class="co"># mu1</span></span>
+<span id="cb36-339"><a href="#cb36-339" aria-hidden="true" tabindex="-1"></a>        tf.constant([<span class="fl">0.05</span>]),              <span class="co"># sigma1</span></span>
+<span id="cb36-340"><a href="#cb36-340" aria-hidden="true" tabindex="-1"></a>        tf.constant([[<span class="fl">0.5</span>,<span class="fl">0.5</span>]]) <span class="co"># log_odd_control_and_ratio</span></span>
+<span id="cb36-341"><a href="#cb36-341" aria-hidden="true" tabindex="-1"></a>                                 <span class="co"># </span><span class="al">NOTE</span><span class="co"> - vector and must have correct shape</span></span>
+<span id="cb36-342"><a href="#cb36-342" aria-hidden="true" tabindex="-1"></a>        ]</span>
+<span id="cb36-343"><a href="#cb36-343" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-344"><a href="#cb36-344" aria-hidden="true" tabindex="-1"></a><span class="co">## now we replicate the above "steps" array into a structure where this is</span></span>
+<span id="cb36-345"><a href="#cb36-345" aria-hidden="true" tabindex="-1"></a><span class="co">## repeated inside each chain</span></span>
+<span id="cb36-346"><a href="#cb36-346" aria-hidden="true" tabindex="-1"></a>n_chains<span class="op">=</span><span class="dv">2</span> <span class="co">## THIS SETS NUMBER OF CHAINS</span></span>
+<span id="cb36-347"><a href="#cb36-347" aria-hidden="true" tabindex="-1"></a>steps_chains <span class="op">=</span> [tf.expand_dims(tf.repeat(steps[<span class="dv">0</span>],repeats<span class="op">=</span>n_chains,axis<span class="op">=-</span><span class="dv">1</span>),axis<span class="op">=-</span><span class="dv">1</span>), <span class="co"># starts with shape (1,)</span></span>
+<span id="cb36-348"><a href="#cb36-348" aria-hidden="true" tabindex="-1"></a>                 tf.expand_dims(tf.repeat(steps[<span class="dv">1</span>],repeats<span class="op">=</span>n_chains,axis<span class="op">=-</span><span class="dv">1</span>),axis<span class="op">=-</span><span class="dv">1</span>), <span class="co"># starts with shape (1,)</span></span>
+<span id="cb36-349"><a href="#cb36-349" aria-hidden="true" tabindex="-1"></a>                 tf.expand_dims(tf.repeat(steps[<span class="dv">2</span>],repeats<span class="op">=</span>n_chains,axis<span class="op">=-</span><span class="dv">1</span>),axis<span class="op">=-</span><span class="dv">1</span>), <span class="co"># starts with shape (1,)</span></span>
+<span id="cb36-350"><a href="#cb36-350" aria-hidden="true" tabindex="-1"></a>                 tf.expand_dims(tf.repeat(steps[<span class="dv">3</span>],repeats<span class="op">=</span>n_chains,axis<span class="op">=-</span><span class="dv">1</span>),axis<span class="op">=-</span><span class="dv">1</span>), <span class="co"># starts with shape (1,)</span></span>
+<span id="cb36-351"><a href="#cb36-351" aria-hidden="true" tabindex="-1"></a>                 tf.expand_dims(tf.tile(steps[<span class="dv">4</span>],[n_chains,<span class="dv">1</span>]),axis<span class="op">=</span><span class="dv">1</span>) <span class="co"># starts with shape (1,2) i.e. [[a, b]]</span></span>
+<span id="cb36-352"><a href="#cb36-352" aria-hidden="true" tabindex="-1"></a>                 ]</span>
+<span id="cb36-353"><a href="#cb36-353" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-354"><a href="#cb36-354" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-355"><a href="#cb36-355" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-358"><a href="#cb36-358" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb36-359"><a href="#cb36-359" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: "sampleout3"</span></span>
+<span id="cb36-360"><a href="#cb36-360" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: true</span></span>
+<span id="cb36-361"><a href="#cb36-361" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb36-362"><a href="#cb36-362" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb36-363"><a href="#cb36-363" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(py<span class="sc">$</span>steps_chains)</span>
+<span id="cb36-364"><a href="#cb36-364" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-365"><a href="#cb36-365" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-366"><a href="#cb36-366" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-369"><a href="#cb36-369" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb36-370"><a href="#cb36-370" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: "out_text_image2"</span></span>
+<span id="cb36-371"><a href="#cb36-371" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: true</span></span>
+<span id="cb36-372"><a href="#cb36-372" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb36-373"><a href="#cb36-373" aria-hidden="true" tabindex="-1"></a><span class="co">#| out.width: "50%"</span></span>
+<span id="cb36-374"><a href="#cb36-374" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig.align: "center"</span></span>
+<span id="cb36-375"><a href="#cb36-375" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb36-376"><a href="#cb36-376" aria-hidden="true" tabindex="-1"></a><span class="co">#knitr::include_graphics("precomputed/vg1_text3.png")</span></span>
+<span id="cb36-377"><a href="#cb36-377" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-378"><a href="#cb36-378" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-379"><a href="#cb36-379" aria-hidden="true" tabindex="-1"></a><span class="fu">### No U-Turn Sampler</span></span>
+<span id="cb36-380"><a href="#cb36-380" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-381"><a href="#cb36-381" aria-hidden="true" tabindex="-1"></a>Now define the No U-Turn sampler, which needs several steps: - define the parameters in the No U-Turn sampler, - then wrap this inside the TransformedTransitionKernel which tell the NUTS what transformations (bijectors - as defined above) to use - then wrap the NUTS and TransformedTransitionKernel inside the adaptive step size routine</span>
+<span id="cb36-382"><a href="#cb36-382" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-385"><a href="#cb36-385" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb36-386"><a href="#cb36-386" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: "samplerdef"</span></span>
+<span id="cb36-387"><a href="#cb36-387" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb36-388"><a href="#cb36-388" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-389"><a href="#cb36-389" aria-hidden="true" tabindex="-1"></a>num_results<span class="op">=</span><span class="dv">1000</span> <span class="co"># number of steps to run each chain for AFTER burn-in</span></span>
+<span id="cb36-390"><a href="#cb36-390" aria-hidden="true" tabindex="-1"></a>num_burnin_steps<span class="op">=</span><span class="dv">100</span> <span class="co"># this is discarded (currently not other option in TPF)</span></span>
+<span id="cb36-391"><a href="#cb36-391" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-392"><a href="#cb36-392" aria-hidden="true" tabindex="-1"></a>mysampler<span class="op">=</span>tfp.mcmc.NoUTurnSampler(</span>
+<span id="cb36-393"><a href="#cb36-393" aria-hidden="true" tabindex="-1"></a>                                     target_log_prob_fn<span class="op">=</span>log_prob_fn,</span>
+<span id="cb36-394"><a href="#cb36-394" aria-hidden="true" tabindex="-1"></a>                                     max_tree_depth<span class="op">=</span><span class="dv">15</span>, <span class="co"># default is 10</span></span>
+<span id="cb36-395"><a href="#cb36-395" aria-hidden="true" tabindex="-1"></a>                                     max_energy_diff<span class="op">=</span><span class="fl">1000.0</span>, <span class="co"># default do not change</span></span>
+<span id="cb36-396"><a href="#cb36-396" aria-hidden="true" tabindex="-1"></a>                                     step_size<span class="op">=</span>steps_chains</span>
+<span id="cb36-397"><a href="#cb36-397" aria-hidden="true" tabindex="-1"></a>                                     )</span>
+<span id="cb36-398"><a href="#cb36-398" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-399"><a href="#cb36-399" aria-hidden="true" tabindex="-1"></a>sampler <span class="op">=</span> tfp.mcmc.TransformedTransitionKernel( <span class="co"># inside this the starting conditions must be on</span></span>
+<span id="cb36-400"><a href="#cb36-400" aria-hidden="true" tabindex="-1"></a>                                                <span class="co"># original scale i.e. precisions must be &gt;0</span></span>
+<span id="cb36-401"><a href="#cb36-401" aria-hidden="true" tabindex="-1"></a>    mysampler,</span>
+<span id="cb36-402"><a href="#cb36-402" aria-hidden="true" tabindex="-1"></a>    bijector<span class="op">=</span>unconstraining_bijectors</span>
+<span id="cb36-403"><a href="#cb36-403" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb36-404"><a href="#cb36-404" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-405"><a href="#cb36-405" aria-hidden="true" tabindex="-1"></a><span class="co">## define final sampler - NUTS, bijectors and adaptation</span></span>
+<span id="cb36-406"><a href="#cb36-406" aria-hidden="true" tabindex="-1"></a>adaptive_sampler <span class="op">=</span> tfp.mcmc.DualAveragingStepSizeAdaptation(</span>
+<span id="cb36-407"><a href="#cb36-407" aria-hidden="true" tabindex="-1"></a>    inner_kernel<span class="op">=</span>sampler,</span>
+<span id="cb36-408"><a href="#cb36-408" aria-hidden="true" tabindex="-1"></a>    num_adaptation_steps<span class="op">=</span><span class="bu">int</span>(<span class="fl">0.8</span> <span class="op">*</span> num_burnin_steps),</span>
+<span id="cb36-409"><a href="#cb36-409" aria-hidden="true" tabindex="-1"></a>    reduce_fn<span class="op">=</span>tfp.math.reduce_logmeanexp, <span class="co"># default - this determines how to change the step</span></span>
+<span id="cb36-410"><a href="#cb36-410" aria-hidden="true" tabindex="-1"></a>                                          <span class="co"># adaptation across chains</span></span>
+<span id="cb36-411"><a href="#cb36-411" aria-hidden="true" tabindex="-1"></a>    <span class="co">#reduce_fn=tfp.math.reduce_log_harmonic_mean_exp, # might be better if difficult chains</span></span>
+<span id="cb36-412"><a href="#cb36-412" aria-hidden="true" tabindex="-1"></a>    target_accept_prob<span class="op">=</span>tf.cast(<span class="fl">0.95</span>, tf.float32)) <span class="co"># this is a key parameter to get good mixing</span></span>
+<span id="cb36-413"><a href="#cb36-413" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-414"><a href="#cb36-414" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-415"><a href="#cb36-415" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-416"><a href="#cb36-416" aria-hidden="true" tabindex="-1"></a><span class="fu">## Define starting point for chains</span></span>
+<span id="cb36-417"><a href="#cb36-417" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-418"><a href="#cb36-418" aria-hidden="true" tabindex="-1"></a>Explicit initial conditions are needed for each parameter in each chain. This is currently done very simply via hard coding. See RStan manual for a fairly simple way to generate random conditions that often works well. The key point here is that the initial conditions must be again in a specific tensor structure.</span>
+<span id="cb36-419"><a href="#cb36-419" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-422"><a href="#cb36-422" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb36-423"><a href="#cb36-423" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: "initstate"</span></span>
+<span id="cb36-424"><a href="#cb36-424" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb36-425"><a href="#cb36-425" aria-hidden="true" tabindex="-1"></a>istate<span class="op">=</span>[tf.constant([<span class="fl">0.0</span>]),</span>
+<span id="cb36-426"><a href="#cb36-426" aria-hidden="true" tabindex="-1"></a>        tf.constant([<span class="fl">0.5</span>]),</span>
+<span id="cb36-427"><a href="#cb36-427" aria-hidden="true" tabindex="-1"></a>                   tf.constant([<span class="fl">0.0</span>]),</span>
+<span id="cb36-428"><a href="#cb36-428" aria-hidden="true" tabindex="-1"></a>        tf.constant([<span class="fl">0.5</span>]),</span>
+<span id="cb36-429"><a href="#cb36-429" aria-hidden="true" tabindex="-1"></a>        tf.constant([[<span class="fl">1.</span>,<span class="op">-</span><span class="fl">1.</span>]])]</span>
+<span id="cb36-430"><a href="#cb36-430" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-431"><a href="#cb36-431" aria-hidden="true" tabindex="-1"></a>current_state <span class="op">=</span> [tf.expand_dims(tf.repeat(istate[<span class="dv">0</span>],repeats<span class="op">=</span>n_chains,axis<span class="op">=-</span><span class="dv">1</span>),axis<span class="op">=-</span><span class="dv">1</span>), <span class="co"># starts with shape (1,)</span></span>
+<span id="cb36-432"><a href="#cb36-432" aria-hidden="true" tabindex="-1"></a>                 tf.expand_dims(tf.repeat(istate[<span class="dv">1</span>],repeats<span class="op">=</span>n_chains,axis<span class="op">=-</span><span class="dv">1</span>),axis<span class="op">=-</span><span class="dv">1</span>), <span class="co"># starts with shape (1,)</span></span>
+<span id="cb36-433"><a href="#cb36-433" aria-hidden="true" tabindex="-1"></a>                 tf.expand_dims(tf.repeat(istate[<span class="dv">2</span>],repeats<span class="op">=</span>n_chains,axis<span class="op">=-</span><span class="dv">1</span>),axis<span class="op">=-</span><span class="dv">1</span>), <span class="co"># starts with shape (1,)</span></span>
+<span id="cb36-434"><a href="#cb36-434" aria-hidden="true" tabindex="-1"></a>                 tf.expand_dims(tf.repeat(istate[<span class="dv">3</span>],repeats<span class="op">=</span>n_chains,axis<span class="op">=-</span><span class="dv">1</span>),axis<span class="op">=-</span><span class="dv">1</span>), <span class="co"># starts with shape (1,)</span></span>
+<span id="cb36-435"><a href="#cb36-435" aria-hidden="true" tabindex="-1"></a>                 tf.expand_dims(tf.tile(istate[<span class="dv">4</span>],[n_chains,<span class="dv">1</span>]),axis<span class="op">=</span><span class="dv">1</span>) <span class="co"># starts with shape (1,2) i.e. [[a, b]]</span></span>
+<span id="cb36-436"><a href="#cb36-436" aria-hidden="true" tabindex="-1"></a>                 ]</span>
+<span id="cb36-437"><a href="#cb36-437" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(current_state)</span>
+<span id="cb36-438"><a href="#cb36-438" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-439"><a href="#cb36-439" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-442"><a href="#cb36-442" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb36-443"><a href="#cb36-443" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: "sampleout4"</span></span>
+<span id="cb36-444"><a href="#cb36-444" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: true</span></span>
+<span id="cb36-445"><a href="#cb36-445" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb36-446"><a href="#cb36-446" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb36-447"><a href="#cb36-447" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(py<span class="sc">$</span>current_state)</span>
+<span id="cb36-448"><a href="#cb36-448" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-449"><a href="#cb36-449" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-450"><a href="#cb36-450" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-451"><a href="#cb36-451" aria-hidden="true" tabindex="-1"></a><span class="fu">## Perform MCMC Sampling</span></span>
+<span id="cb36-452"><a href="#cb36-452" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-453"><a href="#cb36-453" aria-hidden="true" tabindex="-1"></a>We are now in a position to actually sample from our model, but first we will set up a tracer function which is called at every step. This can be used either for diagnostics, such as monitor step-size changes, or else to generate custom output, such as compute log-likelihood at each step. Such a function can be computationally expensive and so it's a trade-off as to whether to wait until the samples have been generated to compute additional functions of the parameters of interest.</span>
+<span id="cb36-454"><a href="#cb36-454" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-457"><a href="#cb36-457" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb36-458"><a href="#cb36-458" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: "trace_fn"</span></span>
+<span id="cb36-459"><a href="#cb36-459" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb36-460"><a href="#cb36-460" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> trace_fn(state, pkr):</span>
+<span id="cb36-461"><a href="#cb36-461" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
+<span id="cb36-462"><a href="#cb36-462" aria-hidden="true" tabindex="-1"></a>        <span class="st">'sample'</span>: state, <span class="co"># this is also pkr['all'][0].transformed_state[0]</span></span>
+<span id="cb36-463"><a href="#cb36-463" aria-hidden="true" tabindex="-1"></a>        <span class="st">'step_size'</span>: pkr.new_step_size,  <span class="co"># &lt;--- THIS extracts the adapted step size</span></span>
+<span id="cb36-464"><a href="#cb36-464" aria-hidden="true" tabindex="-1"></a>        <span class="st">'all'</span>: pkr, <span class="co">#state is also pkr['all'][0].transformed_state[0]</span></span>
+<span id="cb36-465"><a href="#cb36-465" aria-hidden="true" tabindex="-1"></a>        <span class="co">#pkr is a named tuple with ._fields = ('transformed_state', 'inner_results')</span></span>
+<span id="cb36-466"><a href="#cb36-466" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 'transformed_state is the state</span></span>
+<span id="cb36-467"><a href="#cb36-467" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 'inner_results' is diagnostics</span></span>
+<span id="cb36-468"><a href="#cb36-468" aria-hidden="true" tabindex="-1"></a>        <span class="co"># ('target_log_prob', 'grads_target_log_prob', 'step_size', 'log_accept_ratio', 'leapfrogs_taken',                     'is_accepted', 'reach_max_depth', 'has_divergence', 'energy', 'seed')</span></span>
+<span id="cb36-469"><a href="#cb36-469" aria-hidden="true" tabindex="-1"></a>        <span class="st">'has_divergence'</span>:pkr[<span class="dv">0</span>].inner_results.has_divergence,</span>
+<span id="cb36-470"><a href="#cb36-470" aria-hidden="true" tabindex="-1"></a>        <span class="st">'logL'</span>: log_prob_fn(state[<span class="dv">0</span>], state[<span class="dv">1</span>],state[<span class="dv">2</span>],state[<span class="dv">3</span>],state[<span class="dv">4</span>])</span>
+<span id="cb36-471"><a href="#cb36-471" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb36-472"><a href="#cb36-472" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-473"><a href="#cb36-473" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-474"><a href="#cb36-474" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-475"><a href="#cb36-475" aria-hidden="true" tabindex="-1"></a>Now run the actual sampler. The number of steps and burn-in were defined above when we setup the No U-Turn sampler.</span>
+<span id="cb36-476"><a href="#cb36-476" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-479"><a href="#cb36-479" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb36-480"><a href="#cb36-480" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: "mcmcsampling"</span></span>
+<span id="cb36-481"><a href="#cb36-481" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb36-482"><a href="#cb36-482" aria-hidden="true" tabindex="-1"></a><span class="co"># Speed up sampling by tracing with `tf.function`.</span></span>
+<span id="cb36-483"><a href="#cb36-483" aria-hidden="true" tabindex="-1"></a><span class="at">@tf.function</span>(autograph<span class="op">=</span><span class="va">False</span>, jit_compile<span class="op">=</span><span class="va">True</span>,reduce_retracing<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb36-484"><a href="#cb36-484" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> do_sampling():</span>
+<span id="cb36-485"><a href="#cb36-485" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> tfp.mcmc.sample_chain(</span>
+<span id="cb36-486"><a href="#cb36-486" aria-hidden="true" tabindex="-1"></a>      kernel<span class="op">=</span>adaptive_sampler,</span>
+<span id="cb36-487"><a href="#cb36-487" aria-hidden="true" tabindex="-1"></a>      current_state<span class="op">=</span>current_state,</span>
+<span id="cb36-488"><a href="#cb36-488" aria-hidden="true" tabindex="-1"></a>      num_results<span class="op">=</span>num_results,</span>
+<span id="cb36-489"><a href="#cb36-489" aria-hidden="true" tabindex="-1"></a>      num_burnin_steps<span class="op">=</span>num_burnin_steps,</span>
+<span id="cb36-490"><a href="#cb36-490" aria-hidden="true" tabindex="-1"></a>      seed<span class="op">=</span> tf.constant([<span class="dv">9999</span>, <span class="dv">9999</span>], dtype<span class="op">=</span>tf.int32), <span class="co"># this is random seed</span></span>
+<span id="cb36-491"><a href="#cb36-491" aria-hidden="true" tabindex="-1"></a>      trace_fn<span class="op">=</span>trace_fn)</span>
+<span id="cb36-492"><a href="#cb36-492" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-493"><a href="#cb36-493" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-494"><a href="#cb36-494" aria-hidden="true" tabindex="-1"></a>t0 <span class="op">=</span> time.time()</span>
+<span id="cb36-495"><a href="#cb36-495" aria-hidden="true" tabindex="-1"></a><span class="co">#samples, kernel_results = do_sampling()</span></span>
+<span id="cb36-496"><a href="#cb36-496" aria-hidden="true" tabindex="-1"></a>samples, traceout <span class="op">=</span> do_sampling()</span>
+<span id="cb36-497"><a href="#cb36-497" aria-hidden="true" tabindex="-1"></a><span class="co">#res = do_sampling()</span></span>
+<span id="cb36-498"><a href="#cb36-498" aria-hidden="true" tabindex="-1"></a><span class="co">#[mu0, sigma0, mu1, sigma1,log_odds_control_and_ratio], results = do_sampling()</span></span>
+<span id="cb36-499"><a href="#cb36-499" aria-hidden="true" tabindex="-1"></a>t1 <span class="op">=</span> time.time()</span>
+<span id="cb36-500"><a href="#cb36-500" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Inference ran in </span><span class="sc">{:.2f}</span><span class="st">s."</span>.<span class="bu">format</span>(t1<span class="op">-</span>t0))</span>
+<span id="cb36-501"><a href="#cb36-501" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-502"><a href="#cb36-502" aria-hidden="true" tabindex="-1"></a><span class="co">## there is a trailing dimension of 1 so need to squeeze to get each col is chain, and each row is parameter sample</span></span>
+<span id="cb36-503"><a href="#cb36-503" aria-hidden="true" tabindex="-1"></a>samplesflat <span class="op">=</span> <span class="bu">list</span>(<span class="bu">map</span>(<span class="kw">lambda</span> x: tf.squeeze(x).numpy(), samples))</span>
+<span id="cb36-504"><a href="#cb36-504" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f" means for mu0, sigma0, mu1, sigma1</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb36-505"><a href="#cb36-505" aria-hidden="true" tabindex="-1"></a>themeans<span class="op">=</span>[np.mean(row) <span class="cf">for</span> row <span class="kw">in</span> samplesflat[<span class="dv">0</span>:<span class="dv">4</span>]]</span>
+<span id="cb36-506"><a href="#cb36-506" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-507"><a href="#cb36-507" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-508"><a href="#cb36-508" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-509"><a href="#cb36-509" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-512"><a href="#cb36-512" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb36-513"><a href="#cb36-513" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: "stepsize_info"</span></span>
+<span id="cb36-514"><a href="#cb36-514" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb36-515"><a href="#cb36-515" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: true</span></span>
+<span id="cb36-516"><a href="#cb36-516" aria-hidden="true" tabindex="-1"></a><span class="co"># this shows how the step size changes during adaptation</span></span>
+<span id="cb36-517"><a href="#cb36-517" aria-hidden="true" tabindex="-1"></a><span class="co">#traceout['step_size']</span></span>
+<span id="cb36-518"><a href="#cb36-518" aria-hidden="true" tabindex="-1"></a><span class="co">#traceout['step_size'][0][999] #step size for mu0 at iteration 999+1</span></span>
+<span id="cb36-519"><a href="#cb36-519" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-520"><a href="#cb36-520" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-523"><a href="#cb36-523" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb36-524"><a href="#cb36-524" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: "sampleout5"</span></span>
+<span id="cb36-525"><a href="#cb36-525" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: true</span></span>
+<span id="cb36-526"><a href="#cb36-526" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb36-527"><a href="#cb36-527" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb36-528"><a href="#cb36-528" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(py<span class="sc">$</span>themeans)<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"mu0"</span>,<span class="st">"sigma0"</span>,<span class="st">"mu1"</span>,<span class="st">"sigma1"</span>)</span>
+<span id="cb36-529"><a href="#cb36-529" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(py<span class="sc">$</span>themeans)</span>
+<span id="cb36-530"><a href="#cb36-530" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-531"><a href="#cb36-531" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-532"><a href="#cb36-532" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-535"><a href="#cb36-535" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb36-536"><a href="#cb36-536" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: "out_text_image4"</span></span>
+<span id="cb36-537"><a href="#cb36-537" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: true</span></span>
+<span id="cb36-538"><a href="#cb36-538" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb36-539"><a href="#cb36-539" aria-hidden="true" tabindex="-1"></a><span class="co">#| out.width: "25%"</span></span>
+<span id="cb36-540"><a href="#cb36-540" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig.align: "center"</span></span>
+<span id="cb36-541"><a href="#cb36-541" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb36-542"><a href="#cb36-542" aria-hidden="true" tabindex="-1"></a><span class="co">#knitr::include_graphics("precomputed/vg1_text5.png")</span></span>
+<span id="cb36-543"><a href="#cb36-543" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-544"><a href="#cb36-544" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-545"><a href="#cb36-545" aria-hidden="true" tabindex="-1"></a><span class="fu">### Some Output plots</span></span>
+<span id="cb36-546"><a href="#cb36-546" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-547"><a href="#cb36-547" aria-hidden="true" tabindex="-1"></a>We plot the log-likelihood over the MCMC steps (post-burn-in) using two chains, a different colour for each chain. Similarly for trace plots. These are just illustrative output examples, the number of burn-in and total chain steps here are too low for reliable estimation.</span>
+<span id="cb36-548"><a href="#cb36-548" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-551"><a href="#cb36-551" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb36-552"><a href="#cb36-552" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: "outputs1"</span></span>
+<span id="cb36-553"><a href="#cb36-553" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb36-554"><a href="#cb36-554" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb36-555"><a href="#cb36-555" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
+<span id="cb36-556"><a href="#cb36-556" aria-hidden="true" tabindex="-1"></a>plt.plot(tf.squeeze(traceout[<span class="st">'logL'</span>].numpy()))</span>
+<span id="cb36-557"><a href="#cb36-557" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"log likelihood"</span>)</span>
+<span id="cb36-558"><a href="#cb36-558" aria-hidden="true" tabindex="-1"></a><span class="co">#plt.savefig(f"precomputed/vg1_loglike.png")</span></span>
+<span id="cb36-559"><a href="#cb36-559" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb36-560"><a href="#cb36-560" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-561"><a href="#cb36-561" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-562"><a href="#cb36-562" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-565"><a href="#cb36-565" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb36-566"><a href="#cb36-566" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: "out_vg1_mcmcplots1"</span></span>
+<span id="cb36-567"><a href="#cb36-567" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: true</span></span>
+<span id="cb36-568"><a href="#cb36-568" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb36-569"><a href="#cb36-569" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig.align: "center"</span></span>
+<span id="cb36-570"><a href="#cb36-570" aria-hidden="true" tabindex="-1"></a><span class="co">#| out.width: "80%"</span></span>
+<span id="cb36-571"><a href="#cb36-571" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb36-572"><a href="#cb36-572" aria-hidden="true" tabindex="-1"></a><span class="co">#knitr::include_graphics("precomputed/vg1_loglike.png")</span></span>
+<span id="cb36-573"><a href="#cb36-573" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-574"><a href="#cb36-574" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-577"><a href="#cb36-577" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb36-578"><a href="#cb36-578" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: "outputs2"</span></span>
+<span id="cb36-579"><a href="#cb36-579" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb36-580"><a href="#cb36-580" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>)<span class="co">#, sharex='col', sharey='col')</span></span>
+<span id="cb36-581"><a href="#cb36-581" aria-hidden="true" tabindex="-1"></a>fig.set_size_inches(<span class="dv">10</span>, <span class="dv">5</span>)</span>
+<span id="cb36-582"><a href="#cb36-582" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>][<span class="dv">0</span>].plot(samplesflat[<span class="dv">0</span>]) <span class="co"># mu_b</span></span>
+<span id="cb36-583"><a href="#cb36-583" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>][<span class="dv">1</span>].plot(samplesflat[<span class="dv">1</span>]) <span class="co"># tau_b</span></span>
+<span id="cb36-584"><a href="#cb36-584" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>][<span class="dv">0</span>].plot(samplesflat[<span class="dv">2</span>]) <span class="co"># mu</span></span>
+<span id="cb36-585"><a href="#cb36-585" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>][<span class="dv">1</span>].plot(samplesflat[<span class="dv">3</span>]) <span class="co"># tau</span></span>
+<span id="cb36-586"><a href="#cb36-586" aria-hidden="true" tabindex="-1"></a><span class="co">#plt.savefig(f"precomputed/vg1_traces.png")</span></span>
+<span id="cb36-587"><a href="#cb36-587" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb36-588"><a href="#cb36-588" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-589"><a href="#cb36-589" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
 </div> <!-- /content -->
 
 

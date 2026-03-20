@@ -75,7 +75,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-5b4ad623e5705c0698d39aec6f10cf02.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-bcf0aec2e27a285c23a1d33ca6c45a71.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -116,6 +116,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../GSK_logo_2022.svg" alt="" class="navbar-logo light-content">
+    <img src="../GSK_logo_2022.svg" alt="" class="navbar-logo dark-content">
     </a>
     <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">asia</span>
@@ -128,12 +130,108 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html"> 
+    <a class="nav-link" href="../index.html"> <i class="bi bi-house-fill" role="img">
+</i> 
 <span class="menu-text">Home</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../about.html"> 
-<span class="menu-text">About</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-bayesian-tensorflow" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-bezier2" role="img">
+</i> 
+ <span class="menu-text">Bayesian Tensorflow</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-bayesian-tensorflow">    
+        <li>
+    <a class="dropdown-item" href="../tfp/index_tfp.html">
+ <span class="dropdown-text">Getting Started</span></a>
+  </li>  
+        <li><hr class="dropdown-divider"></li>
+        <li>
+    <a class="dropdown-item" href="../tfp/intro_model_build.html">
+ <span class="dropdown-text">Ex.1.1 Two Arm RCT, BHM, No U-Turn</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../tfp/intro_2armstan.html">
+ <span class="dropdown-text">Ex.1.2: Ex.1.2 v RStan</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../tfp/intro_normal_tf_stan.html">
+ <span class="dropdown-text">Ex.1.3: Gaussian Regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../tfp/intro_neg_bin_tfp_stan.html">
+ <span class="dropdown-text">Ex.1.3: Negative Binomial Regression</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-bayesian-direct-estimation" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-bezier2" role="img">
+</i> 
+ <span class="menu-text">Bayesian Direct Estimation</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-bayesian-direct-estimation">    
+        <li>
+    <a class="dropdown-item" href="../vegas/index_vegas.html">
+ <span class="dropdown-text">Getting Started</span></a>
+  </li>  
+        <li><hr class="dropdown-divider"></li>
+        <li>
+    <a class="dropdown-item" href="../vegas/bern1.html">
+ <span class="dropdown-text">Ex.1.1 Vegas Intro</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../vegas/basket1.html">
+ <span class="dropdown-text">Ex.1.2: BHM Basket Vegas</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../vegas/stanvegas1.html">
+ <span class="dropdown-text">Ex.1.3: BHM Basket Stan vs Vegas</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-machine-learning" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-cpu" role="img">
+</i> 
+ <span class="menu-text">Machine Learning</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-machine-learning">    
+        <li>
+    <a class="dropdown-item" href="../ml/ml_gnn_building_blocks.html">
+ <span class="dropdown-text">Graphical Neural Networks</span></a>
+  </li>  
+        <li><hr class="dropdown-divider"></li>
+        <li>
+    <a class="dropdown-item" href="../ml/ml_gnn_example1.html">
+ <span class="dropdown-text">Basic example from TF GNN</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-llms" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-stars" role="img">
+</i> 
+ <span class="menu-text">LLMs</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-llms">    
+        <li>
+    <a class="dropdown-item" href="../llm/llm_table_repeats.html">
+ <span class="dropdown-text">Prompt Engineering for Biostatistics</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/Your-Org-Name/tf-clinical-site"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://linkedin.com/in/yourprofile"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -163,7 +261,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><h1 class="title display-7"></h1></header><div class="quarto-title-block"><div class="quarto-title-tools-only"><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 
 
 
@@ -232,6 +330,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reticulate)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">use_virtualenv</span>(<span class="st">"/Users/gogol/py_env/gnn"</span>, <span class="at">required =</span> <span class="cn">TRUE</span>) <span class="co"># tell R to use the python interpreter and libraries in here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
+
+<!-- -->
 
 </section>
 </section>
@@ -307,6 +407,57 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         container: window.document.getElementById('quarto-embedded-source-code-modal')
       });
       clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
@@ -636,7 +787,71 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       }
     }
   });
-  </script>
+  </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>This package is a collection of heavily documented Rmarkdown vignettes demonstrating how to use <span class="co">[</span><span class="ot">Tensorflow Probability (TFP)</span><span class="co">](https://www.tensorflow.org/probability)</span> in <span class="co">[</span><span class="ot">RStudio</span><span class="co">](https://posit.co/downloads/)</span> for Bayesian inference. <span class="co">[</span><span class="ot">RStan</span><span class="co">](https://mc-stan.org/rstan/)</span> features in many of these for comparison. The application focus is **model building and trial simulation for clinical research and drug development**.</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">## Why Tensorflow Probability (TFP)?</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Having alternative options, e.g., to <span class="co">[</span><span class="ot">RStan</span><span class="co">](https://mc-stan.org/rstan/)</span>, when using open source **reduces business risk** </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="co">[</span><span class="ot">TFP</span><span class="co">](https://www.tensorflow.org/probability)</span> is developed and maintained by Google and is available globally</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="co">[</span><span class="ot">TFP</span><span class="co">](https://www.tensorflow.org/probability)</span> provides a wide variety of building blocks for probabilistic modelling and ML    </span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ## Features</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">[TFP](https://www.tensorflow.org/probability) is less mature in terms of documentation compared [RStan](https://mc-stan.org/rstan/), in addition to having a Python API rather than R API. The vignettes included here are designed to help RStudio users get up to speed with TFP. Multi-lingual R markdown is used in each vignette to allow the strengths of each of R and Python to be used. There is an R wrapper library for TFP available (see [here](https://rstudio.github.io/tfprobability/index.html)).</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">--&gt;</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="fu">## Running the Vignettes </span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>Links to the raw **.Rmd** files for download and local compilation can be found in each of the vignettes on this site. Local compilation has some dependencies which are given below.     </span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="fu">### Quickstart</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Install the <span class="co">[</span><span class="ot">tensorflow</span><span class="co">](https://tensorflow.rstudio.com/install/)</span> library and its install script must include "pandas" in the ``extra_packages`` option (see details below)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Install <span class="co">[</span><span class="ot">tfprobability</span><span class="co">](https://rstudio.github.io/tfprobability/index.html)</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>Ensure <span class="co">[</span><span class="ot">pak</span><span class="co">](https://pak.r-lib.org)</span> is installed and loaded into session</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>then at R Console &gt; ``pak::pkg_install("fraseriainlewis/tfclinical")``</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Due to the computationally intensive nature of the code the vignettes show only pre-computed outputs. Links to the full live vignettes are included at the [tfclinical website](https://fraseriainlewis.github.io/tfclinical/). To run the live vignettes  [tfclinical](https://github.com/fraseriainlewis/tfclinical.git) needs installed and it has one main dependency [tfprobability](https://rstudio.github.io/tfprobability/index.html). The tfprobability library is not used directly but if it is installed and working then this means the essential Python libraries are also installed. There is one exception, in that we also use the Python pandas library and so this should be included in the tensorflow install script (see below) in the ``extras'' option. </span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co">--&gt;</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ::: other pair from above--&gt;</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="fu">### Installation details for Linux</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>Python needs to be installed, and pyenv can also be a very useful tool if dealing with multiple Python versions and to avoid impacting the system Python installation.  </span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="do">##########################################################</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="co"># in RStudio Terminal (not R Console) or in Bash</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>sudo apt<span class="sc">-</span>get update</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>sudo apt<span class="sc">-</span>get install python3<span class="sc">-</span>venv python3<span class="sc">-</span>pip python3<span class="sc">-</span>dev</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="do">##########################################################</span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="co"># in RStudio console</span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tensorflow"</span>)</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tensorflow)</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="fu">install_tensorflow</span>(<span class="at">extra_packages =</span> <span class="fu">c</span>(<span class="st">"tf_keras"</span>, <span class="st">"tensorflow"</span>, <span class="st">"tensorflow-probability"</span>,<span class="st">"pandas"</span>,<span class="st">"matplotlib"</span>))</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="co"># note - matplotlib is not essential, and may be removed or added later via py_install()</span></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="co">#restart session</span></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tfprobability"</span>)</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tensorflow)</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tfprobability)</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">tfd_binomial</span>(<span class="at">total_count =</span> <span class="dv">7</span>, <span class="at">probs =</span> <span class="fl">0.3</span>) <span class="co"># if this works then tensorflow us correctly installed</span></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a><span class="do">##########################################################</span></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a><span class="fu">### Installation details for Windows</span></span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>On Windows the key part is to have a suitable Python installation and also that RStudio can locate this. Once this is in place then the installation process is as above for the Linux case. </span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a><span class="fu">### Advanced: Installation of separate Python venv</span></span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>To run the live Graphical Neural Network (GNN) vignette requires a separate Python venv to be setup because some tensorflow spin-off projects, such as TF-GNN, have strict compatibility requirements. Library versions likely need hardcoded as pip will not choose suitable combinations. The instructions below setup an appropriate venv for running the GNN vignette (only tested on MacOS).</span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a><span class="co"># in bash</span></span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> venv gnn</span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> gnn/bin/activate</span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a><span class="co"># now install via pip the specific library versions needed</span></span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install tensorflow==2.16.2 tf_keras==2.16.0 tensorflow-gnn</span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>The second part below in the R Console is to instruct <span class="co">[</span><span class="ot">reticulate</span><span class="co">](https://rstudio.github.io/reticulate/)</span> to use this Python venv rather than one of the existing virtualenv environments, otherwise reticulate may use, e.g. the tensorflow venv created when doing the above install, which will likely not contain a compatible tensorflow version.</span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a><span class="co"># in RStudio console</span></span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reticulate)</span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a><span class="fu">use_virtualenv</span>(<span class="st">"/Users/gogol/py_env/gnn"</span>, <span class="at">required =</span> <span class="cn">TRUE</span>) <span class="co"># tell R to use the python interpreter and libraries in here</span></span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
 </div> <!-- /content -->
 
 

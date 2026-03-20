@@ -75,7 +75,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-5b4ad623e5705c0698d39aec6f10cf02.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-bcf0aec2e27a285c23a1d33ca6c45a71.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -145,6 +145,8 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../GSK_logo_2022.svg" alt="" class="navbar-logo light-content">
+    <img src="../GSK_logo_2022.svg" alt="" class="navbar-logo dark-content">
     </a>
     <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">asia</span>
@@ -157,12 +159,108 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html"> 
+    <a class="nav-link" href="../index.html"> <i class="bi bi-house-fill" role="img">
+</i> 
 <span class="menu-text">Home</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../about.html"> 
-<span class="menu-text">About</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-bayesian-tensorflow" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-bezier2" role="img">
+</i> 
+ <span class="menu-text">Bayesian Tensorflow</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-bayesian-tensorflow">    
+        <li>
+    <a class="dropdown-item" href="../tfp/index_tfp.html">
+ <span class="dropdown-text">Getting Started</span></a>
+  </li>  
+        <li><hr class="dropdown-divider"></li>
+        <li>
+    <a class="dropdown-item" href="../tfp/intro_model_build.html">
+ <span class="dropdown-text">Ex.1.1 Two Arm RCT, BHM, No U-Turn</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../tfp/intro_2armstan.html">
+ <span class="dropdown-text">Ex.1.2: Ex.1.2 v RStan</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../tfp/intro_normal_tf_stan.html">
+ <span class="dropdown-text">Ex.1.3: Gaussian Regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../tfp/intro_neg_bin_tfp_stan.html">
+ <span class="dropdown-text">Ex.1.3: Negative Binomial Regression</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-bayesian-direct-estimation" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-bezier2" role="img">
+</i> 
+ <span class="menu-text">Bayesian Direct Estimation</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-bayesian-direct-estimation">    
+        <li>
+    <a class="dropdown-item" href="../vegas/index_vegas.html">
+ <span class="dropdown-text">Getting Started</span></a>
+  </li>  
+        <li><hr class="dropdown-divider"></li>
+        <li>
+    <a class="dropdown-item" href="../vegas/bern1.html">
+ <span class="dropdown-text">Ex.1.1 Vegas Intro</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../vegas/basket1.html">
+ <span class="dropdown-text">Ex.1.2: BHM Basket Vegas</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../vegas/stanvegas1.html">
+ <span class="dropdown-text">Ex.1.3: BHM Basket Stan vs Vegas</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-machine-learning" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-cpu" role="img">
+</i> 
+ <span class="menu-text">Machine Learning</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-machine-learning">    
+        <li>
+    <a class="dropdown-item" href="../ml/ml_gnn_building_blocks.html">
+ <span class="dropdown-text">Graphical Neural Networks</span></a>
+  </li>  
+        <li><hr class="dropdown-divider"></li>
+        <li>
+    <a class="dropdown-item" href="../ml/ml_gnn_example1.html">
+ <span class="dropdown-text">Basic example from TF GNN</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-llms" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-stars" role="img">
+</i> 
+ <span class="menu-text">LLMs</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-llms">    
+        <li>
+    <a class="dropdown-item" href="../llm/llm_table_repeats.html">
+ <span class="dropdown-text">Prompt Engineering for Biostatistics</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/Your-Org-Name/tf-clinical-site"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://linkedin.com/in/yourprofile"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -203,7 +301,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Two-arm trial TFP v RStan</h1>
+<div class="quarto-title-block"><div><h1 class="title">Two-arm trial TFP v RStan</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -251,6 +349,8 @@ y_i &amp;\sim \text{Bernoulli}(p_i)
 </ul>
 <p>The basket ID is currently set fixed at 1, denoting there is only one basket in this trial, i.e.&nbsp;a classical two arm randomized trial design. Baskets will be added in other vignettes.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Prepare model inputs</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">99999</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up data</span></span>
@@ -278,12 +378,15 @@ y_i &amp;\sim \text{Bernoulli}(p_i)
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>py<span class="sc">$</span>thedata<span class="ot">&lt;-</span><span class="fu">r_to_py</span>(thedata) <span class="co"># THE KEY LINE - makes data available to Python</span></span>
 <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>                             <span class="co"># this is converted into a pandas dataframe object in Python</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 </section>
 <section id="rstan" class="level2">
 <h2 class="anchored" data-anchor-id="rstan">RStan</h2>
 <p>The RStan workflow is somewhat more compact than the TFP equivalent, where TFP requires more lower level details to be specified whereas these are dealt with behind the scences in RStan. The nodel definition This is somewhat simplified for ease of use, e.g.&nbsp;hard coded hyperparameters.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Stan model</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  BHM_stan_1 <span class="ot">&lt;-</span> <span class="st">"data {</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 0&gt; K;                     // number of baskets (K &gt;= 2)</span></span>
@@ -322,10 +425,13 @@ y_i &amp;\sim \text{Bernoulli}(p_i)
 <span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="st">    y[i] ~ bernoulli_logit(beta[k_vec[i], 1] + beta[k_vec[i], 2] * z_vec[i]);</span></span>
 <span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
 <span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 <section id="setup-and-run-sampler" class="level3">
 <h3 class="anchored" data-anchor-id="setup-and-run-sampler">Setup and run sampler</h3>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Create list with input values for Stan model</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>data_input_1 <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
@@ -359,16 +465,20 @@ y_i &amp;\sim \text{Bernoulli}(p_i)
 <span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
 <span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>end_time <span class="sc">-</span> start_time</span>
 <span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>post_draws_2 <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(stan_fit_2)           <span class="co"># posterior samples of each parameter</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 </section>
 <section id="summarize-results" class="level3">
 <h3 class="anchored" data-anchor-id="summarize-results">Summarize results</h3>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bayesplot)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">color_scheme_set</span>(<span class="st">"viridisA"</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>p<span class="ot">&lt;-</span><span class="fu">mcmc_trace</span>(stan_fit_2,<span class="st">"mu0"</span>)</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#ggsave("precomputed/vg2_traceplot1_stan.png", p)</span></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -382,6 +492,8 @@ y_i &amp;\sim \text{Bernoulli}(p_i)
 <section id="now-for-the-vegas-equivalent-model---overall-constant-of-integration" class="level2">
 <h2 class="anchored" data-anchor-id="now-for-the-vegas-equivalent-model---overall-constant-of-integration">Now for the vegas Equivalent Model - overall constant of integration</h2>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#from jax import config</span></span>
@@ -532,10 +644,13 @@ y_i &amp;\sim \text{Bernoulli}(p_i)
 <span id="cb5-148"><a href="#cb5-148" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-149"><a href="#cb5-149" aria-hidden="true" tabindex="-1"></a><span class="co">#mydens=np.array(jnp.exp(compute_log_lik(searchPts,y_data,T_vec) - log_evidence))</span></span>
 <span id="cb5-150"><a href="#cb5-150" aria-hidden="true" tabindex="-1"></a><span class="co">#myX=np.array(searchPts)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 <section id="marginalise-out-all-except-intercept" class="level3">
 <h3 class="anchored" data-anchor-id="marginalise-out-all-except-intercept">marginalise out all except intercept</h3>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">## we now have the constant of integ log_P(data), need to integrat out the others </span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -663,6 +778,7 @@ y_i &amp;\sim \text{Bernoulli}(p_i)
 <span id="cb6-125"><a href="#cb6-125" aria-hidden="true" tabindex="-1"></a><span class="co"># compute_log_lik(theta, y,T) - log_evidence = log( f(D|a0)f(a0) )</span></span>
 <span id="cb6-126"><a href="#cb6-126" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-127"><a href="#cb6-127" aria-hidden="true" tabindex="-1"></a>a0np<span class="op">=</span> np.array(a0)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 </section>
 <section id="setup" class="level3">
@@ -677,6 +793,8 @@ y_i &amp;\sim \text{Bernoulli}(p_i)
 </div>
 </div>
 
+
+<!-- -->
 
 </section>
 </section>
@@ -752,6 +870,57 @@ y_i &amp;\sim \text{Bernoulli}(p_i)
         container: window.document.getElementById('quarto-embedded-source-code-modal')
       });
       clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
@@ -1081,7 +1250,517 @@ y_i &amp;\sim \text{Bernoulli}(p_i)
       }
     }
   });
-  </script>
+  </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Two-arm trial TFP v RStan"</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="an">output:</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">  rmarkdown::html_vignette:</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">    toc_depth: 2</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">    number_sections: true</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="an">vignette:</span><span class="co"> &gt;</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">  %\VignetteIndexEntry{Two-arm trial TFP v RStan}</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">  %\VignetteEngine{knitr::rmarkdown}</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">  %\VignetteEncoding{UTF-8}</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, include = FALSE}</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">collapse =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">comment =</span> <span class="st">"#&gt;"</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if running on GitHub Actions</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="co"># This is important as otherwise Github will attempt to build this and it's missing the python libraries and will fail</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="co">#on_github &lt;- Sys.getenv("GITHUB_ACTIONS") == "true"</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="co"># If on GitHub, set eval = FALSE for all subsequent chunks</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="co">#knitr::opts_chunk$set(eval = !on_github)</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="fu">## Quick start</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>This vignette uses identical approach as in vignette basket1.qmd but now compares results of the estimated posterior density for the intercept term from direct integration with results from MCMC via Stan.</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="fu">### Model Formulation</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>The model implemented here is a non-centered parameterization for a logistic model.</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>\mu_0 &amp;\sim \text{Normal}(0, 2.5)<span class="sc">\\</span></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>\sigma_0 &amp;\sim \text{Half-Normal}(0, 2.5) <span class="sc">\\</span></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>\mu_1 &amp;\sim \text{Normal}(0, 2.5) <span class="sc">\\</span></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>\sigma_1 &amp;\sim \text{Half-Normal}(0, 2.5) <span class="sc">\\</span></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>\tilde{\theta}_j &amp;\sim \text{Normal}(0, 1)\quad\enspace\text{for}\enspace{j=1,2}  <span class="sc">\\</span></span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>\beta_0 &amp;= \mu_0 + \sigma_0 \tilde{\theta}_1 <span class="sc">\\</span></span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>\beta_1 &amp;= \mu_1 + \sigma_1 \tilde{\theta}_2 <span class="sc">\\</span></span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>\text{logit(}{p_i}) &amp;= \beta_0 + \beta_1 z_i\quad\quad\enspace\enspace\text{for}\enspace{i=1,\dots,N}  <span class="sc">\\</span></span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>y_i &amp;\sim \text{Bernoulli}(p_i)</span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a><span class="in">```{r rsetup, include=FALSE,eval=TRUE}</span></span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a><span class="co">#library(tfclinical)</span></span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reticulate)</span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a><span class="fu">use_virtualenv</span>(<span class="st">"/Users/gogol/py_env/bayes"</span>)</span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tfprobability)</span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a><span class="co">#library(reticulate)</span></span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstan)</span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bayesplot)</span>
+<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a><span class="co">#reticulate::py_install("bash") # just a test</span></span>
+<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data set</span></span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>The R chunk below creates a simple dataset of three cols:</span>
+<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>a binary response variable (0/1 = non-responder/responder),</span>
+<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>a binary treatment variable (0/1 = control/test treatment)</span>
+<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>and a basket ID variable. (1)</span>
+<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a>The basket ID is currently set fixed at 1, denoting there is only one basket in this trial, i.e. a classical two arm randomized trial design. Baskets will be added in other vignettes.</span>
+<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a><span class="in">```{r datasets, include=TRUE,eval=TRUE}</span></span>
+<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a><span class="do">### Prepare model inputs</span></span>
+<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">99999</span>)</span>
+<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up data</span></span>
+<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a>rr_k_ctrl <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.20</span>)        <span class="co"># control response rate for each basket</span></span>
+<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a>rr_k_trt <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.40</span>)         <span class="co"># treatment response rate for each basket</span></span>
+<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a>K<span class="ot">&lt;-</span><span class="fu">length</span>(rr_k_ctrl)        <span class="co"># number of baskets</span></span>
+<span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a>N_k_ctrl <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">100</span>, K)     <span class="co"># number of control participants per basket</span></span>
+<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a>N_k_trt <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">100</span>, K)      <span class="co"># number of treatment participants per basket</span></span>
+<span id="cb7-84"><a href="#cb7-84" aria-hidden="true" tabindex="-1"></a>N_k <span class="ot">&lt;-</span> N_k_ctrl <span class="sc">+</span> N_k_trt   <span class="co"># number of participants per basket (both arms combined)</span></span>
+<span id="cb7-85"><a href="#cb7-85" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="fu">sum</span>(N_k)               <span class="co"># total sample size</span></span>
+<span id="cb7-86"><a href="#cb7-86" aria-hidden="true" tabindex="-1"></a>k_vec <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span>K, N_k)      <span class="co"># N x 1 vector of basket indicators (1 to K)</span></span>
+<span id="cb7-87"><a href="#cb7-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-88"><a href="#cb7-88" aria-hidden="true" tabindex="-1"></a>z_vec<span class="ot">&lt;-</span><span class="cn">NULL</span>;</span>
+<span id="cb7-89"><a href="#cb7-89" aria-hidden="true" tabindex="-1"></a>y<span class="ot">&lt;-</span><span class="cn">NULL</span>;</span>
+<span id="cb7-90"><a href="#cb7-90" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>K){ <span class="co"># for each basket repeat 0-control 1-trt according to the specifc Ns</span></span>
+<span id="cb7-91"><a href="#cb7-91" aria-hidden="true" tabindex="-1"></a>  z_vec<span class="ot">&lt;-</span><span class="fu">c</span>(z_vec,<span class="fu">rep</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">1</span>,<span class="fu">c</span>(N_k_ctrl[i],N_k_trt[i]))) <span class="co"># treatment/control indicator</span></span>
+<span id="cb7-92"><a href="#cb7-92" aria-hidden="true" tabindex="-1"></a>  y<span class="ot">&lt;-</span><span class="fu">c</span>(y,</span>
+<span id="cb7-93"><a href="#cb7-93" aria-hidden="true" tabindex="-1"></a>       <span class="fu">c</span>(<span class="fu">rbinom</span>(N_k_ctrl[i],<span class="dv">1</span>,rr_k_ctrl[i]), <span class="co"># bernoulli for control</span></span>
+<span id="cb7-94"><a href="#cb7-94" aria-hidden="true" tabindex="-1"></a>         <span class="fu">rbinom</span>(N_k_trt[i],<span class="dv">1</span>,rr_k_trt[i]))) <span class="co">#           for trt</span></span>
+<span id="cb7-95"><a href="#cb7-95" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-96"><a href="#cb7-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-97"><a href="#cb7-97" aria-hidden="true" tabindex="-1"></a>thedata<span class="ot">&lt;-</span><span class="fu">data.frame</span>(y,<span class="at">basketID=</span>k_vec,<span class="at">Treatment=</span>z_vec)</span>
+<span id="cb7-98"><a href="#cb7-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-99"><a href="#cb7-99" aria-hidden="true" tabindex="-1"></a>py<span class="sc">$</span>thedata<span class="ot">&lt;-</span><span class="fu">r_to_py</span>(thedata) <span class="co"># THE KEY LINE - makes data available to Python</span></span>
+<span id="cb7-100"><a href="#cb7-100" aria-hidden="true" tabindex="-1"></a>                             <span class="co"># this is converted into a pandas dataframe object in Python</span></span>
+<span id="cb7-101"><a href="#cb7-101" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-102"><a href="#cb7-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-103"><a href="#cb7-103" aria-hidden="true" tabindex="-1"></a><span class="in">```{r datasetsQ, include=FALSE,eval=TRUE}</span></span>
+<span id="cb7-104"><a href="#cb7-104" aria-hidden="true" tabindex="-1"></a>my_table1_object <span class="ot">&lt;-</span> <span class="fu">head</span>(thedata) <span class="sc">%&gt;%</span></span>
+<span id="cb7-105"><a href="#cb7-105" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb7-106"><a href="#cb7-106" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">full_width =</span> F) <span class="sc">%&gt;%</span></span>
+<span id="cb7-107"><a href="#cb7-107" aria-hidden="true" tabindex="-1"></a>  <span class="fu">column_spec</span>(<span class="dv">1</span>, <span class="at">bold =</span> T, <span class="at">color =</span> <span class="st">"blue"</span>)</span>
+<span id="cb7-108"><a href="#cb7-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-109"><a href="#cb7-109" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(my_table1_object)</span>
+<span id="cb7-110"><a href="#cb7-110" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the object</span></span>
+<span id="cb7-111"><a href="#cb7-111" aria-hidden="true" tabindex="-1"></a><span class="co">#saveRDS(my_table1_object, "precomputed/vg2_table1.rds")</span></span>
+<span id="cb7-112"><a href="#cb7-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-113"><a href="#cb7-113" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-114"><a href="#cb7-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-115"><a href="#cb7-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-116"><a href="#cb7-116" aria-hidden="true" tabindex="-1"></a><span class="fu">## RStan</span></span>
+<span id="cb7-117"><a href="#cb7-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-118"><a href="#cb7-118" aria-hidden="true" tabindex="-1"></a>The RStan workflow is somewhat more compact than the TFP equivalent, where TFP requires more lower level details to be specified whereas these are dealt with behind the scences in RStan. The nodel definition This is somewhat simplified for ease of use, e.g. hard coded hyperparameters.</span>
+<span id="cb7-119"><a href="#cb7-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-120"><a href="#cb7-120" aria-hidden="true" tabindex="-1"></a><span class="in">```{r stanmodeldef,include=TRUE,echo=TRUE,eval=TRUE}</span></span>
+<span id="cb7-121"><a href="#cb7-121" aria-hidden="true" tabindex="-1"></a><span class="do">### Stan model</span></span>
+<span id="cb7-122"><a href="#cb7-122" aria-hidden="true" tabindex="-1"></a>  BHM_stan_1 <span class="ot">&lt;-</span> <span class="st">"data {</span></span>
+<span id="cb7-123"><a href="#cb7-123" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 0&gt; K;                     // number of baskets (K &gt;= 2)</span></span>
+<span id="cb7-124"><a href="#cb7-124" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 0&gt; N;                     // total number of participants</span></span>
+<span id="cb7-125"><a href="#cb7-125" aria-hidden="true" tabindex="-1"></a><span class="st">  //int&lt;lower = 0, upper = N&gt; N_k[K];     // K x 1 vector of basket sample sizes</span></span>
+<span id="cb7-126"><a href="#cb7-126" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 0, upper = N&gt; N_k;</span></span>
+<span id="cb7-127"><a href="#cb7-127" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 1, upper = K&gt; k_vec[N];   // N x 1 vector of basket indicators</span></span>
+<span id="cb7-128"><a href="#cb7-128" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 0, upper = 1&gt; z_vec[N];   // N x 1 vector of treatment indicators for active treatment arm</span></span>
+<span id="cb7-129"><a href="#cb7-129" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 0, upper = 1&gt; y[N];       // N x 1 vector of binary responses</span></span>
+<span id="cb7-130"><a href="#cb7-130" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb7-131"><a href="#cb7-131" aria-hidden="true" tabindex="-1"></a><span class="st">parameters {</span></span>
+<span id="cb7-132"><a href="#cb7-132" aria-hidden="true" tabindex="-1"></a><span class="st">  matrix[K,2] beta_tr;                  // K x 2 matrix of transformed regression coefficients</span></span>
+<span id="cb7-133"><a href="#cb7-133" aria-hidden="true" tabindex="-1"></a><span class="st">  real mu1;                              // scalar of hierarchical mean (log odds ratio)</span></span>
+<span id="cb7-134"><a href="#cb7-134" aria-hidden="true" tabindex="-1"></a><span class="st">  real&lt;lower = 0&gt; sigma1;                  // scalar of hierarchical SD (log odds ratio)</span></span>
+<span id="cb7-135"><a href="#cb7-135" aria-hidden="true" tabindex="-1"></a><span class="st">  real mu0;                              // scalar of hierarchical mean (log odds ratio)</span></span>
+<span id="cb7-136"><a href="#cb7-136" aria-hidden="true" tabindex="-1"></a><span class="st">  real&lt;lower = 0&gt; sigma0;                  // scalar of hierarchical SD (log odds ratio)</span></span>
+<span id="cb7-137"><a href="#cb7-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-138"><a href="#cb7-138" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb7-139"><a href="#cb7-139" aria-hidden="true" tabindex="-1"></a><span class="st">transformed parameters {</span></span>
+<span id="cb7-140"><a href="#cb7-140" aria-hidden="true" tabindex="-1"></a><span class="st">  matrix[K,2] beta;                     // K x 2 matrix of regression coefficients (without transformation)</span></span>
+<span id="cb7-141"><a href="#cb7-141" aria-hidden="true" tabindex="-1"></a><span class="st">  // Calculate beta coefs using transformed betas (leads to better mixing)</span></span>
+<span id="cb7-142"><a href="#cb7-142" aria-hidden="true" tabindex="-1"></a><span class="st">  for (k in 1:K){</span></span>
+<span id="cb7-143"><a href="#cb7-143" aria-hidden="true" tabindex="-1"></a><span class="st">    beta[k,1] = mu0 + sigma0 * beta_tr[k,1];</span></span>
+<span id="cb7-144"><a href="#cb7-144" aria-hidden="true" tabindex="-1"></a><span class="st">    beta[k,2] = mu1 + sigma1 * beta_tr[k,2];</span></span>
+<span id="cb7-145"><a href="#cb7-145" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb7-146"><a href="#cb7-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-147"><a href="#cb7-147" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb7-148"><a href="#cb7-148" aria-hidden="true" tabindex="-1"></a><span class="st">model {</span></span>
+<span id="cb7-149"><a href="#cb7-149" aria-hidden="true" tabindex="-1"></a><span class="st">  mu0 ~ normal(0, 2.5);    // vectorized normal priors for hierarchical means (specify SD in normal distn)</span></span>
+<span id="cb7-150"><a href="#cb7-150" aria-hidden="true" tabindex="-1"></a><span class="st">  sigma0 ~ normal(0, 2.5);       // vectorized half-normal priors for hierarchical SDs (specify SD in normal distn)</span></span>
+<span id="cb7-151"><a href="#cb7-151" aria-hidden="true" tabindex="-1"></a><span class="st">  mu1 ~ normal(0, 2.5);    // vectorized normal priors for hierarchical means (specify SD in normal distn)</span></span>
+<span id="cb7-152"><a href="#cb7-152" aria-hidden="true" tabindex="-1"></a><span class="st">  sigma1 ~ normal(0, 2.5);       // vectorized half-normal priors for hierarchical SDs (specify SD in normal distn)</span></span>
+<span id="cb7-153"><a href="#cb7-153" aria-hidden="true" tabindex="-1"></a><span class="st">  beta_tr[,1] ~ normal(0, 1);  // vectorized normal prior for the log odds for the control arm</span></span>
+<span id="cb7-154"><a href="#cb7-154" aria-hidden="true" tabindex="-1"></a><span class="st">  beta_tr[,2] ~ normal(0, 1);  // vectorized normal prior for the log odds ratios</span></span>
+<span id="cb7-155"><a href="#cb7-155" aria-hidden="true" tabindex="-1"></a><span class="st">  for (i in 1:N)</span></span>
+<span id="cb7-156"><a href="#cb7-156" aria-hidden="true" tabindex="-1"></a><span class="st">    y[i] ~ bernoulli_logit(beta[k_vec[i], 1] + beta[k_vec[i], 2] * z_vec[i]);</span></span>
+<span id="cb7-157"><a href="#cb7-157" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb7-158"><a href="#cb7-158" aria-hidden="true" tabindex="-1"></a><span class="st">"</span></span>
+<span id="cb7-159"><a href="#cb7-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-160"><a href="#cb7-160" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-161"><a href="#cb7-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-162"><a href="#cb7-162" aria-hidden="true" tabindex="-1"></a><span class="fu">### Setup and run sampler</span></span>
+<span id="cb7-163"><a href="#cb7-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-164"><a href="#cb7-164" aria-hidden="true" tabindex="-1"></a><span class="in">```{r stansample,echo=TRUE,results='hide',eval=TRUE}</span></span>
+<span id="cb7-165"><a href="#cb7-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-166"><a href="#cb7-166" aria-hidden="true" tabindex="-1"></a><span class="co"># Create list with input values for Stan model</span></span>
+<span id="cb7-167"><a href="#cb7-167" aria-hidden="true" tabindex="-1"></a>data_input_1 <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb7-168"><a href="#cb7-168" aria-hidden="true" tabindex="-1"></a>  <span class="at">K =</span> K,                <span class="co"># number of subgroups</span></span>
+<span id="cb7-169"><a href="#cb7-169" aria-hidden="true" tabindex="-1"></a>  <span class="at">N =</span> N,                <span class="co"># total sample size</span></span>
+<span id="cb7-170"><a href="#cb7-170" aria-hidden="true" tabindex="-1"></a>  <span class="at">N_k =</span> N_k,            <span class="co"># sample size per basket</span></span>
+<span id="cb7-171"><a href="#cb7-171" aria-hidden="true" tabindex="-1"></a>  <span class="at">k_vec =</span> k_vec,        <span class="co"># N x 1 vector of subgroup indicators</span></span>
+<span id="cb7-172"><a href="#cb7-172" aria-hidden="true" tabindex="-1"></a>  <span class="at">z_vec =</span> z_vec,        <span class="co"># N x 1 vector of active treatment arm indicators</span></span>
+<span id="cb7-173"><a href="#cb7-173" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> y                 <span class="co"># N x 1 vector of binary responses</span></span>
+<span id="cb7-174"><a href="#cb7-174" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-175"><a href="#cb7-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-176"><a href="#cb7-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-177"><a href="#cb7-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-178"><a href="#cb7-178" aria-hidden="true" tabindex="-1"></a><span class="do">### Compile and fit model</span></span>
+<span id="cb7-179"><a href="#cb7-179" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">mc.cores =</span> parallel<span class="sc">::</span><span class="fu">detectCores</span>())</span>
+<span id="cb7-180"><a href="#cb7-180" aria-hidden="true" tabindex="-1"></a><span class="co"># Compile model (only run the line below once for a simulation study - compilation not dependent on any</span></span>
+<span id="cb7-181"><a href="#cb7-181" aria-hidden="true" tabindex="-1"></a><span class="co"># simulation inputs as defined by scenarios or on simulated data)</span></span>
+<span id="cb7-182"><a href="#cb7-182" aria-hidden="true" tabindex="-1"></a>stan_mod_1 <span class="ot">&lt;-</span> <span class="fu">stan_model</span>(<span class="at">model_code =</span> BHM_stan_1)</span>
+<span id="cb7-183"><a href="#cb7-183" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit model</span></span>
+<span id="cb7-184"><a href="#cb7-184" aria-hidden="true" tabindex="-1"></a>nsamps <span class="ot">&lt;-</span> <span class="dv">30000</span>       <span class="co"># number of posterior samples (after removing burn-in) per chain</span></span>
+<span id="cb7-185"><a href="#cb7-185" aria-hidden="true" tabindex="-1"></a>nburnin <span class="ot">&lt;-</span> <span class="dv">1000</span>       <span class="co"># number of burn-in samples to remove at beginning of each chain</span></span>
+<span id="cb7-186"><a href="#cb7-186" aria-hidden="true" tabindex="-1"></a>nchains <span class="ot">&lt;-</span> <span class="dv">4</span>          <span class="co"># number of chains</span></span>
+<span id="cb7-187"><a href="#cb7-187" aria-hidden="true" tabindex="-1"></a>BHM_pars_1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"mu0"</span>, <span class="st">"sigma0"</span>,<span class="st">"mu1"</span>, <span class="st">"sigma1"</span>, <span class="st">"beta"</span>,<span class="st">"beta_tr"</span>)     <span class="co"># parameters to sample</span></span>
+<span id="cb7-188"><a href="#cb7-188" aria-hidden="true" tabindex="-1"></a>start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb7-189"><a href="#cb7-189" aria-hidden="true" tabindex="-1"></a>stan_fit_2 <span class="ot">&lt;-</span> <span class="fu">sampling</span>(stan_mod_1, <span class="at">data =</span> data_input_1, <span class="at">pars =</span> BHM_pars_1,</span>
+<span id="cb7-190"><a href="#cb7-190" aria-hidden="true" tabindex="-1"></a>                       <span class="at">iter =</span> nsamps <span class="sc">+</span> nburnin, <span class="at">warmup =</span> nburnin, <span class="at">chains =</span> nchains)</span>
+<span id="cb7-191"><a href="#cb7-191" aria-hidden="true" tabindex="-1"></a>end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb7-192"><a href="#cb7-192" aria-hidden="true" tabindex="-1"></a>end_time <span class="sc">-</span> start_time</span>
+<span id="cb7-193"><a href="#cb7-193" aria-hidden="true" tabindex="-1"></a>post_draws_2 <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(stan_fit_2)           <span class="co"># posterior samples of each parameter</span></span>
+<span id="cb7-194"><a href="#cb7-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-195"><a href="#cb7-195" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-196"><a href="#cb7-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-197"><a href="#cb7-197" aria-hidden="true" tabindex="-1"></a><span class="fu">### Summarize results</span></span>
+<span id="cb7-198"><a href="#cb7-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-199"><a href="#cb7-199" aria-hidden="true" tabindex="-1"></a><span class="in">```{r stanresults,fig.width=10, fig.height=6, out.width="100%",eval=TRUE}</span></span>
+<span id="cb7-200"><a href="#cb7-200" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bayesplot)</span>
+<span id="cb7-201"><a href="#cb7-201" aria-hidden="true" tabindex="-1"></a><span class="fu">color_scheme_set</span>(<span class="st">"viridisA"</span>)</span>
+<span id="cb7-202"><a href="#cb7-202" aria-hidden="true" tabindex="-1"></a>p<span class="ot">&lt;-</span><span class="fu">mcmc_trace</span>(stan_fit_2,<span class="st">"mu0"</span>)</span>
+<span id="cb7-203"><a href="#cb7-203" aria-hidden="true" tabindex="-1"></a><span class="co">#ggsave("precomputed/vg2_traceplot1_stan.png", p)</span></span>
+<span id="cb7-204"><a href="#cb7-204" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p)</span>
+<span id="cb7-205"><a href="#cb7-205" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-206"><a href="#cb7-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-207"><a href="#cb7-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-208"><a href="#cb7-208" aria-hidden="true" tabindex="-1"></a><span class="fu">## Now for the vegas Equivalent Model - overall constant of integration</span></span>
+<span id="cb7-209"><a href="#cb7-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-210"><a href="#cb7-210" aria-hidden="true" tabindex="-1"></a><span class="in">```{python sixvarjaco,include=TRUE,eval=TRUE}</span></span>
+<span id="cb7-211"><a href="#cb7-211" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb7-212"><a href="#cb7-212" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb7-213"><a href="#cb7-213" aria-hidden="true" tabindex="-1"></a><span class="co">#from jax import config</span></span>
+<span id="cb7-214"><a href="#cb7-214" aria-hidden="true" tabindex="-1"></a><span class="co">#config.update("jax_enable_x64", True)  ## if turn this on then vegas need np.array() in function return values</span></span>
+<span id="cb7-215"><a href="#cb7-215" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> jax.numpy <span class="im">as</span> jnp</span>
+<span id="cb7-216"><a href="#cb7-216" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> jax</span>
+<span id="cb7-217"><a href="#cb7-217" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> vegas</span>
+<span id="cb7-218"><a href="#cb7-218" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
+<span id="cb7-219"><a href="#cb7-219" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gvar</span>
+<span id="cb7-220"><a href="#cb7-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-221"><a href="#cb7-221" aria-hidden="true" tabindex="-1"></a><span class="co">## The data.frame passed is now a panda df but for TPF this needs to be further</span></span>
+<span id="cb7-222"><a href="#cb7-222" aria-hidden="true" tabindex="-1"></a><span class="co">## converted into tensors here we simply convert each col of the data.frame into</span></span>
+<span id="cb7-223"><a href="#cb7-223" aria-hidden="true" tabindex="-1"></a><span class="co">## a Rank 1 tensor (i.e. a vector)</span></span>
+<span id="cb7-224"><a href="#cb7-224" aria-hidden="true" tabindex="-1"></a>y_data<span class="op">=</span>jnp.array(thedata.iloc[:,<span class="dv">0</span>],dtype<span class="op">=</span>jnp.float32)[:,<span class="va">None</span>] <span class="co"># 1 col matrix</span></span>
+<span id="cb7-225"><a href="#cb7-225" aria-hidden="true" tabindex="-1"></a>k_vec<span class="op">=</span>jnp.array(thedata.iloc[:,<span class="dv">1</span>])<span class="op">-</span><span class="dv">1</span></span>
+<span id="cb7-226"><a href="#cb7-226" aria-hidden="true" tabindex="-1"></a>T_vec<span class="op">=</span>jnp.array(thedata.iloc[:,<span class="dv">2</span>],dtype<span class="op">=</span>jnp.float32)[:,<span class="va">None</span>] <span class="co"># 1 col matrix</span></span>
+<span id="cb7-227"><a href="#cb7-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-228"><a href="#cb7-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-229"><a href="#cb7-229" aria-hidden="true" tabindex="-1"></a>pars<span class="op">=</span>jnp.array([[<span class="fl">0.1</span>,<span class="op">-</span><span class="fl">1.1</span>,<span class="fl">2.1</span>]],dtype<span class="op">=</span>jnp.float32)</span>
+<span id="cb7-230"><a href="#cb7-230" aria-hidden="true" tabindex="-1"></a><span class="co">#pars=jnp.stack([pars, pars,pars], axis=1)</span></span>
+<span id="cb7-231"><a href="#cb7-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-232"><a href="#cb7-232" aria-hidden="true" tabindex="-1"></a><span class="at">@jax.jit</span></span>
+<span id="cb7-233"><a href="#cb7-233" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> half_normal_logpdf(x, sigma):</span>
+<span id="cb7-234"><a href="#cb7-234" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Log-constant: log(sqrt(2) / sqrt(pi))</span></span>
+<span id="cb7-235"><a href="#cb7-235" aria-hidden="true" tabindex="-1"></a>    log_const <span class="op">=</span> <span class="fl">0.5</span><span class="op">*</span>(jnp.log(<span class="fl">2.0</span>) <span class="op">-</span> jnp.log(jnp.pi)) <span class="op">-</span> jnp.log(sigma)</span>
+<span id="cb7-236"><a href="#cb7-236" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Log-exponent term</span></span>
+<span id="cb7-237"><a href="#cb7-237" aria-hidden="true" tabindex="-1"></a>    log_exp <span class="op">=</span> <span class="op">-</span>((x<span class="op">*</span>x) <span class="op">/</span> (<span class="fl">2.0</span> <span class="op">*</span> sigma<span class="op">*</span>sigma))</span>
+<span id="cb7-238"><a href="#cb7-238" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> log_const<span class="op">+</span>log_exp</span>
+<span id="cb7-239"><a href="#cb7-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-240"><a href="#cb7-240" aria-hidden="true" tabindex="-1"></a><span class="at">@jax.jit</span></span>
+<span id="cb7-241"><a href="#cb7-241" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_log_lik(theta, y,T):</span>
+<span id="cb7-242"><a href="#cb7-242" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"shape1={x.shape}\n")</span></span>
+<span id="cb7-243"><a href="#cb7-243" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb7-244"><a href="#cb7-244" aria-hidden="true" tabindex="-1"></a><span class="co">    mu0 ~ normal(0, 2.5);    // vectorized normal priors for hierarchical means (specify SD in normal distn)</span></span>
+<span id="cb7-245"><a href="#cb7-245" aria-hidden="true" tabindex="-1"></a><span class="co">    sigma0 ~ normal(0, 2.5);       // vectorized half-normal priors for hierarchical SDs (specify SD in normal distn)</span></span>
+<span id="cb7-246"><a href="#cb7-246" aria-hidden="true" tabindex="-1"></a><span class="co">    mu1 ~ normal(0, 2.5);    // vectorized normal priors for hierarchical means (specify SD in normal distn)</span></span>
+<span id="cb7-247"><a href="#cb7-247" aria-hidden="true" tabindex="-1"></a><span class="co">    sigma1 ~ normal(0, 2.5);</span></span>
+<span id="cb7-248"><a href="#cb7-248" aria-hidden="true" tabindex="-1"></a><span class="co">    a0 ~ normal(mu0,sigma0)</span></span>
+<span id="cb7-249"><a href="#cb7-249" aria-hidden="true" tabindex="-1"></a><span class="co">    a1 ~ normal(mu1,sigma1)</span></span>
+<span id="cb7-250"><a href="#cb7-250" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb7-251"><a href="#cb7-251" aria-hidden="true" tabindex="-1"></a><span class="co">    logL + logpdf(a0|mu0,sigma0) + logpdf(a1|mu1,sigma1) + logpdf(mu0) + logpdf(m1) + logpdf(sigma0) + logpdf(sigma1)</span></span>
+<span id="cb7-252"><a href="#cb7-252" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb7-253"><a href="#cb7-253" aria-hidden="true" tabindex="-1"></a><span class="co">    logL = sum_i^n ( y_i*(a0+a1*T_i) - log(1+ exp(a0+a1*T_i) )  )</span></span>
+<span id="cb7-254"><a href="#cb7-254" aria-hidden="true" tabindex="-1"></a><span class="co">    logpdf(a0|mu0,sigma0) = jax.scipy.stats.norm.logpdf(a0,loc=mu0,scale=sigma0)</span></span>
+<span id="cb7-255"><a href="#cb7-255" aria-hidden="true" tabindex="-1"></a><span class="co">    logpdf(a1|mu1,sigma1) = jax.scipy.stats.norm.logpdf(a1,loc=mu1,scale=sigma1)</span></span>
+<span id="cb7-256"><a href="#cb7-256" aria-hidden="true" tabindex="-1"></a><span class="co">    logpdf(mu0) = jax.scipy.stats.norm.logpdf(mu0,loc=0.,scale=2.5)</span></span>
+<span id="cb7-257"><a href="#cb7-257" aria-hidden="true" tabindex="-1"></a><span class="co">    logpdf(mu1) = jax.scipy.stats.norm.logpdf(mu1,loc=0.,scale=2.5)</span></span>
+<span id="cb7-258"><a href="#cb7-258" aria-hidden="true" tabindex="-1"></a><span class="co">    logpdf(sigma0) = half_normal_logpdf(sigma0, 2.5)</span></span>
+<span id="cb7-259"><a href="#cb7-259" aria-hidden="true" tabindex="-1"></a><span class="co">    logpdf(sigma1) = half_normal_logpdf(sigma1, 2.5)</span></span>
+<span id="cb7-260"><a href="#cb7-260" aria-hidden="true" tabindex="-1"></a><span class="co">    Expects x to have shape (batch_size, DIM).</span></span>
+<span id="cb7-261"><a href="#cb7-261" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb7-262"><a href="#cb7-262" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb7-263"><a href="#cb7-263" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"shape={theta.shape}\n")</span></span>
+<span id="cb7-264"><a href="#cb7-264" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"shape={theta.shape}\n")</span></span>
+<span id="cb7-265"><a href="#cb7-265" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-266"><a href="#cb7-266" aria-hidden="true" tabindex="-1"></a>    theta0<span class="op">=</span>jnp.clip(theta[<span class="dv">0</span>,:],<span class="op">-</span><span class="fl">0.99999</span>, <span class="fl">0.99999</span>)</span>
+<span id="cb7-267"><a href="#cb7-267" aria-hidden="true" tabindex="-1"></a>    theta1<span class="op">=</span>jnp.clip(theta[<span class="dv">1</span>,:],<span class="op">-</span><span class="fl">0.99999</span>, <span class="fl">0.99999</span>)</span>
+<span id="cb7-268"><a href="#cb7-268" aria-hidden="true" tabindex="-1"></a>    theta2<span class="op">=</span>jnp.clip(theta[<span class="dv">2</span>,:],<span class="op">-</span><span class="fl">0.99999</span>, <span class="fl">0.99999</span>)</span>
+<span id="cb7-269"><a href="#cb7-269" aria-hidden="true" tabindex="-1"></a>    theta3<span class="op">=</span>jnp.clip(theta[<span class="dv">3</span>,:],<span class="op">-</span><span class="fl">0.99999</span>, <span class="fl">0.99999</span>)</span>
+<span id="cb7-270"><a href="#cb7-270" aria-hidden="true" tabindex="-1"></a>    theta4<span class="op">=</span>jnp.clip(theta[<span class="dv">4</span>,:],<span class="fl">0.00001</span>, <span class="fl">0.99999</span>)</span>
+<span id="cb7-271"><a href="#cb7-271" aria-hidden="true" tabindex="-1"></a>    theta5<span class="op">=</span>jnp.clip(theta[<span class="dv">5</span>,:],<span class="fl">0.00001</span>, <span class="fl">0.99999</span>)</span>
+<span id="cb7-272"><a href="#cb7-272" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-273"><a href="#cb7-273" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-274"><a href="#cb7-274" aria-hidden="true" tabindex="-1"></a>    jacobianL <span class="op">=</span> (  jnp.log(<span class="dv">1</span><span class="op">+</span>jnp.power(theta0,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>jnp.log(<span class="dv">1</span><span class="op">-</span>jnp.power(theta0,<span class="dv">2</span>)) </span>
+<span id="cb7-275"><a href="#cb7-275" aria-hidden="true" tabindex="-1"></a>                 <span class="op">+</span> jnp.log(<span class="dv">1</span><span class="op">+</span>jnp.power(theta1,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>jnp.log(<span class="dv">1</span><span class="op">-</span>jnp.power(theta1,<span class="dv">2</span>))</span>
+<span id="cb7-276"><a href="#cb7-276" aria-hidden="true" tabindex="-1"></a>                 <span class="op">+</span> jnp.log(<span class="dv">1</span><span class="op">+</span>jnp.power(theta2,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>jnp.log(<span class="dv">1</span><span class="op">-</span>jnp.power(theta2,<span class="dv">2</span>))</span>
+<span id="cb7-277"><a href="#cb7-277" aria-hidden="true" tabindex="-1"></a>                 <span class="op">+</span> jnp.log(<span class="dv">1</span><span class="op">+</span>jnp.power(theta3,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>jnp.log(<span class="dv">1</span><span class="op">-</span>jnp.power(theta3,<span class="dv">2</span>))</span>
+<span id="cb7-278"><a href="#cb7-278" aria-hidden="true" tabindex="-1"></a>                 <span class="op">+</span> jnp.log(<span class="dv">1</span><span class="op">+</span>jnp.power(theta4,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>jnp.log(<span class="dv">1</span><span class="op">-</span>jnp.power(theta4,<span class="dv">2</span>))</span>
+<span id="cb7-279"><a href="#cb7-279" aria-hidden="true" tabindex="-1"></a>                 <span class="op">+</span> jnp.log(<span class="dv">1</span><span class="op">+</span>jnp.power(theta5,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>jnp.log(<span class="dv">1</span><span class="op">-</span>jnp.power(theta5,<span class="dv">2</span>))</span>
+<span id="cb7-280"><a href="#cb7-280" aria-hidden="true" tabindex="-1"></a>                 )</span>
+<span id="cb7-281"><a href="#cb7-281" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"jacobian={jacobianL}\n")             </span></span>
+<span id="cb7-282"><a href="#cb7-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-283"><a href="#cb7-283" aria-hidden="true" tabindex="-1"></a>    a0<span class="op">=</span>theta0<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>jnp.power(theta0,<span class="dv">2</span>))</span>
+<span id="cb7-284"><a href="#cb7-284" aria-hidden="true" tabindex="-1"></a>    a1<span class="op">=</span>theta1<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>jnp.power(theta1,<span class="dv">2</span>))</span>
+<span id="cb7-285"><a href="#cb7-285" aria-hidden="true" tabindex="-1"></a>    mu0<span class="op">=</span>theta2<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>jnp.power(theta2,<span class="dv">2</span>))</span>
+<span id="cb7-286"><a href="#cb7-286" aria-hidden="true" tabindex="-1"></a>    mu1<span class="op">=</span>theta3<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>jnp.power(theta3,<span class="dv">2</span>))</span>
+<span id="cb7-287"><a href="#cb7-287" aria-hidden="true" tabindex="-1"></a>    sigma0<span class="op">=</span>theta4<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>jnp.power(theta4,<span class="dv">2</span>))</span>
+<span id="cb7-288"><a href="#cb7-288" aria-hidden="true" tabindex="-1"></a>    sigma1<span class="op">=</span>theta5<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>jnp.power(theta5,<span class="dv">2</span>))</span>
+<span id="cb7-289"><a href="#cb7-289" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"a0={a0} a1={a1} mu0={mu0} mu1={mu1} sigma0={sigma0} sigma1={sigma1}\n")</span></span>
+<span id="cb7-290"><a href="#cb7-290" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-291"><a href="#cb7-291" aria-hidden="true" tabindex="-1"></a>    eta<span class="op">=</span>a0<span class="op">+</span>a1<span class="op">*</span>T <span class="co"># (10,3) where T_vec = (3,) and (10,1) broadcast to (10,3)  </span></span>
+<span id="cb7-292"><a href="#cb7-292" aria-hidden="true" tabindex="-1"></a>    <span class="co"># y_data*eta - jnp.log(1+jnp.exp(eta)) this is (10,3) - want col sums, so collapse over rows</span></span>
+<span id="cb7-293"><a href="#cb7-293" aria-hidden="true" tabindex="-1"></a>    logL <span class="op">=</span> jnp.<span class="bu">sum</span>(y<span class="op">*</span>eta <span class="op">-</span> jnp.log(<span class="dv">1</span><span class="op">+</span>jnp.exp(eta)),axis<span class="op">=</span><span class="dv">0</span>) <span class="co">#</span></span>
+<span id="cb7-294"><a href="#cb7-294" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"logL={logL}\n")</span></span>
+<span id="cb7-295"><a href="#cb7-295" aria-hidden="true" tabindex="-1"></a>    <span class="co"># now add the priors</span></span>
+<span id="cb7-296"><a href="#cb7-296" aria-hidden="true" tabindex="-1"></a>    <span class="co"># simple N(0,sd=10)</span></span>
+<span id="cb7-297"><a href="#cb7-297" aria-hidden="true" tabindex="-1"></a>    prior_a0 <span class="op">=</span> jax.scipy.stats.norm.logpdf(a0,loc<span class="op">=</span>mu0,scale<span class="op">=</span>sigma0)</span>
+<span id="cb7-298"><a href="#cb7-298" aria-hidden="true" tabindex="-1"></a>    prior_a1 <span class="op">=</span> jax.scipy.stats.norm.logpdf(a1,loc<span class="op">=</span>mu1,scale<span class="op">=</span>sigma1)</span>
+<span id="cb7-299"><a href="#cb7-299" aria-hidden="true" tabindex="-1"></a>    prior_mu0 <span class="op">=</span> jax.scipy.stats.norm.logpdf(mu0,loc<span class="op">=</span><span class="fl">0.</span>,scale<span class="op">=</span><span class="fl">2.5</span>)</span>
+<span id="cb7-300"><a href="#cb7-300" aria-hidden="true" tabindex="-1"></a>    prior_mu1 <span class="op">=</span> jax.scipy.stats.norm.logpdf(mu1,loc<span class="op">=</span><span class="fl">0.</span>,scale<span class="op">=</span><span class="fl">2.5</span>)</span>
+<span id="cb7-301"><a href="#cb7-301" aria-hidden="true" tabindex="-1"></a>    prior_sigma0 <span class="op">=</span> half_normal_logpdf(sigma0, <span class="fl">2.5</span>)</span>
+<span id="cb7-302"><a href="#cb7-302" aria-hidden="true" tabindex="-1"></a>    prior_sigma1 <span class="op">=</span> half_normal_logpdf(sigma1, <span class="fl">2.5</span>)</span>
+<span id="cb7-303"><a href="#cb7-303" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-304"><a href="#cb7-304" aria-hidden="true" tabindex="-1"></a>    logDens <span class="op">=</span> logL <span class="op">+</span> prior_a0 <span class="op">+</span> prior_a1 <span class="op">+</span> prior_mu0 <span class="op">+</span> prior_mu1 <span class="op">+</span> prior_sigma0 <span class="op">+</span> prior_sigma1</span>
+<span id="cb7-305"><a href="#cb7-305" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"logDens={logDens}\n")</span></span>
+<span id="cb7-306"><a href="#cb7-306" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (logDens <span class="op">+</span> jacobianL) <span class="co"># this will be (3,)</span></span>
+<span id="cb7-307"><a href="#cb7-307" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-308"><a href="#cb7-308" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Setup Vegas with a Shifting Logic</span></span>
+<span id="cb7-309"><a href="#cb7-309" aria-hidden="true" tabindex="-1"></a><span class="at">@vegas.rbatchintegrand</span></span>
+<span id="cb7-310"><a href="#cb7-310" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> StableLikelihood:</span>
+<span id="cb7-311"><a href="#cb7-311" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, y, T):</span>
+<span id="cb7-312"><a href="#cb7-312" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.y <span class="op">=</span> y</span>
+<span id="cb7-313"><a href="#cb7-313" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.T <span class="op">=</span> T</span>
+<span id="cb7-314"><a href="#cb7-314" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.l_max <span class="op">=</span> <span class="fl">0.0</span> <span class="co"># Will be updated after warm-up</span></span>
+<span id="cb7-315"><a href="#cb7-315" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-316"><a href="#cb7-316" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__call__</span>(<span class="va">self</span>, theta):</span>
+<span id="cb7-317"><a href="#cb7-317" aria-hidden="true" tabindex="-1"></a>        theta_jax <span class="op">=</span> jnp.array(theta)</span>
+<span id="cb7-318"><a href="#cb7-318" aria-hidden="true" tabindex="-1"></a>        log_lik <span class="op">=</span> compute_log_lik(theta_jax, <span class="va">self</span>.y,<span class="va">self</span>.T)</span>
+<span id="cb7-319"><a href="#cb7-319" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb7-320"><a href="#cb7-320" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Shift by the maximum found so far</span></span>
+<span id="cb7-321"><a href="#cb7-321" aria-hidden="true" tabindex="-1"></a>        <span class="co"># This keeps the result near 1.0 instead of 1e-300</span></span>
+<span id="cb7-322"><a href="#cb7-322" aria-hidden="true" tabindex="-1"></a>        <span class="co">## return np.array(jnp.exp(log_lik - self.l_max)) # needt this is using x64 - vegas expects np</span></span>
+<span id="cb7-323"><a href="#cb7-323" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> jnp.exp(log_lik <span class="op">-</span> <span class="va">self</span>.l_max)</span>
+<span id="cb7-324"><a href="#cb7-324" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-325"><a href="#cb7-325" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> StableLikelihood(y<span class="op">=</span>y_data,T<span class="op">=</span>T_vec)</span>
+<span id="cb7-326"><a href="#cb7-326" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-327"><a href="#cb7-327" aria-hidden="true" tabindex="-1"></a>start <span class="op">=</span> jnp.array([<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="fl">0.0001</span>,<span class="fl">0.0001</span>],dtype<span class="op">=</span>jnp.float32) <span class="co"># a0 a1</span></span>
+<span id="cb7-328"><a href="#cb7-328" aria-hidden="true" tabindex="-1"></a>stop <span class="op">=</span> jnp.array([<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>],dtype<span class="op">=</span>jnp.float32)   <span class="co"># a0 a1</span></span>
+<span id="cb7-329"><a href="#cb7-329" aria-hidden="true" tabindex="-1"></a>searchPts<span class="op">=</span>jnp.transpose(jnp.linspace(start, stop, <span class="dv">1000</span>))</span>
+<span id="cb7-330"><a href="#cb7-330" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-331"><a href="#cb7-331" aria-hidden="true" tabindex="-1"></a>model.l_max<span class="op">=</span>jnp.<span class="bu">max</span>(compute_log_lik(searchPts, model.y,model.T))</span>
+<span id="cb7-332"><a href="#cb7-332" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-333"><a href="#cb7-333" aria-hidden="true" tabindex="-1"></a><span class="co">#explicitly set seed</span></span>
+<span id="cb7-334"><a href="#cb7-334" aria-hidden="true" tabindex="-1"></a>gvar.ranseed(<span class="dv">99990</span>)</span>
+<span id="cb7-335"><a href="#cb7-335" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-336"><a href="#cb7-336" aria-hidden="true" tabindex="-1"></a>integ <span class="op">=</span> vegas.Integrator(jnp.array([[<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>],[<span class="fl">0.0001</span>,<span class="dv">1</span>],[<span class="fl">0.0001</span>,<span class="dv">1</span>]],dtype<span class="op">=</span>jnp.float32))</span>
+<span id="cb7-337"><a href="#cb7-337" aria-hidden="true" tabindex="-1"></a><span class="co"># STAGE 1: Warm-up</span></span>
+<span id="cb7-338"><a href="#cb7-338" aria-hidden="true" tabindex="-1"></a>res_warmup <span class="op">=</span> integ(model, nitn<span class="op">=</span><span class="dv">10</span>, neval<span class="op">=</span><span class="dv">10000</span>)</span>
+<span id="cb7-339"><a href="#cb7-339" aria-hidden="true" tabindex="-1"></a><span class="co"># STAGE 2: Production (Stable Integration)</span></span>
+<span id="cb7-340"><a href="#cb7-340" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> integ(model, nitn<span class="op">=</span><span class="dv">10</span>, neval<span class="op">=</span><span class="dv">50000</span>)</span>
+<span id="cb7-341"><a href="#cb7-341" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-342"><a href="#cb7-342" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Output results</span></span>
+<span id="cb7-343"><a href="#cb7-343" aria-hidden="true" tabindex="-1"></a><span class="co">#print(f"\nIntegration Results:")</span></span>
+<span id="cb7-344"><a href="#cb7-344" aria-hidden="true" tabindex="-1"></a><span class="co">#print(result.summary())</span></span>
+<span id="cb7-345"><a href="#cb7-345" aria-hidden="true" tabindex="-1"></a><span class="co">#print(f"Result: {result.mean:.8f} +/- {result.sdev:.8f}")</span></span>
+<span id="cb7-346"><a href="#cb7-346" aria-hidden="true" tabindex="-1"></a><span class="co">#print(f"Q-value: {result.Q:.2f} (should be close to 0.5 for a good fit)")</span></span>
+<span id="cb7-347"><a href="#cb7-347" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-348"><a href="#cb7-348" aria-hidden="true" tabindex="-1"></a><span class="co"># STAGE 3: Final Log-Evidence Calculation</span></span>
+<span id="cb7-349"><a href="#cb7-349" aria-hidden="true" tabindex="-1"></a><span class="co"># log(I) = l_max + log(scaled_integral)</span></span>
+<span id="cb7-350"><a href="#cb7-350" aria-hidden="true" tabindex="-1"></a>log_evidence <span class="op">=</span> model.l_max <span class="op">+</span> jnp.log(result.mean)</span>
+<span id="cb7-351"><a href="#cb7-351" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-352"><a href="#cb7-352" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Log Evidence: </span><span class="sc">{</span>log_evidence<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb7-353"><a href="#cb7-353" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-354"><a href="#cb7-354" aria-hidden="true" tabindex="-1"></a><span class="co"># we want posterior values</span></span>
+<span id="cb7-355"><a href="#cb7-355" aria-hidden="true" tabindex="-1"></a><span class="co"># compute_log_lik(theta, y,T) - log_evidence = log( f(D|a0)f(a0) )</span></span>
+<span id="cb7-356"><a href="#cb7-356" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-357"><a href="#cb7-357" aria-hidden="true" tabindex="-1"></a><span class="co">#mydens=np.array(jnp.exp(compute_log_lik(searchPts,y_data,T_vec) - log_evidence))</span></span>
+<span id="cb7-358"><a href="#cb7-358" aria-hidden="true" tabindex="-1"></a><span class="co">#myX=np.array(searchPts)</span></span>
+<span id="cb7-359"><a href="#cb7-359" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-360"><a href="#cb7-360" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-361"><a href="#cb7-361" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-362"><a href="#cb7-362" aria-hidden="true" tabindex="-1"></a><span class="fu">### marginalise out all except intercept</span></span>
+<span id="cb7-363"><a href="#cb7-363" aria-hidden="true" tabindex="-1"></a><span class="in">```{python margintercept,include=TRUE,eval=TRUE}</span></span>
+<span id="cb7-364"><a href="#cb7-364" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-365"><a href="#cb7-365" aria-hidden="true" tabindex="-1"></a><span class="co">## we now have the constant of integ log_P(data), need to integrat out the others </span></span>
+<span id="cb7-366"><a href="#cb7-366" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-367"><a href="#cb7-367" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb7-368"><a href="#cb7-368" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb7-369"><a href="#cb7-369" aria-hidden="true" tabindex="-1"></a><span class="co">#from jax import config</span></span>
+<span id="cb7-370"><a href="#cb7-370" aria-hidden="true" tabindex="-1"></a><span class="co">#config.update("jax_enable_x64", True)  ## if turn this on then vegas need np.array() in function return values</span></span>
+<span id="cb7-371"><a href="#cb7-371" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> jax.numpy <span class="im">as</span> jnp</span>
+<span id="cb7-372"><a href="#cb7-372" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> jax</span>
+<span id="cb7-373"><a href="#cb7-373" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> vegas</span>
+<span id="cb7-374"><a href="#cb7-374" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
+<span id="cb7-375"><a href="#cb7-375" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gvar</span>
+<span id="cb7-376"><a href="#cb7-376" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-377"><a href="#cb7-377" aria-hidden="true" tabindex="-1"></a><span class="co">## The data.frame passed is now a panda df but for TPF this needs to be further</span></span>
+<span id="cb7-378"><a href="#cb7-378" aria-hidden="true" tabindex="-1"></a><span class="co">## converted into tensors here we simply convert each col of the data.frame into</span></span>
+<span id="cb7-379"><a href="#cb7-379" aria-hidden="true" tabindex="-1"></a><span class="co">## a Rank 1 tensor (i.e. a vector)</span></span>
+<span id="cb7-380"><a href="#cb7-380" aria-hidden="true" tabindex="-1"></a>y_data<span class="op">=</span>jnp.array(thedata.iloc[:,<span class="dv">0</span>],dtype<span class="op">=</span>jnp.float32)[:,<span class="va">None</span>] <span class="co"># 1 col matrix</span></span>
+<span id="cb7-381"><a href="#cb7-381" aria-hidden="true" tabindex="-1"></a>k_vec<span class="op">=</span>jnp.array(thedata.iloc[:,<span class="dv">1</span>])<span class="op">-</span><span class="dv">1</span></span>
+<span id="cb7-382"><a href="#cb7-382" aria-hidden="true" tabindex="-1"></a>T_vec<span class="op">=</span>jnp.array(thedata.iloc[:,<span class="dv">2</span>],dtype<span class="op">=</span>jnp.float32)[:,<span class="va">None</span>] <span class="co"># 1 col matrix</span></span>
+<span id="cb7-383"><a href="#cb7-383" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-384"><a href="#cb7-384" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-385"><a href="#cb7-385" aria-hidden="true" tabindex="-1"></a>pars<span class="op">=</span>jnp.array([[<span class="fl">0.1</span>,<span class="op">-</span><span class="fl">1.1</span>,<span class="fl">2.1</span>]],dtype<span class="op">=</span>jnp.float32)</span>
+<span id="cb7-386"><a href="#cb7-386" aria-hidden="true" tabindex="-1"></a><span class="co">#pars=jnp.stack([pars, pars,pars], axis=1)</span></span>
+<span id="cb7-387"><a href="#cb7-387" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-388"><a href="#cb7-388" aria-hidden="true" tabindex="-1"></a><span class="at">@jax.jit</span></span>
+<span id="cb7-389"><a href="#cb7-389" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> half_normal_logpdf(x, sigma):</span>
+<span id="cb7-390"><a href="#cb7-390" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Log-constant: log(sqrt(2) / sqrt(pi))</span></span>
+<span id="cb7-391"><a href="#cb7-391" aria-hidden="true" tabindex="-1"></a>    log_const <span class="op">=</span> <span class="fl">0.5</span><span class="op">*</span>(jnp.log(<span class="fl">2.0</span>) <span class="op">-</span> jnp.log(jnp.pi)) <span class="op">-</span> jnp.log(sigma)</span>
+<span id="cb7-392"><a href="#cb7-392" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Log-exponent term</span></span>
+<span id="cb7-393"><a href="#cb7-393" aria-hidden="true" tabindex="-1"></a>    log_exp <span class="op">=</span> <span class="op">-</span>((x<span class="op">*</span>x) <span class="op">/</span> (<span class="fl">2.0</span> <span class="op">*</span> sigma<span class="op">*</span>sigma))</span>
+<span id="cb7-394"><a href="#cb7-394" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> log_const<span class="op">+</span>log_exp</span>
+<span id="cb7-395"><a href="#cb7-395" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-396"><a href="#cb7-396" aria-hidden="true" tabindex="-1"></a><span class="at">@jax.jit</span></span>
+<span id="cb7-397"><a href="#cb7-397" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_log_lik2(theta, y,T,a0):</span>
+<span id="cb7-398"><a href="#cb7-398" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"shape1={x.shape}\n")</span></span>
+<span id="cb7-399"><a href="#cb7-399" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb7-400"><a href="#cb7-400" aria-hidden="true" tabindex="-1"></a><span class="co">    as above but we integrate out theta1-theta5 for fixed theta0</span></span>
+<span id="cb7-401"><a href="#cb7-401" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb7-402"><a href="#cb7-402" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb7-403"><a href="#cb7-403" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"shape={theta.shape}\n")</span></span>
+<span id="cb7-404"><a href="#cb7-404" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"shape={theta.shape}\n")</span></span>
+<span id="cb7-405"><a href="#cb7-405" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-406"><a href="#cb7-406" aria-hidden="true" tabindex="-1"></a>    theta1<span class="op">=</span>jnp.clip(theta[<span class="dv">0</span>,:],<span class="op">-</span><span class="fl">0.99999</span>, <span class="fl">0.99999</span>)</span>
+<span id="cb7-407"><a href="#cb7-407" aria-hidden="true" tabindex="-1"></a>    theta2<span class="op">=</span>jnp.clip(theta[<span class="dv">1</span>,:],<span class="op">-</span><span class="fl">0.99999</span>, <span class="fl">0.99999</span>)</span>
+<span id="cb7-408"><a href="#cb7-408" aria-hidden="true" tabindex="-1"></a>    theta3<span class="op">=</span>jnp.clip(theta[<span class="dv">2</span>,:],<span class="op">-</span><span class="fl">0.99999</span>, <span class="fl">0.99999</span>)</span>
+<span id="cb7-409"><a href="#cb7-409" aria-hidden="true" tabindex="-1"></a>    theta4<span class="op">=</span>jnp.clip(theta[<span class="dv">3</span>,:],<span class="fl">0.00001</span>, <span class="fl">0.99999</span>)</span>
+<span id="cb7-410"><a href="#cb7-410" aria-hidden="true" tabindex="-1"></a>    theta5<span class="op">=</span>jnp.clip(theta[<span class="dv">4</span>,:],<span class="fl">0.00001</span>, <span class="fl">0.99999</span>)</span>
+<span id="cb7-411"><a href="#cb7-411" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-412"><a href="#cb7-412" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-413"><a href="#cb7-413" aria-hidden="true" tabindex="-1"></a>    jacobianL <span class="op">=</span> (  jnp.log(<span class="dv">1</span><span class="op">+</span>jnp.power(theta1,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>jnp.log(<span class="dv">1</span><span class="op">-</span>jnp.power(theta1,<span class="dv">2</span>))</span>
+<span id="cb7-414"><a href="#cb7-414" aria-hidden="true" tabindex="-1"></a>                 <span class="op">+</span> jnp.log(<span class="dv">1</span><span class="op">+</span>jnp.power(theta2,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>jnp.log(<span class="dv">1</span><span class="op">-</span>jnp.power(theta2,<span class="dv">2</span>))</span>
+<span id="cb7-415"><a href="#cb7-415" aria-hidden="true" tabindex="-1"></a>                 <span class="op">+</span> jnp.log(<span class="dv">1</span><span class="op">+</span>jnp.power(theta3,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>jnp.log(<span class="dv">1</span><span class="op">-</span>jnp.power(theta3,<span class="dv">2</span>))</span>
+<span id="cb7-416"><a href="#cb7-416" aria-hidden="true" tabindex="-1"></a>                 <span class="op">+</span> jnp.log(<span class="dv">1</span><span class="op">+</span>jnp.power(theta4,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>jnp.log(<span class="dv">1</span><span class="op">-</span>jnp.power(theta4,<span class="dv">2</span>))</span>
+<span id="cb7-417"><a href="#cb7-417" aria-hidden="true" tabindex="-1"></a>                 <span class="op">+</span> jnp.log(<span class="dv">1</span><span class="op">+</span>jnp.power(theta5,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>jnp.log(<span class="dv">1</span><span class="op">-</span>jnp.power(theta5,<span class="dv">2</span>))</span>
+<span id="cb7-418"><a href="#cb7-418" aria-hidden="true" tabindex="-1"></a>                 )</span>
+<span id="cb7-419"><a href="#cb7-419" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"jacobian={jacobianL}\n")             </span></span>
+<span id="cb7-420"><a href="#cb7-420" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-421"><a href="#cb7-421" aria-hidden="true" tabindex="-1"></a>    a1<span class="op">=</span>theta1<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>jnp.power(theta1,<span class="dv">2</span>))</span>
+<span id="cb7-422"><a href="#cb7-422" aria-hidden="true" tabindex="-1"></a>    mu0<span class="op">=</span>theta2<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>jnp.power(theta2,<span class="dv">2</span>))</span>
+<span id="cb7-423"><a href="#cb7-423" aria-hidden="true" tabindex="-1"></a>    mu1<span class="op">=</span>theta3<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>jnp.power(theta3,<span class="dv">2</span>))</span>
+<span id="cb7-424"><a href="#cb7-424" aria-hidden="true" tabindex="-1"></a>    sigma0<span class="op">=</span>theta4<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>jnp.power(theta4,<span class="dv">2</span>))</span>
+<span id="cb7-425"><a href="#cb7-425" aria-hidden="true" tabindex="-1"></a>    sigma1<span class="op">=</span>theta5<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>jnp.power(theta5,<span class="dv">2</span>))</span>
+<span id="cb7-426"><a href="#cb7-426" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"a0={a0} a1={a1} mu0={mu0} mu1={mu1} sigma0={sigma0} sigma1={sigma1}\n")</span></span>
+<span id="cb7-427"><a href="#cb7-427" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-428"><a href="#cb7-428" aria-hidden="true" tabindex="-1"></a>    eta<span class="op">=</span>a0<span class="op">+</span>a1<span class="op">*</span>T <span class="co"># (10,3) where T_vec = (3,) and (10,1) broadcast to (10,3)  </span></span>
+<span id="cb7-429"><a href="#cb7-429" aria-hidden="true" tabindex="-1"></a>    <span class="co"># y_data*eta - jnp.log(1+jnp.exp(eta)) this is (10,3) - want col sums, so collapse over rows</span></span>
+<span id="cb7-430"><a href="#cb7-430" aria-hidden="true" tabindex="-1"></a>    logL <span class="op">=</span> jnp.<span class="bu">sum</span>(y<span class="op">*</span>eta <span class="op">-</span> jnp.log(<span class="dv">1</span><span class="op">+</span>jnp.exp(eta)),axis<span class="op">=</span><span class="dv">0</span>) <span class="co">#</span></span>
+<span id="cb7-431"><a href="#cb7-431" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"logL={logL}\n")</span></span>
+<span id="cb7-432"><a href="#cb7-432" aria-hidden="true" tabindex="-1"></a>    <span class="co"># now add the priors</span></span>
+<span id="cb7-433"><a href="#cb7-433" aria-hidden="true" tabindex="-1"></a>    <span class="co"># simple N(0,sd=10)</span></span>
+<span id="cb7-434"><a href="#cb7-434" aria-hidden="true" tabindex="-1"></a>    prior_a0 <span class="op">=</span> jax.scipy.stats.norm.logpdf(a0,loc<span class="op">=</span>mu0,scale<span class="op">=</span>sigma0)</span>
+<span id="cb7-435"><a href="#cb7-435" aria-hidden="true" tabindex="-1"></a>    prior_a1 <span class="op">=</span> jax.scipy.stats.norm.logpdf(a1,loc<span class="op">=</span>mu1,scale<span class="op">=</span>sigma1)</span>
+<span id="cb7-436"><a href="#cb7-436" aria-hidden="true" tabindex="-1"></a>    prior_mu0 <span class="op">=</span> jax.scipy.stats.norm.logpdf(mu0,loc<span class="op">=</span><span class="fl">0.</span>,scale<span class="op">=</span><span class="fl">2.5</span>)</span>
+<span id="cb7-437"><a href="#cb7-437" aria-hidden="true" tabindex="-1"></a>    prior_mu1 <span class="op">=</span> jax.scipy.stats.norm.logpdf(mu1,loc<span class="op">=</span><span class="fl">0.</span>,scale<span class="op">=</span><span class="fl">2.5</span>)</span>
+<span id="cb7-438"><a href="#cb7-438" aria-hidden="true" tabindex="-1"></a>    prior_sigma0 <span class="op">=</span> half_normal_logpdf(sigma0, <span class="fl">2.5</span>)</span>
+<span id="cb7-439"><a href="#cb7-439" aria-hidden="true" tabindex="-1"></a>    prior_sigma1 <span class="op">=</span> half_normal_logpdf(sigma1, <span class="fl">2.5</span>)</span>
+<span id="cb7-440"><a href="#cb7-440" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-441"><a href="#cb7-441" aria-hidden="true" tabindex="-1"></a>    logDens <span class="op">=</span> logL <span class="op">+</span> prior_a0 <span class="op">+</span> prior_a1 <span class="op">+</span> prior_mu0 <span class="op">+</span> prior_mu1 <span class="op">+</span> prior_sigma0 <span class="op">+</span> prior_sigma1</span>
+<span id="cb7-442"><a href="#cb7-442" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"logDens={logDens}\n")</span></span>
+<span id="cb7-443"><a href="#cb7-443" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (logDens <span class="op">+</span> jacobianL) <span class="co"># this will be (3,)</span></span>
+<span id="cb7-444"><a href="#cb7-444" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-445"><a href="#cb7-445" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Setup Vegas with a Shifting Logic</span></span>
+<span id="cb7-446"><a href="#cb7-446" aria-hidden="true" tabindex="-1"></a><span class="at">@vegas.rbatchintegrand</span></span>
+<span id="cb7-447"><a href="#cb7-447" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> StableLikelihood2:</span>
+<span id="cb7-448"><a href="#cb7-448" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, y, T,a0):</span>
+<span id="cb7-449"><a href="#cb7-449" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.y <span class="op">=</span> y</span>
+<span id="cb7-450"><a href="#cb7-450" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.T <span class="op">=</span> T</span>
+<span id="cb7-451"><a href="#cb7-451" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.l_max <span class="op">=</span> <span class="fl">0.0</span> <span class="co"># Will be updated after warm-up</span></span>
+<span id="cb7-452"><a href="#cb7-452" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.a0 <span class="op">=</span> a0 <span class="co"># random variable which we want to compute density value for</span></span>
+<span id="cb7-453"><a href="#cb7-453" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-454"><a href="#cb7-454" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__call__</span>(<span class="va">self</span>, theta):</span>
+<span id="cb7-455"><a href="#cb7-455" aria-hidden="true" tabindex="-1"></a>        theta_jax <span class="op">=</span> jnp.array(theta)</span>
+<span id="cb7-456"><a href="#cb7-456" aria-hidden="true" tabindex="-1"></a>        log_lik <span class="op">=</span> compute_log_lik2(theta_jax, <span class="va">self</span>.y,<span class="va">self</span>.T, <span class="va">self</span>.a0)</span>
+<span id="cb7-457"><a href="#cb7-457" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb7-458"><a href="#cb7-458" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Shift by the maximum found so far</span></span>
+<span id="cb7-459"><a href="#cb7-459" aria-hidden="true" tabindex="-1"></a>        <span class="co"># This keeps the result near 1.0 instead of 1e-300</span></span>
+<span id="cb7-460"><a href="#cb7-460" aria-hidden="true" tabindex="-1"></a>        <span class="co">## return np.array(jnp.exp(log_lik - self.l_max)) # needt this is using x64 - vegas expects np</span></span>
+<span id="cb7-461"><a href="#cb7-461" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> jnp.exp(log_lik <span class="op">-</span> <span class="va">self</span>.l_max)</span>
+<span id="cb7-462"><a href="#cb7-462" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-463"><a href="#cb7-463" aria-hidden="true" tabindex="-1"></a><span class="co">#explicitly set seed</span></span>
+<span id="cb7-464"><a href="#cb7-464" aria-hidden="true" tabindex="-1"></a>gvar.ranseed(<span class="dv">99991</span>)</span>
+<span id="cb7-465"><a href="#cb7-465" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-466"><a href="#cb7-466" aria-hidden="true" tabindex="-1"></a>Ngrid<span class="op">=</span><span class="dv">300</span></span>
+<span id="cb7-467"><a href="#cb7-467" aria-hidden="true" tabindex="-1"></a><span class="co">#a0= jnp.array([-1.5,-1.14,-1.,-0.5],dtype=jnp.float32)</span></span>
+<span id="cb7-468"><a href="#cb7-468" aria-hidden="true" tabindex="-1"></a>a0<span class="op">=</span> jnp.linspace(<span class="op">-</span><span class="fl">2.5</span>,<span class="op">-</span><span class="fl">0.0</span>,Ngrid,dtype<span class="op">=</span>jnp.float32)</span>
+<span id="cb7-469"><a href="#cb7-469" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-470"><a href="#cb7-470" aria-hidden="true" tabindex="-1"></a>prob_dens<span class="op">=</span>np.ones([Ngrid],dtype<span class="op">=</span>np.float32)</span>
+<span id="cb7-471"><a href="#cb7-471" aria-hidden="true" tabindex="-1"></a>i<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb7-472"><a href="#cb7-472" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x <span class="kw">in</span> a0:</span>
+<span id="cb7-473"><a href="#cb7-473" aria-hidden="true" tabindex="-1"></a>  model <span class="op">=</span> StableLikelihood2(y<span class="op">=</span>y_data,T<span class="op">=</span>T_vec,a0<span class="op">=</span>x)</span>
+<span id="cb7-474"><a href="#cb7-474" aria-hidden="true" tabindex="-1"></a>  start <span class="op">=</span> jnp.array([<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="fl">0.0001</span>,<span class="fl">0.0001</span>],dtype<span class="op">=</span>jnp.float32) <span class="co"># a0 a1</span></span>
+<span id="cb7-475"><a href="#cb7-475" aria-hidden="true" tabindex="-1"></a>  stop <span class="op">=</span> jnp.array([<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>],dtype<span class="op">=</span>jnp.float32)   <span class="co"># a0 a1</span></span>
+<span id="cb7-476"><a href="#cb7-476" aria-hidden="true" tabindex="-1"></a>  searchPts<span class="op">=</span>jnp.transpose(jnp.linspace(start, stop, <span class="dv">10000</span>))</span>
+<span id="cb7-477"><a href="#cb7-477" aria-hidden="true" tabindex="-1"></a>  model.l_max<span class="op">=</span>jnp.<span class="bu">max</span>(compute_log_lik2(searchPts, model.y,model.T,model.a0))</span>
+<span id="cb7-478"><a href="#cb7-478" aria-hidden="true" tabindex="-1"></a>  integ <span class="op">=</span> vegas.Integrator(jnp.array([[<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>],[<span class="fl">0.0001</span>,<span class="dv">1</span>],[<span class="fl">0.0001</span>,<span class="dv">1</span>]],dtype<span class="op">=</span>jnp.float32))</span>
+<span id="cb7-479"><a href="#cb7-479" aria-hidden="true" tabindex="-1"></a>  res_warmup <span class="op">=</span> integ(model, nitn<span class="op">=</span><span class="dv">10</span>, neval<span class="op">=</span><span class="dv">10000</span>)</span>
+<span id="cb7-480"><a href="#cb7-480" aria-hidden="true" tabindex="-1"></a>  result <span class="op">=</span> integ(model, nitn<span class="op">=</span><span class="dv">10</span>, neval<span class="op">=</span><span class="dv">50000</span>)</span>
+<span id="cb7-481"><a href="#cb7-481" aria-hidden="true" tabindex="-1"></a>  marg_a0 <span class="op">=</span> model.l_max <span class="op">+</span> jnp.log(result.mean)</span>
+<span id="cb7-482"><a href="#cb7-482" aria-hidden="true" tabindex="-1"></a>  prob_dens[[i]]<span class="op">=</span>np.array(jnp.exp(marg_a0<span class="op">-</span>log_evidence))</span>
+<span id="cb7-483"><a href="#cb7-483" aria-hidden="true" tabindex="-1"></a>  <span class="co">#print(f"a0={x} a0 dens={prob_dens[[i]]}\n")</span></span>
+<span id="cb7-484"><a href="#cb7-484" aria-hidden="true" tabindex="-1"></a>  i<span class="op">=</span>i<span class="op">+</span><span class="dv">1</span></span>
+<span id="cb7-485"><a href="#cb7-485" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-486"><a href="#cb7-486" aria-hidden="true" tabindex="-1"></a><span class="co"># we want posterior values</span></span>
+<span id="cb7-487"><a href="#cb7-487" aria-hidden="true" tabindex="-1"></a><span class="co"># compute_log_lik(theta, y,T) - log_evidence = log( f(D|a0)f(a0) )</span></span>
+<span id="cb7-488"><a href="#cb7-488" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-489"><a href="#cb7-489" aria-hidden="true" tabindex="-1"></a>a0np<span class="op">=</span> np.array(a0)</span>
+<span id="cb7-490"><a href="#cb7-490" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-491"><a href="#cb7-491" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-492"><a href="#cb7-492" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-493"><a href="#cb7-493" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-494"><a href="#cb7-494" aria-hidden="true" tabindex="-1"></a><span class="fu">### Setup</span></span>
+<span id="cb7-495"><a href="#cb7-495" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-496"><a href="#cb7-496" aria-hidden="true" tabindex="-1"></a><span class="in">```{r compare, echo=FALSE, eval=TRUE}</span></span>
+<span id="cb7-497"><a href="#cb7-497" aria-hidden="true" tabindex="-1"></a><span class="co">#png("precomputed/vg2_TFP_stan_comp.png")</span></span>
+<span id="cb7-498"><a href="#cb7-498" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb7-499"><a href="#cb7-499" aria-hidden="true" tabindex="-1"></a><span class="co">#plot(density(extract(stan_fit_2,"mu0")$mu0),main="mu0")</span></span>
+<span id="cb7-500"><a href="#cb7-500" aria-hidden="true" tabindex="-1"></a><span class="co">#plot(density(extract(stan_fit_2,"beta[1,1]")$"beta[1,1]"),main="beta[1,1]")</span></span>
+<span id="cb7-501"><a href="#cb7-501" aria-hidden="true" tabindex="-1"></a><span class="co">#lines(density(c(py$samplesflat[[1]])),col="red")</span></span>
+<span id="cb7-502"><a href="#cb7-502" aria-hidden="true" tabindex="-1"></a><span class="co">#dev.off()</span></span>
+<span id="cb7-503"><a href="#cb7-503" aria-hidden="true" tabindex="-1"></a><span class="co">#print(summary(stan_fit_2))</span></span>
+<span id="cb7-504"><a href="#cb7-504" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-505"><a href="#cb7-505" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-506"><a href="#cb7-506" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(<span class="fu">extract</span>(stan_fit_2,<span class="st">"beta[1,1]"</span>)<span class="sc">$</span><span class="st">"beta[1,1]"</span>),<span class="at">main=</span><span class="st">"beta[1,1]"</span>,<span class="at">col=</span><span class="st">"blue"</span>)</span>
+<span id="cb7-507"><a href="#cb7-507" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(py<span class="sc">$</span>a0np,py<span class="sc">$</span>prob_dens,<span class="at">col=</span><span class="st">"red"</span>)</span>
+<span id="cb7-508"><a href="#cb7-508" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-509"><a href="#cb7-509" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
 </div> <!-- /content -->
 
 
