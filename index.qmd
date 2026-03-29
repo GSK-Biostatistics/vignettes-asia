@@ -1,7 +1,7 @@
 ---
 title: "Home"
 ---
-This site contains a collection of R vignettes covering a range of themes relevant to statisticians working in drug development and clinical research. While we hope these vignettes are a useful resource, they are provided 'as is' without warranty of any kind, express or implied and used at your own risk.   
+This site contains a collection of R vignettes covering a range of themes relevant to statisticians working in drug development and clinical research. [**While we hope these vignettes are a useful resource, they are provided 'as is' without warranty of any kind, express or implied and used at your own risk.**]{style="color: red;"}   
 
 ## Key Themes and Topics
 
@@ -12,6 +12,10 @@ This site contains a collection of R vignettes covering a range of themes releva
 -  **Graphical Neural Networks**
 
 [Graphical Neural Networks](https://blog.tensorflow.org/2024/02/graph-neural-networks-in-tensorflow.html) (GNN) are new tools and the go-to option for modelling in certain drug discovery tasks, such as properties of new molecules. This is a general methodology with wide application across clinical research for prediction and clustering. 
+
+-  **Bayesian Direct Estimation**
+
+MCMC is widely used for Bayesian modeling but can be computationally intensive and requires effort to ensure numerical robustness, especially in clinical trial designs where we need to rapidly evaluate the operating characteritics of a plethora of design options. Historically, nuemrical integration algorithms such as [VEGAS](https://vegas.readthedocs.io/en/latest/tutorial.html#introduction) was limited by slow function evaluations. With [JAX](https://docs.jax.dev/en/latest/) and MLX, the bottleneck has shifted — making high-dimensional Bayesian integration far more practical than before.
 
 -  **LLM prompts for statistical work**
 

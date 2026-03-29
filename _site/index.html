@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Home – asia</title>
+<title>Home – Asia</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -120,7 +120,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <img src="./GSK_logo_2022.svg" alt="" class="navbar-logo dark-content">
     </a>
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">asia</span>
+    <span class="navbar-title">Asia</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -275,7 +275,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>This site contains a collection of R vignettes covering a range of themes relevant to statisticians working in drug development and clinical research. While we hope these vignettes are a useful resource, they are provided ‘as is’ without warranty of any kind, express or implied and used at your own risk.</p>
+<p>This site contains a collection of R vignettes covering a range of themes relevant to statisticians working in drug development and clinical research. <span style="color: red;"><strong>While we hope these vignettes are a useful resource, they are provided ‘as is’ without warranty of any kind, express or implied and used at your own risk.</strong></span></p>
 <section id="key-themes-and-topics" class="level2">
 <h2 class="anchored" data-anchor-id="key-themes-and-topics">Key Themes and Topics</h2>
 <ul>
@@ -286,6 +286,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Graphical Neural Networks</strong></li>
 </ul>
 <p><a href="https://blog.tensorflow.org/2024/02/graph-neural-networks-in-tensorflow.html">Graphical Neural Networks</a> (GNN) are new tools and the go-to option for modelling in certain drug discovery tasks, such as properties of new molecules. This is a general methodology with wide application across clinical research for prediction and clustering.</p>
+<ul>
+<li><strong>Bayesian Direct Estimation</strong></li>
+</ul>
+<p>MCMC is widely used for Bayesian modeling but can be computationally intensive and requires effort to ensure numerical robustness, especially in clinical trial designs where we need to rapidly evaluate the operating characteritics of a plethora of design options. Historically, nuemrical integration algorithms such as <a href="https://vegas.readthedocs.io/en/latest/tutorial.html#introduction">VEGAS</a> was limited by slow function evaluations. With <a href="https://docs.jax.dev/en/latest/">JAX</a> and MLX, the bottleneck has shifted — making high-dimensional Bayesian integration far more practical than before.</p>
 <ul>
 <li><strong>LLM prompts for statistical work</strong></li>
 </ul>
@@ -751,7 +755,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Home"</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>This site contains a collection of R vignettes covering a range of themes relevant to statisticians working in drug development and clinical research. While we hope these vignettes are a useful resource, they are provided 'as is' without warranty of any kind, express or implied and used at your own risk.   </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>This site contains a collection of R vignettes covering a range of themes relevant to statisticians working in drug development and clinical research. <span class="co">[</span><span class="ot">**While we hope these vignettes are a useful resource, they are provided 'as is' without warranty of any kind, express or implied and used at your own risk.**</span><span class="co">]</span>{style="color: red;"}   </span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Key Themes and Topics</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
@@ -763,11 +767,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Graphical Neural Networks</span><span class="co">](https://blog.tensorflow.org/2024/02/graph-neural-networks-in-tensorflow.html)</span> (GNN) are new tools and the go-to option for modelling in certain drug discovery tasks, such as properties of new molecules. This is a general methodology with wide application across clinical research for prediction and clustering. </span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="ss">-  </span>**LLM prompts for statistical work**</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="ss">-  </span>**Bayesian Direct Estimation**</span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>Large language models are changing the way statisticians work. Effectively using LLMs is a skill on its own, especially how to design and iterate prompts to LLMs save effort overall. </span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>MCMC is widely used for Bayesian modeling but can be computationally intensive and requires effort to ensure numerical robustness, especially in clinical trial designs where we need to rapidly evaluate the operating characteritics of a plethora of design options. Historically, nuemrical integration algorithms such as <span class="co">[</span><span class="ot">VEGAS</span><span class="co">](https://vegas.readthedocs.io/en/latest/tutorial.html#introduction)</span> was limited by slow function evaluations. With <span class="co">[</span><span class="ot">JAX</span><span class="co">](https://docs.jax.dev/en/latest/)</span> and MLX, the bottleneck has shifted — making high-dimensional Bayesian integration far more practical than before.</span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="ss">-  </span>**LLM prompts for statistical work**</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>Large language models are changing the way statisticians work. Effectively using LLMs is a skill on its own, especially how to design and iterate prompts to LLMs save effort overall. </span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

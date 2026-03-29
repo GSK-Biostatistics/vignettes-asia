@@ -6,7 +6,7 @@ execute:
   freeze: true
 
 website:
-  title: "asia"
+  title: "Asia"
   #site-url: 
   navbar:
     logo: "GSK_logo_2022.svg"
