@@ -493,215 +493,203 @@ myX2=np.array(jac_trans(searchPts2))
 
 ```
 
-```{r onevarR2,include=TRUE,eval=TRUE}
 
-par(mfrow=c(1,2))
-plot(py$myX,py$mydens,type="l")
-abline(v=coef(m0))
-plot(py$myX2,py$mydens2,type="l",col="red")
-abline(v=coef(m0))
 
+# Explanation of the Code (With Change of Variables)
+
+## 1. Overview
+
+This code performs **Bayesian inference for a Bernoulli/logistic model**, but introduces an important modification:
+
+> A **change of variables** to transform an **unbounded parameter space** into a **bounded domain** for numerical integration.
+
+The goal remains:
+
+* Compute **model evidence**
+* Compute **posterior density**
+
+---
+
+## 2. Original Parameter Space
+
+The parameter is:
+
+$$
+a_0 \in (-\infty, +\infty)
+$$
+
+This creates a challenge for numerical integration because:
+
+* VEGAS requires **finite bounds**
+* Infinite domains are difficult to sample efficiently
+
+---
+
+## 3. Change of Variables
+
+To address this, the code introduces:
+
+$$
+a_0 = \frac{\theta}{1 - \theta^2}, \quad t \in (-1,1)
+$$
+
+This mapping has the property:
+
+$$
+\theta \in (-1,1) \quad \Longleftrightarrow \quad a_0 \in (-\infty, +\infty)
+$$
+
+---
+
+## 4. Jacobian of the Transformation
+
+When changing variables, we must adjust the density:
+
+$$
+\int f(a_0), da_0 = \int f(a_0(\theta)) \left| \frac{da_0}{d\theta} \right| d\theta
+$$
+
+The derivative is:
+
+$$
+\frac{da_0}{d\theta} = \frac{1 + \theta^2}{(1 - \theta^2)^2}
+$$
+
+So the log-Jacobian is:
+
+$$
+\log \left| \frac{da_0}{d\theta} \right| = \log(1+\theta^2) - 2\log(1-\theta^2)
+$$
+
+This is exactly what the following code in the function `compute_log_lik_adj` computes:
+
+```python
+jacobianL = log(1+t^2) - 2 log(1-t^2)
 ```
 
+---
 
-```{python twovar,include=TRUE,eval=TRUE}
-import numpy as np
-import pandas as pd
-from jax import config
-config.update("jax_enable_x64", True)
-import jax.numpy as jnp
-import jax
-import vegas
-import math
-import gvar
+## 5. Adjusted Log Density
 
-## The data.frame passed is now a panda df but for TPF this needs to be further
-## converted into tensors here we simply convert each col of the data.frame into
-## a Rank 1 tensor (i.e. a vector)
-y_data=jnp.array(thedata.iloc[:,0],dtype=jnp.float64)[:,None] # 1 col matrix
-k_vec=jnp.array(thedata.iloc[:,1])-1
-T_vec=jnp.array(thedata.iloc[:,2],dtype=jnp.float64)[:,None] # 1 col matrix
+The transformed log-density then becomes:
 
+$$
+\log f^*(\theta) = \log f(a_0(\theta)) + \log \left| \frac{da_0}{d\theta} \right|
+$$
 
-pars=jnp.array([[0.1,-1.1,2.1],[0.5,1.5,-2.5]],dtype=jnp.float64)
-#pars=jnp.stack([pars, pars,pars], axis=1)
+This ensures that integration over $\theta$ is equivalent to integration over $a_0$.
 
+---
 
-@jax.jit
-def compute_log_lik(theta, y,T):
-    #print(f"shape1={x.shape}\n")
-    """
-    logL = sum_i^n ( y_i*(a0+a1*T_i) - log(1+ exp(a0+a1*T_i) )  )
-    Expects x to have shape (batch_size, DIM).
-    """
-    #print(f"shape={theta.shape}\n")
-    a0=theta[0,:]#,:] # (3,)
-    a1=theta[1,:]#,:] # (3,)
-    eta=a0+a1*T # (10,3) where T_vec = (3,) and (10,1) broadcast to (10,3)  
-    # y_data*eta - jnp.log(1+jnp.exp(eta)) this is (10,3) - want col sums, so collapse over rows
-    logL = jnp.sum(y*eta - jnp.log(1+jnp.exp(eta)),axis=0) #
-    # now add the priors
-    # simple N(0,sd=10)
-    prior_a0=jax.scipy.stats.norm.logpdf(a0,loc=0.,scale=10.)
-    prior_a1=jax.scipy.stats.norm.logpdf(a1,loc=0.,scale=10.)
-    logDens = logL + prior_a0 + prior_a1
-    return logDens # this will be (3,)
+## 6. Likelihood and Prior
 
-# 2. Setup Vegas with a Shifting Logic
-@vegas.rbatchintegrand
-class StableLikelihood:
-    def __init__(self, y, T):
-        self.y = y
-        self.T = T
-        self.l_max = 0.0 # Will be updated after warm-up
+Same as before:
 
-    def __call__(self, theta):
-        theta_jax = jnp.array(theta)
-        log_lik = compute_log_lik(theta_jax, self.y,self.T)
-        
-        # Shift by the maximum found so far
-        # This keeps the result near 1.0 instead of 1e-300
-        return np.array(jnp.exp(log_lik - self.l_max)).copy()
+### Likelihood:
 
-model = StableLikelihood(y=y_data,T=T_vec)
+$$
+\log L(a_0) = \sum_{i=1}^n \left[ y_i a_0 - \log(1 + e^{a_0}) \right]
+$$
 
-start = jnp.array([-10, -10],dtype=jnp.float64) # a0 a1
-stop = jnp.array([10, 10],dtype=jnp.float64)   # a0 a1
-searchPts=jnp.transpose(jnp.linspace(start, stop, 500))
+### Prior:
 
-model.l_max=jnp.max(compute_log_lik(searchPts, model.y,model.T))
+$$
+a_0 \sim \mathcal{N}(0, 10^2)
+$$
 
-#explicitly set seed
-gvar.ranseed(9999)
+### Combined:
 
-integ = vegas.Integrator(jnp.array([[-10, 10]]*2,dtype=jnp.float64))
-# STAGE 1: Warm-up
-res_warmup = integ(model, nitn=10, neval=10000)
-# STAGE 2: Production (Stable Integration)
-result = integ(model, nitn=10, neval=50000)
+$$
+\log f(a_0) = \log L(a_0) + \log p(a_0)
+$$
+As giiven by
 
-# 5. Output results
-print(f"\nIntegration Results:")
-print(f"Result: {result.mean:.8f} +/- {result.sdev:.8f}")
-print(f"Q-value: {result.Q:.2f} (should be close to 0.5 for a good fit)")
-
-# STAGE 3: Final Log-Evidence Calculation
-# log(I) = l_max + log(scaled_integral)
-log_evidence = model.l_max + jnp.log(result.mean)
-
-print(f"Log Evidence: {log_evidence}")
-
-
+```python
+logDens = logL + prior_a0
 ```
 
-```{python twovar_withjaco,include=TRUE,eval=TRUE}
-import numpy as np
-import pandas as pd
-import jax.numpy as jnp
-import jax
-import vegas
-import math
-import gvar
-from jax import config
-config.update("jax_enable_x64", True)
+And
 
-y_data=jnp.array(thedata.iloc[:,0],dtype=jnp.float64)[:,None] # 1 col matrix
-k_vec=jnp.array(thedata.iloc[:,1])-1
-T_vec=jnp.array(thedata.iloc[:,2],dtype=jnp.float64)[:,None] # 1 col matrix
+$$
+\log f^*(\theta) = \log f(a_0(\theta)) + \log \left| \frac{da_0}{d\theta} \right|
+$$
+That is,
 
-
-pars=jnp.array([[-0.1,0.2,0.3],[0.01,-0.9,0.05]],dtype=jnp.float64)
-#pars=jnp.stack([pars, pars,pars], axis=1)
-
-#change of variables, we take a0 and a1 both on -infty to + infty
-# to a0 = t1/(1-t1^2) and a1 = t2/(1-t2^2)
-# and jacobian is a = (1+t^2)/(1-t^2)^2
-# so evaluate function at these transformations and add in jacobian terms
-
-
-@jax.jit
-def compute_log_lik_adj(theta, y,T):
-    #print(f"shape1={x.shape}\n")
-    """
-    logL = sum_i^n ( y_i*(a0+a1*T_i) - log(1+ exp(a0+a1*T_i) )  )
-    Expects x to have shape (batch_size, DIM).
-    """
-    #print(f"shape={theta.shape}\n")
-    #a0=theta[0,:]#,:] # (3,)
-    #a1=theta[1,:]#,:] # (3,)
-    
-    theta = jnp.clip(theta, -0.99999, 0.99999) 
-    
-    a0=theta[0,:]/(1-jnp.power(theta[0,:],2))
-    a1=theta[1,:]/(1-jnp.power(theta[1,:],2))
-    
-    jacobianL = jnp.log(1+jnp.power(theta[0,:],2)) - 2.0*jnp.log(1-jnp.power(theta[0,:],2))+jnp.log(1+jnp.power(theta[1,:],2)) - 2.0*jnp.log(1-jnp.power(theta[1,:],2))
-    
-     
-    eta=a0+a1*T # (10,3) where T_vec = (3,) and (10,1) broadcast to (10,3)  
-    # y_data*eta - jnp.log(1+jnp.exp(eta)) this is (10,3) - want col sums, so collapse over rows
-    logL = jnp.sum(y*eta - jnp.log(1+jnp.exp(eta)),axis=0) #
-    # now add the priors
-    # simple N(0,sd=10)
-    prior_a0=jax.scipy.stats.norm.logpdf(a0,loc=0.,scale=10.)
-    prior_a1=jax.scipy.stats.norm.logpdf(a1,loc=0.,scale=10.)
-    logDens = logL + prior_a0 + prior_a1
-    logLL = logDens+jacobianL
-    #print(f"theta={theta}\n\na0={a0} a1={a1} logL={logL} expeta={jnp.exp(eta)} jacoL={jacobianL}\n")
-    return logL # this will be (3,)
-
-
-# 2. Setup Vegas with a Shifting Logic
-@vegas.rbatchintegrand
-class StableLikelihood:
-    def __init__(self, y, T):
-        self.y = y
-        self.T = T
-        self.l_max = 0.0 # Will be updated after warm-up
-
-    def __call__(self, theta):
-        theta_jax = jnp.array(theta)
-        log_lik = compute_log_lik_adj(theta_jax, self.y,self.T)
-        
-        # Shift by the maximum found so far
-        # This keeps the result near 1.0 instead of 1e-300
-        #print(f"A=={log_lik} B= {self.l_max}\n")
-        return np.array(jnp.exp(log_lik - self.l_max)).copy()
-
-model = StableLikelihood(y=y_data,T=T_vec)
-
-start = jnp.array([-1, -1],dtype=jnp.float64) # a0 a1
-stop = jnp.array([1, 1],dtype=jnp.float64)   # a0 a1
-searchPts=jnp.transpose(jnp.linspace(start, stop, 5000,endpoint=False))
-
-model.l_max=jnp.max(compute_log_lik_adj(searchPts, model.y,model.T))
-#explicitly set seed
-gvar.ranseed(9999)
-
-integ = vegas.Integrator(jnp.array([[-1, 1]]*2,dtype=jnp.float64))
-# STAGE 1: Warm-up
-res_warmup = integ(model, nitn=10, neval=10000)
-# STAGE 2: Production (Stable Integration)
-result = integ(model, nitn=10, neval=50000)
-
-
-# 5. Output results
-print(f"\nIntegration Results:")
-print(f"Result: {result.mean:.8f} +/- {result.sdev:.8f}")
-print(f"Q-value: {result.Q:.2f} (should be close to 0.5 for a good fit)")
-
-# STAGE 3: Final Log-Evidence Calculation
-# log(I) = l_max + log(scaled_integral)
-log_evidence = model.l_max + jnp.log(result.mean)
-
-print(f"Log Evidence: {log_evidence}")
-
-
-# we want posterior values
-# compute_log_lik(theta, y,T) - log_evidence = log( f(D|a0,a1)f(a0)f(a1) )
-
-
+```python
+logL = logDens+jacobianL
 ```
+
+---
+
+## 7. Clipping for Numerical Stability
+
+The code enforces:
+
+$$
+\theta \in [-0.99999, 0.99999]
+$$
+
+This avoids:
+
+* Division by zero at $ t = \pm 1 $
+* Exploding Jacobian values
+
+---
+
+## 8. Integration Domain
+
+Instead of:
+
+$$
+a_0 \in [-2, 1]
+$$
+
+we now integrate:
+
+$$
+t \in [-1, 1]
+$$
+
+This covers the **entire real line in ( a_0 )**.
+
+---
+
+## 9. Shifting Logic (Same idea as before)
+
+Define:
+
+$$
+\ell_{\max} = \max_t \log f^*(t)
+$$
+
+Then integrate:
+
+$$
+\text{scaled integral} = \int \exp(\log f^*(t) - \ell_{\max}), dt
+$$
+
+Recovers log evidence as:
+
+$$
+\log I = \ell_{\max} + \log(\text{scaled integral})
+$$
+
+---
+
+## 10. Posterior Computation
+
+To compute the posterior and map it mack to the original scale, two functions i.e. `jac_trans` and `compute_log_lik_adj2` are defined. `compute_log_lik_adj2` defines the desnity without Jacobean, i.e., $\log f(a_0)=\log L(a_0)+\log p(a_0)$. With this and the log evidence $\log I$ obtained above, the normalized posterior can be easily obtained as 
+
+$$
+p(a_0∣y)= exp(f(a0) - \log I)
+$$
+
+Now the only step left is $t \mapsto a_0$ mapping, which the `jac_trans` function does using our original equation
+
+$$
+a_0 = \frac{\theta}{1 - \theta^2}, \quad t \in (-1,1)
+$$
+
 
 
 
