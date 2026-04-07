@@ -19,6 +19,25 @@ website:
         text: "Home"
         file: index.qmd
 
+      - text: "Bayesian Direct Estimation"
+        icon: bezier2 # Bootstrap icon for strategy/flow
+        menu:
+          - text: "Getting Started"
+            file: vegas/index_vegas.qmd
+          - text: "---" # Separator line
+          #- text: "Ex.1.1 Vegas Intro"
+          #  file: vegas/bern1.qmd
+          #- text: "Ex.1.2: BHM Logistic Vegas Intro"
+          #  file: vegas/basket1.qmd
+          - text: "Ex.1.1a: BHM Logistic Stan vs Vegas MLX"
+            file: vegas/stanvegas1_mlx.qmd
+          - text: "Ex.1.1b: BHM Logistic Stan vs Vegas JAX"
+            file: vegas/stanvegas1_jax.qmd
+          - text: "Ex.1.2a: BHM Basket Logistic Stan vs Vegas MLX"
+            file: vegas/stanvegas2_mlx.qmd
+          - text: "Ex.1.2b: BHM Basket Logistic Stan vs Vegas MLX"
+            file: vegas/stanvegas2_jax.qmd
+
       - text: "Bayesian Tensorflow"
         icon: bezier2 # Bootstrap icon for strategy/flow
         menu:
@@ -33,20 +52,6 @@ website:
             file: tfp/intro_normal_tf_stan.qmd
           - text: "Ex.1.3: Negative Binomial Regression"
             file: tfp/intro_neg_bin_tfp_stan.qmd
-            
-      - text: "Bayesian Direct Estimation"
-        icon: bezier2 # Bootstrap icon for strategy/flow
-        menu:
-          - text: "Getting Started"
-            file: vegas/index_vegas.qmd
-          - text: "---" # Separator line
-          - text: "Ex.1.1 Vegas Intro"
-            file: vegas/bern1.qmd
-          - text: "Ex.1.2: BHM Basket Vegas"
-            file: vegas/basket1.qmd
-          - text: "Ex.1.3: BHM Basket Stan vs Vegas"
-            file: vegas/stanvegas1.qmd
-
 
       - text: "Machine Learning"
         icon: cpu # Icon for computing/TensorFlow

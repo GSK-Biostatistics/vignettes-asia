@@ -2,7 +2,9 @@
 .Rhistory
 .RData
 .Ruserdata
+*.py
 
 /.quarto/
+vegas/useful_scratch/
 
 **/*.quarto_ipynb
