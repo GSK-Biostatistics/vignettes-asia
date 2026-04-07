@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>index_vegas – Asia</title>
+<title>Bayesian Inference using Vegas v Stan – Asia</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -137,6 +137,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-bayesian-direct-estimation" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-bezier2" role="img">
+</i> 
+ <span class="menu-text">Bayesian Direct Estimation</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-bayesian-direct-estimation">    
+        <li>
+    <a class="dropdown-item" href="../vegas/index_vegas.html">
+ <span class="dropdown-text">Getting Started</span></a>
+  </li>  
+        <li><hr class="dropdown-divider"></li>
+        <li>
+    <a class="dropdown-item" href="../vegas/stanvegas1_mlx.html">
+ <span class="dropdown-text">Ex.1.1a: BHM Logistic Stan vs Vegas MLX</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../vegas/stanvegas1_jax.html">
+ <span class="dropdown-text">Ex.1.1b: BHM Logistic Stan vs Vegas JAX</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../vegas/stanvegas2_mlx.html">
+ <span class="dropdown-text">Ex.1.2a: BHM Basket Logistic Stan vs Vegas MLX</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../vegas/stanvegas2_jax.html">
+ <span class="dropdown-text">Ex.1.2b: BHM Basket Logistic Stan vs Vegas MLX</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-bayesian-tensorflow" role="link" data-bs-toggle="dropdown" aria-expanded="false">
       <i class="bi bi-bezier2" role="img">
 </i> 
@@ -163,32 +193,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li>
     <a class="dropdown-item" href="../tfp/intro_neg_bin_tfp_stan.html">
  <span class="dropdown-text">Ex.1.3: Negative Binomial Regression</span></a>
-  </li>  
-    </ul>
-  </li>
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-bayesian-direct-estimation" role="link" data-bs-toggle="dropdown" aria-expanded="false">
-      <i class="bi bi-bezier2" role="img">
-</i> 
- <span class="menu-text">Bayesian Direct Estimation</span>
-    </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-bayesian-direct-estimation">    
-        <li>
-    <a class="dropdown-item" href="../vegas/index_vegas.html">
- <span class="dropdown-text">Getting Started</span></a>
-  </li>  
-        <li><hr class="dropdown-divider"></li>
-        <li>
-    <a class="dropdown-item" href="../vegas/bern1.html">
- <span class="dropdown-text">Ex.1.1 Vegas Intro</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../vegas/basket1.html">
- <span class="dropdown-text">Ex.1.2: BHM Basket Vegas</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../vegas/stanvegas1.html">
- <span class="dropdown-text">Ex.1.3: BHM Basket Stan vs Vegas</span></a>
   </li>  
     </ul>
   </li>
@@ -253,68 +257,92 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#running-the-vignettes" id="toc-running-the-vignettes" class="nav-link active" data-scroll-target="#running-the-vignettes">Running the Vignettes</a>
   <ul class="collapse">
-  <li><a href="#installation-details-for-linux" id="toc-installation-details-for-linux" class="nav-link" data-scroll-target="#installation-details-for-linux">Installation details for Linux</a></li>
-  <li><a href="#installation-details-for-windows" id="toc-installation-details-for-windows" class="nav-link" data-scroll-target="#installation-details-for-windows">Installation details for Windows</a></li>
-  <li><a href="#advanced-installation-of-separate-python-venv" id="toc-advanced-installation-of-separate-python-venv" class="nav-link" data-scroll-target="#advanced-installation-of-separate-python-venv">Advanced: Installation of separate Python venv</a></li>
+  <li><a href="#installation-details-and-requirements" id="toc-installation-details-and-requirements" class="nav-link" data-scroll-target="#installation-details-and-requirements">Installation details and requirements</a></li>
   </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><h1 class="title display-7"></h1></header><div class="quarto-title-block"><div class="quarto-title-tools-only"><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">Bayesian Inference using Vegas v Stan</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
 
 
 
+<div class="quarto-title-meta">
 
-<p>This is a collection of heavily documented quarto vignettes demonstrating how to perform numerical integration for Bayesian inference in <a href="https://posit.co/downloads/">RStudio</a> using <a href="https://docs.jax.dev/en/latest/">JAX</a> and <a href="https://mlx-framework.org">MLX</a> computational frameworks. The vignettes mix and match R and Python. The <a href="https://mc-stan.org/rstan/">RStan</a> features in many of these for comparison. The application focus is <strong>model building and trial simulation for clinical research and drug development</strong>.</p>
-<ul>
-<li><strong>Bayesian Inference using Vegas, JAX and GPU</strong></li>
-</ul>
-<p>Markov chain Monte Carlo (MCMC) sampling is the default approach for most Bayesian modelling, made accessible via tools such as <a href="https://mc-stan.org/rstan/">RStan</a>. A drawback of MCMC is that considerable effort is needed, especially in clinical trials and regulated environments, to demonstrate that results are numerically robust. MCMC can also be computationally challenging especially in tasks such as computing operating characteristics for Bayesian clinical trial designs as models may need to be fitted many times. An alternative to MCMC is direct approaches such as numerical integration, e.g.&nbsp;<a href="https://github.com/gplepage/vegas">Vegas</a>. Historically, direct integration has not been computationally practical for all but the simplest models. The development of new general purpose computation frameworks such as <a href="https://docs.jax.dev/en/latest/">JAX</a> and <a href="https://mlx-framework.org">MLX</a> makes direct integration attractive beyond only the simplest models as the core calculations are often readily parallelization with thousands of evaluations done simulateneously, for example on a GPU.</p>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>This is a collection of quarto vignettes demonstrating how to perform Bayesian inference via numerical integration, as opposed to MCMC sampling. While MCMC sampling is the default approach in Bayesian modelling, using alternative computational methodologies can be attractive from a quality control and assurance perspective, especially in a regulatory setting.</p>
+<p>The <a href="https://github.com/gplepage/vegas">Vegas</a> library is used which is well established, and developed and maintained by the author of the methodology, with a recent update to the methodology called vegas+. The latest version of the Vegas library supports <a href="https://docs.jax.dev/en/latest/">JAX</a> and <a href="https://mlx-framework.org">MLX</a> computational frameworks which allow parallelization across CPUs and GPUs. The MLX variant is specific to Apple Silicon M-series processors. A substantial speed-up may be obtained when a GPU is available.</p>
+<p>The vignettes mix and match R and Python code blocks in <a href="https://https://posit.co">RStudio</a> Results from <a href="https://mc-stan.org/rstan/">RStan</a> feature in many of these for comparison, being the mostly widely used Bayesian modelling library.</p>
+<!-- Markov chain Monte Carlo (MCMC) sampling is the default approach for most Bayesian modelling, made accessible via tools such as [RStan](https://mc-stan.org/rstan/). A drawback of MCMC is that considerable effort is needed, especially in clinical trials and regulated environments, to demonstrate that results are numerically robust. MCMC can also be computationally challenging especially in tasks such as computing operating characteristics for Bayesian clinical trial designs as models may need to be fitted many times. An alternative to MCMC is direct approaches such as numerical integration, e.g. [Vegas](https://github.com/gplepage/vegas). Historically, direct integration has not been computationally practical for all but the simplest models. The development of new general purpose computation frameworks such as [JAX](https://docs.jax.dev/en/latest/) and [MLX](https://mlx-framework.org) makes direct integration attractive beyond only the simplest models as the core calculations are often readily parallelization with thousands of evaluations done simulateneously, for example on a GPU.  -->
 <section id="running-the-vignettes" class="level2">
 <h2 class="anchored" data-anchor-id="running-the-vignettes">Running the Vignettes</h2>
 <!--  url needs updated -->
-<p>The raw quarto files are available on GitHub <a href="https://github.com/fraseriainlewis/asia.git">here</a></p>
-<section id="installation-details-for-linux" class="level3">
-<h3 class="anchored" data-anchor-id="installation-details-for-linux">Installation details for Linux</h3>
+<p>The raw quarto files are available on GSK GitHub <a href="https://github.com/GSK-Biostatistics/vignettes-asia">here</a></p>
+<section id="installation-details-and-requirements" class="level3">
+<h3 class="anchored" data-anchor-id="installation-details-and-requirements">Installation details and requirements</h3>
 <!-- <to be updated - this is tensorflow - vegas and jax could be added but a bit of a hack> -->
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">##########################################################</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># in RStudio Terminal (not R Console) or in Bash</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>sudo apt<span class="sc">-</span>get update</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>sudo apt<span class="sc">-</span>get install python3<span class="sc">-</span>venv python3<span class="sc">-</span>pip python3<span class="sc">-</span>dev</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">##########################################################</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># in RStudio console</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tensorflow"</span>)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tensorflow)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">install_tensorflow</span>(<span class="at">extra_packages =</span> <span class="fu">c</span>(<span class="st">"tf_keras"</span>, <span class="st">"tensorflow"</span>, <span class="st">"tensorflow-probability"</span>,<span class="st">"pandas"</span>,<span class="st">"matplotlib"</span>))</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># note - matplotlib is not essential, and may be removed or added later via py_install()</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#restart session</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tfprobability"</span>)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tensorflow)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tfprobability)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">tfd_binomial</span>(<span class="at">total_count =</span> <span class="dv">7</span>, <span class="at">probs =</span> <span class="fl">0.3</span>) <span class="co"># if this works then tensorflow us correctly installed</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="do">##########################################################</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="installation-details-for-windows" class="level3">
-<h3 class="anchored" data-anchor-id="installation-details-for-windows">Installation details for Windows</h3>
-<p>On Windows the key part is to have a suitable Python installation and also that RStudio can locate this. Once this is in place then the installation process is as above for the Linux case.</p>
-</section>
-<section id="advanced-installation-of-separate-python-venv" class="level3">
-<h3 class="anchored" data-anchor-id="advanced-installation-of-separate-python-venv">Advanced: Installation of separate Python venv</h3>
+<p>The vignettes use RStudio and mix and match Python and R and so RStudio must have a working Python installation available (e.g.&nbsp;via <a href="https://cran.r-project.org/web/packages/reticulate/index.html">reticulate</a>).</p>
+<ul>
+<li><p>The simplest option is to install reticulate from CRAN and then install additional Python libraries into the default reticulate environment vi reticulate’s py_install() function</p></li>
+<li><p>The most flexible approach is to manually create a python virtualenv via the RStudio terminal and load it into the R session using reticulate as needed. This is the approach used in the quarto files.</p></li>
+</ul>
+<section id="installation-of-separate-python-venv" class="level4">
+<h4 class="anchored" data-anchor-id="installation-of-separate-python-venv">Installation of separate Python venv</h4>
 <p>The instructions below setup an appropriate venv</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in bash</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> venv gnn</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> gnn/bin/activate</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># now install via pip the specific library versions needed</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install tensorflow==2.16.2 tf_keras==2.16.0 tensorflow-gnn</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The second part below in the R Console is to instruct <a href="https://rstudio.github.io/reticulate/">reticulate</a> to use this Python venv rather than one of the existing virtualenv environments, otherwise reticulate may use, e.g.&nbsp;the tensorflow venv created when doing the above install, which will likely not contain a compatible tensorflow version.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in RStudio console</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reticulate)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">use_virtualenv</span>(<span class="st">"/mydir/gnn"</span>, <span class="at">required =</span> <span class="cn">TRUE</span>) <span class="co"># tell R to use the python interpreter and libraries in here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in bash or terminal in RStudio </span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> venv myvenv</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> myvenv/bin/activate  <span class="co"># Windows uses gnn\Scripts\activate</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># now install via pip the specific library versions needed</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install numpy pandas jax vegas math gvar scipy</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The second part below in the R Console is to instruct <a href="https://rstudio.github.io/reticulate/">reticulate</a> to use this Python venv rather than one of the existing (or default) virtualenv environments.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in RStudio console</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reticulate)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">use_virtualenv</span>(<span class="st">"/mydir/myvenv"</span>, <span class="at">required =</span> <span class="cn">TRUE</span>) <span class="co"># tell R to use the python interpreter and libraries in here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="installation-of-tensorflow" class="level4">
+<h4 class="anchored" data-anchor-id="installation-of-tensorflow">Installation of Tensorflow</h4>
+<p>Tensorflow, including tensorflow-gnn can have specific version compatibility requirements and may be easiest to install the RStudio R Tensorflow library which installs the necessary Python libraries as part of this. See below.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">##########################################################</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># in RStudio Terminal (not R Console) or in Bash</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>sudo apt<span class="sc">-</span>get update</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>sudo apt<span class="sc">-</span>get install python3<span class="sc">-</span>venv python3<span class="sc">-</span>pip python3<span class="sc">-</span>dev</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="do">##########################################################</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># in RStudio console</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tensorflow"</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tensorflow)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">install_tensorflow</span>(<span class="at">extra_packages =</span> <span class="fu">c</span>(<span class="st">"tf_keras"</span>, <span class="st">"tensorflow"</span>, <span class="st">"tensorflow-probability"</span>,<span class="st">"pandas"</span>,<span class="st">"matplotlib"</span>))</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># note - matplotlib is not essential, and may be removed or added later via py_install()</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#restart session</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tfprobability"</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tensorflow)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tfprobability)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">tfd_binomial</span>(<span class="at">total_count =</span> <span class="dv">7</span>, <span class="at">probs =</span> <span class="fl">0.3</span>) <span class="co"># if this works then tensorflow us correctly installed</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="do">##########################################################</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The tensorflow-gnn can have very specific version requirements. e.g.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in bash or terminal in RStudio </span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> venv gnn</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> gnn/bin/activate  <span class="co"># Windows uses gnn\Scripts\activate</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># now install via pip the specific library versions needed</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install tensorflow==2.16.2 tf_keras==2.16.0 tensorflow-gnn</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 
 <!-- -->
 
+</section>
 </section>
 </section>
 
@@ -770,56 +798,78 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>This is a collection of heavily documented quarto vignettes demonstrating how to perform numerical integration for Bayesian inference in <span class="co">[</span><span class="ot">RStudio</span><span class="co">](https://posit.co/downloads/)</span> using <span class="co">[</span><span class="ot">JAX</span><span class="co">](https://docs.jax.dev/en/latest/)</span> and <span class="co">[</span><span class="ot">MLX</span><span class="co">](https://mlx-framework.org)</span> computational frameworks. The vignettes mix and match R and Python. The  <span class="co">[</span><span class="ot">RStan</span><span class="co">](https://mc-stan.org/rstan/)</span> features in many of these for comparison. The application focus is **model building and trial simulation for clinical research and drug development**.</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ss">-  </span>**Bayesian Inference using Vegas, JAX and GPU**</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>Markov chain Monte Carlo (MCMC) sampling is the default approach for most Bayesian modelling, made accessible via tools such as <span class="co">[</span><span class="ot">RStan</span><span class="co">](https://mc-stan.org/rstan/)</span>. A drawback of MCMC is that considerable effort is needed, especially in clinical trials and regulated environments, to demonstrate that results are numerically robust. MCMC can also be computationally challenging especially in tasks such as computing operating characteristics for Bayesian clinical trial designs as models may need to be fitted many times. An alternative to MCMC is direct approaches such as numerical integration, e.g. <span class="co">[</span><span class="ot">Vegas</span><span class="co">](https://github.com/gplepage/vegas)</span>. Historically, direct integration has not been computationally practical for all but the simplest models. The development of new general purpose computation frameworks such as <span class="co">[</span><span class="ot">JAX</span><span class="co">](https://docs.jax.dev/en/latest/)</span> and <span class="co">[</span><span class="ot">MLX</span><span class="co">](https://mlx-framework.org)</span> makes direct integration attractive beyond only the simplest models as the core calculations are often readily parallelization with thousands of evaluations done simulateneously, for example on a GPU.  </span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="fu">## Running the Vignettes </span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--  url needs updated --&gt;</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>The raw quarto files are available on GitHub <span class="co">[</span><span class="ot">here</span><span class="co">](https://github.com/fraseriainlewis/asia.git)</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="fu">### Installation details for Linux</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- &lt;to be updated - this is tensorflow - vegas and jax could be added but a bit of a hack&gt; --&gt;</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="do">##########################################################</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co"># in RStudio Terminal (not R Console) or in Bash</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>sudo apt<span class="sc">-</span>get update</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>sudo apt<span class="sc">-</span>get install python3<span class="sc">-</span>venv python3<span class="sc">-</span>pip python3<span class="sc">-</span>dev</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="do">##########################################################</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co"># in RStudio console</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tensorflow"</span>)</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tensorflow)</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="fu">install_tensorflow</span>(<span class="at">extra_packages =</span> <span class="fu">c</span>(<span class="st">"tf_keras"</span>, <span class="st">"tensorflow"</span>, <span class="st">"tensorflow-probability"</span>,<span class="st">"pandas"</span>,<span class="st">"matplotlib"</span>))</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="co"># note - matplotlib is not essential, and may be removed or added later via py_install()</span></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="co">#restart session</span></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tfprobability"</span>)</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tensorflow)</span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tfprobability)</span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">tfd_binomial</span>(<span class="at">total_count =</span> <span class="dv">7</span>, <span class="at">probs =</span> <span class="fl">0.3</span>) <span class="co"># if this works then tensorflow us correctly installed</span></span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="do">##########################################################</span></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="fu">### Installation details for Windows</span></span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>On Windows the key part is to have a suitable Python installation and also that RStudio can locate this. Once this is in place then the installation process is as above for the Linux case. </span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="fu">### Advanced: Installation of separate Python venv</span></span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>The instructions below setup an appropriate venv</span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="co"># in bash</span></span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> venv gnn</span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> gnn/bin/activate</span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a><span class="co"># now install via pip the specific library versions needed</span></span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install tensorflow==2.16.2 tf_keras==2.16.0 tensorflow-gnn</span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>The second part below in the R Console is to instruct <span class="co">[</span><span class="ot">reticulate</span><span class="co">](https://rstudio.github.io/reticulate/)</span> to use this Python venv rather than one of the existing virtualenv environments, otherwise reticulate may use, e.g. the tensorflow venv created when doing the above install, which will likely not contain a compatible tensorflow version.</span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a><span class="co"># in RStudio console</span></span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reticulate)</span>
-<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a><span class="fu">use_virtualenv</span>(<span class="st">"/mydir/gnn"</span>, <span class="at">required =</span> <span class="cn">TRUE</span>) <span class="co"># tell R to use the python interpreter and libraries in here</span></span>
-<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Bayesian Inference using Vegas v Stan"</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>This is a collection of quarto vignettes demonstrating how to perform Bayesian inference via numerical integration, as opposed to MCMC sampling. While MCMC sampling is the default approach in Bayesian modelling, using alternative computational methodologies can be attractive from a quality control and assurance perspective, especially in a regulatory setting.   </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>The <span class="co">[</span><span class="ot">Vegas</span><span class="co">](https://github.com/gplepage/vegas)</span> library is used which is well established, and developed and maintained by the author of the methodology, with a recent update to the methodology called vegas+. The latest version of the Vegas library supports <span class="co">[</span><span class="ot">JAX</span><span class="co">](https://docs.jax.dev/en/latest/)</span> and <span class="co">[</span><span class="ot">MLX</span><span class="co">](https://mlx-framework.org)</span> computational frameworks which allow parallelization across CPUs and GPUs. The MLX variant is specific to Apple Silicon M-series processors. A substantial speed-up may be obtained when a GPU is available.</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>The vignettes mix and match R and Python code blocks in <span class="co">[</span><span class="ot">RStudio</span><span class="co">](https://https://posit.co)</span> Results from <span class="co">[</span><span class="ot">RStan</span><span class="co">](https://mc-stan.org/rstan/)</span> feature in many of these for comparison, being the mostly widely used Bayesian modelling library.</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Markov chain Monte Carlo (MCMC) sampling is the default approach for most Bayesian modelling, made accessible via tools such as [RStan](https://mc-stan.org/rstan/). A drawback of MCMC is that considerable effort is needed, especially in clinical trials and regulated environments, to demonstrate that results are numerically robust. MCMC can also be computationally challenging especially in tasks such as computing operating characteristics for Bayesian clinical trial designs as models may need to be fitted many times. An alternative to MCMC is direct approaches such as numerical integration, e.g. [Vegas](https://github.com/gplepage/vegas). Historically, direct integration has not been computationally practical for all but the simplest models. The development of new general purpose computation frameworks such as [JAX](https://docs.jax.dev/en/latest/) and [MLX](https://mlx-framework.org) makes direct integration attractive beyond only the simplest models as the core calculations are often readily parallelization with thousands of evaluations done simulateneously, for example on a GPU.  --&gt;</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="fu">## Running the Vignettes </span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--  url needs updated --&gt;</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>The raw quarto files are available on GSK GitHub <span class="co">[</span><span class="ot">here</span><span class="co">](https://github.com/GSK-Biostatistics/vignettes-asia)</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="fu">### Installation details and requirements</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- &lt;to be updated - this is tensorflow - vegas and jax could be added but a bit of a hack&gt; --&gt;</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>The vignettes use RStudio and mix and match Python and R and so RStudio must have a working Python installation available (e.g. via <span class="co">[</span><span class="ot">reticulate</span><span class="co">](https://cran.r-project.org/web/packages/reticulate/index.html)</span>). </span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The simplest option is to install reticulate from CRAN and then install additional Python libraries into the default reticulate environment vi reticulate's py_install() function  </span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The most flexible approach is to manually create a python virtualenv via the RStudio terminal and load it into the R session using reticulate as needed. This is the approach used in the quarto files.  </span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Installation of separate Python venv</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>The instructions below setup an appropriate venv </span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="co"># in bash or terminal in RStudio </span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> venv myvenv</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> myvenv/bin/activate  <span class="co"># Windows uses gnn\Scripts\activate</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="co"># now install via pip the specific library versions needed</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install numpy pandas jax vegas math gvar scipy</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>The second part below in the R Console is to instruct <span class="co">[</span><span class="ot">reticulate</span><span class="co">](https://rstudio.github.io/reticulate/)</span> to use this Python venv rather than one of the existing (or default) virtualenv environments. </span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="co"># in RStudio console</span></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reticulate)</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a><span class="fu">use_virtualenv</span>(<span class="st">"/mydir/myvenv"</span>, <span class="at">required =</span> <span class="cn">TRUE</span>) <span class="co"># tell R to use the python interpreter and libraries in here</span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Installation of Tensorflow</span></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>Tensorflow, including tensorflow-gnn can have specific version compatibility requirements and may be easiest to install the RStudio R Tensorflow library which installs the necessary Python libraries as part of this. See below. </span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a><span class="do">##########################################################</span></span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a><span class="co"># in RStudio Terminal (not R Console) or in Bash</span></span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>sudo apt<span class="sc">-</span>get update</span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>sudo apt<span class="sc">-</span>get install python3<span class="sc">-</span>venv python3<span class="sc">-</span>pip python3<span class="sc">-</span>dev</span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a><span class="do">##########################################################</span></span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a><span class="co"># in RStudio console</span></span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tensorflow"</span>)</span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tensorflow)</span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a><span class="fu">install_tensorflow</span>(<span class="at">extra_packages =</span> <span class="fu">c</span>(<span class="st">"tf_keras"</span>, <span class="st">"tensorflow"</span>, <span class="st">"tensorflow-probability"</span>,<span class="st">"pandas"</span>,<span class="st">"matplotlib"</span>))</span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a><span class="co"># note - matplotlib is not essential, and may be removed or added later via py_install()</span></span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a><span class="co">#restart session</span></span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tfprobability"</span>)</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tensorflow)</span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tfprobability)</span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">tfd_binomial</span>(<span class="at">total_count =</span> <span class="dv">7</span>, <span class="at">probs =</span> <span class="fl">0.3</span>) <span class="co"># if this works then tensorflow us correctly installed</span></span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a><span class="do">##########################################################</span></span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>The tensorflow-gnn can have very specific version requirements. e.g.</span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a><span class="co"># in bash or terminal in RStudio </span></span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> venv gnn</span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> gnn/bin/activate  <span class="co"># Windows uses gnn\Scripts\activate</span></span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a><span class="co"># now install via pip the specific library versions needed</span></span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install tensorflow==2.16.2 tf_keras==2.16.0 tensorflow-gnn</span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
