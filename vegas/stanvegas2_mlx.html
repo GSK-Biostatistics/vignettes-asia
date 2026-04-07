@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Two-arm trial TFP v RStan – Asia</title>
+<title>BHM Basket Trial Logistic Regression Vegas MLX v RStan – Asia</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -306,7 +306,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Two-arm trial TFP v RStan</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+<div class="quarto-title-block"><div><h1 class="title">BHM Basket Trial Logistic Regression Vegas MLX v RStan</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -328,20 +328,32 @@ window.Quarto = {
 <p>This vignette uses identical approach as in vignette basket1.qmd but now compares results of the estimated posterior density for the intercept term from direct integration with results from MCMC via Stan.</p>
 <section id="model-formulation" class="level3">
 <h3 class="anchored" data-anchor-id="model-formulation">Model Formulation</h3>
-<p>The model implemented here is a non-centered parameterization for a logistic model.</p>
+<p>The model implemented here is a non-centered parameterization for a Basket trial with two baskets and a logistic response model.</p>
 <p><span class="math display">\[
 \begin{aligned}
 \mu_0 &amp;\sim \text{Normal}(0, 2.5)\\
 \sigma_0 &amp;\sim \text{Half-Normal}(0, 2.5) \\
 \mu_1 &amp;\sim \text{Normal}(0, 2.5) \\
 \sigma_1 &amp;\sim \text{Half-Normal}(0, 2.5) \\
-\tilde{\theta}_j &amp;\sim \text{Normal}(0, 1)\quad\enspace\text{for}\enspace{j=1,2}  \\
-\beta_0 &amp;= \mu_0 + \sigma_0 \tilde{\theta}_1 \\
-\beta_1 &amp;= \mu_1 + \sigma_1 \tilde{\theta}_2 \\
+\tilde{\theta}_j &amp;\sim \text{Normal}(0, 1)\quad\enspace\text{for}\enspace{j=1,\dots,4}  \\
+\beta_{0,0} &amp;= \mu_0 + \sigma_0 \tilde{\theta}_1 \quad\quad\hspace{0.2cm}\text{ intercept - log odds control basket 0}\\
+\beta_{0,1} &amp;= \mu_0 + \sigma_0 \tilde{\theta}_2 \quad\quad\hspace{0.2cm}\text{ intercept - log odds control basket 1}\\
+\beta_{1,0} &amp;= \mu_1 + \sigma_1 \tilde{\theta}_3 \quad\quad\hspace{0.2cm}\text{ treatment - log OR basket 0}\\
+\beta_{1,1} &amp;= \mu_1 + \sigma_1 \tilde{\theta}_4 \quad\quad\hspace{0.2cm}\text{ treatment - log OR basket 1}\\
 \text{logit(}{p_i}) &amp;= \beta_0 + \beta_1 z_i\quad\quad\enspace\enspace\text{for}\enspace{i=1,\dots,N}  \\
 y_i &amp;\sim \text{Bernoulli}(p_i)
 \end{aligned}
 \]</span></p>
+<p>When using direct integration via Vegas we don’t need the non-centered parameterization:</p>
+$$
+<span class="math display">\[\begin{aligned}
+\beta_{0,0} &amp;\sim \text{Normal}(\mu_0, \sigma_0) \\
+\beta_{0,1} &amp;\sim \text{Normal}(\mu_0, \sigma_0) \\
+\beta_{1,0} &amp;\sim \text{Normal}(\mu_1, \sigma_1) \\
+\beta_{1,1} &amp;\sim \text{Normal}(\mu_1, \sigma_1) \\
+
+\end{aligned}\]</span>
+<p>$$</p>
 </section>
 </section>
 <section id="data-set" class="level2">
