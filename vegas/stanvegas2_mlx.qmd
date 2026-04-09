@@ -64,7 +64,7 @@ $$
 ```{r rsetup, include=FALSE,eval=TRUE}
 #library(tfclinical)
 library(reticulate)
-use_virtualenv("/Users/work/tfp")
+use_virtualenv("/Users/gogol/py_env/bayes/")
 library(tfprobability)
 #library(reticulate)
 library(kableExtra)
@@ -88,8 +88,8 @@ The basket ID is currently set fixed at 1, denoting there is only one basket in 
 ### Prepare model inputs
 set.seed(99999)
 # Set up data
-rr_k_ctrl <- c(0.20,0.25)        # control response rate for each basket
-rr_k_trt <- c(0.40,0.45)         # treatment response rate for each basket
+rr_k_ctrl <- c(0.20,0.25, 0.3)        # control response rate for each basket
+rr_k_trt <- c(0.40,0.45, 0.5)         # treatment response rate for each basket
 
 K<-length(rr_k_ctrl)        # number of baskets
 
@@ -286,6 +286,13 @@ def mx_norm_logpdf(x, loc, scale):
 
 ### SETUP LIKELIHOOD*PRIOR - for full model NOTE: a0 and a1 are now both vectors/matrices
 ###                          to ensure the likelihood is correct, and various syntax changes needed
+
+@mx.compile
+def stable_log1p_exp(x):
+    # This avoids overflow when x is very large (exp(x) would be inf)
+    return mx.where(x > 15.0, x, mx.log1p(mx.exp(x)))
+  
+  
 @mx.compile
 def compute_log_lik(theta, y,T,K):
     #print(f"shape1={x.shape}\n")
@@ -307,8 +314,8 @@ def compute_log_lik(theta, y,T,K):
     theta1=mx.clip(theta[2:4,:],-0.999, 0.999)
     theta2=mx.clip(theta[4,:],-0.999, 0.999)
     theta3=mx.clip(theta[5,:],-0.999, 0.999)
-    theta4=mx.clip(theta[6,:],0.00001, 0.999)
-    theta5=mx.clip(theta[7,:],0.00001, 0.999)
+    theta4=mx.clip(theta[6,:],1e-7, 0.999)
+    theta5=mx.clip(theta[7,:],1e-7, 0.999)
     
     # break jacobian up as otherwise @mx.compile can fail - need to keep it fairly simple
     jacobianLA = ( mx.sum(mx.log1p(mx.power(theta0,2)) - 2.0*mx.log1p(-mx.power(theta0,2)),axis=0)
@@ -334,7 +341,12 @@ def compute_log_lik(theta, y,T,K):
     
     eta=a0[K]+a1[K]*T # (10,3) where T_vec = (3,) and (10,1) broadcast to (10,3)  
     # y_data*eta - mx.log(1+mx.exp(eta)) this is (10,3) - want col sums, so collapse over rows
-    logL = mx.sum(y*eta - mx.log1p(mx.exp(eta)),axis=0) #
+    #logL = mx.sum(y*eta - mx.log1p(mx.exp(eta)),axis=0) #
+    
+    log_terms = y * eta - mx.log1p(mx.exp(eta))
+    log_terms = mx.nan_to_num(log_terms, nan=-1e10, posinf=-1e10, neginf=-1e10)
+    #logL = mx.sum(y * eta - stable_log1p_exp(eta), axis=0)
+    logL = mx.sum(log_terms, axis=0) 
     #print(f"logL={logL}\n")
     # now add the priors
     # simple N(0,sd=10)
@@ -365,7 +377,13 @@ class StableLikelihood:
         # Shift by the maximum found so far
         # This keeps the result near 1.0 instead of 1e-300
         ## return np.array(jnp.exp(log_lik - self.l_max)) # need this is using x64 - vegas expects np
-        return mx.exp(log_lik - self.l_max)
+        result_mlx = mx.exp(mx.clip(log_lik - self.l_max, -100, 100))
+        
+        result_mlx = mx.nan_to_num(result_mlx, nan=0.0, posinf=0.0, neginf=0.0)
+      
+      #CRITICAL: Force evaluation and convert to NumPy for vegas
+        mx.eval(result_mlx)
+        return np.array(result_mlx)
 
 #### ------------------------------------------------------------------------------------------------
 #### 3. COMPUTE EVIDENCE - overall denominator 
@@ -427,12 +445,12 @@ def compute_log_lik2(theta, y,T,K,a00):
     
     """
     # theta0[0] = a0 - first component of intercept - basket 0
-    theta0=mx.clip(theta[0:1,:],-0.999, 0.999) # 0
-    theta1=mx.clip(theta[1:3,:],-0.999, 0.999) # 1,2
-    theta2=mx.clip(theta[3,:],-0.999, 0.999)   # 3 
-    theta3=mx.clip(theta[4,:],-0.999, 0.999)
-    theta4=mx.clip(theta[5,:],0.00001, 0.999)
-    theta5=mx.clip(theta[6,:],0.00001, 0.999)
+    theta0=mx.clip(theta[0:1,:],-0.999999, 0.999999) # 0
+    theta1=mx.clip(theta[1:3,:],-0.999999, 0.999999) # 1,2
+    theta2=mx.clip(theta[3,:],-0.999999, 0.999999)   # 3 
+    theta3=mx.clip(theta[4,:],-0.999999, 0.999999)
+    theta4=mx.clip(theta[5,:],0.00001, 0.999999)
+    theta5=mx.clip(theta[6,:],0.00001, 0.999999)
     
     
     jacobianLA = ( mx.log1p(mx.power(theta0,2)) - 2.0*mx.log1p(-mx.power(theta0,2)) # don't need sum here any longer
@@ -459,7 +477,13 @@ def compute_log_lik2(theta, y,T,K,a00):
     
     eta=a0[K]+a1[K]*T # (10,3) where T_vec = (3,) and (10,1) broadcast to (10,3)  
     # y_data*eta - mx.log(1+mx.exp(eta)) this is (10,3) - want col sums, so collapse over rows
-    logL = mx.sum(y*eta - mx.log1p(mx.exp(eta)),axis=0) #
+    
+    log_terms = y * eta - mx.log1p(mx.exp(eta))
+    log_terms = mx.nan_to_num(log_terms, nan=-1e10, posinf=-1e10, neginf=-1e10)
+    #logL = mx.sum(y * eta - stable_log1p_exp(eta), axis=0)
+    logL = mx.sum(log_terms, axis=0)
+    
+    #logL = mx.sum(y*eta - mx.log1p(mx.exp(eta)),axis=0) #
     #print(f"logL={logL}\n")
     # now add the priors
     # simple N(0,sd=10)
@@ -490,7 +514,13 @@ class StableLikelihood2:
         # Shift by the maximum found so far
         # This keeps the result near 1.0 instead of 1e-300
         ## return np.array(jnp.exp(log_lik - self.l_max)) # needt this is using x64 - vegas expects np
-        return mx.exp(log_lik - self.l_max)
+        #result_mlx2 = mx.exp(log_lik - self.l_max)
+        result_mlx2 = mx.exp(mx.clip(log_lik - self.l_max, -100, 100))
+        
+        result_mlx2 = mx.nan_to_num(result_mlx2, nan=0.0, posinf=0.0, neginf=0.0)
+        
+        mx.eval(result_mlx2)
+        return np.array(result_mlx2)
 
 #### ------------------------------------------------------------------------------------------------
 #### 5. COMPUTE MARGINAL DENSITY for a00 (a0 in first basket) 

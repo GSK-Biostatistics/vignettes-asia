@@ -369,8 +369,8 @@ y_i &amp;\sim \text{Bernoulli}(p_i)
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>K<span class="ot">&lt;-</span><span class="fu">length</span>(rr_k_ctrl)        <span class="co"># number of baskets</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>N_k_ctrl <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">100</span>, K)     <span class="co"># number of control participants per basket</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>N_k_trt <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">100</span>, K)      <span class="co"># number of treatment participants per basket</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>N_k_ctrl <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">500</span>, K)     <span class="co"># number of control participants per basket</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>N_k_trt <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">500</span>, K)      <span class="co"># number of treatment participants per basket</span></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>N_k <span class="ot">&lt;-</span> N_k_ctrl <span class="sc">+</span> N_k_trt   <span class="co"># number of participants per basket (both arms combined)</span></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="fu">sum</span>(N_k)               <span class="co"># total sample size</span></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>k_vec <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span>K, N_k)      <span class="co"># N x 1 vector of basket indicators (1 to K)</span></span>
@@ -469,7 +469,7 @@ y_i &amp;\sim \text{Bernoulli}(p_i)
 <span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
 <span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>stan_fit_2 <span class="ot">&lt;-</span> <span class="fu">sampling</span>(stan_mod_1, <span class="at">data =</span> data_input_1, <span class="at">pars =</span> BHM_pars_1,</span>
 <span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>                       <span class="at">iter =</span> nsamps <span class="sc">+</span> nburnin, <span class="at">warmup =</span> nburnin, <span class="at">chains =</span> nchains)</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: There were 808 divergent transitions after warmup. See</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: There were 546 divergent transitions after warmup. See</span></span>
 <span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; https://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup</span></span>
 <span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; to find out why this is a problem and how to eliminate them.</span></span>
 <span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: Examine the pairs() plot to diagnose sampling problems</span></span>
@@ -648,7 +648,7 @@ y_i &amp;\sim \text{Bernoulli}(p_i)
 <span id="cb5-141"><a href="#cb5-141" aria-hidden="true" tabindex="-1"></a>log_evidence <span class="op">=</span> model.l_max <span class="op">+</span> jnp.log(result.mean)</span>
 <span id="cb5-142"><a href="#cb5-142" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-143"><a href="#cb5-143" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Log Evidence: </span><span class="sc">{</span>log_evidence<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb5-144"><a href="#cb5-144" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Log Evidence: -129.4234619140625</span></span>
+<span id="cb5-144"><a href="#cb5-144" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Log Evidence: -592.0901489257812</span></span>
 <span id="cb5-145"><a href="#cb5-145" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-146"><a href="#cb5-146" aria-hidden="true" tabindex="-1"></a><span class="co"># we want posterior values</span></span>
 <span id="cb5-147"><a href="#cb5-147" aria-hidden="true" tabindex="-1"></a><span class="co"># compute_log_lik(theta, y,T) - log_evidence = log( f(D|a0)f(a0) )</span></span>
@@ -1322,7 +1322,7 @@ y_i &amp;\sim \text{Bernoulli}(p_i)
 <span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a><span class="in">```{r rsetup, include=FALSE,eval=TRUE}</span></span>
 <span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a><span class="co">#library(tfclinical)</span></span>
 <span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reticulate)</span>
-<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a><span class="fu">use_virtualenv</span>(<span class="st">"/Users/work/tfp"</span>)</span>
+<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a><span class="fu">use_virtualenv</span>(<span class="st">"/Users/gogol/py_env/bayes/"</span>)</span>
 <span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tfprobability)</span>
 <span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a><span class="co">#library(reticulate)</span></span>
 <span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
@@ -1351,8 +1351,8 @@ y_i &amp;\sim \text{Bernoulli}(p_i)
 <span id="cb7-87"><a href="#cb7-87" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-88"><a href="#cb7-88" aria-hidden="true" tabindex="-1"></a>K<span class="ot">&lt;-</span><span class="fu">length</span>(rr_k_ctrl)        <span class="co"># number of baskets</span></span>
 <span id="cb7-89"><a href="#cb7-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-90"><a href="#cb7-90" aria-hidden="true" tabindex="-1"></a>N_k_ctrl <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">100</span>, K)     <span class="co"># number of control participants per basket</span></span>
-<span id="cb7-91"><a href="#cb7-91" aria-hidden="true" tabindex="-1"></a>N_k_trt <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">100</span>, K)      <span class="co"># number of treatment participants per basket</span></span>
+<span id="cb7-90"><a href="#cb7-90" aria-hidden="true" tabindex="-1"></a>N_k_ctrl <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">500</span>, K)     <span class="co"># number of control participants per basket</span></span>
+<span id="cb7-91"><a href="#cb7-91" aria-hidden="true" tabindex="-1"></a>N_k_trt <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">500</span>, K)      <span class="co"># number of treatment participants per basket</span></span>
 <span id="cb7-92"><a href="#cb7-92" aria-hidden="true" tabindex="-1"></a>N_k <span class="ot">&lt;-</span> N_k_ctrl <span class="sc">+</span> N_k_trt   <span class="co"># number of participants per basket (both arms combined)</span></span>
 <span id="cb7-93"><a href="#cb7-93" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="fu">sum</span>(N_k)               <span class="co"># total sample size</span></span>
 <span id="cb7-94"><a href="#cb7-94" aria-hidden="true" tabindex="-1"></a>k_vec <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span>K, N_k)      <span class="co"># N x 1 vector of basket indicators (1 to K)</span></span>

@@ -58,7 +58,7 @@ $$
 ```{r rsetup, include=FALSE,eval=TRUE}
 #library(tfclinical)
 library(reticulate)
-use_virtualenv("/Users/work/tfp")
+use_virtualenv("/Users/gogol/py_env/bayes")
 library(tfprobability)
 #library(reticulate)
 library(kableExtra)
@@ -87,8 +87,8 @@ rr_k_trt <- c(0.40)         # treatment response rate for each basket
 
 K<-length(rr_k_ctrl)        # number of baskets
 
-N_k_ctrl <- rep(100, K)     # number of control participants per basket
-N_k_trt <- rep(100, K)      # number of treatment participants per basket
+N_k_ctrl <- rep(500, K)     # number of control participants per basket
+N_k_trt <- rep(500, K)      # number of treatment participants per basket
 N_k <- N_k_ctrl + N_k_trt   # number of participants per basket (both arms combined)
 N <- sum(N_k)               # total sample size
 k_vec <- rep(1:K, N_k)      # N x 1 vector of basket indicators (1 to K)
