@@ -1611,518 +1611,514 @@ $$
 <span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a><span class="in">```{r rsetup, include=FALSE,eval=TRUE}</span></span>
-<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a><span class="co">#library(tfclinical)</span></span>
-<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reticulate)</span>
-<span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a><span class="fu">use_virtualenv</span>(<span class="st">"/Users/work/tfp"</span>)</span>
-<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tfprobability)</span>
-<span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a><span class="co">#library(reticulate)</span></span>
-<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
-<span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstan)</span>
-<span id="cb8-73"><a href="#cb8-73" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bayesplot)</span>
-<span id="cb8-74"><a href="#cb8-74" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb8-75"><a href="#cb8-75" aria-hidden="true" tabindex="-1"></a><span class="co">#reticulate::py_install("bash") # just a test</span></span>
-<span id="cb8-76"><a href="#cb8-76" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reticulate)</span>
+<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a><span class="fu">use_virtualenv</span>(<span class="st">"/mnt/myvenv"</span>)</span>
+<span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstan)</span>
+<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bayesplot)</span>
+<span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a><span class="co">#reticulate::py_install("bash") # just a test</span></span>
+<span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-73"><a href="#cb8-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-74"><a href="#cb8-74" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data set</span></span>
+<span id="cb8-75"><a href="#cb8-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-76"><a href="#cb8-76" aria-hidden="true" tabindex="-1"></a>The R chunk below creates a simple dataset of three cols:</span>
 <span id="cb8-77"><a href="#cb8-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-78"><a href="#cb8-78" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data set</span></span>
-<span id="cb8-79"><a href="#cb8-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-80"><a href="#cb8-80" aria-hidden="true" tabindex="-1"></a>The R chunk below creates a simple dataset of three cols:</span>
+<span id="cb8-78"><a href="#cb8-78" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>a binary response variable (0/1 = non-responder/responder),</span>
+<span id="cb8-79"><a href="#cb8-79" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>a binary treatment variable (0/1 = control/test treatment)</span>
+<span id="cb8-80"><a href="#cb8-80" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>and a basket ID variable. (1)</span>
 <span id="cb8-81"><a href="#cb8-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-82"><a href="#cb8-82" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>a binary response variable (0/1 = non-responder/responder),</span>
-<span id="cb8-83"><a href="#cb8-83" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>a binary treatment variable (0/1 = control/test treatment)</span>
-<span id="cb8-84"><a href="#cb8-84" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>and a basket ID variable. (1)</span>
-<span id="cb8-85"><a href="#cb8-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-86"><a href="#cb8-86" aria-hidden="true" tabindex="-1"></a>The basket ID is currently set fixed at 1, denoting there is only one basket in this trial, i.e. a classical two arm randomized trial design. Baskets will be added in other vignettes.</span>
-<span id="cb8-87"><a href="#cb8-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-88"><a href="#cb8-88" aria-hidden="true" tabindex="-1"></a><span class="in">```{r datasets, include=TRUE,eval=TRUE}</span></span>
-<span id="cb8-89"><a href="#cb8-89" aria-hidden="true" tabindex="-1"></a><span class="do">### Prepare model inputs</span></span>
-<span id="cb8-90"><a href="#cb8-90" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">99999</span>)</span>
-<span id="cb8-91"><a href="#cb8-91" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up data</span></span>
-<span id="cb8-92"><a href="#cb8-92" aria-hidden="true" tabindex="-1"></a>rr_k_ctrl <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.20</span>,<span class="fl">0.25</span>)        <span class="co"># control response rate for each basket</span></span>
-<span id="cb8-93"><a href="#cb8-93" aria-hidden="true" tabindex="-1"></a>rr_k_trt <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.40</span>,<span class="fl">0.45</span>)         <span class="co"># treatment response rate for each basket</span></span>
-<span id="cb8-94"><a href="#cb8-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-95"><a href="#cb8-95" aria-hidden="true" tabindex="-1"></a>K<span class="ot">&lt;-</span><span class="fu">length</span>(rr_k_ctrl)        <span class="co"># number of baskets</span></span>
-<span id="cb8-96"><a href="#cb8-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-97"><a href="#cb8-97" aria-hidden="true" tabindex="-1"></a>N_k_ctrl <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">50</span>, K)     <span class="co"># number of control participants per basket</span></span>
-<span id="cb8-98"><a href="#cb8-98" aria-hidden="true" tabindex="-1"></a>N_k_trt <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">50</span>, K)      <span class="co"># number of treatment participants per basket</span></span>
-<span id="cb8-99"><a href="#cb8-99" aria-hidden="true" tabindex="-1"></a>N_k <span class="ot">&lt;-</span> N_k_ctrl <span class="sc">+</span> N_k_trt   <span class="co"># number of participants per basket (both arms combined)</span></span>
-<span id="cb8-100"><a href="#cb8-100" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="fu">sum</span>(N_k)               <span class="co"># total sample size</span></span>
-<span id="cb8-101"><a href="#cb8-101" aria-hidden="true" tabindex="-1"></a>k_vec <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span>K, N_k)      <span class="co"># N x 1 vector of basket indicators (1 to K)</span></span>
-<span id="cb8-102"><a href="#cb8-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-103"><a href="#cb8-103" aria-hidden="true" tabindex="-1"></a>z_vec<span class="ot">&lt;-</span><span class="cn">NULL</span>;</span>
-<span id="cb8-104"><a href="#cb8-104" aria-hidden="true" tabindex="-1"></a>y<span class="ot">&lt;-</span><span class="cn">NULL</span>;</span>
-<span id="cb8-105"><a href="#cb8-105" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>K){ <span class="co"># for each basket repeat 0-control 1-trt according to the specifc Ns</span></span>
-<span id="cb8-106"><a href="#cb8-106" aria-hidden="true" tabindex="-1"></a>  z_vec<span class="ot">&lt;-</span><span class="fu">c</span>(z_vec,<span class="fu">rep</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">1</span>,<span class="fu">c</span>(N_k_ctrl[i],N_k_trt[i]))) <span class="co"># treatment/control indicator</span></span>
-<span id="cb8-107"><a href="#cb8-107" aria-hidden="true" tabindex="-1"></a>  y<span class="ot">&lt;-</span><span class="fu">c</span>(y,</span>
-<span id="cb8-108"><a href="#cb8-108" aria-hidden="true" tabindex="-1"></a>       <span class="fu">c</span>(<span class="fu">rbinom</span>(N_k_ctrl[i],<span class="dv">1</span>,rr_k_ctrl[i]), <span class="co"># bernoulli for control</span></span>
-<span id="cb8-109"><a href="#cb8-109" aria-hidden="true" tabindex="-1"></a>         <span class="fu">rbinom</span>(N_k_trt[i],<span class="dv">1</span>,rr_k_trt[i]))) <span class="co">#           for trt</span></span>
-<span id="cb8-110"><a href="#cb8-110" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb8-111"><a href="#cb8-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-112"><a href="#cb8-112" aria-hidden="true" tabindex="-1"></a>thedata<span class="ot">&lt;-</span><span class="fu">data.frame</span>(y,<span class="at">basketID=</span>k_vec,<span class="at">Treatment=</span>z_vec)</span>
+<span id="cb8-82"><a href="#cb8-82" aria-hidden="true" tabindex="-1"></a>The basket ID is currently set fixed at 1, denoting there is only one basket in this trial, i.e. a classical two arm randomized trial design. Baskets will be added in other vignettes.</span>
+<span id="cb8-83"><a href="#cb8-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-84"><a href="#cb8-84" aria-hidden="true" tabindex="-1"></a><span class="in">```{r datasets, include=TRUE,eval=TRUE}</span></span>
+<span id="cb8-85"><a href="#cb8-85" aria-hidden="true" tabindex="-1"></a><span class="do">### Prepare model inputs</span></span>
+<span id="cb8-86"><a href="#cb8-86" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">99999</span>)</span>
+<span id="cb8-87"><a href="#cb8-87" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up data</span></span>
+<span id="cb8-88"><a href="#cb8-88" aria-hidden="true" tabindex="-1"></a>rr_k_ctrl <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.20</span>,<span class="fl">0.25</span>)        <span class="co"># control response rate for each basket</span></span>
+<span id="cb8-89"><a href="#cb8-89" aria-hidden="true" tabindex="-1"></a>rr_k_trt <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.40</span>,<span class="fl">0.45</span>)         <span class="co"># treatment response rate for each basket</span></span>
+<span id="cb8-90"><a href="#cb8-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-91"><a href="#cb8-91" aria-hidden="true" tabindex="-1"></a>K<span class="ot">&lt;-</span><span class="fu">length</span>(rr_k_ctrl)        <span class="co"># number of baskets</span></span>
+<span id="cb8-92"><a href="#cb8-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-93"><a href="#cb8-93" aria-hidden="true" tabindex="-1"></a>N_k_ctrl <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">50</span>, K)     <span class="co"># number of control participants per basket</span></span>
+<span id="cb8-94"><a href="#cb8-94" aria-hidden="true" tabindex="-1"></a>N_k_trt <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">50</span>, K)      <span class="co"># number of treatment participants per basket</span></span>
+<span id="cb8-95"><a href="#cb8-95" aria-hidden="true" tabindex="-1"></a>N_k <span class="ot">&lt;-</span> N_k_ctrl <span class="sc">+</span> N_k_trt   <span class="co"># number of participants per basket (both arms combined)</span></span>
+<span id="cb8-96"><a href="#cb8-96" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="fu">sum</span>(N_k)               <span class="co"># total sample size</span></span>
+<span id="cb8-97"><a href="#cb8-97" aria-hidden="true" tabindex="-1"></a>k_vec <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span>K, N_k)      <span class="co"># N x 1 vector of basket indicators (1 to K)</span></span>
+<span id="cb8-98"><a href="#cb8-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-99"><a href="#cb8-99" aria-hidden="true" tabindex="-1"></a>z_vec<span class="ot">&lt;-</span><span class="cn">NULL</span>;</span>
+<span id="cb8-100"><a href="#cb8-100" aria-hidden="true" tabindex="-1"></a>y<span class="ot">&lt;-</span><span class="cn">NULL</span>;</span>
+<span id="cb8-101"><a href="#cb8-101" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>K){ <span class="co"># for each basket repeat 0-control 1-trt according to the specifc Ns</span></span>
+<span id="cb8-102"><a href="#cb8-102" aria-hidden="true" tabindex="-1"></a>  z_vec<span class="ot">&lt;-</span><span class="fu">c</span>(z_vec,<span class="fu">rep</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">1</span>,<span class="fu">c</span>(N_k_ctrl[i],N_k_trt[i]))) <span class="co"># treatment/control indicator</span></span>
+<span id="cb8-103"><a href="#cb8-103" aria-hidden="true" tabindex="-1"></a>  y<span class="ot">&lt;-</span><span class="fu">c</span>(y,</span>
+<span id="cb8-104"><a href="#cb8-104" aria-hidden="true" tabindex="-1"></a>       <span class="fu">c</span>(<span class="fu">rbinom</span>(N_k_ctrl[i],<span class="dv">1</span>,rr_k_ctrl[i]), <span class="co"># bernoulli for control</span></span>
+<span id="cb8-105"><a href="#cb8-105" aria-hidden="true" tabindex="-1"></a>         <span class="fu">rbinom</span>(N_k_trt[i],<span class="dv">1</span>,rr_k_trt[i]))) <span class="co">#           for trt</span></span>
+<span id="cb8-106"><a href="#cb8-106" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-107"><a href="#cb8-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-108"><a href="#cb8-108" aria-hidden="true" tabindex="-1"></a>thedata<span class="ot">&lt;-</span><span class="fu">data.frame</span>(y,<span class="at">basketID=</span>k_vec,<span class="at">Treatment=</span>z_vec)</span>
+<span id="cb8-109"><a href="#cb8-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-110"><a href="#cb8-110" aria-hidden="true" tabindex="-1"></a>py<span class="sc">$</span>thedata<span class="ot">&lt;-</span><span class="fu">r_to_py</span>(thedata) <span class="co"># THE KEY LINE - makes data available to Python</span></span>
+<span id="cb8-111"><a href="#cb8-111" aria-hidden="true" tabindex="-1"></a>                             <span class="co"># this is converted into a pandas dataframe object in Python</span></span>
+<span id="cb8-112"><a href="#cb8-112" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb8-113"><a href="#cb8-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-114"><a href="#cb8-114" aria-hidden="true" tabindex="-1"></a>py<span class="sc">$</span>thedata<span class="ot">&lt;-</span><span class="fu">r_to_py</span>(thedata) <span class="co"># THE KEY LINE - makes data available to Python</span></span>
-<span id="cb8-115"><a href="#cb8-115" aria-hidden="true" tabindex="-1"></a>                             <span class="co"># this is converted into a pandas dataframe object in Python</span></span>
-<span id="cb8-116"><a href="#cb8-116" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-117"><a href="#cb8-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-114"><a href="#cb8-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-115"><a href="#cb8-115" aria-hidden="true" tabindex="-1"></a><span class="fu">## RStan</span></span>
+<span id="cb8-116"><a href="#cb8-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-117"><a href="#cb8-117" aria-hidden="true" tabindex="-1"></a>The RStan workflow is somewhat more compact than the TFP equivalent, where TFP requires more lower level details to be specified whereas these are dealt with behind the scences in RStan. The nodel definition This is somewhat simplified for ease of use, e.g. hard coded hyperparameters.</span>
 <span id="cb8-118"><a href="#cb8-118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-119"><a href="#cb8-119" aria-hidden="true" tabindex="-1"></a><span class="fu">## RStan</span></span>
-<span id="cb8-120"><a href="#cb8-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-121"><a href="#cb8-121" aria-hidden="true" tabindex="-1"></a>The RStan workflow is somewhat more compact than the TFP equivalent, where TFP requires more lower level details to be specified whereas these are dealt with behind the scences in RStan. The nodel definition This is somewhat simplified for ease of use, e.g. hard coded hyperparameters.</span>
-<span id="cb8-122"><a href="#cb8-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-123"><a href="#cb8-123" aria-hidden="true" tabindex="-1"></a><span class="in">```{r stanmodeldef,include=TRUE,echo=TRUE,eval=TRUE}</span></span>
-<span id="cb8-124"><a href="#cb8-124" aria-hidden="true" tabindex="-1"></a><span class="do">### Stan model</span></span>
-<span id="cb8-125"><a href="#cb8-125" aria-hidden="true" tabindex="-1"></a>  BHM_stan_1 <span class="ot">&lt;-</span> <span class="st">"data {</span></span>
-<span id="cb8-126"><a href="#cb8-126" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 0&gt; K;                     // number of baskets (K &gt;= 2)</span></span>
-<span id="cb8-127"><a href="#cb8-127" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 0&gt; N;                     // total number of participants</span></span>
-<span id="cb8-128"><a href="#cb8-128" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 0, upper = N&gt; N_k[K];     // K x 1 vector of basket sample sizes</span></span>
-<span id="cb8-129"><a href="#cb8-129" aria-hidden="true" tabindex="-1"></a><span class="st">  //int&lt;lower = 0, upper = N&gt; N_k;</span></span>
-<span id="cb8-130"><a href="#cb8-130" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 1, upper = K&gt; k_vec[N];   // N x 1 vector of basket indicators</span></span>
-<span id="cb8-131"><a href="#cb8-131" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 0, upper = 1&gt; z_vec[N];   // N x 1 vector of treatment indicators for active treatment arm</span></span>
-<span id="cb8-132"><a href="#cb8-132" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 0, upper = 1&gt; y[N];       // N x 1 vector of binary responses</span></span>
-<span id="cb8-133"><a href="#cb8-133" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb8-134"><a href="#cb8-134" aria-hidden="true" tabindex="-1"></a><span class="st">parameters {</span></span>
-<span id="cb8-135"><a href="#cb8-135" aria-hidden="true" tabindex="-1"></a><span class="st">  matrix[K,2] beta_tr;                  // K x 2 matrix of transformed regression coefficients</span></span>
-<span id="cb8-136"><a href="#cb8-136" aria-hidden="true" tabindex="-1"></a><span class="st">  real mu1;                              // scalar of hierarchical mean (log odds ratio)</span></span>
-<span id="cb8-137"><a href="#cb8-137" aria-hidden="true" tabindex="-1"></a><span class="st">  real&lt;lower = 0&gt; sigma1;                  // scalar of hierarchical SD (log odds ratio)</span></span>
-<span id="cb8-138"><a href="#cb8-138" aria-hidden="true" tabindex="-1"></a><span class="st">  real mu0;                              // scalar of hierarchical mean (log odds ratio)</span></span>
-<span id="cb8-139"><a href="#cb8-139" aria-hidden="true" tabindex="-1"></a><span class="st">  real&lt;lower = 0&gt; sigma0;                  // scalar of hierarchical SD (log odds ratio)</span></span>
-<span id="cb8-140"><a href="#cb8-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-141"><a href="#cb8-141" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb8-142"><a href="#cb8-142" aria-hidden="true" tabindex="-1"></a><span class="st">transformed parameters {</span></span>
-<span id="cb8-143"><a href="#cb8-143" aria-hidden="true" tabindex="-1"></a><span class="st">  matrix[K,2] beta;                     // K x 2 matrix of regression coefficients (without transformation)</span></span>
-<span id="cb8-144"><a href="#cb8-144" aria-hidden="true" tabindex="-1"></a><span class="st">  // Calculate beta coefs using transformed betas (leads to better mixing)</span></span>
-<span id="cb8-145"><a href="#cb8-145" aria-hidden="true" tabindex="-1"></a><span class="st">  for (k in 1:K){</span></span>
-<span id="cb8-146"><a href="#cb8-146" aria-hidden="true" tabindex="-1"></a><span class="st">    beta[k,1] = mu0 + sigma0 * beta_tr[k,1];</span></span>
-<span id="cb8-147"><a href="#cb8-147" aria-hidden="true" tabindex="-1"></a><span class="st">    beta[k,2] = mu1 + sigma1 * beta_tr[k,2];</span></span>
-<span id="cb8-148"><a href="#cb8-148" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
-<span id="cb8-149"><a href="#cb8-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-150"><a href="#cb8-150" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb8-151"><a href="#cb8-151" aria-hidden="true" tabindex="-1"></a><span class="st">model {</span></span>
-<span id="cb8-152"><a href="#cb8-152" aria-hidden="true" tabindex="-1"></a><span class="st">  mu0 ~ normal(0, 2.5);    // vectorized normal priors for hierarchical means (specify SD in normal distn)</span></span>
-<span id="cb8-153"><a href="#cb8-153" aria-hidden="true" tabindex="-1"></a><span class="st">  sigma0 ~ normal(0, 2.5);       // vectorized half-normal priors for hierarchical SDs (specify SD in normal distn)</span></span>
-<span id="cb8-154"><a href="#cb8-154" aria-hidden="true" tabindex="-1"></a><span class="st">  mu1 ~ normal(0, 2.5);    // vectorized normal priors for hierarchical means (specify SD in normal distn)</span></span>
-<span id="cb8-155"><a href="#cb8-155" aria-hidden="true" tabindex="-1"></a><span class="st">  sigma1 ~ normal(0, 2.5);       // vectorized half-normal priors for hierarchical SDs (specify SD in normal distn)</span></span>
-<span id="cb8-156"><a href="#cb8-156" aria-hidden="true" tabindex="-1"></a><span class="st">  beta_tr[,1] ~ normal(0, 1);  // vectorized normal prior for the log odds for the control arm</span></span>
-<span id="cb8-157"><a href="#cb8-157" aria-hidden="true" tabindex="-1"></a><span class="st">  beta_tr[,2] ~ normal(0, 1);  // vectorized normal prior for the log odds ratios</span></span>
-<span id="cb8-158"><a href="#cb8-158" aria-hidden="true" tabindex="-1"></a><span class="st">  for (i in 1:N)</span></span>
-<span id="cb8-159"><a href="#cb8-159" aria-hidden="true" tabindex="-1"></a><span class="st">    y[i] ~ bernoulli_logit(beta[k_vec[i], 1] + beta[k_vec[i], 2] * z_vec[i]);</span></span>
-<span id="cb8-160"><a href="#cb8-160" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb8-161"><a href="#cb8-161" aria-hidden="true" tabindex="-1"></a><span class="st">"</span></span>
+<span id="cb8-119"><a href="#cb8-119" aria-hidden="true" tabindex="-1"></a><span class="in">```{r stanmodeldef,include=TRUE,echo=TRUE,eval=TRUE}</span></span>
+<span id="cb8-120"><a href="#cb8-120" aria-hidden="true" tabindex="-1"></a><span class="do">### Stan model</span></span>
+<span id="cb8-121"><a href="#cb8-121" aria-hidden="true" tabindex="-1"></a>  BHM_stan_1 <span class="ot">&lt;-</span> <span class="st">"data {</span></span>
+<span id="cb8-122"><a href="#cb8-122" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 0&gt; K;                     // number of baskets (K &gt;= 2)</span></span>
+<span id="cb8-123"><a href="#cb8-123" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 0&gt; N;                     // total number of participants</span></span>
+<span id="cb8-124"><a href="#cb8-124" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 0, upper = N&gt; N_k[K];     // K x 1 vector of basket sample sizes</span></span>
+<span id="cb8-125"><a href="#cb8-125" aria-hidden="true" tabindex="-1"></a><span class="st">  //int&lt;lower = 0, upper = N&gt; N_k;</span></span>
+<span id="cb8-126"><a href="#cb8-126" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 1, upper = K&gt; k_vec[N];   // N x 1 vector of basket indicators</span></span>
+<span id="cb8-127"><a href="#cb8-127" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 0, upper = 1&gt; z_vec[N];   // N x 1 vector of treatment indicators for active treatment arm</span></span>
+<span id="cb8-128"><a href="#cb8-128" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 0, upper = 1&gt; y[N];       // N x 1 vector of binary responses</span></span>
+<span id="cb8-129"><a href="#cb8-129" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb8-130"><a href="#cb8-130" aria-hidden="true" tabindex="-1"></a><span class="st">parameters {</span></span>
+<span id="cb8-131"><a href="#cb8-131" aria-hidden="true" tabindex="-1"></a><span class="st">  matrix[K,2] beta_tr;                  // K x 2 matrix of transformed regression coefficients</span></span>
+<span id="cb8-132"><a href="#cb8-132" aria-hidden="true" tabindex="-1"></a><span class="st">  real mu1;                              // scalar of hierarchical mean (log odds ratio)</span></span>
+<span id="cb8-133"><a href="#cb8-133" aria-hidden="true" tabindex="-1"></a><span class="st">  real&lt;lower = 0&gt; sigma1;                  // scalar of hierarchical SD (log odds ratio)</span></span>
+<span id="cb8-134"><a href="#cb8-134" aria-hidden="true" tabindex="-1"></a><span class="st">  real mu0;                              // scalar of hierarchical mean (log odds ratio)</span></span>
+<span id="cb8-135"><a href="#cb8-135" aria-hidden="true" tabindex="-1"></a><span class="st">  real&lt;lower = 0&gt; sigma0;                  // scalar of hierarchical SD (log odds ratio)</span></span>
+<span id="cb8-136"><a href="#cb8-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-137"><a href="#cb8-137" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb8-138"><a href="#cb8-138" aria-hidden="true" tabindex="-1"></a><span class="st">transformed parameters {</span></span>
+<span id="cb8-139"><a href="#cb8-139" aria-hidden="true" tabindex="-1"></a><span class="st">  matrix[K,2] beta;                     // K x 2 matrix of regression coefficients (without transformation)</span></span>
+<span id="cb8-140"><a href="#cb8-140" aria-hidden="true" tabindex="-1"></a><span class="st">  // Calculate beta coefs using transformed betas (leads to better mixing)</span></span>
+<span id="cb8-141"><a href="#cb8-141" aria-hidden="true" tabindex="-1"></a><span class="st">  for (k in 1:K){</span></span>
+<span id="cb8-142"><a href="#cb8-142" aria-hidden="true" tabindex="-1"></a><span class="st">    beta[k,1] = mu0 + sigma0 * beta_tr[k,1];</span></span>
+<span id="cb8-143"><a href="#cb8-143" aria-hidden="true" tabindex="-1"></a><span class="st">    beta[k,2] = mu1 + sigma1 * beta_tr[k,2];</span></span>
+<span id="cb8-144"><a href="#cb8-144" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb8-145"><a href="#cb8-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-146"><a href="#cb8-146" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb8-147"><a href="#cb8-147" aria-hidden="true" tabindex="-1"></a><span class="st">model {</span></span>
+<span id="cb8-148"><a href="#cb8-148" aria-hidden="true" tabindex="-1"></a><span class="st">  mu0 ~ normal(0, 2.5);    // vectorized normal priors for hierarchical means (specify SD in normal distn)</span></span>
+<span id="cb8-149"><a href="#cb8-149" aria-hidden="true" tabindex="-1"></a><span class="st">  sigma0 ~ normal(0, 2.5);       // vectorized half-normal priors for hierarchical SDs (specify SD in normal distn)</span></span>
+<span id="cb8-150"><a href="#cb8-150" aria-hidden="true" tabindex="-1"></a><span class="st">  mu1 ~ normal(0, 2.5);    // vectorized normal priors for hierarchical means (specify SD in normal distn)</span></span>
+<span id="cb8-151"><a href="#cb8-151" aria-hidden="true" tabindex="-1"></a><span class="st">  sigma1 ~ normal(0, 2.5);       // vectorized half-normal priors for hierarchical SDs (specify SD in normal distn)</span></span>
+<span id="cb8-152"><a href="#cb8-152" aria-hidden="true" tabindex="-1"></a><span class="st">  beta_tr[,1] ~ normal(0, 1);  // vectorized normal prior for the log odds for the control arm</span></span>
+<span id="cb8-153"><a href="#cb8-153" aria-hidden="true" tabindex="-1"></a><span class="st">  beta_tr[,2] ~ normal(0, 1);  // vectorized normal prior for the log odds ratios</span></span>
+<span id="cb8-154"><a href="#cb8-154" aria-hidden="true" tabindex="-1"></a><span class="st">  for (i in 1:N)</span></span>
+<span id="cb8-155"><a href="#cb8-155" aria-hidden="true" tabindex="-1"></a><span class="st">    y[i] ~ bernoulli_logit(beta[k_vec[i], 1] + beta[k_vec[i], 2] * z_vec[i]);</span></span>
+<span id="cb8-156"><a href="#cb8-156" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb8-157"><a href="#cb8-157" aria-hidden="true" tabindex="-1"></a><span class="st">"</span></span>
+<span id="cb8-158"><a href="#cb8-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-159"><a href="#cb8-159" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-160"><a href="#cb8-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-161"><a href="#cb8-161" aria-hidden="true" tabindex="-1"></a><span class="fu">### Setup and run sampler</span></span>
 <span id="cb8-162"><a href="#cb8-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-163"><a href="#cb8-163" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-163"><a href="#cb8-163" aria-hidden="true" tabindex="-1"></a><span class="in">```{r stansample,echo=TRUE,results='hide',eval=TRUE}</span></span>
 <span id="cb8-164"><a href="#cb8-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-165"><a href="#cb8-165" aria-hidden="true" tabindex="-1"></a><span class="fu">### Setup and run sampler</span></span>
-<span id="cb8-166"><a href="#cb8-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-167"><a href="#cb8-167" aria-hidden="true" tabindex="-1"></a><span class="in">```{r stansample,echo=TRUE,results='hide',eval=TRUE}</span></span>
-<span id="cb8-168"><a href="#cb8-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-169"><a href="#cb8-169" aria-hidden="true" tabindex="-1"></a><span class="co"># Create list with input values for Stan model</span></span>
-<span id="cb8-170"><a href="#cb8-170" aria-hidden="true" tabindex="-1"></a>data_input_1 <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb8-171"><a href="#cb8-171" aria-hidden="true" tabindex="-1"></a>  <span class="at">K =</span> K,                <span class="co"># number of subgroups</span></span>
-<span id="cb8-172"><a href="#cb8-172" aria-hidden="true" tabindex="-1"></a>  <span class="at">N =</span> N,                <span class="co"># total sample size</span></span>
-<span id="cb8-173"><a href="#cb8-173" aria-hidden="true" tabindex="-1"></a>  <span class="at">N_k =</span> N_k,            <span class="co"># sample size per basket</span></span>
-<span id="cb8-174"><a href="#cb8-174" aria-hidden="true" tabindex="-1"></a>  <span class="at">k_vec =</span> k_vec,        <span class="co"># N x 1 vector of subgroup indicators</span></span>
-<span id="cb8-175"><a href="#cb8-175" aria-hidden="true" tabindex="-1"></a>  <span class="at">z_vec =</span> z_vec,        <span class="co"># N x 1 vector of active treatment arm indicators</span></span>
-<span id="cb8-176"><a href="#cb8-176" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> y                 <span class="co"># N x 1 vector of binary responses</span></span>
-<span id="cb8-177"><a href="#cb8-177" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb8-178"><a href="#cb8-178" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-179"><a href="#cb8-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-180"><a href="#cb8-180" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-181"><a href="#cb8-181" aria-hidden="true" tabindex="-1"></a><span class="do">### Compile and fit model</span></span>
-<span id="cb8-182"><a href="#cb8-182" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">mc.cores =</span> parallel<span class="sc">::</span><span class="fu">detectCores</span>())</span>
-<span id="cb8-183"><a href="#cb8-183" aria-hidden="true" tabindex="-1"></a><span class="co"># Compile model (only run the line below once for a simulation study - compilation not dependent on any</span></span>
-<span id="cb8-184"><a href="#cb8-184" aria-hidden="true" tabindex="-1"></a><span class="co"># simulation inputs as defined by scenarios or on simulated data)</span></span>
-<span id="cb8-185"><a href="#cb8-185" aria-hidden="true" tabindex="-1"></a>stan_mod_1 <span class="ot">&lt;-</span> <span class="fu">stan_model</span>(<span class="at">model_code =</span> BHM_stan_1)</span>
-<span id="cb8-186"><a href="#cb8-186" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit model</span></span>
-<span id="cb8-187"><a href="#cb8-187" aria-hidden="true" tabindex="-1"></a>nsamps <span class="ot">&lt;-</span> <span class="dv">30000</span>       <span class="co"># number of posterior samples (after removing burn-in) per chain</span></span>
-<span id="cb8-188"><a href="#cb8-188" aria-hidden="true" tabindex="-1"></a>nburnin <span class="ot">&lt;-</span> <span class="dv">1000</span>       <span class="co"># number of burn-in samples to remove at beginning of each chain</span></span>
-<span id="cb8-189"><a href="#cb8-189" aria-hidden="true" tabindex="-1"></a>nchains <span class="ot">&lt;-</span> <span class="dv">4</span>          <span class="co"># number of chains</span></span>
-<span id="cb8-190"><a href="#cb8-190" aria-hidden="true" tabindex="-1"></a>BHM_pars_1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"beta"</span>,<span class="st">"mu0"</span>, <span class="st">"sigma0"</span>,<span class="st">"mu1"</span>, <span class="st">"sigma1"</span>, <span class="st">"beta"</span>,<span class="st">"beta_tr"</span>)     <span class="co"># parameters to sample</span></span>
-<span id="cb8-191"><a href="#cb8-191" aria-hidden="true" tabindex="-1"></a>start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
-<span id="cb8-192"><a href="#cb8-192" aria-hidden="true" tabindex="-1"></a>stan_fit_2 <span class="ot">&lt;-</span> <span class="fu">sampling</span>(stan_mod_1, <span class="at">data =</span> data_input_1, <span class="at">pars =</span> BHM_pars_1,</span>
-<span id="cb8-193"><a href="#cb8-193" aria-hidden="true" tabindex="-1"></a>                       <span class="at">iter =</span> nsamps <span class="sc">+</span> nburnin, <span class="at">warmup =</span> nburnin, <span class="at">chains =</span> nchains)</span>
-<span id="cb8-194"><a href="#cb8-194" aria-hidden="true" tabindex="-1"></a>end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
-<span id="cb8-195"><a href="#cb8-195" aria-hidden="true" tabindex="-1"></a>end_time <span class="sc">-</span> start_time</span>
-<span id="cb8-196"><a href="#cb8-196" aria-hidden="true" tabindex="-1"></a>post_draws_2 <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(stan_fit_2)           <span class="co"># posterior samples of each parameter</span></span>
+<span id="cb8-165"><a href="#cb8-165" aria-hidden="true" tabindex="-1"></a><span class="co"># Create list with input values for Stan model</span></span>
+<span id="cb8-166"><a href="#cb8-166" aria-hidden="true" tabindex="-1"></a>data_input_1 <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb8-167"><a href="#cb8-167" aria-hidden="true" tabindex="-1"></a>  <span class="at">K =</span> K,                <span class="co"># number of subgroups</span></span>
+<span id="cb8-168"><a href="#cb8-168" aria-hidden="true" tabindex="-1"></a>  <span class="at">N =</span> N,                <span class="co"># total sample size</span></span>
+<span id="cb8-169"><a href="#cb8-169" aria-hidden="true" tabindex="-1"></a>  <span class="at">N_k =</span> N_k,            <span class="co"># sample size per basket</span></span>
+<span id="cb8-170"><a href="#cb8-170" aria-hidden="true" tabindex="-1"></a>  <span class="at">k_vec =</span> k_vec,        <span class="co"># N x 1 vector of subgroup indicators</span></span>
+<span id="cb8-171"><a href="#cb8-171" aria-hidden="true" tabindex="-1"></a>  <span class="at">z_vec =</span> z_vec,        <span class="co"># N x 1 vector of active treatment arm indicators</span></span>
+<span id="cb8-172"><a href="#cb8-172" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> y                 <span class="co"># N x 1 vector of binary responses</span></span>
+<span id="cb8-173"><a href="#cb8-173" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb8-174"><a href="#cb8-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-175"><a href="#cb8-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-176"><a href="#cb8-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-177"><a href="#cb8-177" aria-hidden="true" tabindex="-1"></a><span class="do">### Compile and fit model</span></span>
+<span id="cb8-178"><a href="#cb8-178" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">mc.cores =</span> parallel<span class="sc">::</span><span class="fu">detectCores</span>())</span>
+<span id="cb8-179"><a href="#cb8-179" aria-hidden="true" tabindex="-1"></a><span class="co"># Compile model (only run the line below once for a simulation study - compilation not dependent on any</span></span>
+<span id="cb8-180"><a href="#cb8-180" aria-hidden="true" tabindex="-1"></a><span class="co"># simulation inputs as defined by scenarios or on simulated data)</span></span>
+<span id="cb8-181"><a href="#cb8-181" aria-hidden="true" tabindex="-1"></a>stan_mod_1 <span class="ot">&lt;-</span> <span class="fu">stan_model</span>(<span class="at">model_code =</span> BHM_stan_1)</span>
+<span id="cb8-182"><a href="#cb8-182" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit model</span></span>
+<span id="cb8-183"><a href="#cb8-183" aria-hidden="true" tabindex="-1"></a>nsamps <span class="ot">&lt;-</span> <span class="dv">30000</span>       <span class="co"># number of posterior samples (after removing burn-in) per chain</span></span>
+<span id="cb8-184"><a href="#cb8-184" aria-hidden="true" tabindex="-1"></a>nburnin <span class="ot">&lt;-</span> <span class="dv">1000</span>       <span class="co"># number of burn-in samples to remove at beginning of each chain</span></span>
+<span id="cb8-185"><a href="#cb8-185" aria-hidden="true" tabindex="-1"></a>nchains <span class="ot">&lt;-</span> <span class="dv">4</span>          <span class="co"># number of chains</span></span>
+<span id="cb8-186"><a href="#cb8-186" aria-hidden="true" tabindex="-1"></a>BHM_pars_1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"beta"</span>,<span class="st">"mu0"</span>, <span class="st">"sigma0"</span>,<span class="st">"mu1"</span>, <span class="st">"sigma1"</span>, <span class="st">"beta"</span>,<span class="st">"beta_tr"</span>)     <span class="co"># parameters to sample</span></span>
+<span id="cb8-187"><a href="#cb8-187" aria-hidden="true" tabindex="-1"></a>start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb8-188"><a href="#cb8-188" aria-hidden="true" tabindex="-1"></a>stan_fit_2 <span class="ot">&lt;-</span> <span class="fu">sampling</span>(stan_mod_1, <span class="at">data =</span> data_input_1, <span class="at">pars =</span> BHM_pars_1,</span>
+<span id="cb8-189"><a href="#cb8-189" aria-hidden="true" tabindex="-1"></a>                       <span class="at">iter =</span> nsamps <span class="sc">+</span> nburnin, <span class="at">warmup =</span> nburnin, <span class="at">chains =</span> nchains)</span>
+<span id="cb8-190"><a href="#cb8-190" aria-hidden="true" tabindex="-1"></a>end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb8-191"><a href="#cb8-191" aria-hidden="true" tabindex="-1"></a>end_time <span class="sc">-</span> start_time</span>
+<span id="cb8-192"><a href="#cb8-192" aria-hidden="true" tabindex="-1"></a>post_draws_2 <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(stan_fit_2)           <span class="co"># posterior samples of each parameter</span></span>
+<span id="cb8-193"><a href="#cb8-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-194"><a href="#cb8-194" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-195"><a href="#cb8-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-196"><a href="#cb8-196" aria-hidden="true" tabindex="-1"></a><span class="fu">### Summarize results</span></span>
 <span id="cb8-197"><a href="#cb8-197" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-198"><a href="#cb8-198" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-199"><a href="#cb8-199" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-200"><a href="#cb8-200" aria-hidden="true" tabindex="-1"></a><span class="fu">### Summarize results</span></span>
-<span id="cb8-201"><a href="#cb8-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-202"><a href="#cb8-202" aria-hidden="true" tabindex="-1"></a><span class="in">```{r stanresults,fig.width=10, fig.height=6, out.width="100%",eval=TRUE}</span></span>
-<span id="cb8-203"><a href="#cb8-203" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bayesplot)</span>
-<span id="cb8-204"><a href="#cb8-204" aria-hidden="true" tabindex="-1"></a><span class="fu">color_scheme_set</span>(<span class="st">"viridisA"</span>)</span>
-<span id="cb8-205"><a href="#cb8-205" aria-hidden="true" tabindex="-1"></a>p<span class="ot">&lt;-</span><span class="fu">mcmc_trace</span>(stan_fit_2,<span class="st">"mu0"</span>)</span>
-<span id="cb8-206"><a href="#cb8-206" aria-hidden="true" tabindex="-1"></a><span class="co">#ggsave("precomputed/vg2_traceplot1_stan.png", p)</span></span>
-<span id="cb8-207"><a href="#cb8-207" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p)</span>
-<span id="cb8-208"><a href="#cb8-208" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-209"><a href="#cb8-209" aria-hidden="true" tabindex="-1"></a><span class="in">```{r stanresults2,fig.width=10, fig.height=6, out.width="100%",eval=TRUE}</span></span>
-<span id="cb8-210"><a href="#cb8-210" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bayesplot)</span>
-<span id="cb8-211"><a href="#cb8-211" aria-hidden="true" tabindex="-1"></a><span class="fu">color_scheme_set</span>(<span class="st">"viridisA"</span>)</span>
-<span id="cb8-212"><a href="#cb8-212" aria-hidden="true" tabindex="-1"></a>p<span class="ot">&lt;-</span><span class="fu">mcmc_trace</span>(stan_fit_2,<span class="st">"beta[1,1]"</span>)</span>
-<span id="cb8-213"><a href="#cb8-213" aria-hidden="true" tabindex="-1"></a><span class="co">#ggsave("precomputed/vg2_traceplot1_stan.png", p)</span></span>
-<span id="cb8-214"><a href="#cb8-214" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p)</span>
-<span id="cb8-215"><a href="#cb8-215" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-216"><a href="#cb8-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-217"><a href="#cb8-217" aria-hidden="true" tabindex="-1"></a><span class="fu">## Now for the vegas Equivalent Model - overall constant of integration</span></span>
-<span id="cb8-218"><a href="#cb8-218" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-219"><a href="#cb8-219" aria-hidden="true" tabindex="-1"></a><span class="in">```{python evid_and_a0,include=TRUE,eval=TRUE}</span></span>
-<span id="cb8-220"><a href="#cb8-220" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb8-221"><a href="#cb8-221" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb8-222"><a href="#cb8-222" aria-hidden="true" tabindex="-1"></a><span class="co">#from jax import config</span></span>
-<span id="cb8-223"><a href="#cb8-223" aria-hidden="true" tabindex="-1"></a><span class="co">#config.update("jax_enable_x64", True)  ## if turn this on then vegas need np.array() in function return values</span></span>
-<span id="cb8-224"><a href="#cb8-224" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> jax.numpy <span class="im">as</span> jnp</span>
-<span id="cb8-225"><a href="#cb8-225" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> jax</span>
-<span id="cb8-226"><a href="#cb8-226" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> vegas</span>
-<span id="cb8-227"><a href="#cb8-227" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
-<span id="cb8-228"><a href="#cb8-228" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gvar</span>
-<span id="cb8-229"><a href="#cb8-229" aria-hidden="true" tabindex="-1"></a><span class="co">#import mlx </span></span>
-<span id="cb8-230"><a href="#cb8-230" aria-hidden="true" tabindex="-1"></a><span class="co">#import mlx.core as mx</span></span>
-<span id="cb8-231"><a href="#cb8-231" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-232"><a href="#cb8-232" aria-hidden="true" tabindex="-1"></a><span class="co">## The data.frame passed is now a panda df needs converted to mlx</span></span>
-<span id="cb8-233"><a href="#cb8-233" aria-hidden="true" tabindex="-1"></a>y_data<span class="op">=</span>jnp.array(thedata.iloc[:, <span class="dv">0</span>].to_numpy(), dtype<span class="op">=</span>jnp.float32)[:,<span class="va">None</span>]</span>
-<span id="cb8-234"><a href="#cb8-234" aria-hidden="true" tabindex="-1"></a>K_vec<span class="op">=</span>jnp.array(thedata.iloc[:, <span class="dv">1</span>].to_numpy())<span class="op">-</span><span class="dv">1</span></span>
-<span id="cb8-235"><a href="#cb8-235" aria-hidden="true" tabindex="-1"></a>T_vec<span class="op">=</span>jnp.array(thedata.iloc[:, <span class="dv">2</span>].to_numpy(), dtype<span class="op">=</span>jnp.float32)[:,<span class="va">None</span>]</span>
-<span id="cb8-236"><a href="#cb8-236" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-237"><a href="#cb8-237" aria-hidden="true" tabindex="-1"></a><span class="co">#### ------------------------------------------------------------------------------------------------</span></span>
-<span id="cb8-238"><a href="#cb8-238" aria-hidden="true" tabindex="-1"></a><span class="co">#### 1. DEFINE HELPER FUNCTIONS - STATS FUNCTIONS ARE LATER</span></span>
-<span id="cb8-239"><a href="#cb8-239" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> converged(vegasresult, reltol, Qtol):</span>
-<span id="cb8-240"><a href="#cb8-240" aria-hidden="true" tabindex="-1"></a>    res <span class="op">=</span> vegasresult <span class="co"># note this is results object OR vegas.ravg object - both have necessary members</span></span>
-<span id="cb8-241"><a href="#cb8-241" aria-hidden="true" tabindex="-1"></a>    <span class="co"># This returns True if the condition is met, False otherwise</span></span>
-<span id="cb8-242"><a href="#cb8-242" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (<span class="dv">100</span> <span class="op">*</span> (gvar.sdev(res) <span class="op">/</span> gvar.mean(res)) <span class="op">&lt;</span> reltol) <span class="kw">and</span> (res.Q <span class="op">&gt;</span> Qtol)</span>
-<span id="cb8-243"><a href="#cb8-243" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-244"><a href="#cb8-244" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> runIters(integ,model,warm_nitn,warm_neval,run_nitn,run_neval,iMax,errTol,Qtol,verbose<span class="op">=</span><span class="va">False</span>):</span>
-<span id="cb8-245"><a href="#cb8-245" aria-hidden="true" tabindex="-1"></a>    <span class="co"># RUN VEGAS to hit a given accuracy level AND checks Q</span></span>
-<span id="cb8-246"><a href="#cb8-246" aria-hidden="true" tabindex="-1"></a>    <span class="co"># this runs warmup and sets of iters until specified error is met, 100*sdev/mean &lt; errTol</span></span>
-<span id="cb8-247"><a href="#cb8-247" aria-hidden="true" tabindex="-1"></a>    <span class="co"># e.g. errTol = 0.1 is sd is less than 0.1% of mean</span></span>
-<span id="cb8-248"><a href="#cb8-248" aria-hidden="true" tabindex="-1"></a>    <span class="co"># returns a list comprising of integ() object and a boolean, boolean is to check accuracy was hit</span></span>
-<span id="cb8-249"><a href="#cb8-249" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Warmup grid - do not store results with rest as early grid selection</span></span>
-<span id="cb8-250"><a href="#cb8-250" aria-hidden="true" tabindex="-1"></a>    res_warmup <span class="op">=</span> integ(model, nitn<span class="op">=</span>warm_nitn, neval<span class="op">=</span>warm_neval)</span>
-<span id="cb8-251"><a href="#cb8-251" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Production (Stable Integration)</span></span>
-<span id="cb8-252"><a href="#cb8-252" aria-hidden="true" tabindex="-1"></a>    results1 <span class="op">=</span> integ(model, nitn<span class="op">=</span>run_nitn, neval<span class="op">=</span>run_neval)</span>
-<span id="cb8-253"><a href="#cb8-253" aria-hidden="true" tabindex="-1"></a>    <span class="co"># now check if the desired accuracy is achieved and Q is not too low</span></span>
-<span id="cb8-254"><a href="#cb8-254" aria-hidden="true" tabindex="-1"></a>    i<span class="op">=</span><span class="dv">0</span></span>
-<span id="cb8-255"><a href="#cb8-255" aria-hidden="true" tabindex="-1"></a>    results1itn<span class="op">=</span>results1.itn_results <span class="co"># pull out just iters as array</span></span>
-<span id="cb8-256"><a href="#cb8-256" aria-hidden="true" tabindex="-1"></a>    success <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb8-257"><a href="#cb8-257" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> (<span class="kw">not</span> converged(results1,errTol,Qtol)) <span class="kw">and</span> i<span class="op">&lt;</span>iMax:</span>
-<span id="cb8-258"><a href="#cb8-258" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> verbose:</span>
-<span id="cb8-259"><a href="#cb8-259" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"cumulative iterations=</span><span class="sc">{</span>i<span class="op">*</span>run_nitn<span class="op">+</span>run_nitn<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
-<span id="cb8-260"><a href="#cb8-260" aria-hidden="true" tabindex="-1"></a>        <span class="co"># not converged yet so run another set of iterations - each updates grid</span></span>
-<span id="cb8-261"><a href="#cb8-261" aria-hidden="true" tabindex="-1"></a>        results2 <span class="op">=</span> integ(model, nitn<span class="op">=</span>run_nitn, neval<span class="op">=</span>run_neval)</span>
-<span id="cb8-262"><a href="#cb8-262" aria-hidden="true" tabindex="-1"></a>        <span class="co"># combine the results with existing set</span></span>
-<span id="cb8-263"><a href="#cb8-263" aria-hidden="true" tabindex="-1"></a>        results1itn <span class="op">=</span> results1itn<span class="op">+</span>results2.itn_results <span class="co">#existing plus newest</span></span>
-<span id="cb8-264"><a href="#cb8-264" aria-hidden="true" tabindex="-1"></a>        results1<span class="op">=</span>vegas.ravg(results1itn) <span class="co"># this is then passed to while condition to see if more integ() needed</span></span>
-<span id="cb8-265"><a href="#cb8-265" aria-hidden="true" tabindex="-1"></a>        i<span class="op">=</span>i<span class="op">+</span><span class="dv">1</span> <span class="co"># counter to control too many iters</span></span>
-<span id="cb8-266"><a href="#cb8-266" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> i<span class="op">==</span>iMax:</span>
-<span id="cb8-267"><a href="#cb8-267" aria-hidden="true" tabindex="-1"></a>            success<span class="op">=</span><span class="va">False</span></span>
-<span id="cb8-268"><a href="#cb8-268" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">list</span>([results1,success])</span>
-<span id="cb8-269"><a href="#cb8-269" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-270"><a href="#cb8-270" aria-hidden="true" tabindex="-1"></a><span class="co">#### ------------------------------------------------------------------------------------------------</span></span>
-<span id="cb8-271"><a href="#cb8-271" aria-hidden="true" tabindex="-1"></a><span class="co">#### 2. DEFINE STATS FUNCTIONS </span></span>
-<span id="cb8-272"><a href="#cb8-272" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-273"><a href="#cb8-273" aria-hidden="true" tabindex="-1"></a><span class="at">@jax.jit</span></span>
-<span id="cb8-274"><a href="#cb8-274" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> jnp_half_normal_logpdf(x, sigma):</span>
-<span id="cb8-275"><a href="#cb8-275" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Log-constant: log(sqrt(2) / sqrt(pi))</span></span>
-<span id="cb8-276"><a href="#cb8-276" aria-hidden="true" tabindex="-1"></a>    log_const <span class="op">=</span> <span class="fl">0.5</span><span class="op">*</span>(jnp.log(<span class="fl">2.0</span>) <span class="op">-</span> jnp.log(jnp.pi)) <span class="op">-</span> jnp.log(sigma)</span>
-<span id="cb8-277"><a href="#cb8-277" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Log-exponent term</span></span>
-<span id="cb8-278"><a href="#cb8-278" aria-hidden="true" tabindex="-1"></a>    log_exp <span class="op">=</span> <span class="op">-</span>((x<span class="op">*</span>x) <span class="op">/</span> (<span class="fl">2.0</span> <span class="op">*</span> sigma<span class="op">*</span>sigma))</span>
-<span id="cb8-279"><a href="#cb8-279" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> log_const<span class="op">+</span>log_exp</span>
-<span id="cb8-280"><a href="#cb8-280" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-281"><a href="#cb8-281" aria-hidden="true" tabindex="-1"></a><span class="at">@jax.jit</span></span>
-<span id="cb8-282"><a href="#cb8-282" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> jnp_norm_logpdf(x, loc, scale):</span>
-<span id="cb8-283"><a href="#cb8-283" aria-hidden="true" tabindex="-1"></a>    <span class="co"># -0.5 * ((x - loc) / scale)**2 - log(scale) - 0.5 * log(2 * pi)</span></span>
-<span id="cb8-284"><a href="#cb8-284" aria-hidden="true" tabindex="-1"></a>    log_var <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span> <span class="op">*</span> ((x <span class="op">-</span> loc) <span class="op">/</span> scale)<span class="op">**</span><span class="dv">2</span></span>
-<span id="cb8-285"><a href="#cb8-285" aria-hidden="true" tabindex="-1"></a>    log_const <span class="op">=</span> <span class="op">-</span>jnp.log(scale) <span class="op">-</span> <span class="fl">0.5</span> <span class="op">*</span> math.log(<span class="dv">2</span> <span class="op">*</span> math.pi)</span>
-<span id="cb8-286"><a href="#cb8-286" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> log_var <span class="op">+</span> log_const</span>
-<span id="cb8-287"><a href="#cb8-287" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-288"><a href="#cb8-288" aria-hidden="true" tabindex="-1"></a><span class="co">### SETUP LIKELIHOOD*PRIOR - for full model </span><span class="al">NOTE</span><span class="co">: a0 and a1 are now both vectors/matrices</span></span>
-<span id="cb8-289"><a href="#cb8-289" aria-hidden="true" tabindex="-1"></a><span class="co">###                          to ensure the likelihood is correct, and various syntax changes needed</span></span>
-<span id="cb8-290"><a href="#cb8-290" aria-hidden="true" tabindex="-1"></a><span class="at">@jax.jit</span></span>
-<span id="cb8-291"><a href="#cb8-291" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_log_lik(theta, y,T,K):</span>
-<span id="cb8-292"><a href="#cb8-292" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"shape1={x.shape}\n")</span></span>
-<span id="cb8-293"><a href="#cb8-293" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb8-294"><a href="#cb8-294" aria-hidden="true" tabindex="-1"></a><span class="co">    mu0 ~ normal(0, 2.5);    // vectorized normal priors for hierarchical means (specify SD in normal distn)</span></span>
-<span id="cb8-295"><a href="#cb8-295" aria-hidden="true" tabindex="-1"></a><span class="co">    sigma0 ~ normal(0, 2.5);       // vectorized half-normal priors for hierarchical SDs (specify SD in normal distn)</span></span>
-<span id="cb8-296"><a href="#cb8-296" aria-hidden="true" tabindex="-1"></a><span class="co">    mu1 ~ normal(0, 2.5);    // vectorized normal priors for hierarchical means (specify SD in normal distn)</span></span>
-<span id="cb8-297"><a href="#cb8-297" aria-hidden="true" tabindex="-1"></a><span class="co">    sigma1 ~ normal(0, 2.5);</span></span>
-<span id="cb8-298"><a href="#cb8-298" aria-hidden="true" tabindex="-1"></a><span class="co">    a0 ~ normal(mu0,sigma0)</span></span>
-<span id="cb8-299"><a href="#cb8-299" aria-hidden="true" tabindex="-1"></a><span class="co">    a1 ~ normal(mu1,sigma1)</span></span>
+<span id="cb8-198"><a href="#cb8-198" aria-hidden="true" tabindex="-1"></a><span class="in">```{r stanresults,fig.width=10, fig.height=6, out.width="100%",eval=TRUE}</span></span>
+<span id="cb8-199"><a href="#cb8-199" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bayesplot)</span>
+<span id="cb8-200"><a href="#cb8-200" aria-hidden="true" tabindex="-1"></a><span class="fu">color_scheme_set</span>(<span class="st">"viridisA"</span>)</span>
+<span id="cb8-201"><a href="#cb8-201" aria-hidden="true" tabindex="-1"></a>p<span class="ot">&lt;-</span><span class="fu">mcmc_trace</span>(stan_fit_2,<span class="st">"mu0"</span>)</span>
+<span id="cb8-202"><a href="#cb8-202" aria-hidden="true" tabindex="-1"></a><span class="co">#ggsave("precomputed/vg2_traceplot1_stan.png", p)</span></span>
+<span id="cb8-203"><a href="#cb8-203" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p)</span>
+<span id="cb8-204"><a href="#cb8-204" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-205"><a href="#cb8-205" aria-hidden="true" tabindex="-1"></a><span class="in">```{r stanresults2,fig.width=10, fig.height=6, out.width="100%",eval=TRUE}</span></span>
+<span id="cb8-206"><a href="#cb8-206" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bayesplot)</span>
+<span id="cb8-207"><a href="#cb8-207" aria-hidden="true" tabindex="-1"></a><span class="fu">color_scheme_set</span>(<span class="st">"viridisA"</span>)</span>
+<span id="cb8-208"><a href="#cb8-208" aria-hidden="true" tabindex="-1"></a>p<span class="ot">&lt;-</span><span class="fu">mcmc_trace</span>(stan_fit_2,<span class="st">"beta[1,1]"</span>)</span>
+<span id="cb8-209"><a href="#cb8-209" aria-hidden="true" tabindex="-1"></a><span class="co">#ggsave("precomputed/vg2_traceplot1_stan.png", p)</span></span>
+<span id="cb8-210"><a href="#cb8-210" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p)</span>
+<span id="cb8-211"><a href="#cb8-211" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-212"><a href="#cb8-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-213"><a href="#cb8-213" aria-hidden="true" tabindex="-1"></a><span class="fu">## Now for the vegas Equivalent Model - overall constant of integration</span></span>
+<span id="cb8-214"><a href="#cb8-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-215"><a href="#cb8-215" aria-hidden="true" tabindex="-1"></a><span class="in">```{python evid_and_a0,include=TRUE,eval=TRUE}</span></span>
+<span id="cb8-216"><a href="#cb8-216" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb8-217"><a href="#cb8-217" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb8-218"><a href="#cb8-218" aria-hidden="true" tabindex="-1"></a><span class="co">#from jax import config</span></span>
+<span id="cb8-219"><a href="#cb8-219" aria-hidden="true" tabindex="-1"></a><span class="co">#config.update("jax_enable_x64", True)  ## if turn this on then vegas need np.array() in function return values</span></span>
+<span id="cb8-220"><a href="#cb8-220" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> jax.numpy <span class="im">as</span> jnp</span>
+<span id="cb8-221"><a href="#cb8-221" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> jax</span>
+<span id="cb8-222"><a href="#cb8-222" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> vegas</span>
+<span id="cb8-223"><a href="#cb8-223" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
+<span id="cb8-224"><a href="#cb8-224" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gvar</span>
+<span id="cb8-225"><a href="#cb8-225" aria-hidden="true" tabindex="-1"></a><span class="co">#import mlx </span></span>
+<span id="cb8-226"><a href="#cb8-226" aria-hidden="true" tabindex="-1"></a><span class="co">#import mlx.core as mx</span></span>
+<span id="cb8-227"><a href="#cb8-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-228"><a href="#cb8-228" aria-hidden="true" tabindex="-1"></a><span class="co">## The data.frame passed is now a panda df needs converted to mlx</span></span>
+<span id="cb8-229"><a href="#cb8-229" aria-hidden="true" tabindex="-1"></a>y_data<span class="op">=</span>jnp.array(thedata.iloc[:, <span class="dv">0</span>].to_numpy(), dtype<span class="op">=</span>jnp.float32)[:,<span class="va">None</span>]</span>
+<span id="cb8-230"><a href="#cb8-230" aria-hidden="true" tabindex="-1"></a>K_vec<span class="op">=</span>jnp.array(thedata.iloc[:, <span class="dv">1</span>].to_numpy())<span class="op">-</span><span class="dv">1</span></span>
+<span id="cb8-231"><a href="#cb8-231" aria-hidden="true" tabindex="-1"></a>T_vec<span class="op">=</span>jnp.array(thedata.iloc[:, <span class="dv">2</span>].to_numpy(), dtype<span class="op">=</span>jnp.float32)[:,<span class="va">None</span>]</span>
+<span id="cb8-232"><a href="#cb8-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-233"><a href="#cb8-233" aria-hidden="true" tabindex="-1"></a><span class="co">#### ------------------------------------------------------------------------------------------------</span></span>
+<span id="cb8-234"><a href="#cb8-234" aria-hidden="true" tabindex="-1"></a><span class="co">#### 1. DEFINE HELPER FUNCTIONS - STATS FUNCTIONS ARE LATER</span></span>
+<span id="cb8-235"><a href="#cb8-235" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> converged(vegasresult, reltol, Qtol):</span>
+<span id="cb8-236"><a href="#cb8-236" aria-hidden="true" tabindex="-1"></a>    res <span class="op">=</span> vegasresult <span class="co"># note this is results object OR vegas.ravg object - both have necessary members</span></span>
+<span id="cb8-237"><a href="#cb8-237" aria-hidden="true" tabindex="-1"></a>    <span class="co"># This returns True if the condition is met, False otherwise</span></span>
+<span id="cb8-238"><a href="#cb8-238" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (<span class="dv">100</span> <span class="op">*</span> (gvar.sdev(res) <span class="op">/</span> gvar.mean(res)) <span class="op">&lt;</span> reltol) <span class="kw">and</span> (res.Q <span class="op">&gt;</span> Qtol)</span>
+<span id="cb8-239"><a href="#cb8-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-240"><a href="#cb8-240" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> runIters(integ,model,warm_nitn,warm_neval,run_nitn,run_neval,iMax,errTol,Qtol,verbose<span class="op">=</span><span class="va">False</span>):</span>
+<span id="cb8-241"><a href="#cb8-241" aria-hidden="true" tabindex="-1"></a>    <span class="co"># RUN VEGAS to hit a given accuracy level AND checks Q</span></span>
+<span id="cb8-242"><a href="#cb8-242" aria-hidden="true" tabindex="-1"></a>    <span class="co"># this runs warmup and sets of iters until specified error is met, 100*sdev/mean &lt; errTol</span></span>
+<span id="cb8-243"><a href="#cb8-243" aria-hidden="true" tabindex="-1"></a>    <span class="co"># e.g. errTol = 0.1 is sd is less than 0.1% of mean</span></span>
+<span id="cb8-244"><a href="#cb8-244" aria-hidden="true" tabindex="-1"></a>    <span class="co"># returns a list comprising of integ() object and a boolean, boolean is to check accuracy was hit</span></span>
+<span id="cb8-245"><a href="#cb8-245" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Warmup grid - do not store results with rest as early grid selection</span></span>
+<span id="cb8-246"><a href="#cb8-246" aria-hidden="true" tabindex="-1"></a>    res_warmup <span class="op">=</span> integ(model, nitn<span class="op">=</span>warm_nitn, neval<span class="op">=</span>warm_neval)</span>
+<span id="cb8-247"><a href="#cb8-247" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Production (Stable Integration)</span></span>
+<span id="cb8-248"><a href="#cb8-248" aria-hidden="true" tabindex="-1"></a>    results1 <span class="op">=</span> integ(model, nitn<span class="op">=</span>run_nitn, neval<span class="op">=</span>run_neval)</span>
+<span id="cb8-249"><a href="#cb8-249" aria-hidden="true" tabindex="-1"></a>    <span class="co"># now check if the desired accuracy is achieved and Q is not too low</span></span>
+<span id="cb8-250"><a href="#cb8-250" aria-hidden="true" tabindex="-1"></a>    i<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb8-251"><a href="#cb8-251" aria-hidden="true" tabindex="-1"></a>    results1itn<span class="op">=</span>results1.itn_results <span class="co"># pull out just iters as array</span></span>
+<span id="cb8-252"><a href="#cb8-252" aria-hidden="true" tabindex="-1"></a>    success <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb8-253"><a href="#cb8-253" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> (<span class="kw">not</span> converged(results1,errTol,Qtol)) <span class="kw">and</span> i<span class="op">&lt;</span>iMax:</span>
+<span id="cb8-254"><a href="#cb8-254" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> verbose:</span>
+<span id="cb8-255"><a href="#cb8-255" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"cumulative iterations=</span><span class="sc">{</span>i<span class="op">*</span>run_nitn<span class="op">+</span>run_nitn<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb8-256"><a href="#cb8-256" aria-hidden="true" tabindex="-1"></a>        <span class="co"># not converged yet so run another set of iterations - each updates grid</span></span>
+<span id="cb8-257"><a href="#cb8-257" aria-hidden="true" tabindex="-1"></a>        results2 <span class="op">=</span> integ(model, nitn<span class="op">=</span>run_nitn, neval<span class="op">=</span>run_neval)</span>
+<span id="cb8-258"><a href="#cb8-258" aria-hidden="true" tabindex="-1"></a>        <span class="co"># combine the results with existing set</span></span>
+<span id="cb8-259"><a href="#cb8-259" aria-hidden="true" tabindex="-1"></a>        results1itn <span class="op">=</span> results1itn<span class="op">+</span>results2.itn_results <span class="co">#existing plus newest</span></span>
+<span id="cb8-260"><a href="#cb8-260" aria-hidden="true" tabindex="-1"></a>        results1<span class="op">=</span>vegas.ravg(results1itn) <span class="co"># this is then passed to while condition to see if more integ() needed</span></span>
+<span id="cb8-261"><a href="#cb8-261" aria-hidden="true" tabindex="-1"></a>        i<span class="op">=</span>i<span class="op">+</span><span class="dv">1</span> <span class="co"># counter to control too many iters</span></span>
+<span id="cb8-262"><a href="#cb8-262" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> i<span class="op">==</span>iMax:</span>
+<span id="cb8-263"><a href="#cb8-263" aria-hidden="true" tabindex="-1"></a>            success<span class="op">=</span><span class="va">False</span></span>
+<span id="cb8-264"><a href="#cb8-264" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">list</span>([results1,success])</span>
+<span id="cb8-265"><a href="#cb8-265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-266"><a href="#cb8-266" aria-hidden="true" tabindex="-1"></a><span class="co">#### ------------------------------------------------------------------------------------------------</span></span>
+<span id="cb8-267"><a href="#cb8-267" aria-hidden="true" tabindex="-1"></a><span class="co">#### 2. DEFINE STATS FUNCTIONS </span></span>
+<span id="cb8-268"><a href="#cb8-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-269"><a href="#cb8-269" aria-hidden="true" tabindex="-1"></a><span class="at">@jax.jit</span></span>
+<span id="cb8-270"><a href="#cb8-270" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> jnp_half_normal_logpdf(x, sigma):</span>
+<span id="cb8-271"><a href="#cb8-271" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Log-constant: log(sqrt(2) / sqrt(pi))</span></span>
+<span id="cb8-272"><a href="#cb8-272" aria-hidden="true" tabindex="-1"></a>    log_const <span class="op">=</span> <span class="fl">0.5</span><span class="op">*</span>(jnp.log(<span class="fl">2.0</span>) <span class="op">-</span> jnp.log(jnp.pi)) <span class="op">-</span> jnp.log(sigma)</span>
+<span id="cb8-273"><a href="#cb8-273" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Log-exponent term</span></span>
+<span id="cb8-274"><a href="#cb8-274" aria-hidden="true" tabindex="-1"></a>    log_exp <span class="op">=</span> <span class="op">-</span>((x<span class="op">*</span>x) <span class="op">/</span> (<span class="fl">2.0</span> <span class="op">*</span> sigma<span class="op">*</span>sigma))</span>
+<span id="cb8-275"><a href="#cb8-275" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> log_const<span class="op">+</span>log_exp</span>
+<span id="cb8-276"><a href="#cb8-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-277"><a href="#cb8-277" aria-hidden="true" tabindex="-1"></a><span class="at">@jax.jit</span></span>
+<span id="cb8-278"><a href="#cb8-278" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> jnp_norm_logpdf(x, loc, scale):</span>
+<span id="cb8-279"><a href="#cb8-279" aria-hidden="true" tabindex="-1"></a>    <span class="co"># -0.5 * ((x - loc) / scale)**2 - log(scale) - 0.5 * log(2 * pi)</span></span>
+<span id="cb8-280"><a href="#cb8-280" aria-hidden="true" tabindex="-1"></a>    log_var <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span> <span class="op">*</span> ((x <span class="op">-</span> loc) <span class="op">/</span> scale)<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb8-281"><a href="#cb8-281" aria-hidden="true" tabindex="-1"></a>    log_const <span class="op">=</span> <span class="op">-</span>jnp.log(scale) <span class="op">-</span> <span class="fl">0.5</span> <span class="op">*</span> math.log(<span class="dv">2</span> <span class="op">*</span> math.pi)</span>
+<span id="cb8-282"><a href="#cb8-282" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> log_var <span class="op">+</span> log_const</span>
+<span id="cb8-283"><a href="#cb8-283" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-284"><a href="#cb8-284" aria-hidden="true" tabindex="-1"></a><span class="co">### SETUP LIKELIHOOD*PRIOR - for full model </span><span class="al">NOTE</span><span class="co">: a0 and a1 are now both vectors/matrices</span></span>
+<span id="cb8-285"><a href="#cb8-285" aria-hidden="true" tabindex="-1"></a><span class="co">###                          to ensure the likelihood is correct, and various syntax changes needed</span></span>
+<span id="cb8-286"><a href="#cb8-286" aria-hidden="true" tabindex="-1"></a><span class="at">@jax.jit</span></span>
+<span id="cb8-287"><a href="#cb8-287" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_log_lik(theta, y,T,K):</span>
+<span id="cb8-288"><a href="#cb8-288" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"shape1={x.shape}\n")</span></span>
+<span id="cb8-289"><a href="#cb8-289" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb8-290"><a href="#cb8-290" aria-hidden="true" tabindex="-1"></a><span class="co">    mu0 ~ normal(0, 2.5);    // vectorized normal priors for hierarchical means (specify SD in normal distn)</span></span>
+<span id="cb8-291"><a href="#cb8-291" aria-hidden="true" tabindex="-1"></a><span class="co">    sigma0 ~ normal(0, 2.5);       // vectorized half-normal priors for hierarchical SDs (specify SD in normal distn)</span></span>
+<span id="cb8-292"><a href="#cb8-292" aria-hidden="true" tabindex="-1"></a><span class="co">    mu1 ~ normal(0, 2.5);    // vectorized normal priors for hierarchical means (specify SD in normal distn)</span></span>
+<span id="cb8-293"><a href="#cb8-293" aria-hidden="true" tabindex="-1"></a><span class="co">    sigma1 ~ normal(0, 2.5);</span></span>
+<span id="cb8-294"><a href="#cb8-294" aria-hidden="true" tabindex="-1"></a><span class="co">    a0 ~ normal(mu0,sigma0)</span></span>
+<span id="cb8-295"><a href="#cb8-295" aria-hidden="true" tabindex="-1"></a><span class="co">    a1 ~ normal(mu1,sigma1)</span></span>
+<span id="cb8-296"><a href="#cb8-296" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb8-297"><a href="#cb8-297" aria-hidden="true" tabindex="-1"></a><span class="co">    logL + logpdf(a0|mu0,sigma0) + logpdf(a1|mu1,sigma1) + logpdf(mu0) + logpdf(m1) + logpdf(sigma0) + logpdf(sigma1)</span></span>
+<span id="cb8-298"><a href="#cb8-298" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb8-299"><a href="#cb8-299" aria-hidden="true" tabindex="-1"></a><span class="co">    logL = sum_i^n ( y_i*(a0+a1*T_i) - log(1+ exp(a0+a1*T_i) )  )</span></span>
 <span id="cb8-300"><a href="#cb8-300" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
-<span id="cb8-301"><a href="#cb8-301" aria-hidden="true" tabindex="-1"></a><span class="co">    logL + logpdf(a0|mu0,sigma0) + logpdf(a1|mu1,sigma1) + logpdf(mu0) + logpdf(m1) + logpdf(sigma0) + logpdf(sigma1)</span></span>
-<span id="cb8-302"><a href="#cb8-302" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
-<span id="cb8-303"><a href="#cb8-303" aria-hidden="true" tabindex="-1"></a><span class="co">    logL = sum_i^n ( y_i*(a0+a1*T_i) - log(1+ exp(a0+a1*T_i) )  )</span></span>
-<span id="cb8-304"><a href="#cb8-304" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
-<span id="cb8-305"><a href="#cb8-305" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb8-306"><a href="#cb8-306" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb8-307"><a href="#cb8-307" aria-hidden="true" tabindex="-1"></a>    theta0<span class="op">=</span>jnp.clip(theta[<span class="dv">0</span>:<span class="dv">2</span>,:],<span class="op">-</span><span class="fl">0.999</span>, <span class="fl">0.999</span>)</span>
-<span id="cb8-308"><a href="#cb8-308" aria-hidden="true" tabindex="-1"></a>    theta1<span class="op">=</span>jnp.clip(theta[<span class="dv">2</span>:<span class="dv">4</span>,:],<span class="op">-</span><span class="fl">0.999</span>, <span class="fl">0.999</span>)</span>
-<span id="cb8-309"><a href="#cb8-309" aria-hidden="true" tabindex="-1"></a>    theta2<span class="op">=</span>jnp.clip(theta[<span class="dv">4</span>,:],<span class="op">-</span><span class="fl">0.999</span>, <span class="fl">0.999</span>)</span>
-<span id="cb8-310"><a href="#cb8-310" aria-hidden="true" tabindex="-1"></a>    theta3<span class="op">=</span>jnp.clip(theta[<span class="dv">5</span>,:],<span class="op">-</span><span class="fl">0.999</span>, <span class="fl">0.999</span>)</span>
-<span id="cb8-311"><a href="#cb8-311" aria-hidden="true" tabindex="-1"></a>    theta4<span class="op">=</span>jnp.clip(theta[<span class="dv">6</span>,:],<span class="fl">0.00001</span>, <span class="fl">0.999</span>)</span>
-<span id="cb8-312"><a href="#cb8-312" aria-hidden="true" tabindex="-1"></a>    theta5<span class="op">=</span>jnp.clip(theta[<span class="dv">7</span>,:],<span class="fl">0.00001</span>, <span class="fl">0.999</span>)</span>
-<span id="cb8-313"><a href="#cb8-313" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb8-314"><a href="#cb8-314" aria-hidden="true" tabindex="-1"></a>    <span class="co"># break jacobian up as otherwise @jnp.compile can fail - need to keep it fairly simple</span></span>
-<span id="cb8-315"><a href="#cb8-315" aria-hidden="true" tabindex="-1"></a>    jacobianLA <span class="op">=</span> ( jnp.<span class="bu">sum</span>(jnp.log1p(jnp.power(theta0,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>jnp.log1p(<span class="op">-</span>jnp.power(theta0,<span class="dv">2</span>)),axis<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb8-316"><a href="#cb8-316" aria-hidden="true" tabindex="-1"></a>                <span class="op">+</span> jnp.<span class="bu">sum</span>(jnp.log1p(jnp.power(theta1,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>jnp.log1p(<span class="op">-</span>jnp.power(theta1,<span class="dv">2</span>)),axis<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb8-317"><a href="#cb8-317" aria-hidden="true" tabindex="-1"></a>                )</span>
-<span id="cb8-318"><a href="#cb8-318" aria-hidden="true" tabindex="-1"></a>                </span>
-<span id="cb8-319"><a href="#cb8-319" aria-hidden="true" tabindex="-1"></a>    jacobianLB <span class="op">=</span> jacobianLA <span class="op">+</span> (</span>
-<span id="cb8-320"><a href="#cb8-320" aria-hidden="true" tabindex="-1"></a>                jnp.log1p(jnp.power(theta2,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>jnp.log1p(<span class="op">-</span>jnp.power(theta2,<span class="dv">2</span>)) <span class="op">+</span> </span>
-<span id="cb8-321"><a href="#cb8-321" aria-hidden="true" tabindex="-1"></a>                jnp.log1p(jnp.power(theta3,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>jnp.log1p(<span class="op">-</span>jnp.power(theta3,<span class="dv">2</span>)) <span class="op">+</span> </span>
-<span id="cb8-322"><a href="#cb8-322" aria-hidden="true" tabindex="-1"></a>                jnp.log1p(jnp.power(theta4,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>jnp.log1p(<span class="op">-</span>jnp.power(theta4,<span class="dv">2</span>)) <span class="op">+</span> </span>
-<span id="cb8-323"><a href="#cb8-323" aria-hidden="true" tabindex="-1"></a>                jnp.log1p(jnp.power(theta5,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>jnp.log1p(<span class="op">-</span>jnp.power(theta5,<span class="dv">2</span>)) </span>
-<span id="cb8-324"><a href="#cb8-324" aria-hidden="true" tabindex="-1"></a>                )</span>
-<span id="cb8-325"><a href="#cb8-325" aria-hidden="true" tabindex="-1"></a>                 </span>
-<span id="cb8-326"><a href="#cb8-326" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"jacobian={jacobianL}\n")             </span></span>
-<span id="cb8-327"><a href="#cb8-327" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-328"><a href="#cb8-328" aria-hidden="true" tabindex="-1"></a>    a0<span class="op">=</span>theta0<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>jnp.power(theta0,<span class="dv">2</span>))</span>
-<span id="cb8-329"><a href="#cb8-329" aria-hidden="true" tabindex="-1"></a>    a1<span class="op">=</span>theta1<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>jnp.power(theta1,<span class="dv">2</span>))</span>
-<span id="cb8-330"><a href="#cb8-330" aria-hidden="true" tabindex="-1"></a>    mu0<span class="op">=</span>theta2<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>jnp.power(theta2,<span class="dv">2</span>))</span>
-<span id="cb8-331"><a href="#cb8-331" aria-hidden="true" tabindex="-1"></a>    mu1<span class="op">=</span>theta3<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>jnp.power(theta3,<span class="dv">2</span>))</span>
-<span id="cb8-332"><a href="#cb8-332" aria-hidden="true" tabindex="-1"></a>    sigma0<span class="op">=</span>theta4<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>jnp.power(theta4,<span class="dv">2</span>))</span>
-<span id="cb8-333"><a href="#cb8-333" aria-hidden="true" tabindex="-1"></a>    sigma1<span class="op">=</span>theta5<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>jnp.power(theta5,<span class="dv">2</span>))</span>
-<span id="cb8-334"><a href="#cb8-334" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"a0={a0} a1={a1} mu0={mu0} mu1={mu1} sigma0={sigma0} sigma1={sigma1}\n")</span></span>
-<span id="cb8-335"><a href="#cb8-335" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb8-336"><a href="#cb8-336" aria-hidden="true" tabindex="-1"></a>    eta<span class="op">=</span>a0[K]<span class="op">+</span>a1[K]<span class="op">*</span>T <span class="co"># (10,3) where T_vec = (3,) and (10,1) broadcast to (10,3)  </span></span>
-<span id="cb8-337"><a href="#cb8-337" aria-hidden="true" tabindex="-1"></a>    <span class="co"># y_data*eta - jnp.log(1+jnp.exp(eta)) this is (10,3) - want col sums, so collapse over rows</span></span>
-<span id="cb8-338"><a href="#cb8-338" aria-hidden="true" tabindex="-1"></a>    logL <span class="op">=</span> jnp.<span class="bu">sum</span>(y<span class="op">*</span>eta <span class="op">-</span> jnp.log1p(jnp.exp(eta)),axis<span class="op">=</span><span class="dv">0</span>) <span class="co">#</span></span>
-<span id="cb8-339"><a href="#cb8-339" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"logL={logL}\n")</span></span>
-<span id="cb8-340"><a href="#cb8-340" aria-hidden="true" tabindex="-1"></a>    <span class="co"># now add the priors</span></span>
-<span id="cb8-341"><a href="#cb8-341" aria-hidden="true" tabindex="-1"></a>    <span class="co"># simple N(0,sd=10)</span></span>
-<span id="cb8-342"><a href="#cb8-342" aria-hidden="true" tabindex="-1"></a>    prior_a0 <span class="op">=</span> jnp_norm_logpdf(a0,loc<span class="op">=</span>mu0,scale<span class="op">=</span>sigma0)</span>
-<span id="cb8-343"><a href="#cb8-343" aria-hidden="true" tabindex="-1"></a>    prior_a1 <span class="op">=</span> jnp_norm_logpdf(a1,loc<span class="op">=</span>mu1,scale<span class="op">=</span>sigma1)</span>
-<span id="cb8-344"><a href="#cb8-344" aria-hidden="true" tabindex="-1"></a>    prior_mu0 <span class="op">=</span> jnp_norm_logpdf(mu0,loc<span class="op">=</span><span class="fl">0.</span>,scale<span class="op">=</span><span class="fl">2.5</span>)</span>
-<span id="cb8-345"><a href="#cb8-345" aria-hidden="true" tabindex="-1"></a>    prior_mu1 <span class="op">=</span> jnp_norm_logpdf(mu1,loc<span class="op">=</span><span class="fl">0.</span>,scale<span class="op">=</span><span class="fl">2.5</span>)</span>
-<span id="cb8-346"><a href="#cb8-346" aria-hidden="true" tabindex="-1"></a>    prior_sigma0 <span class="op">=</span> jnp_half_normal_logpdf(sigma0, <span class="fl">2.5</span>)</span>
-<span id="cb8-347"><a href="#cb8-347" aria-hidden="true" tabindex="-1"></a>    prior_sigma1 <span class="op">=</span> jnp_half_normal_logpdf(sigma1, <span class="fl">2.5</span>)</span>
-<span id="cb8-348"><a href="#cb8-348" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb8-349"><a href="#cb8-349" aria-hidden="true" tabindex="-1"></a>    logDens <span class="op">=</span> logL <span class="op">+</span> jnp.<span class="bu">sum</span>(prior_a0,axis<span class="op">=</span><span class="dv">0</span>) <span class="op">+</span> jnp.<span class="bu">sum</span>(prior_a1,axis<span class="op">=</span><span class="dv">0</span>) <span class="op">+</span> prior_mu0 <span class="op">+</span> prior_mu1 <span class="op">+</span> prior_sigma0 <span class="op">+</span> prior_sigma1</span>
-<span id="cb8-350"><a href="#cb8-350" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"logDens={logDens}\n")</span></span>
-<span id="cb8-351"><a href="#cb8-351" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (logDens <span class="op">+</span> jacobianLB) <span class="co"># this will be (3,)</span></span>
-<span id="cb8-352"><a href="#cb8-352" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-353"><a href="#cb8-353" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Setup Vegas with a Shifting Logic</span></span>
-<span id="cb8-354"><a href="#cb8-354" aria-hidden="true" tabindex="-1"></a><span class="at">@vegas.rbatchintegrand</span></span>
-<span id="cb8-355"><a href="#cb8-355" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> StableLikelihood:</span>
-<span id="cb8-356"><a href="#cb8-356" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, y, T,K):</span>
-<span id="cb8-357"><a href="#cb8-357" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.y <span class="op">=</span> y</span>
-<span id="cb8-358"><a href="#cb8-358" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.T <span class="op">=</span> T</span>
-<span id="cb8-359"><a href="#cb8-359" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.l_max <span class="op">=</span> <span class="fl">0.0</span> <span class="co"># Will be updated after warm-up</span></span>
-<span id="cb8-360"><a href="#cb8-360" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.K <span class="op">=</span> K</span>
-<span id="cb8-361"><a href="#cb8-361" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-362"><a href="#cb8-362" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__call__</span>(<span class="va">self</span>, theta):</span>
-<span id="cb8-363"><a href="#cb8-363" aria-hidden="true" tabindex="-1"></a>        theta_mlx <span class="op">=</span> jnp.array(theta)</span>
-<span id="cb8-364"><a href="#cb8-364" aria-hidden="true" tabindex="-1"></a>        log_lik <span class="op">=</span> compute_log_lik(theta_mlx, <span class="va">self</span>.y,<span class="va">self</span>.T,<span class="va">self</span>.K)</span>
-<span id="cb8-365"><a href="#cb8-365" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb8-366"><a href="#cb8-366" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Shift by the maximum found so far</span></span>
-<span id="cb8-367"><a href="#cb8-367" aria-hidden="true" tabindex="-1"></a>        <span class="co"># This keeps the result near 1.0 instead of 1e-300</span></span>
-<span id="cb8-368"><a href="#cb8-368" aria-hidden="true" tabindex="-1"></a>        <span class="co">## return np.array(jnp.exp(log_lik - self.l_max)) # need this is using x64 - vegas expects np</span></span>
-<span id="cb8-369"><a href="#cb8-369" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> jnp.exp(log_lik <span class="op">-</span> <span class="va">self</span>.l_max)</span>
+<span id="cb8-301"><a href="#cb8-301" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb8-302"><a href="#cb8-302" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-303"><a href="#cb8-303" aria-hidden="true" tabindex="-1"></a>    theta0<span class="op">=</span>jnp.clip(theta[<span class="dv">0</span>:<span class="dv">2</span>,:],<span class="op">-</span><span class="fl">0.999</span>, <span class="fl">0.999</span>)</span>
+<span id="cb8-304"><a href="#cb8-304" aria-hidden="true" tabindex="-1"></a>    theta1<span class="op">=</span>jnp.clip(theta[<span class="dv">2</span>:<span class="dv">4</span>,:],<span class="op">-</span><span class="fl">0.999</span>, <span class="fl">0.999</span>)</span>
+<span id="cb8-305"><a href="#cb8-305" aria-hidden="true" tabindex="-1"></a>    theta2<span class="op">=</span>jnp.clip(theta[<span class="dv">4</span>,:],<span class="op">-</span><span class="fl">0.999</span>, <span class="fl">0.999</span>)</span>
+<span id="cb8-306"><a href="#cb8-306" aria-hidden="true" tabindex="-1"></a>    theta3<span class="op">=</span>jnp.clip(theta[<span class="dv">5</span>,:],<span class="op">-</span><span class="fl">0.999</span>, <span class="fl">0.999</span>)</span>
+<span id="cb8-307"><a href="#cb8-307" aria-hidden="true" tabindex="-1"></a>    theta4<span class="op">=</span>jnp.clip(theta[<span class="dv">6</span>,:],<span class="fl">0.00001</span>, <span class="fl">0.999</span>)</span>
+<span id="cb8-308"><a href="#cb8-308" aria-hidden="true" tabindex="-1"></a>    theta5<span class="op">=</span>jnp.clip(theta[<span class="dv">7</span>,:],<span class="fl">0.00001</span>, <span class="fl">0.999</span>)</span>
+<span id="cb8-309"><a href="#cb8-309" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-310"><a href="#cb8-310" aria-hidden="true" tabindex="-1"></a>    <span class="co"># break jacobian up as otherwise @jnp.compile can fail - need to keep it fairly simple</span></span>
+<span id="cb8-311"><a href="#cb8-311" aria-hidden="true" tabindex="-1"></a>    jacobianLA <span class="op">=</span> ( jnp.<span class="bu">sum</span>(jnp.log1p(jnp.power(theta0,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>jnp.log1p(<span class="op">-</span>jnp.power(theta0,<span class="dv">2</span>)),axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb8-312"><a href="#cb8-312" aria-hidden="true" tabindex="-1"></a>                <span class="op">+</span> jnp.<span class="bu">sum</span>(jnp.log1p(jnp.power(theta1,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>jnp.log1p(<span class="op">-</span>jnp.power(theta1,<span class="dv">2</span>)),axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb8-313"><a href="#cb8-313" aria-hidden="true" tabindex="-1"></a>                )</span>
+<span id="cb8-314"><a href="#cb8-314" aria-hidden="true" tabindex="-1"></a>                </span>
+<span id="cb8-315"><a href="#cb8-315" aria-hidden="true" tabindex="-1"></a>    jacobianLB <span class="op">=</span> jacobianLA <span class="op">+</span> (</span>
+<span id="cb8-316"><a href="#cb8-316" aria-hidden="true" tabindex="-1"></a>                jnp.log1p(jnp.power(theta2,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>jnp.log1p(<span class="op">-</span>jnp.power(theta2,<span class="dv">2</span>)) <span class="op">+</span> </span>
+<span id="cb8-317"><a href="#cb8-317" aria-hidden="true" tabindex="-1"></a>                jnp.log1p(jnp.power(theta3,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>jnp.log1p(<span class="op">-</span>jnp.power(theta3,<span class="dv">2</span>)) <span class="op">+</span> </span>
+<span id="cb8-318"><a href="#cb8-318" aria-hidden="true" tabindex="-1"></a>                jnp.log1p(jnp.power(theta4,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>jnp.log1p(<span class="op">-</span>jnp.power(theta4,<span class="dv">2</span>)) <span class="op">+</span> </span>
+<span id="cb8-319"><a href="#cb8-319" aria-hidden="true" tabindex="-1"></a>                jnp.log1p(jnp.power(theta5,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>jnp.log1p(<span class="op">-</span>jnp.power(theta5,<span class="dv">2</span>)) </span>
+<span id="cb8-320"><a href="#cb8-320" aria-hidden="true" tabindex="-1"></a>                )</span>
+<span id="cb8-321"><a href="#cb8-321" aria-hidden="true" tabindex="-1"></a>                 </span>
+<span id="cb8-322"><a href="#cb8-322" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"jacobian={jacobianL}\n")             </span></span>
+<span id="cb8-323"><a href="#cb8-323" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-324"><a href="#cb8-324" aria-hidden="true" tabindex="-1"></a>    a0<span class="op">=</span>theta0<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>jnp.power(theta0,<span class="dv">2</span>))</span>
+<span id="cb8-325"><a href="#cb8-325" aria-hidden="true" tabindex="-1"></a>    a1<span class="op">=</span>theta1<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>jnp.power(theta1,<span class="dv">2</span>))</span>
+<span id="cb8-326"><a href="#cb8-326" aria-hidden="true" tabindex="-1"></a>    mu0<span class="op">=</span>theta2<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>jnp.power(theta2,<span class="dv">2</span>))</span>
+<span id="cb8-327"><a href="#cb8-327" aria-hidden="true" tabindex="-1"></a>    mu1<span class="op">=</span>theta3<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>jnp.power(theta3,<span class="dv">2</span>))</span>
+<span id="cb8-328"><a href="#cb8-328" aria-hidden="true" tabindex="-1"></a>    sigma0<span class="op">=</span>theta4<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>jnp.power(theta4,<span class="dv">2</span>))</span>
+<span id="cb8-329"><a href="#cb8-329" aria-hidden="true" tabindex="-1"></a>    sigma1<span class="op">=</span>theta5<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>jnp.power(theta5,<span class="dv">2</span>))</span>
+<span id="cb8-330"><a href="#cb8-330" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"a0={a0} a1={a1} mu0={mu0} mu1={mu1} sigma0={sigma0} sigma1={sigma1}\n")</span></span>
+<span id="cb8-331"><a href="#cb8-331" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-332"><a href="#cb8-332" aria-hidden="true" tabindex="-1"></a>    eta<span class="op">=</span>a0[K]<span class="op">+</span>a1[K]<span class="op">*</span>T <span class="co"># (10,3) where T_vec = (3,) and (10,1) broadcast to (10,3)  </span></span>
+<span id="cb8-333"><a href="#cb8-333" aria-hidden="true" tabindex="-1"></a>    <span class="co"># y_data*eta - jnp.log(1+jnp.exp(eta)) this is (10,3) - want col sums, so collapse over rows</span></span>
+<span id="cb8-334"><a href="#cb8-334" aria-hidden="true" tabindex="-1"></a>    logL <span class="op">=</span> jnp.<span class="bu">sum</span>(y<span class="op">*</span>eta <span class="op">-</span> jnp.log1p(jnp.exp(eta)),axis<span class="op">=</span><span class="dv">0</span>) <span class="co">#</span></span>
+<span id="cb8-335"><a href="#cb8-335" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"logL={logL}\n")</span></span>
+<span id="cb8-336"><a href="#cb8-336" aria-hidden="true" tabindex="-1"></a>    <span class="co"># now add the priors</span></span>
+<span id="cb8-337"><a href="#cb8-337" aria-hidden="true" tabindex="-1"></a>    <span class="co"># simple N(0,sd=10)</span></span>
+<span id="cb8-338"><a href="#cb8-338" aria-hidden="true" tabindex="-1"></a>    prior_a0 <span class="op">=</span> jnp_norm_logpdf(a0,loc<span class="op">=</span>mu0,scale<span class="op">=</span>sigma0)</span>
+<span id="cb8-339"><a href="#cb8-339" aria-hidden="true" tabindex="-1"></a>    prior_a1 <span class="op">=</span> jnp_norm_logpdf(a1,loc<span class="op">=</span>mu1,scale<span class="op">=</span>sigma1)</span>
+<span id="cb8-340"><a href="#cb8-340" aria-hidden="true" tabindex="-1"></a>    prior_mu0 <span class="op">=</span> jnp_norm_logpdf(mu0,loc<span class="op">=</span><span class="fl">0.</span>,scale<span class="op">=</span><span class="fl">2.5</span>)</span>
+<span id="cb8-341"><a href="#cb8-341" aria-hidden="true" tabindex="-1"></a>    prior_mu1 <span class="op">=</span> jnp_norm_logpdf(mu1,loc<span class="op">=</span><span class="fl">0.</span>,scale<span class="op">=</span><span class="fl">2.5</span>)</span>
+<span id="cb8-342"><a href="#cb8-342" aria-hidden="true" tabindex="-1"></a>    prior_sigma0 <span class="op">=</span> jnp_half_normal_logpdf(sigma0, <span class="fl">2.5</span>)</span>
+<span id="cb8-343"><a href="#cb8-343" aria-hidden="true" tabindex="-1"></a>    prior_sigma1 <span class="op">=</span> jnp_half_normal_logpdf(sigma1, <span class="fl">2.5</span>)</span>
+<span id="cb8-344"><a href="#cb8-344" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-345"><a href="#cb8-345" aria-hidden="true" tabindex="-1"></a>    logDens <span class="op">=</span> logL <span class="op">+</span> jnp.<span class="bu">sum</span>(prior_a0,axis<span class="op">=</span><span class="dv">0</span>) <span class="op">+</span> jnp.<span class="bu">sum</span>(prior_a1,axis<span class="op">=</span><span class="dv">0</span>) <span class="op">+</span> prior_mu0 <span class="op">+</span> prior_mu1 <span class="op">+</span> prior_sigma0 <span class="op">+</span> prior_sigma1</span>
+<span id="cb8-346"><a href="#cb8-346" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"logDens={logDens}\n")</span></span>
+<span id="cb8-347"><a href="#cb8-347" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (logDens <span class="op">+</span> jacobianLB) <span class="co"># this will be (3,)</span></span>
+<span id="cb8-348"><a href="#cb8-348" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-349"><a href="#cb8-349" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Setup Vegas with a Shifting Logic</span></span>
+<span id="cb8-350"><a href="#cb8-350" aria-hidden="true" tabindex="-1"></a><span class="at">@vegas.rbatchintegrand</span></span>
+<span id="cb8-351"><a href="#cb8-351" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> StableLikelihood:</span>
+<span id="cb8-352"><a href="#cb8-352" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, y, T,K):</span>
+<span id="cb8-353"><a href="#cb8-353" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.y <span class="op">=</span> y</span>
+<span id="cb8-354"><a href="#cb8-354" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.T <span class="op">=</span> T</span>
+<span id="cb8-355"><a href="#cb8-355" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.l_max <span class="op">=</span> <span class="fl">0.0</span> <span class="co"># Will be updated after warm-up</span></span>
+<span id="cb8-356"><a href="#cb8-356" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.K <span class="op">=</span> K</span>
+<span id="cb8-357"><a href="#cb8-357" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-358"><a href="#cb8-358" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__call__</span>(<span class="va">self</span>, theta):</span>
+<span id="cb8-359"><a href="#cb8-359" aria-hidden="true" tabindex="-1"></a>        theta_mlx <span class="op">=</span> jnp.array(theta)</span>
+<span id="cb8-360"><a href="#cb8-360" aria-hidden="true" tabindex="-1"></a>        log_lik <span class="op">=</span> compute_log_lik(theta_mlx, <span class="va">self</span>.y,<span class="va">self</span>.T,<span class="va">self</span>.K)</span>
+<span id="cb8-361"><a href="#cb8-361" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb8-362"><a href="#cb8-362" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Shift by the maximum found so far</span></span>
+<span id="cb8-363"><a href="#cb8-363" aria-hidden="true" tabindex="-1"></a>        <span class="co"># This keeps the result near 1.0 instead of 1e-300</span></span>
+<span id="cb8-364"><a href="#cb8-364" aria-hidden="true" tabindex="-1"></a>        <span class="co">## return np.array(jnp.exp(log_lik - self.l_max)) # need this is using x64 - vegas expects np</span></span>
+<span id="cb8-365"><a href="#cb8-365" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> jnp.exp(log_lik <span class="op">-</span> <span class="va">self</span>.l_max)</span>
+<span id="cb8-366"><a href="#cb8-366" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-367"><a href="#cb8-367" aria-hidden="true" tabindex="-1"></a><span class="co">#### ------------------------------------------------------------------------------------------------</span></span>
+<span id="cb8-368"><a href="#cb8-368" aria-hidden="true" tabindex="-1"></a><span class="co">#### 3. COMPUTE EVIDENCE - overall denominator </span></span>
+<span id="cb8-369"><a href="#cb8-369" aria-hidden="true" tabindex="-1"></a><span class="co">#### ------------------------------------------------------------------------------------------------</span></span>
 <span id="cb8-370"><a href="#cb8-370" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-371"><a href="#cb8-371" aria-hidden="true" tabindex="-1"></a><span class="co">#### ------------------------------------------------------------------------------------------------</span></span>
-<span id="cb8-372"><a href="#cb8-372" aria-hidden="true" tabindex="-1"></a><span class="co">#### 3. COMPUTE EVIDENCE - overall denominator </span></span>
-<span id="cb8-373"><a href="#cb8-373" aria-hidden="true" tabindex="-1"></a><span class="co">#### ------------------------------------------------------------------------------------------------</span></span>
-<span id="cb8-374"><a href="#cb8-374" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-375"><a href="#cb8-375" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> StableLikelihood(y<span class="op">=</span>y_data,T<span class="op">=</span>T_vec,K<span class="op">=</span>K_vec)</span>
-<span id="cb8-376"><a href="#cb8-376" aria-hidden="true" tabindex="-1"></a>start <span class="op">=</span> jnp.array([<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="fl">0.0001</span>,<span class="fl">0.0001</span>],dtype<span class="op">=</span>jnp.float32) <span class="co"># a0 a1</span></span>
-<span id="cb8-377"><a href="#cb8-377" aria-hidden="true" tabindex="-1"></a>stop <span class="op">=</span> jnp.array([<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>],dtype<span class="op">=</span>jnp.float32)   <span class="co"># a0 a1</span></span>
-<span id="cb8-378"><a href="#cb8-378" aria-hidden="true" tabindex="-1"></a>searchPts<span class="op">=</span>jnp.array(np.array(jnp.transpose(jnp.linspace(start, stop, <span class="dv">10</span>))), dtype<span class="op">=</span>jnp.float32)</span>
-<span id="cb8-379"><a href="#cb8-379" aria-hidden="true" tabindex="-1"></a><span class="co"># theta=searchPts[:,0:5]</span></span>
-<span id="cb8-380"><a href="#cb8-380" aria-hidden="true" tabindex="-1"></a>model.l_max<span class="op">=</span>jnp.<span class="bu">max</span>(compute_log_lik(searchPts, model.y,model.T,model.K))</span>
+<span id="cb8-371"><a href="#cb8-371" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> StableLikelihood(y<span class="op">=</span>y_data,T<span class="op">=</span>T_vec,K<span class="op">=</span>K_vec)</span>
+<span id="cb8-372"><a href="#cb8-372" aria-hidden="true" tabindex="-1"></a>start <span class="op">=</span> jnp.array([<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="fl">0.0001</span>,<span class="fl">0.0001</span>],dtype<span class="op">=</span>jnp.float32) <span class="co"># a0 a1</span></span>
+<span id="cb8-373"><a href="#cb8-373" aria-hidden="true" tabindex="-1"></a>stop <span class="op">=</span> jnp.array([<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>],dtype<span class="op">=</span>jnp.float32)   <span class="co"># a0 a1</span></span>
+<span id="cb8-374"><a href="#cb8-374" aria-hidden="true" tabindex="-1"></a>searchPts<span class="op">=</span>jnp.array(np.array(jnp.transpose(jnp.linspace(start, stop, <span class="dv">10</span>))), dtype<span class="op">=</span>jnp.float32)</span>
+<span id="cb8-375"><a href="#cb8-375" aria-hidden="true" tabindex="-1"></a><span class="co"># theta=searchPts[:,0:5]</span></span>
+<span id="cb8-376"><a href="#cb8-376" aria-hidden="true" tabindex="-1"></a>model.l_max<span class="op">=</span>jnp.<span class="bu">max</span>(compute_log_lik(searchPts, model.y,model.T,model.K))</span>
+<span id="cb8-377"><a href="#cb8-377" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-378"><a href="#cb8-378" aria-hidden="true" tabindex="-1"></a><span class="co">### this is manual check to see if the mode has the highest functional value - approx mode from stan</span></span>
+<span id="cb8-379"><a href="#cb8-379" aria-hidden="true" tabindex="-1"></a><span class="co"># we are using transformation from y into x/1-x^2 to give is -inf, +inf into -1, 1 so need inverse trans</span></span>
+<span id="cb8-380"><a href="#cb8-380" aria-hidden="true" tabindex="-1"></a><span class="co"># as we know mode of -inf, +inf parameters but need this on -1,1 hence revmap does inverse of y=x/(1-x^2)</span></span>
 <span id="cb8-381"><a href="#cb8-381" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-382"><a href="#cb8-382" aria-hidden="true" tabindex="-1"></a><span class="co">### this is manual check to see if the mode has the highest functional value - approx mode from stan</span></span>
-<span id="cb8-383"><a href="#cb8-383" aria-hidden="true" tabindex="-1"></a><span class="co"># we are using transformation from y into x/1-x^2 to give is -inf, +inf into -1, 1 so need inverse trans</span></span>
-<span id="cb8-384"><a href="#cb8-384" aria-hidden="true" tabindex="-1"></a><span class="co"># as we know mode of -inf, +inf parameters but need this on -1,1 hence revmap does inverse of y=x/(1-x^2)</span></span>
-<span id="cb8-385"><a href="#cb8-385" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-386"><a href="#cb8-386" aria-hidden="true" tabindex="-1"></a>a00<span class="op">=-</span><span class="fl">0.96</span></span>
-<span id="cb8-387"><a href="#cb8-387" aria-hidden="true" tabindex="-1"></a>a01<span class="op">=-</span><span class="fl">0.84</span></span>
-<span id="cb8-388"><a href="#cb8-388" aria-hidden="true" tabindex="-1"></a>a10<span class="op">=</span><span class="fl">0.83</span></span>
-<span id="cb8-389"><a href="#cb8-389" aria-hidden="true" tabindex="-1"></a>a11<span class="op">=</span><span class="fl">0.56</span></span>
-<span id="cb8-390"><a href="#cb8-390" aria-hidden="true" tabindex="-1"></a>mu0<span class="op">=-</span><span class="fl">0.8</span></span>
-<span id="cb8-391"><a href="#cb8-391" aria-hidden="true" tabindex="-1"></a>mu1<span class="op">=</span><span class="fl">0.67</span></span>
-<span id="cb8-392"><a href="#cb8-392" aria-hidden="true" tabindex="-1"></a>sigma0<span class="op">=</span><span class="fl">0.86</span></span>
-<span id="cb8-393"><a href="#cb8-393" aria-hidden="true" tabindex="-1"></a>sigma1<span class="op">=</span><span class="fl">1.03</span></span>
-<span id="cb8-394"><a href="#cb8-394" aria-hidden="true" tabindex="-1"></a><span class="co"># to check log Like could also remove jaco term in log_like function above as a check</span></span>
-<span id="cb8-395"><a href="#cb8-395" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> revmap(x):</span>
-<span id="cb8-396"><a href="#cb8-396" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span>( (<span class="dv">2</span><span class="op">*</span>x)<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span> np.sqrt(<span class="dv">1</span><span class="op">+</span><span class="dv">4</span><span class="op">*</span>x<span class="op">*</span>x)))</span>
+<span id="cb8-382"><a href="#cb8-382" aria-hidden="true" tabindex="-1"></a>a00<span class="op">=-</span><span class="fl">0.96</span></span>
+<span id="cb8-383"><a href="#cb8-383" aria-hidden="true" tabindex="-1"></a>a01<span class="op">=-</span><span class="fl">0.84</span></span>
+<span id="cb8-384"><a href="#cb8-384" aria-hidden="true" tabindex="-1"></a>a10<span class="op">=</span><span class="fl">0.83</span></span>
+<span id="cb8-385"><a href="#cb8-385" aria-hidden="true" tabindex="-1"></a>a11<span class="op">=</span><span class="fl">0.56</span></span>
+<span id="cb8-386"><a href="#cb8-386" aria-hidden="true" tabindex="-1"></a>mu0<span class="op">=-</span><span class="fl">0.8</span></span>
+<span id="cb8-387"><a href="#cb8-387" aria-hidden="true" tabindex="-1"></a>mu1<span class="op">=</span><span class="fl">0.67</span></span>
+<span id="cb8-388"><a href="#cb8-388" aria-hidden="true" tabindex="-1"></a>sigma0<span class="op">=</span><span class="fl">0.86</span></span>
+<span id="cb8-389"><a href="#cb8-389" aria-hidden="true" tabindex="-1"></a>sigma1<span class="op">=</span><span class="fl">1.03</span></span>
+<span id="cb8-390"><a href="#cb8-390" aria-hidden="true" tabindex="-1"></a><span class="co"># to check log Like could also remove jaco term in log_like function above as a check</span></span>
+<span id="cb8-391"><a href="#cb8-391" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> revmap(x):</span>
+<span id="cb8-392"><a href="#cb8-392" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span>( (<span class="dv">2</span><span class="op">*</span>x)<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span> np.sqrt(<span class="dv">1</span><span class="op">+</span><span class="dv">4</span><span class="op">*</span>x<span class="op">*</span>x)))</span>
+<span id="cb8-393"><a href="#cb8-393" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-394"><a href="#cb8-394" aria-hidden="true" tabindex="-1"></a><span class="co"># this should give us a high point of the function (inc. jacobian)</span></span>
+<span id="cb8-395"><a href="#cb8-395" aria-hidden="true" tabindex="-1"></a>testPts<span class="op">=</span>jnp.array([[revmap(a00)],[revmap(a01)],[revmap(a10)],[revmap(a11)],[revmap(mu0)],[revmap(mu1)],[revmap(sigma0)],[revmap(sigma1)]], dtype<span class="op">=</span>jnp.float32)</span>
+<span id="cb8-396"><a href="#cb8-396" aria-hidden="true" tabindex="-1"></a>compute_log_lik(testPts, model.y,model.T,model.K)</span>
 <span id="cb8-397"><a href="#cb8-397" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-398"><a href="#cb8-398" aria-hidden="true" tabindex="-1"></a><span class="co"># this should give us a high point of the function (inc. jacobian)</span></span>
-<span id="cb8-399"><a href="#cb8-399" aria-hidden="true" tabindex="-1"></a>testPts<span class="op">=</span>jnp.array([[revmap(a00)],[revmap(a01)],[revmap(a10)],[revmap(a11)],[revmap(mu0)],[revmap(mu1)],[revmap(sigma0)],[revmap(sigma1)]], dtype<span class="op">=</span>jnp.float32)</span>
-<span id="cb8-400"><a href="#cb8-400" aria-hidden="true" tabindex="-1"></a>compute_log_lik(testPts, model.y,model.T,model.K)</span>
-<span id="cb8-401"><a href="#cb8-401" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-402"><a href="#cb8-402" aria-hidden="true" tabindex="-1"></a><span class="co">#explicitly set seed</span></span>
-<span id="cb8-403"><a href="#cb8-403" aria-hidden="true" tabindex="-1"></a>gvar.ranseed(<span class="dv">99990</span>)</span>
-<span id="cb8-404"><a href="#cb8-404" aria-hidden="true" tabindex="-1"></a>integ <span class="op">=</span> vegas.Integrator(jnp.array([[<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>],[<span class="fl">0.0001</span>,<span class="dv">1</span>],[<span class="fl">0.0001</span>,<span class="dv">1</span>]],dtype<span class="op">=</span>jnp.float32))</span>
-<span id="cb8-405"><a href="#cb8-405" aria-hidden="true" tabindex="-1"></a><span class="co">#integ.map.grid.base[0,0:5] # get the actual grid typically 1000 bins</span></span>
-<span id="cb8-406"><a href="#cb8-406" aria-hidden="true" tabindex="-1"></a>result<span class="op">=</span>runIters(integ,model,warm_nitn<span class="op">=</span><span class="dv">100</span>,warm_neval<span class="op">=</span><span class="dv">100000</span>,run_nitn<span class="op">=</span><span class="dv">10</span>,run_neval<span class="op">=</span><span class="dv">100000</span>,iMax<span class="op">=</span><span class="dv">20</span>,errTol<span class="op">=</span><span class="fl">1.0</span>,Qtol<span class="op">=</span><span class="fl">0.15</span>,verbose<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb8-407"><a href="#cb8-407" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> result[<span class="dv">1</span>]:</span>
-<span id="cb8-408"><a href="#cb8-408" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"1. warning: Integrand did not achieve target accuracy</span><span class="ch">\n</span><span class="ss">"</span>)</span>
-<span id="cb8-409"><a href="#cb8-409" aria-hidden="true" tabindex="-1"></a>result<span class="op">=</span>result[<span class="dv">0</span>] <span class="co"># overwrite with vegas object</span></span>
-<span id="cb8-410"><a href="#cb8-410" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-411"><a href="#cb8-411" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"final weighted I=</span><span class="sc">{</span>result<span class="sc">.</span>mean<span class="sc">}</span><span class="ch">\n</span><span class="ss">final sdev=</span><span class="sc">{</span>result<span class="sc">.</span>sdev<span class="sc">}</span><span class="ch">\n</span><span class="ss">final rel error (%)=</span><span class="sc">{</span><span class="dv">100</span><span class="op">*</span>result<span class="sc">.</span>sdev<span class="op">/</span>result<span class="sc">.</span>mean<span class="sc">}</span><span class="ch">\n</span><span class="ss">final Q=</span><span class="sc">{</span>result<span class="sc">.</span>Q<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb8-398"><a href="#cb8-398" aria-hidden="true" tabindex="-1"></a><span class="co">#explicitly set seed</span></span>
+<span id="cb8-399"><a href="#cb8-399" aria-hidden="true" tabindex="-1"></a>gvar.ranseed(<span class="dv">99990</span>)</span>
+<span id="cb8-400"><a href="#cb8-400" aria-hidden="true" tabindex="-1"></a>integ <span class="op">=</span> vegas.Integrator(jnp.array([[<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>],[<span class="fl">0.0001</span>,<span class="dv">1</span>],[<span class="fl">0.0001</span>,<span class="dv">1</span>]],dtype<span class="op">=</span>jnp.float32))</span>
+<span id="cb8-401"><a href="#cb8-401" aria-hidden="true" tabindex="-1"></a><span class="co">#integ.map.grid.base[0,0:5] # get the actual grid typically 1000 bins</span></span>
+<span id="cb8-402"><a href="#cb8-402" aria-hidden="true" tabindex="-1"></a>result<span class="op">=</span>runIters(integ,model,warm_nitn<span class="op">=</span><span class="dv">100</span>,warm_neval<span class="op">=</span><span class="dv">100000</span>,run_nitn<span class="op">=</span><span class="dv">10</span>,run_neval<span class="op">=</span><span class="dv">100000</span>,iMax<span class="op">=</span><span class="dv">20</span>,errTol<span class="op">=</span><span class="fl">1.0</span>,Qtol<span class="op">=</span><span class="fl">0.15</span>,verbose<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb8-403"><a href="#cb8-403" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> result[<span class="dv">1</span>]:</span>
+<span id="cb8-404"><a href="#cb8-404" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"1. warning: Integrand did not achieve target accuracy</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb8-405"><a href="#cb8-405" aria-hidden="true" tabindex="-1"></a>result<span class="op">=</span>result[<span class="dv">0</span>] <span class="co"># overwrite with vegas object</span></span>
+<span id="cb8-406"><a href="#cb8-406" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-407"><a href="#cb8-407" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"final weighted I=</span><span class="sc">{</span>result<span class="sc">.</span>mean<span class="sc">}</span><span class="ch">\n</span><span class="ss">final sdev=</span><span class="sc">{</span>result<span class="sc">.</span>sdev<span class="sc">}</span><span class="ch">\n</span><span class="ss">final rel error (%)=</span><span class="sc">{</span><span class="dv">100</span><span class="op">*</span>result<span class="sc">.</span>sdev<span class="op">/</span>result<span class="sc">.</span>mean<span class="sc">}</span><span class="ch">\n</span><span class="ss">final Q=</span><span class="sc">{</span>result<span class="sc">.</span>Q<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb8-408"><a href="#cb8-408" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-409"><a href="#cb8-409" aria-hidden="true" tabindex="-1"></a><span class="co"># Final Log-Evidence Calculation</span></span>
+<span id="cb8-410"><a href="#cb8-410" aria-hidden="true" tabindex="-1"></a><span class="co"># log(I) = l_max + log(scaled_integral)</span></span>
+<span id="cb8-411"><a href="#cb8-411" aria-hidden="true" tabindex="-1"></a>log_evidence <span class="op">=</span> model.l_max <span class="op">+</span> jnp.log(gvar.mean(result))</span>
 <span id="cb8-412"><a href="#cb8-412" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-413"><a href="#cb8-413" aria-hidden="true" tabindex="-1"></a><span class="co"># Final Log-Evidence Calculation</span></span>
-<span id="cb8-414"><a href="#cb8-414" aria-hidden="true" tabindex="-1"></a><span class="co"># log(I) = l_max + log(scaled_integral)</span></span>
-<span id="cb8-415"><a href="#cb8-415" aria-hidden="true" tabindex="-1"></a>log_evidence <span class="op">=</span> model.l_max <span class="op">+</span> jnp.log(gvar.mean(result))</span>
-<span id="cb8-416"><a href="#cb8-416" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-417"><a href="#cb8-417" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Log Evidence: </span><span class="sc">{</span>log_evidence<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb8-413"><a href="#cb8-413" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Log Evidence: </span><span class="sc">{</span>log_evidence<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb8-414"><a href="#cb8-414" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-415"><a href="#cb8-415" aria-hidden="true" tabindex="-1"></a><span class="co">#### ------------------------------------------------------------------------------------------------</span></span>
+<span id="cb8-416"><a href="#cb8-416" aria-hidden="true" tabindex="-1"></a><span class="co">#### 4. Additional stats functions</span></span>
+<span id="cb8-417"><a href="#cb8-417" aria-hidden="true" tabindex="-1"></a><span class="co">#### ------------------------------------------------------------------------------------------------</span></span>
 <span id="cb8-418"><a href="#cb8-418" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-419"><a href="#cb8-419" aria-hidden="true" tabindex="-1"></a><span class="co">#### ------------------------------------------------------------------------------------------------</span></span>
-<span id="cb8-420"><a href="#cb8-420" aria-hidden="true" tabindex="-1"></a><span class="co">#### 4. Additional stats functions</span></span>
-<span id="cb8-421"><a href="#cb8-421" aria-hidden="true" tabindex="-1"></a><span class="co">#### ------------------------------------------------------------------------------------------------</span></span>
-<span id="cb8-422"><a href="#cb8-422" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-423"><a href="#cb8-423" aria-hidden="true" tabindex="-1"></a><span class="at">@jax.jit</span></span>
-<span id="cb8-424"><a href="#cb8-424" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_log_lik2(theta, y,T,K,a00):</span>
-<span id="cb8-425"><a href="#cb8-425" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"shape1={x.shape}\n")</span></span>
-<span id="cb8-426"><a href="#cb8-426" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb8-427"><a href="#cb8-427" aria-hidden="true" tabindex="-1"></a><span class="co">    as above but we integrate out theta1-theta5 for fixed theta0</span></span>
-<span id="cb8-428"><a href="#cb8-428" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
-<span id="cb8-429"><a href="#cb8-429" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb8-430"><a href="#cb8-430" aria-hidden="true" tabindex="-1"></a>    <span class="co"># theta0[0] = a0 - first component of intercept - basket 0</span></span>
-<span id="cb8-431"><a href="#cb8-431" aria-hidden="true" tabindex="-1"></a>    theta0<span class="op">=</span>jnp.clip(theta[<span class="dv">0</span>:<span class="dv">1</span>,:],<span class="op">-</span><span class="fl">0.999</span>, <span class="fl">0.999</span>) <span class="co"># 0</span></span>
-<span id="cb8-432"><a href="#cb8-432" aria-hidden="true" tabindex="-1"></a>    theta1<span class="op">=</span>jnp.clip(theta[<span class="dv">1</span>:<span class="dv">3</span>,:],<span class="op">-</span><span class="fl">0.999</span>, <span class="fl">0.999</span>) <span class="co"># 1,2</span></span>
-<span id="cb8-433"><a href="#cb8-433" aria-hidden="true" tabindex="-1"></a>    theta2<span class="op">=</span>jnp.clip(theta[<span class="dv">3</span>,:],<span class="op">-</span><span class="fl">0.999</span>, <span class="fl">0.999</span>)   <span class="co"># 3 </span></span>
-<span id="cb8-434"><a href="#cb8-434" aria-hidden="true" tabindex="-1"></a>    theta3<span class="op">=</span>jnp.clip(theta[<span class="dv">4</span>,:],<span class="op">-</span><span class="fl">0.999</span>, <span class="fl">0.999</span>)</span>
-<span id="cb8-435"><a href="#cb8-435" aria-hidden="true" tabindex="-1"></a>    theta4<span class="op">=</span>jnp.clip(theta[<span class="dv">5</span>,:],<span class="fl">0.00001</span>, <span class="fl">0.999</span>)</span>
-<span id="cb8-436"><a href="#cb8-436" aria-hidden="true" tabindex="-1"></a>    theta5<span class="op">=</span>jnp.clip(theta[<span class="dv">6</span>,:],<span class="fl">0.00001</span>, <span class="fl">0.999</span>)</span>
-<span id="cb8-437"><a href="#cb8-437" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb8-438"><a href="#cb8-438" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb8-439"><a href="#cb8-439" aria-hidden="true" tabindex="-1"></a>    jacobianLA <span class="op">=</span> ( jnp.log1p(jnp.power(theta0,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>jnp.log1p(<span class="op">-</span>jnp.power(theta0,<span class="dv">2</span>)) <span class="co"># don't need sum here any longer</span></span>
-<span id="cb8-440"><a href="#cb8-440" aria-hidden="true" tabindex="-1"></a>                <span class="op">+</span> jnp.<span class="bu">sum</span>(jnp.log1p(jnp.power(theta1,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>jnp.log1p(<span class="op">-</span>jnp.power(theta1,<span class="dv">2</span>)),axis<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb8-441"><a href="#cb8-441" aria-hidden="true" tabindex="-1"></a>                )</span>
-<span id="cb8-442"><a href="#cb8-442" aria-hidden="true" tabindex="-1"></a>                </span>
-<span id="cb8-443"><a href="#cb8-443" aria-hidden="true" tabindex="-1"></a>    jacobianLB <span class="op">=</span> jacobianLA <span class="op">+</span> (</span>
-<span id="cb8-444"><a href="#cb8-444" aria-hidden="true" tabindex="-1"></a>                jnp.log1p(jnp.power(theta2,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>jnp.log1p(<span class="op">-</span>jnp.power(theta2,<span class="dv">2</span>)) <span class="op">+</span> </span>
-<span id="cb8-445"><a href="#cb8-445" aria-hidden="true" tabindex="-1"></a>                jnp.log1p(jnp.power(theta3,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>jnp.log1p(<span class="op">-</span>jnp.power(theta3,<span class="dv">2</span>)) <span class="op">+</span> </span>
-<span id="cb8-446"><a href="#cb8-446" aria-hidden="true" tabindex="-1"></a>                jnp.log1p(jnp.power(theta4,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>jnp.log1p(<span class="op">-</span>jnp.power(theta4,<span class="dv">2</span>)) <span class="op">+</span> </span>
-<span id="cb8-447"><a href="#cb8-447" aria-hidden="true" tabindex="-1"></a>                jnp.log1p(jnp.power(theta5,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>jnp.log1p(<span class="op">-</span>jnp.power(theta5,<span class="dv">2</span>)) </span>
-<span id="cb8-448"><a href="#cb8-448" aria-hidden="true" tabindex="-1"></a>                )</span>
-<span id="cb8-449"><a href="#cb8-449" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-450"><a href="#cb8-450" aria-hidden="true" tabindex="-1"></a>    a01<span class="op">=</span>theta0<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>jnp.power(theta0,<span class="dv">2</span>))</span>
-<span id="cb8-451"><a href="#cb8-451" aria-hidden="true" tabindex="-1"></a>    a0<span class="op">=</span>jnp.concatenate([jnp.broadcast_to(a00,a01.shape),a01])</span>
-<span id="cb8-452"><a href="#cb8-452" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb8-453"><a href="#cb8-453" aria-hidden="true" tabindex="-1"></a>    a1<span class="op">=</span>theta1<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>jnp.power(theta1,<span class="dv">2</span>))</span>
-<span id="cb8-454"><a href="#cb8-454" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb8-455"><a href="#cb8-455" aria-hidden="true" tabindex="-1"></a>    mu0<span class="op">=</span>theta2<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>jnp.power(theta2,<span class="dv">2</span>))</span>
-<span id="cb8-456"><a href="#cb8-456" aria-hidden="true" tabindex="-1"></a>    mu1<span class="op">=</span>theta3<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>jnp.power(theta3,<span class="dv">2</span>))</span>
-<span id="cb8-457"><a href="#cb8-457" aria-hidden="true" tabindex="-1"></a>    sigma0<span class="op">=</span>theta4<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>jnp.power(theta4,<span class="dv">2</span>))</span>
-<span id="cb8-458"><a href="#cb8-458" aria-hidden="true" tabindex="-1"></a>    sigma1<span class="op">=</span>theta5<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>jnp.power(theta5,<span class="dv">2</span>))</span>
-<span id="cb8-459"><a href="#cb8-459" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"a0={a0} a1={a1} mu0={mu0} mu1={mu1} sigma0={sigma0} sigma1={sigma1}\n")</span></span>
-<span id="cb8-460"><a href="#cb8-460" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb8-461"><a href="#cb8-461" aria-hidden="true" tabindex="-1"></a>    eta<span class="op">=</span>a0[K]<span class="op">+</span>a1[K]<span class="op">*</span>T <span class="co"># (10,3) where T_vec = (3,) and (10,1) broadcast to (10,3)  </span></span>
-<span id="cb8-462"><a href="#cb8-462" aria-hidden="true" tabindex="-1"></a>    <span class="co"># y_data*eta - jnp.log(1+jnp.exp(eta)) this is (10,3) - want col sums, so collapse over rows</span></span>
-<span id="cb8-463"><a href="#cb8-463" aria-hidden="true" tabindex="-1"></a>    logL <span class="op">=</span> jnp.<span class="bu">sum</span>(y<span class="op">*</span>eta <span class="op">-</span> jnp.log1p(jnp.exp(eta)),axis<span class="op">=</span><span class="dv">0</span>) <span class="co">#</span></span>
-<span id="cb8-464"><a href="#cb8-464" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"logL={logL}\n")</span></span>
-<span id="cb8-465"><a href="#cb8-465" aria-hidden="true" tabindex="-1"></a>    <span class="co"># now add the priors</span></span>
-<span id="cb8-466"><a href="#cb8-466" aria-hidden="true" tabindex="-1"></a>    <span class="co"># simple N(0,sd=10)</span></span>
-<span id="cb8-467"><a href="#cb8-467" aria-hidden="true" tabindex="-1"></a>    prior_a0 <span class="op">=</span> jnp_norm_logpdf(a0,loc<span class="op">=</span>mu0,scale<span class="op">=</span>sigma0)</span>
-<span id="cb8-468"><a href="#cb8-468" aria-hidden="true" tabindex="-1"></a>    prior_a1 <span class="op">=</span> jnp_norm_logpdf(a1,loc<span class="op">=</span>mu1,scale<span class="op">=</span>sigma1)</span>
-<span id="cb8-469"><a href="#cb8-469" aria-hidden="true" tabindex="-1"></a>    prior_mu0 <span class="op">=</span> jnp_norm_logpdf(mu0,loc<span class="op">=</span><span class="fl">0.</span>,scale<span class="op">=</span><span class="fl">2.5</span>)</span>
-<span id="cb8-470"><a href="#cb8-470" aria-hidden="true" tabindex="-1"></a>    prior_mu1 <span class="op">=</span> jnp_norm_logpdf(mu1,loc<span class="op">=</span><span class="fl">0.</span>,scale<span class="op">=</span><span class="fl">2.5</span>)</span>
-<span id="cb8-471"><a href="#cb8-471" aria-hidden="true" tabindex="-1"></a>    prior_sigma0 <span class="op">=</span> jnp_half_normal_logpdf(sigma0, <span class="fl">2.5</span>)</span>
-<span id="cb8-472"><a href="#cb8-472" aria-hidden="true" tabindex="-1"></a>    prior_sigma1 <span class="op">=</span> jnp_half_normal_logpdf(sigma1, <span class="fl">2.5</span>)</span>
-<span id="cb8-473"><a href="#cb8-473" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb8-474"><a href="#cb8-474" aria-hidden="true" tabindex="-1"></a>    logDens <span class="op">=</span> logL <span class="op">+</span> jnp.<span class="bu">sum</span>(prior_a0,axis<span class="op">=</span><span class="dv">0</span>) <span class="op">+</span> jnp.<span class="bu">sum</span>(prior_a1,axis<span class="op">=</span><span class="dv">0</span>) <span class="op">+</span> prior_mu0 <span class="op">+</span> prior_mu1 <span class="op">+</span> prior_sigma0 <span class="op">+</span> prior_sigma1</span>
-<span id="cb8-475"><a href="#cb8-475" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"logDens={logDens}\n")</span></span>
-<span id="cb8-476"><a href="#cb8-476" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (logDens <span class="op">+</span> jacobianLB) <span class="co"># this will be (3,)</span></span>
-<span id="cb8-477"><a href="#cb8-477" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-478"><a href="#cb8-478" aria-hidden="true" tabindex="-1"></a><span class="at">@vegas.rbatchintegrand</span></span>
-<span id="cb8-479"><a href="#cb8-479" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> StableLikelihood2:</span>
-<span id="cb8-480"><a href="#cb8-480" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, y, T,K,a00):</span>
-<span id="cb8-481"><a href="#cb8-481" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.y <span class="op">=</span> y</span>
-<span id="cb8-482"><a href="#cb8-482" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.T <span class="op">=</span> T</span>
-<span id="cb8-483"><a href="#cb8-483" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.l_max <span class="op">=</span> <span class="fl">0.0</span> <span class="co"># Will be updated after warm-up</span></span>
-<span id="cb8-484"><a href="#cb8-484" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.K <span class="op">=</span> K</span>
-<span id="cb8-485"><a href="#cb8-485" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.a00 <span class="op">=</span> a00 <span class="co"># random variable which we want to compute density value for</span></span>
-<span id="cb8-486"><a href="#cb8-486" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-487"><a href="#cb8-487" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__call__</span>(<span class="va">self</span>, theta):</span>
-<span id="cb8-488"><a href="#cb8-488" aria-hidden="true" tabindex="-1"></a>        theta_mx <span class="op">=</span> jnp.array(theta)</span>
-<span id="cb8-489"><a href="#cb8-489" aria-hidden="true" tabindex="-1"></a>        log_lik <span class="op">=</span> compute_log_lik2(theta_mx, <span class="va">self</span>.y,<span class="va">self</span>.T, <span class="va">self</span>.K,<span class="va">self</span>.a00)</span>
-<span id="cb8-490"><a href="#cb8-490" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb8-491"><a href="#cb8-491" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Shift by the maximum found so far</span></span>
-<span id="cb8-492"><a href="#cb8-492" aria-hidden="true" tabindex="-1"></a>        <span class="co"># This keeps the result near 1.0 instead of 1e-300</span></span>
-<span id="cb8-493"><a href="#cb8-493" aria-hidden="true" tabindex="-1"></a>        <span class="co">## return np.array(jnp.exp(log_lik - self.l_max)) # needt this is using x64 - vegas expects np</span></span>
-<span id="cb8-494"><a href="#cb8-494" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> jnp.exp(log_lik <span class="op">-</span> <span class="va">self</span>.l_max)</span>
+<span id="cb8-419"><a href="#cb8-419" aria-hidden="true" tabindex="-1"></a><span class="at">@jax.jit</span></span>
+<span id="cb8-420"><a href="#cb8-420" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_log_lik2(theta, y,T,K,a00):</span>
+<span id="cb8-421"><a href="#cb8-421" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"shape1={x.shape}\n")</span></span>
+<span id="cb8-422"><a href="#cb8-422" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb8-423"><a href="#cb8-423" aria-hidden="true" tabindex="-1"></a><span class="co">    as above but we integrate out theta1-theta5 for fixed theta0</span></span>
+<span id="cb8-424"><a href="#cb8-424" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb8-425"><a href="#cb8-425" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb8-426"><a href="#cb8-426" aria-hidden="true" tabindex="-1"></a>    <span class="co"># theta0[0] = a0 - first component of intercept - basket 0</span></span>
+<span id="cb8-427"><a href="#cb8-427" aria-hidden="true" tabindex="-1"></a>    theta0<span class="op">=</span>jnp.clip(theta[<span class="dv">0</span>:<span class="dv">1</span>,:],<span class="op">-</span><span class="fl">0.999</span>, <span class="fl">0.999</span>) <span class="co"># 0</span></span>
+<span id="cb8-428"><a href="#cb8-428" aria-hidden="true" tabindex="-1"></a>    theta1<span class="op">=</span>jnp.clip(theta[<span class="dv">1</span>:<span class="dv">3</span>,:],<span class="op">-</span><span class="fl">0.999</span>, <span class="fl">0.999</span>) <span class="co"># 1,2</span></span>
+<span id="cb8-429"><a href="#cb8-429" aria-hidden="true" tabindex="-1"></a>    theta2<span class="op">=</span>jnp.clip(theta[<span class="dv">3</span>,:],<span class="op">-</span><span class="fl">0.999</span>, <span class="fl">0.999</span>)   <span class="co"># 3 </span></span>
+<span id="cb8-430"><a href="#cb8-430" aria-hidden="true" tabindex="-1"></a>    theta3<span class="op">=</span>jnp.clip(theta[<span class="dv">4</span>,:],<span class="op">-</span><span class="fl">0.999</span>, <span class="fl">0.999</span>)</span>
+<span id="cb8-431"><a href="#cb8-431" aria-hidden="true" tabindex="-1"></a>    theta4<span class="op">=</span>jnp.clip(theta[<span class="dv">5</span>,:],<span class="fl">0.00001</span>, <span class="fl">0.999</span>)</span>
+<span id="cb8-432"><a href="#cb8-432" aria-hidden="true" tabindex="-1"></a>    theta5<span class="op">=</span>jnp.clip(theta[<span class="dv">6</span>,:],<span class="fl">0.00001</span>, <span class="fl">0.999</span>)</span>
+<span id="cb8-433"><a href="#cb8-433" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-434"><a href="#cb8-434" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-435"><a href="#cb8-435" aria-hidden="true" tabindex="-1"></a>    jacobianLA <span class="op">=</span> ( jnp.log1p(jnp.power(theta0,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>jnp.log1p(<span class="op">-</span>jnp.power(theta0,<span class="dv">2</span>)) <span class="co"># don't need sum here any longer</span></span>
+<span id="cb8-436"><a href="#cb8-436" aria-hidden="true" tabindex="-1"></a>                <span class="op">+</span> jnp.<span class="bu">sum</span>(jnp.log1p(jnp.power(theta1,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>jnp.log1p(<span class="op">-</span>jnp.power(theta1,<span class="dv">2</span>)),axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb8-437"><a href="#cb8-437" aria-hidden="true" tabindex="-1"></a>                )</span>
+<span id="cb8-438"><a href="#cb8-438" aria-hidden="true" tabindex="-1"></a>                </span>
+<span id="cb8-439"><a href="#cb8-439" aria-hidden="true" tabindex="-1"></a>    jacobianLB <span class="op">=</span> jacobianLA <span class="op">+</span> (</span>
+<span id="cb8-440"><a href="#cb8-440" aria-hidden="true" tabindex="-1"></a>                jnp.log1p(jnp.power(theta2,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>jnp.log1p(<span class="op">-</span>jnp.power(theta2,<span class="dv">2</span>)) <span class="op">+</span> </span>
+<span id="cb8-441"><a href="#cb8-441" aria-hidden="true" tabindex="-1"></a>                jnp.log1p(jnp.power(theta3,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>jnp.log1p(<span class="op">-</span>jnp.power(theta3,<span class="dv">2</span>)) <span class="op">+</span> </span>
+<span id="cb8-442"><a href="#cb8-442" aria-hidden="true" tabindex="-1"></a>                jnp.log1p(jnp.power(theta4,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>jnp.log1p(<span class="op">-</span>jnp.power(theta4,<span class="dv">2</span>)) <span class="op">+</span> </span>
+<span id="cb8-443"><a href="#cb8-443" aria-hidden="true" tabindex="-1"></a>                jnp.log1p(jnp.power(theta5,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>jnp.log1p(<span class="op">-</span>jnp.power(theta5,<span class="dv">2</span>)) </span>
+<span id="cb8-444"><a href="#cb8-444" aria-hidden="true" tabindex="-1"></a>                )</span>
+<span id="cb8-445"><a href="#cb8-445" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-446"><a href="#cb8-446" aria-hidden="true" tabindex="-1"></a>    a01<span class="op">=</span>theta0<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>jnp.power(theta0,<span class="dv">2</span>))</span>
+<span id="cb8-447"><a href="#cb8-447" aria-hidden="true" tabindex="-1"></a>    a0<span class="op">=</span>jnp.concatenate([jnp.broadcast_to(a00,a01.shape),a01])</span>
+<span id="cb8-448"><a href="#cb8-448" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-449"><a href="#cb8-449" aria-hidden="true" tabindex="-1"></a>    a1<span class="op">=</span>theta1<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>jnp.power(theta1,<span class="dv">2</span>))</span>
+<span id="cb8-450"><a href="#cb8-450" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-451"><a href="#cb8-451" aria-hidden="true" tabindex="-1"></a>    mu0<span class="op">=</span>theta2<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>jnp.power(theta2,<span class="dv">2</span>))</span>
+<span id="cb8-452"><a href="#cb8-452" aria-hidden="true" tabindex="-1"></a>    mu1<span class="op">=</span>theta3<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>jnp.power(theta3,<span class="dv">2</span>))</span>
+<span id="cb8-453"><a href="#cb8-453" aria-hidden="true" tabindex="-1"></a>    sigma0<span class="op">=</span>theta4<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>jnp.power(theta4,<span class="dv">2</span>))</span>
+<span id="cb8-454"><a href="#cb8-454" aria-hidden="true" tabindex="-1"></a>    sigma1<span class="op">=</span>theta5<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>jnp.power(theta5,<span class="dv">2</span>))</span>
+<span id="cb8-455"><a href="#cb8-455" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"a0={a0} a1={a1} mu0={mu0} mu1={mu1} sigma0={sigma0} sigma1={sigma1}\n")</span></span>
+<span id="cb8-456"><a href="#cb8-456" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-457"><a href="#cb8-457" aria-hidden="true" tabindex="-1"></a>    eta<span class="op">=</span>a0[K]<span class="op">+</span>a1[K]<span class="op">*</span>T <span class="co"># (10,3) where T_vec = (3,) and (10,1) broadcast to (10,3)  </span></span>
+<span id="cb8-458"><a href="#cb8-458" aria-hidden="true" tabindex="-1"></a>    <span class="co"># y_data*eta - jnp.log(1+jnp.exp(eta)) this is (10,3) - want col sums, so collapse over rows</span></span>
+<span id="cb8-459"><a href="#cb8-459" aria-hidden="true" tabindex="-1"></a>    logL <span class="op">=</span> jnp.<span class="bu">sum</span>(y<span class="op">*</span>eta <span class="op">-</span> jnp.log1p(jnp.exp(eta)),axis<span class="op">=</span><span class="dv">0</span>) <span class="co">#</span></span>
+<span id="cb8-460"><a href="#cb8-460" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"logL={logL}\n")</span></span>
+<span id="cb8-461"><a href="#cb8-461" aria-hidden="true" tabindex="-1"></a>    <span class="co"># now add the priors</span></span>
+<span id="cb8-462"><a href="#cb8-462" aria-hidden="true" tabindex="-1"></a>    <span class="co"># simple N(0,sd=10)</span></span>
+<span id="cb8-463"><a href="#cb8-463" aria-hidden="true" tabindex="-1"></a>    prior_a0 <span class="op">=</span> jnp_norm_logpdf(a0,loc<span class="op">=</span>mu0,scale<span class="op">=</span>sigma0)</span>
+<span id="cb8-464"><a href="#cb8-464" aria-hidden="true" tabindex="-1"></a>    prior_a1 <span class="op">=</span> jnp_norm_logpdf(a1,loc<span class="op">=</span>mu1,scale<span class="op">=</span>sigma1)</span>
+<span id="cb8-465"><a href="#cb8-465" aria-hidden="true" tabindex="-1"></a>    prior_mu0 <span class="op">=</span> jnp_norm_logpdf(mu0,loc<span class="op">=</span><span class="fl">0.</span>,scale<span class="op">=</span><span class="fl">2.5</span>)</span>
+<span id="cb8-466"><a href="#cb8-466" aria-hidden="true" tabindex="-1"></a>    prior_mu1 <span class="op">=</span> jnp_norm_logpdf(mu1,loc<span class="op">=</span><span class="fl">0.</span>,scale<span class="op">=</span><span class="fl">2.5</span>)</span>
+<span id="cb8-467"><a href="#cb8-467" aria-hidden="true" tabindex="-1"></a>    prior_sigma0 <span class="op">=</span> jnp_half_normal_logpdf(sigma0, <span class="fl">2.5</span>)</span>
+<span id="cb8-468"><a href="#cb8-468" aria-hidden="true" tabindex="-1"></a>    prior_sigma1 <span class="op">=</span> jnp_half_normal_logpdf(sigma1, <span class="fl">2.5</span>)</span>
+<span id="cb8-469"><a href="#cb8-469" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-470"><a href="#cb8-470" aria-hidden="true" tabindex="-1"></a>    logDens <span class="op">=</span> logL <span class="op">+</span> jnp.<span class="bu">sum</span>(prior_a0,axis<span class="op">=</span><span class="dv">0</span>) <span class="op">+</span> jnp.<span class="bu">sum</span>(prior_a1,axis<span class="op">=</span><span class="dv">0</span>) <span class="op">+</span> prior_mu0 <span class="op">+</span> prior_mu1 <span class="op">+</span> prior_sigma0 <span class="op">+</span> prior_sigma1</span>
+<span id="cb8-471"><a href="#cb8-471" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"logDens={logDens}\n")</span></span>
+<span id="cb8-472"><a href="#cb8-472" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (logDens <span class="op">+</span> jacobianLB) <span class="co"># this will be (3,)</span></span>
+<span id="cb8-473"><a href="#cb8-473" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-474"><a href="#cb8-474" aria-hidden="true" tabindex="-1"></a><span class="at">@vegas.rbatchintegrand</span></span>
+<span id="cb8-475"><a href="#cb8-475" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> StableLikelihood2:</span>
+<span id="cb8-476"><a href="#cb8-476" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, y, T,K,a00):</span>
+<span id="cb8-477"><a href="#cb8-477" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.y <span class="op">=</span> y</span>
+<span id="cb8-478"><a href="#cb8-478" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.T <span class="op">=</span> T</span>
+<span id="cb8-479"><a href="#cb8-479" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.l_max <span class="op">=</span> <span class="fl">0.0</span> <span class="co"># Will be updated after warm-up</span></span>
+<span id="cb8-480"><a href="#cb8-480" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.K <span class="op">=</span> K</span>
+<span id="cb8-481"><a href="#cb8-481" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.a00 <span class="op">=</span> a00 <span class="co"># random variable which we want to compute density value for</span></span>
+<span id="cb8-482"><a href="#cb8-482" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-483"><a href="#cb8-483" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__call__</span>(<span class="va">self</span>, theta):</span>
+<span id="cb8-484"><a href="#cb8-484" aria-hidden="true" tabindex="-1"></a>        theta_mx <span class="op">=</span> jnp.array(theta)</span>
+<span id="cb8-485"><a href="#cb8-485" aria-hidden="true" tabindex="-1"></a>        log_lik <span class="op">=</span> compute_log_lik2(theta_mx, <span class="va">self</span>.y,<span class="va">self</span>.T, <span class="va">self</span>.K,<span class="va">self</span>.a00)</span>
+<span id="cb8-486"><a href="#cb8-486" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb8-487"><a href="#cb8-487" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Shift by the maximum found so far</span></span>
+<span id="cb8-488"><a href="#cb8-488" aria-hidden="true" tabindex="-1"></a>        <span class="co"># This keeps the result near 1.0 instead of 1e-300</span></span>
+<span id="cb8-489"><a href="#cb8-489" aria-hidden="true" tabindex="-1"></a>        <span class="co">## return np.array(jnp.exp(log_lik - self.l_max)) # needt this is using x64 - vegas expects np</span></span>
+<span id="cb8-490"><a href="#cb8-490" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> jnp.exp(log_lik <span class="op">-</span> <span class="va">self</span>.l_max)</span>
+<span id="cb8-491"><a href="#cb8-491" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-492"><a href="#cb8-492" aria-hidden="true" tabindex="-1"></a><span class="co">#### ------------------------------------------------------------------------------------------------</span></span>
+<span id="cb8-493"><a href="#cb8-493" aria-hidden="true" tabindex="-1"></a><span class="co">#### 5. COMPUTE MARGINAL DENSITY for a00 (a0 in first basket) </span></span>
+<span id="cb8-494"><a href="#cb8-494" aria-hidden="true" tabindex="-1"></a><span class="co">#### ------------------------------------------------------------------------------------------------</span></span>
 <span id="cb8-495"><a href="#cb8-495" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-496"><a href="#cb8-496" aria-hidden="true" tabindex="-1"></a><span class="co">#### ------------------------------------------------------------------------------------------------</span></span>
-<span id="cb8-497"><a href="#cb8-497" aria-hidden="true" tabindex="-1"></a><span class="co">#### 5. COMPUTE MARGINAL DENSITY for a00 (a0 in first basket) </span></span>
-<span id="cb8-498"><a href="#cb8-498" aria-hidden="true" tabindex="-1"></a><span class="co">#### ------------------------------------------------------------------------------------------------</span></span>
-<span id="cb8-499"><a href="#cb8-499" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-500"><a href="#cb8-500" aria-hidden="true" tabindex="-1"></a><span class="co">#explicitly set seed</span></span>
-<span id="cb8-501"><a href="#cb8-501" aria-hidden="true" tabindex="-1"></a>gvar.ranseed(<span class="dv">99991</span>)</span>
-<span id="cb8-502"><a href="#cb8-502" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-503"><a href="#cb8-503" aria-hidden="true" tabindex="-1"></a><span class="co"># jaco version</span></span>
-<span id="cb8-504"><a href="#cb8-504" aria-hidden="true" tabindex="-1"></a><span class="co">#model2 = StableLikelihood2(y=y_data,T=T_vec,K=K_vec,a00=-0.96)</span></span>
-<span id="cb8-505"><a href="#cb8-505" aria-hidden="true" tabindex="-1"></a><span class="co">#start = jnp.array([-1,-1,-1,-1,-1,0,0],dtype=jnp.float32) # a0 a1</span></span>
-<span id="cb8-506"><a href="#cb8-506" aria-hidden="true" tabindex="-1"></a><span class="co">#stop = jnp.array([1,1,1,1,1,1,1],dtype=jnp.float32)   # a0 a1</span></span>
-<span id="cb8-507"><a href="#cb8-507" aria-hidden="true" tabindex="-1"></a><span class="co">#searchPts=jnp.array(np.array(jnp.transpose(jnp.linspace(start, stop, 1000))), dtype=jnp.float32)</span></span>
-<span id="cb8-508"><a href="#cb8-508" aria-hidden="true" tabindex="-1"></a><span class="co">#model2.l_max=jnp.max(compute_log_lik2(searchPts, model2.y,model2.T,model2.K,model2.a00))</span></span>
-<span id="cb8-509"><a href="#cb8-509" aria-hidden="true" tabindex="-1"></a><span class="co">#integ = vegas.Integrator(jnp.array([[-1,1],[-1,1],[-1,1],[-1,1],[-1,1],[0.0001,1],[0.0001,1]],dtype=jnp.float32))</span></span>
-<span id="cb8-510"><a href="#cb8-510" aria-hidden="true" tabindex="-1"></a><span class="co">#res_warmup = integ(model2, nitn=10, neval=10000)  </span></span>
-<span id="cb8-511"><a href="#cb8-511" aria-hidden="true" tabindex="-1"></a><span class="co">#print(res_warmup.summary()) </span></span>
-<span id="cb8-512"><a href="#cb8-512" aria-hidden="true" tabindex="-1"></a><span class="co">#I = model2.l_max + jnp.log(gvar.mean(res_warmup))</span></span>
-<span id="cb8-513"><a href="#cb8-513" aria-hidden="true" tabindex="-1"></a><span class="co">#print(f"I (unscaled)={I}\n")</span></span>
-<span id="cb8-514"><a href="#cb8-514" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-515"><a href="#cb8-515" aria-hidden="true" tabindex="-1"></a>Ngrid<span class="op">=</span><span class="dv">50</span></span>
-<span id="cb8-516"><a href="#cb8-516" aria-hidden="true" tabindex="-1"></a>a00<span class="op">=</span> jnp.array(np.array(jnp.linspace(<span class="op">-</span><span class="fl">3.5</span>,<span class="fl">0.5</span>,Ngrid,dtype<span class="op">=</span>jnp.float32)), dtype<span class="op">=</span>jnp.float32)</span>
-<span id="cb8-517"><a href="#cb8-517" aria-hidden="true" tabindex="-1"></a>prob_dens<span class="op">=</span>np.ones([Ngrid],dtype<span class="op">=</span>np.float32)</span>
-<span id="cb8-518"><a href="#cb8-518" aria-hidden="true" tabindex="-1"></a>start <span class="op">=</span> jnp.array([<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>],dtype<span class="op">=</span>jnp.float32) <span class="co"># a0 a1</span></span>
-<span id="cb8-519"><a href="#cb8-519" aria-hidden="true" tabindex="-1"></a>stop <span class="op">=</span> jnp.array([<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>],dtype<span class="op">=</span>jnp.float32)   <span class="co"># a0 a1</span></span>
-<span id="cb8-520"><a href="#cb8-520" aria-hidden="true" tabindex="-1"></a>searchPts<span class="op">=</span>jnp.array(np.array(jnp.transpose(jnp.linspace(start, stop, <span class="dv">1000</span>))), dtype<span class="op">=</span>jnp.float32)</span>
-<span id="cb8-521"><a href="#cb8-521" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-522"><a href="#cb8-522" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-523"><a href="#cb8-523" aria-hidden="true" tabindex="-1"></a>i<span class="op">=</span><span class="dv">0</span></span>
-<span id="cb8-524"><a href="#cb8-524" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x <span class="kw">in</span> a00:</span>
-<span id="cb8-525"><a href="#cb8-525" aria-hidden="true" tabindex="-1"></a>  model2 <span class="op">=</span> StableLikelihood2(y<span class="op">=</span>y_data,T<span class="op">=</span>T_vec,K<span class="op">=</span>K_vec,a00<span class="op">=</span>x)</span>
-<span id="cb8-526"><a href="#cb8-526" aria-hidden="true" tabindex="-1"></a>  model2.l_max<span class="op">=</span>jnp.<span class="bu">max</span>(compute_log_lik2(searchPts, model2.y,model2.T,model2.K,model2.a00))</span>
-<span id="cb8-527"><a href="#cb8-527" aria-hidden="true" tabindex="-1"></a>  integ2 <span class="op">=</span> vegas.Integrator(jnp.array([[<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>],[<span class="fl">0.0001</span>,<span class="dv">1</span>],[<span class="fl">0.0001</span>,<span class="dv">1</span>]],dtype<span class="op">=</span>jnp.float32))</span>
-<span id="cb8-528"><a href="#cb8-528" aria-hidden="true" tabindex="-1"></a>  res_warmup <span class="op">=</span> integ2(model2, nitn<span class="op">=</span><span class="dv">100</span>, neval<span class="op">=</span><span class="dv">10000</span>)</span>
-<span id="cb8-529"><a href="#cb8-529" aria-hidden="true" tabindex="-1"></a>  <span class="co">#result = integ(model, nitn=10, neval=50000)</span></span>
-<span id="cb8-530"><a href="#cb8-530" aria-hidden="true" tabindex="-1"></a>  result<span class="op">=</span>runIters(integ2,model2,warm_nitn<span class="op">=</span><span class="dv">100</span>,warm_neval<span class="op">=</span><span class="dv">50000</span>,run_nitn<span class="op">=</span><span class="dv">10</span>,run_neval<span class="op">=</span><span class="dv">50000</span>,iMax<span class="op">=</span><span class="dv">20</span>,errTol<span class="op">=</span><span class="fl">1.0</span>,Qtol<span class="op">=</span><span class="fl">0.15</span>,verbose<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb8-531"><a href="#cb8-531" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="kw">not</span> result[<span class="dv">1</span>]:</span>
-<span id="cb8-532"><a href="#cb8-532" aria-hidden="true" tabindex="-1"></a>      <span class="bu">print</span>(<span class="ss">f"1. warning: Integrand at a0=</span><span class="sc">{</span>x<span class="sc">}</span><span class="ss"> did not achieve target accuracy or Q tolerance</span><span class="ch">\n</span><span class="ss">"</span>)</span>
-<span id="cb8-533"><a href="#cb8-533" aria-hidden="true" tabindex="-1"></a>  result<span class="op">=</span>result[<span class="dv">0</span>] <span class="co"># overwrite with vegas object</span></span>
-<span id="cb8-534"><a href="#cb8-534" aria-hidden="true" tabindex="-1"></a>  marg_a00 <span class="op">=</span> model2.l_max <span class="op">+</span> jnp.log(gvar.mean(result))</span>
-<span id="cb8-535"><a href="#cb8-535" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="ss">f"marg_a00=</span><span class="sc">{</span>marg_a00<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
-<span id="cb8-536"><a href="#cb8-536" aria-hidden="true" tabindex="-1"></a>  prob_dens[[i]]<span class="op">=</span>jnp.array(jnp.exp(marg_a00<span class="op">-</span>log_evidence))</span>
-<span id="cb8-537"><a href="#cb8-537" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb8-538"><a href="#cb8-538" aria-hidden="true" tabindex="-1"></a>  <span class="co">#print(f"a0={x} a0 dens={prob_dens[[i]]}\n")</span></span>
-<span id="cb8-539"><a href="#cb8-539" aria-hidden="true" tabindex="-1"></a>  i<span class="op">=</span>i<span class="op">+</span><span class="dv">1</span></span>
-<span id="cb8-540"><a href="#cb8-540" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-541"><a href="#cb8-541" aria-hidden="true" tabindex="-1"></a><span class="co"># we want posterior values</span></span>
-<span id="cb8-542"><a href="#cb8-542" aria-hidden="true" tabindex="-1"></a><span class="co"># compute_log_lik(theta, y,T) - log_evidence = log( f(D|a0)f(a0) )</span></span>
-<span id="cb8-543"><a href="#cb8-543" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-544"><a href="#cb8-544" aria-hidden="true" tabindex="-1"></a>a00np<span class="op">=</span> np.array(a00)</span>
-<span id="cb8-545"><a href="#cb8-545" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-496"><a href="#cb8-496" aria-hidden="true" tabindex="-1"></a><span class="co">#explicitly set seed</span></span>
+<span id="cb8-497"><a href="#cb8-497" aria-hidden="true" tabindex="-1"></a>gvar.ranseed(<span class="dv">99991</span>)</span>
+<span id="cb8-498"><a href="#cb8-498" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-499"><a href="#cb8-499" aria-hidden="true" tabindex="-1"></a><span class="co"># jaco version</span></span>
+<span id="cb8-500"><a href="#cb8-500" aria-hidden="true" tabindex="-1"></a><span class="co">#model2 = StableLikelihood2(y=y_data,T=T_vec,K=K_vec,a00=-0.96)</span></span>
+<span id="cb8-501"><a href="#cb8-501" aria-hidden="true" tabindex="-1"></a><span class="co">#start = jnp.array([-1,-1,-1,-1,-1,0,0],dtype=jnp.float32) # a0 a1</span></span>
+<span id="cb8-502"><a href="#cb8-502" aria-hidden="true" tabindex="-1"></a><span class="co">#stop = jnp.array([1,1,1,1,1,1,1],dtype=jnp.float32)   # a0 a1</span></span>
+<span id="cb8-503"><a href="#cb8-503" aria-hidden="true" tabindex="-1"></a><span class="co">#searchPts=jnp.array(np.array(jnp.transpose(jnp.linspace(start, stop, 1000))), dtype=jnp.float32)</span></span>
+<span id="cb8-504"><a href="#cb8-504" aria-hidden="true" tabindex="-1"></a><span class="co">#model2.l_max=jnp.max(compute_log_lik2(searchPts, model2.y,model2.T,model2.K,model2.a00))</span></span>
+<span id="cb8-505"><a href="#cb8-505" aria-hidden="true" tabindex="-1"></a><span class="co">#integ = vegas.Integrator(jnp.array([[-1,1],[-1,1],[-1,1],[-1,1],[-1,1],[0.0001,1],[0.0001,1]],dtype=jnp.float32))</span></span>
+<span id="cb8-506"><a href="#cb8-506" aria-hidden="true" tabindex="-1"></a><span class="co">#res_warmup = integ(model2, nitn=10, neval=10000)  </span></span>
+<span id="cb8-507"><a href="#cb8-507" aria-hidden="true" tabindex="-1"></a><span class="co">#print(res_warmup.summary()) </span></span>
+<span id="cb8-508"><a href="#cb8-508" aria-hidden="true" tabindex="-1"></a><span class="co">#I = model2.l_max + jnp.log(gvar.mean(res_warmup))</span></span>
+<span id="cb8-509"><a href="#cb8-509" aria-hidden="true" tabindex="-1"></a><span class="co">#print(f"I (unscaled)={I}\n")</span></span>
+<span id="cb8-510"><a href="#cb8-510" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-511"><a href="#cb8-511" aria-hidden="true" tabindex="-1"></a>Ngrid<span class="op">=</span><span class="dv">50</span></span>
+<span id="cb8-512"><a href="#cb8-512" aria-hidden="true" tabindex="-1"></a>a00<span class="op">=</span> jnp.array(np.array(jnp.linspace(<span class="op">-</span><span class="fl">3.5</span>,<span class="fl">0.5</span>,Ngrid,dtype<span class="op">=</span>jnp.float32)), dtype<span class="op">=</span>jnp.float32)</span>
+<span id="cb8-513"><a href="#cb8-513" aria-hidden="true" tabindex="-1"></a>prob_dens<span class="op">=</span>np.ones([Ngrid],dtype<span class="op">=</span>np.float32)</span>
+<span id="cb8-514"><a href="#cb8-514" aria-hidden="true" tabindex="-1"></a>start <span class="op">=</span> jnp.array([<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>],dtype<span class="op">=</span>jnp.float32) <span class="co"># a0 a1</span></span>
+<span id="cb8-515"><a href="#cb8-515" aria-hidden="true" tabindex="-1"></a>stop <span class="op">=</span> jnp.array([<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>],dtype<span class="op">=</span>jnp.float32)   <span class="co"># a0 a1</span></span>
+<span id="cb8-516"><a href="#cb8-516" aria-hidden="true" tabindex="-1"></a>searchPts<span class="op">=</span>jnp.array(np.array(jnp.transpose(jnp.linspace(start, stop, <span class="dv">1000</span>))), dtype<span class="op">=</span>jnp.float32)</span>
+<span id="cb8-517"><a href="#cb8-517" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-518"><a href="#cb8-518" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-519"><a href="#cb8-519" aria-hidden="true" tabindex="-1"></a>i<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb8-520"><a href="#cb8-520" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x <span class="kw">in</span> a00:</span>
+<span id="cb8-521"><a href="#cb8-521" aria-hidden="true" tabindex="-1"></a>  model2 <span class="op">=</span> StableLikelihood2(y<span class="op">=</span>y_data,T<span class="op">=</span>T_vec,K<span class="op">=</span>K_vec,a00<span class="op">=</span>x)</span>
+<span id="cb8-522"><a href="#cb8-522" aria-hidden="true" tabindex="-1"></a>  model2.l_max<span class="op">=</span>jnp.<span class="bu">max</span>(compute_log_lik2(searchPts, model2.y,model2.T,model2.K,model2.a00))</span>
+<span id="cb8-523"><a href="#cb8-523" aria-hidden="true" tabindex="-1"></a>  integ2 <span class="op">=</span> vegas.Integrator(jnp.array([[<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>],[<span class="fl">0.0001</span>,<span class="dv">1</span>],[<span class="fl">0.0001</span>,<span class="dv">1</span>]],dtype<span class="op">=</span>jnp.float32))</span>
+<span id="cb8-524"><a href="#cb8-524" aria-hidden="true" tabindex="-1"></a>  res_warmup <span class="op">=</span> integ2(model2, nitn<span class="op">=</span><span class="dv">100</span>, neval<span class="op">=</span><span class="dv">10000</span>)</span>
+<span id="cb8-525"><a href="#cb8-525" aria-hidden="true" tabindex="-1"></a>  <span class="co">#result = integ(model, nitn=10, neval=50000)</span></span>
+<span id="cb8-526"><a href="#cb8-526" aria-hidden="true" tabindex="-1"></a>  result<span class="op">=</span>runIters(integ2,model2,warm_nitn<span class="op">=</span><span class="dv">100</span>,warm_neval<span class="op">=</span><span class="dv">50000</span>,run_nitn<span class="op">=</span><span class="dv">10</span>,run_neval<span class="op">=</span><span class="dv">50000</span>,iMax<span class="op">=</span><span class="dv">20</span>,errTol<span class="op">=</span><span class="fl">1.0</span>,Qtol<span class="op">=</span><span class="fl">0.15</span>,verbose<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb8-527"><a href="#cb8-527" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="kw">not</span> result[<span class="dv">1</span>]:</span>
+<span id="cb8-528"><a href="#cb8-528" aria-hidden="true" tabindex="-1"></a>      <span class="bu">print</span>(<span class="ss">f"1. warning: Integrand at a0=</span><span class="sc">{</span>x<span class="sc">}</span><span class="ss"> did not achieve target accuracy or Q tolerance</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb8-529"><a href="#cb8-529" aria-hidden="true" tabindex="-1"></a>  result<span class="op">=</span>result[<span class="dv">0</span>] <span class="co"># overwrite with vegas object</span></span>
+<span id="cb8-530"><a href="#cb8-530" aria-hidden="true" tabindex="-1"></a>  marg_a00 <span class="op">=</span> model2.l_max <span class="op">+</span> jnp.log(gvar.mean(result))</span>
+<span id="cb8-531"><a href="#cb8-531" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="ss">f"marg_a00=</span><span class="sc">{</span>marg_a00<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb8-532"><a href="#cb8-532" aria-hidden="true" tabindex="-1"></a>  prob_dens[[i]]<span class="op">=</span>jnp.array(jnp.exp(marg_a00<span class="op">-</span>log_evidence))</span>
+<span id="cb8-533"><a href="#cb8-533" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-534"><a href="#cb8-534" aria-hidden="true" tabindex="-1"></a>  <span class="co">#print(f"a0={x} a0 dens={prob_dens[[i]]}\n")</span></span>
+<span id="cb8-535"><a href="#cb8-535" aria-hidden="true" tabindex="-1"></a>  i<span class="op">=</span>i<span class="op">+</span><span class="dv">1</span></span>
+<span id="cb8-536"><a href="#cb8-536" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-537"><a href="#cb8-537" aria-hidden="true" tabindex="-1"></a><span class="co"># we want posterior values</span></span>
+<span id="cb8-538"><a href="#cb8-538" aria-hidden="true" tabindex="-1"></a><span class="co"># compute_log_lik(theta, y,T) - log_evidence = log( f(D|a0)f(a0) )</span></span>
+<span id="cb8-539"><a href="#cb8-539" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-540"><a href="#cb8-540" aria-hidden="true" tabindex="-1"></a>a00np<span class="op">=</span> np.array(a00)</span>
+<span id="cb8-541"><a href="#cb8-541" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-542"><a href="#cb8-542" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-543"><a href="#cb8-543" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-544"><a href="#cb8-544" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-545"><a href="#cb8-545" aria-hidden="true" tabindex="-1"></a><span class="in">```{r onevarRR,include=TRUE,eval=TRUE}</span></span>
 <span id="cb8-546"><a href="#cb8-546" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-547"><a href="#cb8-547" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-548"><a href="#cb8-548" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-549"><a href="#cb8-549" aria-hidden="true" tabindex="-1"></a><span class="in">```{r onevarRR,include=TRUE,eval=TRUE}</span></span>
+<span id="cb8-547"><a href="#cb8-547" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(py<span class="sc">$</span>a00np,py<span class="sc">$</span>prob_dens,<span class="at">type=</span><span class="st">"p"</span>)</span>
+<span id="cb8-548"><a href="#cb8-548" aria-hidden="true" tabindex="-1"></a>f_interp <span class="ot">&lt;-</span> <span class="fu">splinefun</span>(py<span class="sc">$</span>a00np, py<span class="sc">$</span>prob_dens, <span class="at">method =</span> <span class="st">"fmm"</span>)</span>
+<span id="cb8-549"><a href="#cb8-549" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(py<span class="sc">$</span>a00np,<span class="fu">f_interp</span>(py<span class="sc">$</span>a00np),<span class="at">col=</span><span class="st">"blue"</span>)</span>
 <span id="cb8-550"><a href="#cb8-550" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-551"><a href="#cb8-551" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(py<span class="sc">$</span>a00np,py<span class="sc">$</span>prob_dens,<span class="at">type=</span><span class="st">"p"</span>)</span>
-<span id="cb8-552"><a href="#cb8-552" aria-hidden="true" tabindex="-1"></a>f_interp <span class="ot">&lt;-</span> <span class="fu">splinefun</span>(py<span class="sc">$</span>a00np, py<span class="sc">$</span>prob_dens, <span class="at">method =</span> <span class="st">"fmm"</span>)</span>
-<span id="cb8-553"><a href="#cb8-553" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(py<span class="sc">$</span>a00np,<span class="fu">f_interp</span>(py<span class="sc">$</span>a00np),<span class="at">col=</span><span class="st">"blue"</span>)</span>
+<span id="cb8-551"><a href="#cb8-551" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-552"><a href="#cb8-552" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-553"><a href="#cb8-553" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-554"><a href="#cb8-554" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-555"><a href="#cb8-555" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-556"><a href="#cb8-556" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-555"><a href="#cb8-555" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-556"><a href="#cb8-556" aria-hidden="true" tabindex="-1"></a><span class="fu">### Compare stan density with vegas density</span></span>
 <span id="cb8-557"><a href="#cb8-557" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-558"><a href="#cb8-558" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-559"><a href="#cb8-559" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-560"><a href="#cb8-560" aria-hidden="true" tabindex="-1"></a><span class="fu">### Compare stan density with vegas density</span></span>
-<span id="cb8-561"><a href="#cb8-561" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-562"><a href="#cb8-562" aria-hidden="true" tabindex="-1"></a><span class="in">```{r compare, echo=FALSE, eval=TRUE}</span></span>
-<span id="cb8-563"><a href="#cb8-563" aria-hidden="true" tabindex="-1"></a><span class="co">#png("precomputed/vg2_TFP_stan_comp.png")</span></span>
-<span id="cb8-564"><a href="#cb8-564" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span>
-<span id="cb8-565"><a href="#cb8-565" aria-hidden="true" tabindex="-1"></a><span class="co">#plot(density(extract(stan_fit_2,"mu0")$mu0),main="mu0")</span></span>
-<span id="cb8-566"><a href="#cb8-566" aria-hidden="true" tabindex="-1"></a><span class="co">#plot(density(extract(stan_fit_2,"beta[1,1]")$"beta[1,1]"),main="beta[1,1]")</span></span>
-<span id="cb8-567"><a href="#cb8-567" aria-hidden="true" tabindex="-1"></a><span class="co">#lines(density(c(py$samplesflat[[1]])),col="red")</span></span>
-<span id="cb8-568"><a href="#cb8-568" aria-hidden="true" tabindex="-1"></a><span class="co">#dev.off()</span></span>
-<span id="cb8-569"><a href="#cb8-569" aria-hidden="true" tabindex="-1"></a><span class="co">#print(summary(stan_fit_2))</span></span>
-<span id="cb8-570"><a href="#cb8-570" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-571"><a href="#cb8-571" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-572"><a href="#cb8-572" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(<span class="fu">extract</span>(stan_fit_2,<span class="st">"beta[1,1]"</span>)<span class="sc">$</span><span class="st">"beta[1,1]"</span>),<span class="at">main=</span><span class="st">"beta[1,1]"</span>,<span class="at">col=</span><span class="st">"blue"</span>,<span class="at">lwd=</span><span class="dv">2</span>)</span>
-<span id="cb8-573"><a href="#cb8-573" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(py<span class="sc">$</span>a00np,py<span class="sc">$</span>prob_dens,<span class="at">col=</span><span class="st">"brown"</span>,<span class="at">pch=</span><span class="dv">21</span>,<span class="at">bg=</span><span class="st">"brown"</span>)</span>
-<span id="cb8-574"><a href="#cb8-574" aria-hidden="true" tabindex="-1"></a>f_interp <span class="ot">&lt;-</span> <span class="fu">splinefun</span>(py<span class="sc">$</span>a00np, py<span class="sc">$</span>prob_dens, <span class="at">method =</span> <span class="st">"fmm"</span>)</span>
-<span id="cb8-575"><a href="#cb8-575" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(py<span class="sc">$</span>a00np,<span class="fu">f_interp</span>(py<span class="sc">$</span>a00np),<span class="at">col=</span><span class="st">"magenta"</span>)</span>
-<span id="cb8-576"><a href="#cb8-576" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-577"><a href="#cb8-577" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb8-558"><a href="#cb8-558" aria-hidden="true" tabindex="-1"></a><span class="in">```{r compare, echo=FALSE, eval=TRUE}</span></span>
+<span id="cb8-559"><a href="#cb8-559" aria-hidden="true" tabindex="-1"></a><span class="co">#png("precomputed/vg2_TFP_stan_comp.png")</span></span>
+<span id="cb8-560"><a href="#cb8-560" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb8-561"><a href="#cb8-561" aria-hidden="true" tabindex="-1"></a><span class="co">#plot(density(extract(stan_fit_2,"mu0")$mu0),main="mu0")</span></span>
+<span id="cb8-562"><a href="#cb8-562" aria-hidden="true" tabindex="-1"></a><span class="co">#plot(density(extract(stan_fit_2,"beta[1,1]")$"beta[1,1]"),main="beta[1,1]")</span></span>
+<span id="cb8-563"><a href="#cb8-563" aria-hidden="true" tabindex="-1"></a><span class="co">#lines(density(c(py$samplesflat[[1]])),col="red")</span></span>
+<span id="cb8-564"><a href="#cb8-564" aria-hidden="true" tabindex="-1"></a><span class="co">#dev.off()</span></span>
+<span id="cb8-565"><a href="#cb8-565" aria-hidden="true" tabindex="-1"></a><span class="co">#print(summary(stan_fit_2))</span></span>
+<span id="cb8-566"><a href="#cb8-566" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-567"><a href="#cb8-567" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-568"><a href="#cb8-568" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(<span class="fu">extract</span>(stan_fit_2,<span class="st">"beta[1,1]"</span>)<span class="sc">$</span><span class="st">"beta[1,1]"</span>),<span class="at">main=</span><span class="st">"beta[1,1]"</span>,<span class="at">col=</span><span class="st">"blue"</span>,<span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb8-569"><a href="#cb8-569" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(py<span class="sc">$</span>a00np,py<span class="sc">$</span>prob_dens,<span class="at">col=</span><span class="st">"brown"</span>,<span class="at">pch=</span><span class="dv">21</span>,<span class="at">bg=</span><span class="st">"brown"</span>)</span>
+<span id="cb8-570"><a href="#cb8-570" aria-hidden="true" tabindex="-1"></a>f_interp <span class="ot">&lt;-</span> <span class="fu">splinefun</span>(py<span class="sc">$</span>a00np, py<span class="sc">$</span>prob_dens, <span class="at">method =</span> <span class="st">"fmm"</span>)</span>
+<span id="cb8-571"><a href="#cb8-571" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(py<span class="sc">$</span>a00np,<span class="fu">f_interp</span>(py<span class="sc">$</span>a00np),<span class="at">col=</span><span class="st">"magenta"</span>)</span>
+<span id="cb8-572"><a href="#cb8-572" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-573"><a href="#cb8-573" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
