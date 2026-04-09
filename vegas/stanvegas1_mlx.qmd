@@ -56,12 +56,8 @@ $$
 $$
 
 ```{r rsetup, include=FALSE,eval=TRUE}
-#library(tfclinical)
 library(reticulate)
-use_virtualenv("/Users/work/tfp")
-library(tfprobability)
-#library(reticulate)
-library(kableExtra)
+use_virtualenv("/mnt/myvenv")
 library(rstan)
 library(bayesplot)
 library(ggplot2)
@@ -106,18 +102,6 @@ thedata<-data.frame(y,basketID=k_vec,Treatment=z_vec)
 
 py$thedata<-r_to_py(thedata) # THE KEY LINE - makes data available to Python
                              # this is converted into a pandas dataframe object in Python
-```
-
-```{r datasetsQ, include=FALSE,eval=TRUE}
-my_table1_object <- head(thedata) %>%
-  kable() %>%
-  kable_styling(full_width = F) %>%
-  column_spec(1, bold = T, color = "blue")
-
-print(my_table1_object)
-# Save the object
-#saveRDS(my_table1_object, "precomputed/vg2_table1.rds")
-
 ```
 
 
