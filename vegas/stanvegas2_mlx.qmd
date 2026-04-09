@@ -62,12 +62,8 @@ $$
 $$
 
 ```{r rsetup, include=FALSE,eval=TRUE}
-#library(tfclinical)
 library(reticulate)
-use_virtualenv("/Users/work/tfp")
-library(tfprobability)
-#library(reticulate)
-library(kableExtra)
+use_virtualenv("/mnt/myvenv")
 library(rstan)
 library(bayesplot)
 library(ggplot2)
