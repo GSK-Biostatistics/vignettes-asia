@@ -1,10 +1,15 @@
 ---
-title: "Bayesian Inference using Vegas v Stan"
+title: "Bayesian Inference using Vegas and RStan"
 ---
 
 This is a collection of quarto vignettes demonstrating how to perform Bayesian inference via numerical integration, as opposed to MCMC sampling. While MCMC sampling is the default approach in Bayesian modelling, using alternative computational methodologies can be attractive from a quality control and assurance perspective, especially in a regulatory setting.   
 
-The [Vegas](https://github.com/gplepage/vegas) library is used which is well established, and developed and maintained by the author of the methodology, with a recent update to the methodology called vegas+. The latest version of the Vegas library supports [JAX](https://docs.jax.dev/en/latest/) and [MLX](https://mlx-framework.org) computational frameworks which allow parallelization across CPUs and GPUs. The MLX variant is specific to Apple Silicon M-series processors. A substantial speed-up may be obtained when a GPU is available.
+
+- Direct integration is fast, especially if a GPU is available, and feasible for many situations encountered in clinical trial design
+- These vignettes explain the practical aspects of what is needed for a statistician to get this method working with their own design or model 
+- As sample sizes increase, e.g., high hundreds of thousands of patients, this approach may become numerically unstable and MCMC is preferred
+
+The [Vegas](https://github.com/gplepage/vegas) library is used which is long standing and features in [GNU GSL](https://www.gnu.org/software/gsl/), and is developed and maintained by the author of the methodology, with a recent update to the methodology called vegas+. The latest version of the Vegas library supports [JAX](https://docs.jax.dev/en/latest/) and [MLX](https://mlx-framework.org) computational frameworks which allow parallelization across CPUs and GPUs. The MLX variant is specific to Apple Silicon M-series processors. A substantial speed-up may be obtained when a GPU is available.
 
 The vignettes mix and match R and Python code blocks in [RStudio](https://https://posit.co) Results from [RStan](https://mc-stan.org/rstan/) feature in many of these for comparison, being the mostly widely used Bayesian modelling library.
 
@@ -19,55 +24,25 @@ The raw quarto files are available on GSK GitHub [here](https://github.com/GSK-B
 <!-- <to be updated - this is tensorflow - vegas and jax could be added but a bit of a hack> -->
 The vignettes use RStudio and mix and match Python and R and so RStudio must have a working Python installation available (e.g. via [reticulate](https://cran.r-project.org/web/packages/reticulate/index.html)). 
 
-- The simplest option is to install reticulate from CRAN and then install additional Python libraries into the default reticulate environment vi reticulate's py_install() function  
+- The simplest option is to install reticulate from CRAN and ensure reticulate is able to locate a Python installation. This method is built into the vignettes.   
 
-- The most flexible approach is to manually create a python virtualenv via the RStudio terminal and load it into the R session using reticulate as needed. This is the approach used in the quarto files.  
+- The most flexible approach is to manually create a python virtualenv via the RStudio terminal and load it into the R session using reticulate as needed.   
 
-#### Installation of separate Python venv
+#### Advanced: installation of separate Python venv
 The instructions below setup an appropriate venv 
 
 ```bash
 # in bash or terminal in RStudio 
 python3 -m venv myvenv
-source myvenv/bin/activate  # Windows uses gnn\Scripts\activate
+source myvenv/bin/activate  # Windows uses myvenv\Scripts\activate
 # now install via pip the specific library versions needed
 pip install numpy pandas jax vegas math gvar scipy
 ```
-The second part below in the R Console is to instruct [reticulate](https://rstudio.github.io/reticulate/) to use this Python venv rather than one of the existing (or default) virtualenv environments. 
+The second part is to instruct [reticulate](https://rstudio.github.io/reticulate/) to use this Python venv rather than one of the existing (or default) virtualenv environments. 
 ```r
 # in RStudio console
 library(reticulate)
 use_virtualenv("/mydir/myvenv", required = TRUE) # tell R to use the python interpreter and libraries in here
 ```
 
-#### Installation of Tensorflow
-Tensorflow, including tensorflow-gnn can have specific version compatibility requirements and may be easiest to install the RStudio R Tensorflow library which installs the necessary Python libraries as part of this. See below. 
-
-```r
-##########################################################
-# in RStudio Terminal (not R Console) or in Bash
-sudo apt-get update
-sudo apt-get install python3-venv python3-pip python3-dev
-##########################################################
-# in RStudio console
-install.packages("tensorflow")
-library(tensorflow)
-install_tensorflow(extra_packages = c("tf_keras", "tensorflow", "tensorflow-probability","pandas","matplotlib"))
-# note - matplotlib is not essential, and may be removed or added later via py_install()
-#restart session
-install.packages("tfprobability")
-library(tensorflow)
-library(tfprobability)
-d <- tfd_binomial(total_count = 7, probs = 0.3) # if this works then tensorflow us correctly installed
-##########################################################
-```
-
-The tensorflow-gnn can have very specific version requirements. e.g.
-```bash
-# in bash or terminal in RStudio 
-python3 -m venv gnn
-source gnn/bin/activate  # Windows uses gnn\Scripts\activate
-# now install via pip the specific library versions needed
-pip install tensorflow==2.16.2 tf_keras==2.16.0 tensorflow-gnn
-```
 

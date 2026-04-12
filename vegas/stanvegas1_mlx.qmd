@@ -1,5 +1,5 @@
 ---
-title: "BHM Logistic Regression Vegas MLX v RStan"
+title: "Logistic BHM - Vegas MLX v RStan"
 output:
   rmarkdown::html_vignette:
     toc: true
@@ -26,12 +26,14 @@ knitr::opts_chunk$set(
 
 ```
 
-## Quick start
-This vignette uses identical approach as in vignette basket1.qmd but now compares results of the estimated posterior density for the intercept term from direct integration with results from MCMC via Stan.
+### Quickstart
+This vignettes compares the same Bayesian hierarchical model estimated with Vegas and Rstan. This is a logistic regression model. Only key snippets and outputs are shown below. The full vignette is available [here](https://raw.githubusercontent.com/GSK-Biostatistics/vignettes-asia/refs/heads/main/vegas/stanvegas1_mlx.qmd)
+
+This vignette is almost identical to the other vignette ``Logistic BHM - Vegas JAX v RStan'' but this one uses the MLX library for the calculations which uses a GPU, and is considerably faster the JAX equivalent but requires MacOS and Apple Silicon platform. 
 
 ### Model Formulation
 
-The model implemented here is a non-centered parameterization for a logistic model.
+The model implemented here is a non-centered parameterization (helps improve MCMC sampling) for a logistic model.
 
 $$
 \begin{aligned}
@@ -73,6 +75,7 @@ install_if_missing(c("numpy","pandas","jax","vegas","gvar","mlx"))
 library(rstan)
 library(bayesplot)
 library(ggplot2)
+library(kableExtra)
 #reticulate::py_install("bash") # just a test
 ```
 
@@ -80,13 +83,13 @@ library(ggplot2)
 
 The R chunk below creates a simple dataset of three cols:
 
--   a binary response variable (0/1 = non-responder/responder),
+-   a binary response variable y (0/1 = non-responder/responder),
+-   a (dummy) basket ID variable (=1)
 -   a binary treatment variable (0/1 = control/test treatment)
--   and a basket ID variable. (1)
 
 The basket ID is currently set fixed at 1, denoting there is only one basket in this trial, i.e. a classical two arm randomized trial design. Baskets will be added in other vignettes.
 
-```{r datasets, include=TRUE,eval=TRUE}
+```{r datasets, include=FALSE,eval=TRUE}
 ### Prepare model inputs
 set.seed(99999)
 # Set up data
@@ -116,10 +119,21 @@ py$thedata<-r_to_py(thedata) # THE KEY LINE - makes data available to Python
                              # this is converted into a pandas dataframe object in Python
 ```
 
+```{r datasetsQ, include=TRUE,eval=TRUE}
+my_table1_object <- head(thedata) %>%
+  kable() %>%
+  kable_styling(full_width = F) %>%
+  column_spec(1, bold = F)#, color = "blue")
+
+my_table1_object
+# Save the object
+#saveRDS(my_table1_object, precomputed/vg2_table1.rds")
+
+```
 
 ## RStan
 
-The RStan workflow is somewhat more compact than the TFP equivalent, where TFP requires more lower level details to be specified whereas these are dealt with behind the scences in RStan. The nodel definition This is somewhat simplified for ease of use, e.g. hard coded hyperparameters.
+The code for implementing the above model is RStan is given below. 
 
 ```{r stanmodeldef,include=TRUE,echo=TRUE,eval=TRUE}
 ### Stan model
@@ -165,7 +179,7 @@ model {
 
 ### Setup and run sampler
 
-```{r stansample,echo=TRUE,results='hide',eval=TRUE}
+```{r stansample,echo=TRUE,include=FALSE,results='hide',eval=TRUE}
 
 # Create list with input values for Stan model
 data_input_1 <- list(
@@ -209,9 +223,9 @@ print(p)
 ```
 
 
-## Now for the vegas Equivalent Model - overall constant of integration
+## Vegas
 
-```{python evid_and_a0,include=TRUE,eval=TRUE}
+```{python evid_and_a0,include=FALSE,eval=TRUE}
 import numpy as np
 import pandas as pd
 #from jax import config
@@ -262,6 +276,27 @@ def runIters(integ,model,warm_nitn,warm_neval,run_nitn,run_neval,iMax,errTol,Qto
             success=False
     return list([results1,success])
 
+```
+
+To use direct integration in Vegas the key parts are:
+
+-  define the prior density functions
+-  define the log likelihood + log priors
+
+In addition, we also implement a **change of variables** to deal with the range of integration going to $\infty$. This means we integrate over transformed variables (see below) which have finite bounds. As we are changing variables then this requires the usual Jacobian adjustment to the function being integrated to ensure the volume being computed is equivalent to that on the original scale.
+
+To map a variable $t\in(-1,1)$ to $x\in(-\infty,\infty)$ we can use the following function and it's Jacobian (J):
+$$
+\begin{aligned}
+x&=&\frac{t}{1-t^2} \\
+\\
+\enspace\text{where } \quad\enspace J &=& \frac{1+t^2}{(1-t^2)^2}
+\end{aligned}
+$$
+
+The function below `compute_log_lik(theta, y,T)` is necessary to compute the overall standardization constant - the constant which ensures the posterior density integrates to unity - and the integration here is over all parameters in the model. We work in log scale as much as possible and a scaling ``trick'' is used to help avoid numerical overflow. These technical numerical details can be found in the full quarto file.  
+
+```{python sixvarjaco_a,include=TRUE,eval=TRUE}
 #### ------------------------------------------------------------------------------------------------
 #### 2. DEFINE STATS FUNCTIONS 
 #### ------------------------------------------------------------------------------------------------
@@ -316,12 +351,12 @@ def compute_log_lik(theta, y,T):
     theta5=mx.clip(theta[5,:],0.00001, 0.99999)
     
     
-    jacobianL = (  mx.log(1+mx.power(theta0,2)) - 2.0*mx.log(1-mx.power(theta0,2)) 
-                 + mx.log(1+mx.power(theta1,2)) - 2.0*mx.log(1-mx.power(theta1,2))
-                 + mx.log(1+mx.power(theta2,2)) - 2.0*mx.log(1-mx.power(theta2,2))
-                 + mx.log(1+mx.power(theta3,2)) - 2.0*mx.log(1-mx.power(theta3,2))
-                 + mx.log(1+mx.power(theta4,2)) - 2.0*mx.log(1-mx.power(theta4,2))
-                 + mx.log(1+mx.power(theta5,2)) - 2.0*mx.log(1-mx.power(theta5,2))
+    jacobianL = (  mx.log1p(mx.power(theta0,2)) - 2.0*mx.log1p(-mx.power(theta0,2)) 
+                 + mx.log1p(mx.power(theta1,2)) - 2.0*mx.log1p(-mx.power(theta1,2))
+                 + mx.log1p(mx.power(theta2,2)) - 2.0*mx.log1p(-mx.power(theta2,2))
+                 + mx.log1p(mx.power(theta3,2)) - 2.0*mx.log1p(-mx.power(theta3,2))
+                 + mx.log1p(mx.power(theta4,2)) - 2.0*mx.log1p(-mx.power(theta4,2))
+                 + mx.log1p(mx.power(theta5,2)) - 2.0*mx.log1p(-mx.power(theta5,2))
                  )
     #print(f"jacobian={jacobianL}\n")             
 
@@ -335,7 +370,7 @@ def compute_log_lik(theta, y,T):
     
     eta=a0+a1*T # (10,3) where T_vec = (3,) and (10,1) broadcast to (10,3)  
     # y_data*eta - mx.log(1+mx.exp(eta)) this is (10,3) - want col sums, so collapse over rows
-    logL = mx.sum(y*eta - mx.log(1+mx.exp(eta)),axis=0) #
+    logL = mx.sum(y*eta - mx.log1p(mx.exp(eta)),axis=0) #
     #print(f"logL={logL}\n")
     # now add the priors
     # simple N(0,sd=10)
@@ -349,6 +384,10 @@ def compute_log_lik(theta, y,T):
     logDens = logL + prior_a0 + prior_a1 + prior_mu0 + prior_mu1 + prior_sigma0 + prior_sigma1
     #print(f"logDens={logDens}\n")
     return (logDens + jacobianL) # this will be (3,)
+```
+
+
+```{python sixvarjaco_b,include=FALSE,eval=TRUE}
 
 @mx.compile
 def compute_log_lik2(theta, y,T,a0):
@@ -497,10 +536,7 @@ a0np= np.array(a0)
 ```
 
 
-
-
-
-### Compare stan density with vegas density
+### Plots of comparisons
 
 ```{r compare, echo=FALSE, eval=TRUE}
 #png("precomputed/vg2_TFP_stan_comp.png")
