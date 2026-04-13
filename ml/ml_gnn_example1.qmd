@@ -30,7 +30,6 @@ knitr::opts_chunk$set(
 #library(tfclinical)
 library(ragg)
 library(reticulate)
-#use_virtualenv("C://Users//fil44768//OneDrive - GSK//Documents//.virtualenvs//gnn", required=TRUE)
 use_virtualenv("/Users/gogol/py_env/ml_gnn", required = TRUE)
 # 1. Set the device to 'png' (which both R and Python understand)
 knitr::opts_chunk$set(dev = "png")
