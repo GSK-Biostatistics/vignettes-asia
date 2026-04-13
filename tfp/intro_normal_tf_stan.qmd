@@ -43,7 +43,7 @@ This example uses simulated data.
 library(rstanarm)
 library(tfprobability)
 library(reticulate)
-use_virtualenv("/Users/work/tfp")
+use_virtualenv("/Users/gogol/py_env/gnn")
 library(kableExtra)
 library(rstanarm)
 options(mc.cores = parallel::detectCores())

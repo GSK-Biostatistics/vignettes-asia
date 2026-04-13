@@ -1,0 +1,48 @@
+---
+title: "Bayesian Inference using Vegas and RStan"
+---
+
+This is a collection of quarto vignettes demonstrating how to perform Bayesian inference via numerical integration, as opposed to MCMC sampling. While MCMC sampling is the default approach in Bayesian modelling, using alternative computational methodologies can be attractive from a quality control and assurance perspective, especially in a regulatory setting.   
+
+
+- Direct integration is fast, especially if a GPU is available, and feasible for many situations encountered in clinical trial design
+- These vignettes explain the practical aspects of what is needed for a statistician to get this method working with their own design or model 
+- As sample sizes increase, e.g., high hundreds of thousands of patients, this approach may become numerically unstable and MCMC is preferred
+
+The [Vegas](https://github.com/gplepage/vegas) library is used which is long standing and features in [GNU GSL](https://www.gnu.org/software/gsl/), and is developed and maintained by the author of the methodology, with a recent update to the methodology called vegas+. The latest version of the Vegas library supports [JAX](https://docs.jax.dev/en/latest/) and [MLX](https://mlx-framework.org) computational frameworks which allow parallelization across CPUs and GPUs. The MLX variant is specific to Apple Silicon M-series processors. A substantial speed-up may be obtained when a GPU is available.
+
+The vignettes mix and match R and Python code blocks in [RStudio](https://https://posit.co) Results from [RStan](https://mc-stan.org/rstan/) feature in many of these for comparison, being the mostly widely used Bayesian modelling library.
+
+<!-- Markov chain Monte Carlo (MCMC) sampling is the default approach for most Bayesian modelling, made accessible via tools such as [RStan](https://mc-stan.org/rstan/). A drawback of MCMC is that considerable effort is needed, especially in clinical trials and regulated environments, to demonstrate that results are numerically robust. MCMC can also be computationally challenging especially in tasks such as computing operating characteristics for Bayesian clinical trial designs as models may need to be fitted many times. An alternative to MCMC is direct approaches such as numerical integration, e.g. [Vegas](https://github.com/gplepage/vegas). Historically, direct integration has not been computationally practical for all but the simplest models. The development of new general purpose computation frameworks such as [JAX](https://docs.jax.dev/en/latest/) and [MLX](https://mlx-framework.org) makes direct integration attractive beyond only the simplest models as the core calculations are often readily parallelization with thousands of evaluations done simulateneously, for example on a GPU.  -->
+
+
+## Running the Vignettes 
+<!--  url needs updated -->
+The raw quarto files are available on GSK GitHub [here](https://github.com/GSK-Biostatistics/vignettes-asia)
+
+### Installation details and requirements
+<!-- <to be updated - this is tensorflow - vegas and jax could be added but a bit of a hack> -->
+The vignettes use RStudio and mix and match Python and R and so RStudio must have a working Python installation available (e.g. via [reticulate](https://cran.r-project.org/web/packages/reticulate/index.html)). 
+
+- The simplest option is to install reticulate from CRAN and ensure reticulate is able to locate a Python installation. This method is built into the vignettes.   
+
+- The most flexible approach is to manually create a python virtualenv via the RStudio terminal and load it into the R session using reticulate as needed.   
+
+#### Advanced: installation of separate Python venv
+The instructions below setup an appropriate venv 
+
+```bash
+# in bash or terminal in RStudio 
+python3 -m venv myvenv
+source myvenv/bin/activate  # Windows uses myvenv\Scripts\activate
+# now install via pip the specific library versions needed
+pip install numpy pandas jax vegas math gvar scipy
+```
+The second part is to instruct [reticulate](https://rstudio.github.io/reticulate/) to use this Python venv rather than one of the existing (or default) virtualenv environments. 
+```r
+# in RStudio console
+library(reticulate)
+use_virtualenv("/mydir/myvenv", required = TRUE) # tell R to use the python interpreter and libraries in here
+```
+
+

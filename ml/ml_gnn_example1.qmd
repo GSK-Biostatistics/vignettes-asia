@@ -70,14 +70,15 @@ import numpy as np
 import tensorflow as tf
 import tensorflow_gnn as tfgnn
 
-#print(f'Running TF-GNN {tfgnn.__version__} with TensorFlow {tf.__version__}.')
+print(f'Running TF-GNN {tfgnn.__version__} with TensorFlow {tf.__version__}.')
 
 ```
 
 ```{python chunkpy11,include=TRUE, echo=TRUE,eval=TRUE}
 
-train_path = os.path.join(os.getcwd(), 'data/mutag', 'train.tfrecords')
-val_path = os.path.join(os.getcwd(), 'data/mutag', 'val.tfrecords')
+#train_path = os.path.join(os.getcwd(), 'data/mutag', 'train.tfrecords')
+train_path = os.path.join(os.path.expanduser('~'), 'data', 'mutag','train.tfrecords')
+val_path = os.path.join(os.path.expanduser('~'), 'data', 'mutag', 'val.tfrecords')
 #get_ipython().system('ls -l {train_path} {val_path}')
 
 print(f" the train path={train_path}")

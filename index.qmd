@@ -1,21 +1,31 @@
 ---
-title: "Home"
+title: "Vignettes for Drug Development"
 ---
-This site contains a collection of R vignettes covering a range of themes relevant to statisticians working in drug development and clinical research. While we hope these vignettes are a useful resource, they are provided 'as is' without warranty of any kind, express or implied and used at your own risk.   
+[**Disclaimer: please note that all content on this site is provided 'as is' without warranty of any kind, express or implied and used at your own risk.**]{style="color: black;"}   
 
-## Key Themes and Topics
+We hope these vignettes are a useful resource for statisticians and data scientists working in drug development. *Pull requests are welcome*.
 
--  **Tensorflow Probability**
 
-[Tensorflow Probability](https://www.tensorflow.org/probability) is a relatively new library for Bayesian modelling building on the Tensorflow computational framework for large scale computation. An alternative to [RStan](https://mc-stan.org/rstan/) and removes reliance on a single library for business critical modelling 
+## 1. Bayesian Clinical Trial Designs
+Bayesian trial designs are a feature of modern drug development, with major Health Authorities issuing guidance and consultation documents for sponsors (US/FDA, EU/EMA, China/CDE, Japan/PMDA). Demonstrating that a trial has robust design operating characteristics is crucially important; from the perspective of the sponsor we need to know how likely it is that the proposed trial will be successful. From the Health Authority perspective they require strong evidence that the chance of falsely concluding a positive treatment effect is tightly controlled. 
 
--  **Graphical Neural Networks**
+**We provide vignettes that demonstrate the use of different open source computational tools for Bayesian inference for designs of varying complexity**. The use of different tools has practical advantages: 1. independent QC of key results; 2. reduces reliance on a single tool; 3. computational efficiency/feasibility differences, especially if a GPU is available.    
 
-[Graphical Neural Networks](https://blog.tensorflow.org/2024/02/graph-neural-networks-in-tensorflow.html) (GNN) are new tools and the go-to option for modelling in certain drug discovery tasks, such as properties of new molecules. This is a general methodology with wide application across clinical research for prediction and clustering. 
+- [RStan](https://mc-stan.org/rstan/) - widely used library for Markov chain Monte Carlo (MCMC) estimation  
 
--  **LLM prompts for statistical work**
+- [VEGAS](https://vegas.readthedocs.io/en/latest/tutorial.html#introduction) - long established method for Monte Carlo integration
 
-Large language models are changing the way statisticians work. Effectively using LLMs is a skill on its own, especially how to design and iterate prompts to LLMs save effort overall. 
+- [Tensorflow Probability](https://www.tensorflow.org/probability) - newer library for MCMC estimation
+
+
+## 2. GenAI and LLM Assistance in Drug Development
+Large language models (LLMs) are changing the way statisticians and clinical programmers work. Effectively using LLMs and GenAI is becoming an essential skill, especially learning how to drive these new tools to produce high quality outputs while saving effort overall. This is a new and rapdily evolving area. 
+
+
+## 3. Machine Learning for Exploring Complex Data
+Vignettes exploring new modelling methodologies, such as [Graphical Neural Networks](https://blog.tensorflow.org/2024/02/graph-neural-networks-in-tensorflow.html) (GNN) are new tools and the go-to option for modelling in certain drug discovery tasks, such as properties of new molecules. This is a general methodology with wide application across clinical research for prediction and clustering. 
+
+
 
 
 
