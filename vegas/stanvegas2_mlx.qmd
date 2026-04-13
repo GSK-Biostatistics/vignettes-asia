@@ -27,7 +27,7 @@ knitr::opts_chunk$set(
 ```
 
 ## Quick start
-This vignette uses identical approach as in vignette basket1.qmd but now compares results of the estimated posterior density for the intercept term from direct integration with results from MCMC via Stan.
+This vignette is almost identical to ``BHM Basket Trial Logistic Regression Vegas v RStan'' but uses Apple's MLX library so the computations are offloaded onto a GPU. This results in a considerable speed up in terms of computational time.  
 
 ### Model Formulation
 
