@@ -1,5 +1,5 @@
 ---
-title: "Logistic BHM - Vegas JAX v RStan"
+title: "Logistic BHM - Vegas v RStan"
 output:
   rmarkdown::html_vignette:
     toc: true
