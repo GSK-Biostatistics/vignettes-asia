@@ -126,8 +126,6 @@ my_table1_object <- head(thedata) %>%
   column_spec(1, bold = F)#, color = "blue")
 
 my_table1_object
-# Save the object
-#saveRDS(my_table1_object, precomputed/vg2_table1.rds")
 
 ```
 
