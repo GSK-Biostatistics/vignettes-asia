@@ -361,7 +361,7 @@ y_i &amp;\sim \text{Bernoulli}(p_i)
 </ul>
 <p>The basket ID is currently set fixed at 1, denoting there is only one basket in this trial, i.e.&nbsp;a classical two arm randomized trial design. Baskets will be added in other vignettes.</p>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>my_table1_object <span class="ot">&lt;-</span> <span class="fu">head</span>(thedata) <span class="sc">%&gt;%</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>() <span class="sc">%&gt;%</span></span>
@@ -413,7 +413,7 @@ y_i &amp;\sim \text{Bernoulli}(p_i)
 </tbody>
 </table>
 </div>
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the object</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#saveRDS(my_table1_object, precomputed/vg2_table1.rds")</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -424,7 +424,7 @@ y_i &amp;\sim \text{Bernoulli}(p_i)
 <h2 class="anchored" data-anchor-id="rstan">RStan</h2>
 <p>The code for implementing the above model is RStan is given below.</p>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Stan model</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  BHM_stan_1 <span class="ot">&lt;-</span> <span class="st">"data {</span></span>
@@ -472,7 +472,7 @@ y_i &amp;\sim \text{Bernoulli}(p_i)
 <section id="summarize-results" class="level3">
 <h3 class="anchored" data-anchor-id="summarize-results">Summarize results</h3>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bayesplot)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">color_scheme_set</span>(<span class="st">"viridisA"</span>)</span>
@@ -507,7 +507,7 @@ x&amp;=&amp;\frac{t}{1-t^2} \\
 \]</span></p>
 <p>The function below <code>compute_log_lik(theta, y,T)</code> is necessary to compute the overall standardization constant - the constant which ensures the posterior density integrates to unity - and the integration here is over all parameters in the model. We work in log scale as much as possible and a scaling ``trick’’ is used to help avoid numerical overflow. These technical numerical details can be found in the full quarto file.</p>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#### ------------------------------------------------------------------------------------------------</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#### 2. DEFINE STATS FUNCTIONS </span></span>
