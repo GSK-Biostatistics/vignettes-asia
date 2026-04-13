@@ -178,20 +178,20 @@ window.Quarto = {
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
-    <a class="dropdown-item" href="../vegas/stanvegas1_mlx.html">
- <span class="dropdown-text">Ex.1.1a: BHM Logistic Stan vs Vegas MLX</span></a>
-  </li>  
-        <li>
     <a class="dropdown-item" href="../vegas/stanvegas1_jax.html">
- <span class="dropdown-text">Ex.1.1b: BHM Logistic Stan vs Vegas JAX</span></a>
+ <span class="dropdown-text">Ex.1.1a: BHM Logistic Stan vs Vegas(JAX)</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../vegas/stanvegas2_mlx.html">
- <span class="dropdown-text">Ex.1.2a: BHM Basket Logistic Stan vs Vegas MLX</span></a>
+    <a class="dropdown-item" href="../vegas/stanvegas1_mlx.html">
+ <span class="dropdown-text">Ex.1.1b: BHM Logistic Stan vs Vegas(MLX)</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../vegas/stanvegas2_jax.html">
- <span class="dropdown-text">Ex.1.2b: BHM Basket Logistic Stan vs Vegas MLX</span></a>
+ <span class="dropdown-text">Ex.1.2a: BHM Basket Logistic Stan vs Vegas(JAX)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../vegas/stanvegas2_mlx.html">
+ <span class="dropdown-text">Ex.1.2b: BHM Basket Logistic Stan vs Vegas(MLX)</span></a>
   </li>  
     </ul>
   </li>
@@ -259,12 +259,12 @@ window.Quarto = {
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/Your-Org-Name/tf-clinical-site"> <i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/GSK-Biostatistics/vignettes-asia"> <i class="bi bi-github" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://linkedin.com/in/yourprofile"> <i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/company/gsk"> <i class="bi bi-linkedin" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -359,7 +359,7 @@ y_i &amp;\sim \text{Bernoulli}(p_i)
 </ul>
 <p>The basket ID is currently set fixed at 1, denoting there is only one basket in this trial, i.e.&nbsp;a classical two arm randomized trial design. Baskets will be added in other vignettes.</p>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>my_table1_object <span class="ot">&lt;-</span> <span class="fu">head</span>(thedata) <span class="sc">%&gt;%</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>() <span class="sc">%&gt;%</span></span>
@@ -411,7 +411,7 @@ y_i &amp;\sim \text{Bernoulli}(p_i)
 </tbody>
 </table>
 </div>
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the object</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#saveRDS(my_table1_object, precomputed/vg2_table1.rds")</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -422,7 +422,7 @@ y_i &amp;\sim \text{Bernoulli}(p_i)
 <h2 class="anchored" data-anchor-id="rstan">RStan</h2>
 <p>The code for implementing the above model is RStan is given below.</p>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Stan model</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  BHM_stan_1 <span class="ot">&lt;-</span> <span class="st">"data {</span></span>
@@ -470,7 +470,7 @@ y_i &amp;\sim \text{Bernoulli}(p_i)
 <section id="summarize-results" class="level3">
 <h3 class="anchored" data-anchor-id="summarize-results">Summarize results</h3>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bayesplot)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">color_scheme_set</span>(<span class="st">"viridisA"</span>)</span>
@@ -505,7 +505,7 @@ x&amp;=&amp;\frac{t}{1-t^2} \\
 \]</span></p>
 <p>The function below <code>compute_log_lik(theta, y,T)</code> is necessary to compute the overall standardization constant - the constant which ensures the posterior density integrates to unity - and the integration here is over all parameters in the model. We work in log scale as much as possible and a scaling ``trick’’ is used to help avoid numerical overflow. These technical numerical details can be found in the full quarto file.</p>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#### ------------------------------------------------------------------------------------------------</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#### 2. DEFINE STATS FUNCTIONS </span></span>
@@ -1194,434 +1194,432 @@ x&amp;=&amp;\frac{t}{1-t^2} \\
 <span id="cb6-126"><a href="#cb6-126" aria-hidden="true" tabindex="-1"></a>  <span class="fu">column_spec</span>(<span class="dv">1</span>, <span class="at">bold =</span> F)<span class="co">#, color = "blue")</span></span>
 <span id="cb6-127"><a href="#cb6-127" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-128"><a href="#cb6-128" aria-hidden="true" tabindex="-1"></a>my_table1_object</span>
-<span id="cb6-129"><a href="#cb6-129" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the object</span></span>
-<span id="cb6-130"><a href="#cb6-130" aria-hidden="true" tabindex="-1"></a><span class="co">#saveRDS(my_table1_object, precomputed/vg2_table1.rds")</span></span>
+<span id="cb6-129"><a href="#cb6-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-130"><a href="#cb6-130" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb6-131"><a href="#cb6-131" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-132"><a href="#cb6-132" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-132"><a href="#cb6-132" aria-hidden="true" tabindex="-1"></a><span class="fu">## RStan</span></span>
 <span id="cb6-133"><a href="#cb6-133" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-134"><a href="#cb6-134" aria-hidden="true" tabindex="-1"></a><span class="fu">## RStan</span></span>
+<span id="cb6-134"><a href="#cb6-134" aria-hidden="true" tabindex="-1"></a>The code for implementing the above model is RStan is given below. </span>
 <span id="cb6-135"><a href="#cb6-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-136"><a href="#cb6-136" aria-hidden="true" tabindex="-1"></a>The code for implementing the above model is RStan is given below. </span>
-<span id="cb6-137"><a href="#cb6-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-138"><a href="#cb6-138" aria-hidden="true" tabindex="-1"></a><span class="in">```{r stanmodeldef,include=TRUE,echo=TRUE,eval=TRUE}</span></span>
-<span id="cb6-139"><a href="#cb6-139" aria-hidden="true" tabindex="-1"></a><span class="do">### Stan model</span></span>
-<span id="cb6-140"><a href="#cb6-140" aria-hidden="true" tabindex="-1"></a>  BHM_stan_1 <span class="ot">&lt;-</span> <span class="st">"data {</span></span>
-<span id="cb6-141"><a href="#cb6-141" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 0&gt; K;                     // number of baskets (K &gt;= 2)</span></span>
-<span id="cb6-142"><a href="#cb6-142" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 0&gt; N;                     // total number of participants</span></span>
-<span id="cb6-143"><a href="#cb6-143" aria-hidden="true" tabindex="-1"></a><span class="st">  //int&lt;lower = 0, upper = N&gt; N_k[K];     // K x 1 vector of basket sample sizes</span></span>
-<span id="cb6-144"><a href="#cb6-144" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 0, upper = N&gt; N_k;</span></span>
-<span id="cb6-145"><a href="#cb6-145" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 1, upper = K&gt; k_vec[N];   // N x 1 vector of basket indicators</span></span>
-<span id="cb6-146"><a href="#cb6-146" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 0, upper = 1&gt; z_vec[N];   // N x 1 vector of treatment indicators for active treatment arm</span></span>
-<span id="cb6-147"><a href="#cb6-147" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 0, upper = 1&gt; y[N];       // N x 1 vector of binary responses</span></span>
-<span id="cb6-148"><a href="#cb6-148" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb6-149"><a href="#cb6-149" aria-hidden="true" tabindex="-1"></a><span class="st">parameters {</span></span>
-<span id="cb6-150"><a href="#cb6-150" aria-hidden="true" tabindex="-1"></a><span class="st">  matrix[K,2] beta_tr;                  // K x 2 matrix of transformed regression coefficients</span></span>
-<span id="cb6-151"><a href="#cb6-151" aria-hidden="true" tabindex="-1"></a><span class="st">  real mu1;                              // scalar of hierarchical mean (log odds ratio)</span></span>
-<span id="cb6-152"><a href="#cb6-152" aria-hidden="true" tabindex="-1"></a><span class="st">  real&lt;lower = 0&gt; sigma1;                  // scalar of hierarchical SD (log odds ratio)</span></span>
-<span id="cb6-153"><a href="#cb6-153" aria-hidden="true" tabindex="-1"></a><span class="st">  real mu0;                              // scalar of hierarchical mean (log odds ratio)</span></span>
-<span id="cb6-154"><a href="#cb6-154" aria-hidden="true" tabindex="-1"></a><span class="st">  real&lt;lower = 0&gt; sigma0;                  // scalar of hierarchical SD (log odds ratio)</span></span>
-<span id="cb6-155"><a href="#cb6-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-156"><a href="#cb6-156" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb6-157"><a href="#cb6-157" aria-hidden="true" tabindex="-1"></a><span class="st">transformed parameters {</span></span>
-<span id="cb6-158"><a href="#cb6-158" aria-hidden="true" tabindex="-1"></a><span class="st">  matrix[K,2] beta;                     // K x 2 matrix of regression coefficients (without transformation)</span></span>
-<span id="cb6-159"><a href="#cb6-159" aria-hidden="true" tabindex="-1"></a><span class="st">  // Calculate beta coefs using transformed betas (leads to better mixing)</span></span>
-<span id="cb6-160"><a href="#cb6-160" aria-hidden="true" tabindex="-1"></a><span class="st">  for (k in 1:K){</span></span>
-<span id="cb6-161"><a href="#cb6-161" aria-hidden="true" tabindex="-1"></a><span class="st">    beta[k,1] = mu0 + sigma0 * beta_tr[k,1];</span></span>
-<span id="cb6-162"><a href="#cb6-162" aria-hidden="true" tabindex="-1"></a><span class="st">    beta[k,2] = mu1 + sigma1 * beta_tr[k,2];</span></span>
-<span id="cb6-163"><a href="#cb6-163" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
-<span id="cb6-164"><a href="#cb6-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-165"><a href="#cb6-165" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb6-166"><a href="#cb6-166" aria-hidden="true" tabindex="-1"></a><span class="st">model {</span></span>
-<span id="cb6-167"><a href="#cb6-167" aria-hidden="true" tabindex="-1"></a><span class="st">  mu0 ~ normal(0, 2.5);    // vectorized normal priors for hierarchical means (specify SD in normal distn)</span></span>
-<span id="cb6-168"><a href="#cb6-168" aria-hidden="true" tabindex="-1"></a><span class="st">  sigma0 ~ normal(0, 2.5);       // vectorized half-normal priors for hierarchical SDs (specify SD in normal distn)</span></span>
-<span id="cb6-169"><a href="#cb6-169" aria-hidden="true" tabindex="-1"></a><span class="st">  mu1 ~ normal(0, 2.5);    // vectorized normal priors for hierarchical means (specify SD in normal distn)</span></span>
-<span id="cb6-170"><a href="#cb6-170" aria-hidden="true" tabindex="-1"></a><span class="st">  sigma1 ~ normal(0, 2.5);       // vectorized half-normal priors for hierarchical SDs (specify SD in normal distn)</span></span>
-<span id="cb6-171"><a href="#cb6-171" aria-hidden="true" tabindex="-1"></a><span class="st">  beta_tr[,1] ~ normal(0, 1);  // vectorized normal prior for the log odds for the control arm</span></span>
-<span id="cb6-172"><a href="#cb6-172" aria-hidden="true" tabindex="-1"></a><span class="st">  beta_tr[,2] ~ normal(0, 1);  // vectorized normal prior for the log odds ratios</span></span>
-<span id="cb6-173"><a href="#cb6-173" aria-hidden="true" tabindex="-1"></a><span class="st">  for (i in 1:N)</span></span>
-<span id="cb6-174"><a href="#cb6-174" aria-hidden="true" tabindex="-1"></a><span class="st">    y[i] ~ bernoulli_logit(beta[k_vec[i], 1] + beta[k_vec[i], 2] * z_vec[i]);</span></span>
-<span id="cb6-175"><a href="#cb6-175" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb6-176"><a href="#cb6-176" aria-hidden="true" tabindex="-1"></a><span class="st">"</span></span>
+<span id="cb6-136"><a href="#cb6-136" aria-hidden="true" tabindex="-1"></a><span class="in">```{r stanmodeldef,include=TRUE,echo=TRUE,eval=TRUE}</span></span>
+<span id="cb6-137"><a href="#cb6-137" aria-hidden="true" tabindex="-1"></a><span class="do">### Stan model</span></span>
+<span id="cb6-138"><a href="#cb6-138" aria-hidden="true" tabindex="-1"></a>  BHM_stan_1 <span class="ot">&lt;-</span> <span class="st">"data {</span></span>
+<span id="cb6-139"><a href="#cb6-139" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 0&gt; K;                     // number of baskets (K &gt;= 2)</span></span>
+<span id="cb6-140"><a href="#cb6-140" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 0&gt; N;                     // total number of participants</span></span>
+<span id="cb6-141"><a href="#cb6-141" aria-hidden="true" tabindex="-1"></a><span class="st">  //int&lt;lower = 0, upper = N&gt; N_k[K];     // K x 1 vector of basket sample sizes</span></span>
+<span id="cb6-142"><a href="#cb6-142" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 0, upper = N&gt; N_k;</span></span>
+<span id="cb6-143"><a href="#cb6-143" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 1, upper = K&gt; k_vec[N];   // N x 1 vector of basket indicators</span></span>
+<span id="cb6-144"><a href="#cb6-144" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 0, upper = 1&gt; z_vec[N];   // N x 1 vector of treatment indicators for active treatment arm</span></span>
+<span id="cb6-145"><a href="#cb6-145" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 0, upper = 1&gt; y[N];       // N x 1 vector of binary responses</span></span>
+<span id="cb6-146"><a href="#cb6-146" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb6-147"><a href="#cb6-147" aria-hidden="true" tabindex="-1"></a><span class="st">parameters {</span></span>
+<span id="cb6-148"><a href="#cb6-148" aria-hidden="true" tabindex="-1"></a><span class="st">  matrix[K,2] beta_tr;                  // K x 2 matrix of transformed regression coefficients</span></span>
+<span id="cb6-149"><a href="#cb6-149" aria-hidden="true" tabindex="-1"></a><span class="st">  real mu1;                              // scalar of hierarchical mean (log odds ratio)</span></span>
+<span id="cb6-150"><a href="#cb6-150" aria-hidden="true" tabindex="-1"></a><span class="st">  real&lt;lower = 0&gt; sigma1;                  // scalar of hierarchical SD (log odds ratio)</span></span>
+<span id="cb6-151"><a href="#cb6-151" aria-hidden="true" tabindex="-1"></a><span class="st">  real mu0;                              // scalar of hierarchical mean (log odds ratio)</span></span>
+<span id="cb6-152"><a href="#cb6-152" aria-hidden="true" tabindex="-1"></a><span class="st">  real&lt;lower = 0&gt; sigma0;                  // scalar of hierarchical SD (log odds ratio)</span></span>
+<span id="cb6-153"><a href="#cb6-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-154"><a href="#cb6-154" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb6-155"><a href="#cb6-155" aria-hidden="true" tabindex="-1"></a><span class="st">transformed parameters {</span></span>
+<span id="cb6-156"><a href="#cb6-156" aria-hidden="true" tabindex="-1"></a><span class="st">  matrix[K,2] beta;                     // K x 2 matrix of regression coefficients (without transformation)</span></span>
+<span id="cb6-157"><a href="#cb6-157" aria-hidden="true" tabindex="-1"></a><span class="st">  // Calculate beta coefs using transformed betas (leads to better mixing)</span></span>
+<span id="cb6-158"><a href="#cb6-158" aria-hidden="true" tabindex="-1"></a><span class="st">  for (k in 1:K){</span></span>
+<span id="cb6-159"><a href="#cb6-159" aria-hidden="true" tabindex="-1"></a><span class="st">    beta[k,1] = mu0 + sigma0 * beta_tr[k,1];</span></span>
+<span id="cb6-160"><a href="#cb6-160" aria-hidden="true" tabindex="-1"></a><span class="st">    beta[k,2] = mu1 + sigma1 * beta_tr[k,2];</span></span>
+<span id="cb6-161"><a href="#cb6-161" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb6-162"><a href="#cb6-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-163"><a href="#cb6-163" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb6-164"><a href="#cb6-164" aria-hidden="true" tabindex="-1"></a><span class="st">model {</span></span>
+<span id="cb6-165"><a href="#cb6-165" aria-hidden="true" tabindex="-1"></a><span class="st">  mu0 ~ normal(0, 2.5);    // vectorized normal priors for hierarchical means (specify SD in normal distn)</span></span>
+<span id="cb6-166"><a href="#cb6-166" aria-hidden="true" tabindex="-1"></a><span class="st">  sigma0 ~ normal(0, 2.5);       // vectorized half-normal priors for hierarchical SDs (specify SD in normal distn)</span></span>
+<span id="cb6-167"><a href="#cb6-167" aria-hidden="true" tabindex="-1"></a><span class="st">  mu1 ~ normal(0, 2.5);    // vectorized normal priors for hierarchical means (specify SD in normal distn)</span></span>
+<span id="cb6-168"><a href="#cb6-168" aria-hidden="true" tabindex="-1"></a><span class="st">  sigma1 ~ normal(0, 2.5);       // vectorized half-normal priors for hierarchical SDs (specify SD in normal distn)</span></span>
+<span id="cb6-169"><a href="#cb6-169" aria-hidden="true" tabindex="-1"></a><span class="st">  beta_tr[,1] ~ normal(0, 1);  // vectorized normal prior for the log odds for the control arm</span></span>
+<span id="cb6-170"><a href="#cb6-170" aria-hidden="true" tabindex="-1"></a><span class="st">  beta_tr[,2] ~ normal(0, 1);  // vectorized normal prior for the log odds ratios</span></span>
+<span id="cb6-171"><a href="#cb6-171" aria-hidden="true" tabindex="-1"></a><span class="st">  for (i in 1:N)</span></span>
+<span id="cb6-172"><a href="#cb6-172" aria-hidden="true" tabindex="-1"></a><span class="st">    y[i] ~ bernoulli_logit(beta[k_vec[i], 1] + beta[k_vec[i], 2] * z_vec[i]);</span></span>
+<span id="cb6-173"><a href="#cb6-173" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb6-174"><a href="#cb6-174" aria-hidden="true" tabindex="-1"></a><span class="st">"</span></span>
+<span id="cb6-175"><a href="#cb6-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-176"><a href="#cb6-176" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb6-177"><a href="#cb6-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-178"><a href="#cb6-178" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-178"><a href="#cb6-178" aria-hidden="true" tabindex="-1"></a><span class="fu">### Setup and run sampler</span></span>
 <span id="cb6-179"><a href="#cb6-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-180"><a href="#cb6-180" aria-hidden="true" tabindex="-1"></a><span class="fu">### Setup and run sampler</span></span>
+<span id="cb6-180"><a href="#cb6-180" aria-hidden="true" tabindex="-1"></a><span class="in">```{r stansample,echo=TRUE,include=FALSE,results='hide',eval=TRUE}</span></span>
 <span id="cb6-181"><a href="#cb6-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-182"><a href="#cb6-182" aria-hidden="true" tabindex="-1"></a><span class="in">```{r stansample,echo=TRUE,include=FALSE,results='hide',eval=TRUE}</span></span>
-<span id="cb6-183"><a href="#cb6-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-184"><a href="#cb6-184" aria-hidden="true" tabindex="-1"></a><span class="co"># Create list with input values for Stan model</span></span>
-<span id="cb6-185"><a href="#cb6-185" aria-hidden="true" tabindex="-1"></a>data_input_1 <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb6-186"><a href="#cb6-186" aria-hidden="true" tabindex="-1"></a>  <span class="at">K =</span> K,                <span class="co"># number of subgroups</span></span>
-<span id="cb6-187"><a href="#cb6-187" aria-hidden="true" tabindex="-1"></a>  <span class="at">N =</span> N,                <span class="co"># total sample size</span></span>
-<span id="cb6-188"><a href="#cb6-188" aria-hidden="true" tabindex="-1"></a>  <span class="at">N_k =</span> N_k,            <span class="co"># sample size per basket</span></span>
-<span id="cb6-189"><a href="#cb6-189" aria-hidden="true" tabindex="-1"></a>  <span class="at">k_vec =</span> k_vec,        <span class="co"># N x 1 vector of subgroup indicators</span></span>
-<span id="cb6-190"><a href="#cb6-190" aria-hidden="true" tabindex="-1"></a>  <span class="at">z_vec =</span> z_vec,        <span class="co"># N x 1 vector of active treatment arm indicators</span></span>
-<span id="cb6-191"><a href="#cb6-191" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> y                 <span class="co"># N x 1 vector of binary responses</span></span>
-<span id="cb6-192"><a href="#cb6-192" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb6-182"><a href="#cb6-182" aria-hidden="true" tabindex="-1"></a><span class="co"># Create list with input values for Stan model</span></span>
+<span id="cb6-183"><a href="#cb6-183" aria-hidden="true" tabindex="-1"></a>data_input_1 <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb6-184"><a href="#cb6-184" aria-hidden="true" tabindex="-1"></a>  <span class="at">K =</span> K,                <span class="co"># number of subgroups</span></span>
+<span id="cb6-185"><a href="#cb6-185" aria-hidden="true" tabindex="-1"></a>  <span class="at">N =</span> N,                <span class="co"># total sample size</span></span>
+<span id="cb6-186"><a href="#cb6-186" aria-hidden="true" tabindex="-1"></a>  <span class="at">N_k =</span> N_k,            <span class="co"># sample size per basket</span></span>
+<span id="cb6-187"><a href="#cb6-187" aria-hidden="true" tabindex="-1"></a>  <span class="at">k_vec =</span> k_vec,        <span class="co"># N x 1 vector of subgroup indicators</span></span>
+<span id="cb6-188"><a href="#cb6-188" aria-hidden="true" tabindex="-1"></a>  <span class="at">z_vec =</span> z_vec,        <span class="co"># N x 1 vector of active treatment arm indicators</span></span>
+<span id="cb6-189"><a href="#cb6-189" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> y                 <span class="co"># N x 1 vector of binary responses</span></span>
+<span id="cb6-190"><a href="#cb6-190" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb6-191"><a href="#cb6-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-192"><a href="#cb6-192" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-193"><a href="#cb6-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-194"><a href="#cb6-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-195"><a href="#cb6-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-196"><a href="#cb6-196" aria-hidden="true" tabindex="-1"></a><span class="do">### Compile and fit model</span></span>
-<span id="cb6-197"><a href="#cb6-197" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">mc.cores =</span> parallel<span class="sc">::</span><span class="fu">detectCores</span>())</span>
-<span id="cb6-198"><a href="#cb6-198" aria-hidden="true" tabindex="-1"></a><span class="co"># Compile model (only run the line below once for a simulation study - compilation not dependent on any</span></span>
-<span id="cb6-199"><a href="#cb6-199" aria-hidden="true" tabindex="-1"></a><span class="co"># simulation inputs as defined by scenarios or on simulated data)</span></span>
-<span id="cb6-200"><a href="#cb6-200" aria-hidden="true" tabindex="-1"></a>stan_mod_1 <span class="ot">&lt;-</span> <span class="fu">stan_model</span>(<span class="at">model_code =</span> BHM_stan_1)</span>
-<span id="cb6-201"><a href="#cb6-201" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit model</span></span>
-<span id="cb6-202"><a href="#cb6-202" aria-hidden="true" tabindex="-1"></a>nsamps <span class="ot">&lt;-</span> <span class="dv">30000</span>       <span class="co"># number of posterior samples (after removing burn-in) per chain</span></span>
-<span id="cb6-203"><a href="#cb6-203" aria-hidden="true" tabindex="-1"></a>nburnin <span class="ot">&lt;-</span> <span class="dv">1000</span>       <span class="co"># number of burn-in samples to remove at beginning of each chain</span></span>
-<span id="cb6-204"><a href="#cb6-204" aria-hidden="true" tabindex="-1"></a>nchains <span class="ot">&lt;-</span> <span class="dv">4</span>          <span class="co"># number of chains</span></span>
-<span id="cb6-205"><a href="#cb6-205" aria-hidden="true" tabindex="-1"></a>BHM_pars_1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"mu0"</span>, <span class="st">"sigma0"</span>,<span class="st">"mu1"</span>, <span class="st">"sigma1"</span>, <span class="st">"beta"</span>,<span class="st">"beta_tr"</span>)     <span class="co"># parameters to sample</span></span>
-<span id="cb6-206"><a href="#cb6-206" aria-hidden="true" tabindex="-1"></a>start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
-<span id="cb6-207"><a href="#cb6-207" aria-hidden="true" tabindex="-1"></a>stan_fit_2 <span class="ot">&lt;-</span> <span class="fu">sampling</span>(stan_mod_1, <span class="at">data =</span> data_input_1, <span class="at">pars =</span> BHM_pars_1,</span>
-<span id="cb6-208"><a href="#cb6-208" aria-hidden="true" tabindex="-1"></a>                       <span class="at">iter =</span> nsamps <span class="sc">+</span> nburnin, <span class="at">warmup =</span> nburnin, <span class="at">chains =</span> nchains)</span>
-<span id="cb6-209"><a href="#cb6-209" aria-hidden="true" tabindex="-1"></a>end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
-<span id="cb6-210"><a href="#cb6-210" aria-hidden="true" tabindex="-1"></a>end_time <span class="sc">-</span> start_time</span>
-<span id="cb6-211"><a href="#cb6-211" aria-hidden="true" tabindex="-1"></a>post_draws_2 <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(stan_fit_2)           <span class="co"># posterior samples of each parameter</span></span>
+<span id="cb6-194"><a href="#cb6-194" aria-hidden="true" tabindex="-1"></a><span class="do">### Compile and fit model</span></span>
+<span id="cb6-195"><a href="#cb6-195" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">mc.cores =</span> parallel<span class="sc">::</span><span class="fu">detectCores</span>())</span>
+<span id="cb6-196"><a href="#cb6-196" aria-hidden="true" tabindex="-1"></a><span class="co"># Compile model (only run the line below once for a simulation study - compilation not dependent on any</span></span>
+<span id="cb6-197"><a href="#cb6-197" aria-hidden="true" tabindex="-1"></a><span class="co"># simulation inputs as defined by scenarios or on simulated data)</span></span>
+<span id="cb6-198"><a href="#cb6-198" aria-hidden="true" tabindex="-1"></a>stan_mod_1 <span class="ot">&lt;-</span> <span class="fu">stan_model</span>(<span class="at">model_code =</span> BHM_stan_1)</span>
+<span id="cb6-199"><a href="#cb6-199" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit model</span></span>
+<span id="cb6-200"><a href="#cb6-200" aria-hidden="true" tabindex="-1"></a>nsamps <span class="ot">&lt;-</span> <span class="dv">30000</span>       <span class="co"># number of posterior samples (after removing burn-in) per chain</span></span>
+<span id="cb6-201"><a href="#cb6-201" aria-hidden="true" tabindex="-1"></a>nburnin <span class="ot">&lt;-</span> <span class="dv">1000</span>       <span class="co"># number of burn-in samples to remove at beginning of each chain</span></span>
+<span id="cb6-202"><a href="#cb6-202" aria-hidden="true" tabindex="-1"></a>nchains <span class="ot">&lt;-</span> <span class="dv">4</span>          <span class="co"># number of chains</span></span>
+<span id="cb6-203"><a href="#cb6-203" aria-hidden="true" tabindex="-1"></a>BHM_pars_1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"mu0"</span>, <span class="st">"sigma0"</span>,<span class="st">"mu1"</span>, <span class="st">"sigma1"</span>, <span class="st">"beta"</span>,<span class="st">"beta_tr"</span>)     <span class="co"># parameters to sample</span></span>
+<span id="cb6-204"><a href="#cb6-204" aria-hidden="true" tabindex="-1"></a>start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb6-205"><a href="#cb6-205" aria-hidden="true" tabindex="-1"></a>stan_fit_2 <span class="ot">&lt;-</span> <span class="fu">sampling</span>(stan_mod_1, <span class="at">data =</span> data_input_1, <span class="at">pars =</span> BHM_pars_1,</span>
+<span id="cb6-206"><a href="#cb6-206" aria-hidden="true" tabindex="-1"></a>                       <span class="at">iter =</span> nsamps <span class="sc">+</span> nburnin, <span class="at">warmup =</span> nburnin, <span class="at">chains =</span> nchains)</span>
+<span id="cb6-207"><a href="#cb6-207" aria-hidden="true" tabindex="-1"></a>end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb6-208"><a href="#cb6-208" aria-hidden="true" tabindex="-1"></a>end_time <span class="sc">-</span> start_time</span>
+<span id="cb6-209"><a href="#cb6-209" aria-hidden="true" tabindex="-1"></a>post_draws_2 <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(stan_fit_2)           <span class="co"># posterior samples of each parameter</span></span>
+<span id="cb6-210"><a href="#cb6-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-211"><a href="#cb6-211" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb6-212"><a href="#cb6-212" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-213"><a href="#cb6-213" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-213"><a href="#cb6-213" aria-hidden="true" tabindex="-1"></a><span class="fu">### Summarize results</span></span>
 <span id="cb6-214"><a href="#cb6-214" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-215"><a href="#cb6-215" aria-hidden="true" tabindex="-1"></a><span class="fu">### Summarize results</span></span>
-<span id="cb6-216"><a href="#cb6-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-217"><a href="#cb6-217" aria-hidden="true" tabindex="-1"></a><span class="in">```{r stanresults,fig.width=10, fig.height=6, out.width="100%",eval=TRUE}</span></span>
-<span id="cb6-218"><a href="#cb6-218" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bayesplot)</span>
-<span id="cb6-219"><a href="#cb6-219" aria-hidden="true" tabindex="-1"></a><span class="fu">color_scheme_set</span>(<span class="st">"viridisA"</span>)</span>
-<span id="cb6-220"><a href="#cb6-220" aria-hidden="true" tabindex="-1"></a>p<span class="ot">&lt;-</span><span class="fu">mcmc_trace</span>(stan_fit_2,<span class="st">"mu0"</span>)</span>
-<span id="cb6-221"><a href="#cb6-221" aria-hidden="true" tabindex="-1"></a><span class="co">#ggsave("precomputed/vg2_traceplot1_stan.png", p)</span></span>
-<span id="cb6-222"><a href="#cb6-222" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p)</span>
-<span id="cb6-223"><a href="#cb6-223" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb6-224"><a href="#cb6-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-215"><a href="#cb6-215" aria-hidden="true" tabindex="-1"></a><span class="in">```{r stanresults,fig.width=10, fig.height=6, out.width="100%",eval=TRUE}</span></span>
+<span id="cb6-216"><a href="#cb6-216" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bayesplot)</span>
+<span id="cb6-217"><a href="#cb6-217" aria-hidden="true" tabindex="-1"></a><span class="fu">color_scheme_set</span>(<span class="st">"viridisA"</span>)</span>
+<span id="cb6-218"><a href="#cb6-218" aria-hidden="true" tabindex="-1"></a>p<span class="ot">&lt;-</span><span class="fu">mcmc_trace</span>(stan_fit_2,<span class="st">"mu0"</span>)</span>
+<span id="cb6-219"><a href="#cb6-219" aria-hidden="true" tabindex="-1"></a><span class="co">#ggsave("precomputed/vg2_traceplot1_stan.png", p)</span></span>
+<span id="cb6-220"><a href="#cb6-220" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p)</span>
+<span id="cb6-221"><a href="#cb6-221" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-222"><a href="#cb6-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-223"><a href="#cb6-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-224"><a href="#cb6-224" aria-hidden="true" tabindex="-1"></a><span class="fu">## Vegas</span></span>
 <span id="cb6-225"><a href="#cb6-225" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-226"><a href="#cb6-226" aria-hidden="true" tabindex="-1"></a><span class="fu">## Vegas</span></span>
-<span id="cb6-227"><a href="#cb6-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-228"><a href="#cb6-228" aria-hidden="true" tabindex="-1"></a><span class="in">```{python evid_and_a0,include=FALSE,eval=TRUE}</span></span>
-<span id="cb6-229"><a href="#cb6-229" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb6-230"><a href="#cb6-230" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb6-231"><a href="#cb6-231" aria-hidden="true" tabindex="-1"></a><span class="co">#from jax import config</span></span>
-<span id="cb6-232"><a href="#cb6-232" aria-hidden="true" tabindex="-1"></a><span class="co">#config.update("jax_enable_x64", True)  ## if turn this on then vegas need np.array() in function return values</span></span>
-<span id="cb6-233"><a href="#cb6-233" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> jax.numpy <span class="im">as</span> jnp</span>
-<span id="cb6-234"><a href="#cb6-234" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> jax</span>
-<span id="cb6-235"><a href="#cb6-235" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> vegas</span>
-<span id="cb6-236"><a href="#cb6-236" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
-<span id="cb6-237"><a href="#cb6-237" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gvar</span>
-<span id="cb6-238"><a href="#cb6-238" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> mlx </span>
-<span id="cb6-239"><a href="#cb6-239" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> mlx.core <span class="im">as</span> mx</span>
-<span id="cb6-240"><a href="#cb6-240" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-241"><a href="#cb6-241" aria-hidden="true" tabindex="-1"></a><span class="co">## The data.frame passed is now a panda df needs converted to mlx</span></span>
-<span id="cb6-242"><a href="#cb6-242" aria-hidden="true" tabindex="-1"></a>y_data<span class="op">=</span>mx.array(thedata.iloc[:, <span class="dv">0</span>].to_numpy(), dtype<span class="op">=</span>mx.float32)[:,<span class="va">None</span>]</span>
-<span id="cb6-243"><a href="#cb6-243" aria-hidden="true" tabindex="-1"></a>k_vec<span class="op">=</span>mx.array(thedata.iloc[:, <span class="dv">1</span>].to_numpy())<span class="op">-</span><span class="dv">1</span></span>
-<span id="cb6-244"><a href="#cb6-244" aria-hidden="true" tabindex="-1"></a>T_vec<span class="op">=</span>mx.array(thedata.iloc[:, <span class="dv">2</span>].to_numpy(), dtype<span class="op">=</span>mx.float32)[:,<span class="va">None</span>]</span>
-<span id="cb6-245"><a href="#cb6-245" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-246"><a href="#cb6-246" aria-hidden="true" tabindex="-1"></a><span class="co">#### ------------------------------------------------------------------------------------------------</span></span>
-<span id="cb6-247"><a href="#cb6-247" aria-hidden="true" tabindex="-1"></a><span class="co">#### 1. DEFINE HELPER FUNCTIONS - STATS FUNCTIONS ARE LATER</span></span>
-<span id="cb6-248"><a href="#cb6-248" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> converged(vegasresult, reltol, Qtol):</span>
-<span id="cb6-249"><a href="#cb6-249" aria-hidden="true" tabindex="-1"></a>    res <span class="op">=</span> vegasresult <span class="co"># note this is results object OR vegas.ravg object - both have necessary members</span></span>
-<span id="cb6-250"><a href="#cb6-250" aria-hidden="true" tabindex="-1"></a>    <span class="co"># This returns True if the condition is met, False otherwise</span></span>
-<span id="cb6-251"><a href="#cb6-251" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (<span class="dv">100</span> <span class="op">*</span> (gvar.sdev(res) <span class="op">/</span> gvar.mean(res)) <span class="op">&lt;</span> reltol) <span class="kw">and</span> (res.Q <span class="op">&gt;</span> Qtol)</span>
-<span id="cb6-252"><a href="#cb6-252" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-253"><a href="#cb6-253" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> runIters(integ,model,warm_nitn,warm_neval,run_nitn,run_neval,iMax,errTol,Qtol,verbose<span class="op">=</span><span class="va">False</span>):</span>
-<span id="cb6-254"><a href="#cb6-254" aria-hidden="true" tabindex="-1"></a>    <span class="co"># RUN VEGAS to hit a given accuracy level AND checks Q</span></span>
-<span id="cb6-255"><a href="#cb6-255" aria-hidden="true" tabindex="-1"></a>    <span class="co"># this runs warmup and sets of iters until specified error is met, 100*sdev/mean &lt; errTol</span></span>
-<span id="cb6-256"><a href="#cb6-256" aria-hidden="true" tabindex="-1"></a>    <span class="co"># e.g. errTol = 0.1 is sd is less than 0.1% of mean</span></span>
-<span id="cb6-257"><a href="#cb6-257" aria-hidden="true" tabindex="-1"></a>    <span class="co"># returns a list comprising of integ() object and a boolean, boolean is to check accuracy was hit</span></span>
-<span id="cb6-258"><a href="#cb6-258" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Warmup grid - do not store results with rest as early grid selection</span></span>
-<span id="cb6-259"><a href="#cb6-259" aria-hidden="true" tabindex="-1"></a>    res_warmup <span class="op">=</span> integ(model, nitn<span class="op">=</span>warm_nitn, neval<span class="op">=</span>warm_neval)</span>
-<span id="cb6-260"><a href="#cb6-260" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Production (Stable Integration)</span></span>
-<span id="cb6-261"><a href="#cb6-261" aria-hidden="true" tabindex="-1"></a>    results1 <span class="op">=</span> integ(model, nitn<span class="op">=</span>run_nitn, neval<span class="op">=</span>run_neval)</span>
-<span id="cb6-262"><a href="#cb6-262" aria-hidden="true" tabindex="-1"></a>    <span class="co"># now check if the desired accuracy is achieved and Q is not too low</span></span>
-<span id="cb6-263"><a href="#cb6-263" aria-hidden="true" tabindex="-1"></a>    i<span class="op">=</span><span class="dv">0</span></span>
-<span id="cb6-264"><a href="#cb6-264" aria-hidden="true" tabindex="-1"></a>    results1itn<span class="op">=</span>results1.itn_results <span class="co"># pull out just iters as array</span></span>
-<span id="cb6-265"><a href="#cb6-265" aria-hidden="true" tabindex="-1"></a>    success <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb6-266"><a href="#cb6-266" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> (<span class="kw">not</span> converged(results1,errTol,Qtol)) <span class="kw">and</span> i<span class="op">&lt;</span>iMax:</span>
-<span id="cb6-267"><a href="#cb6-267" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> verbose:</span>
-<span id="cb6-268"><a href="#cb6-268" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"cumulative iterations=</span><span class="sc">{</span>i<span class="op">*</span>run_nitn<span class="op">+</span>run_nitn<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
-<span id="cb6-269"><a href="#cb6-269" aria-hidden="true" tabindex="-1"></a>        <span class="co"># not converged yet so run another set of iterations - each updates grid</span></span>
-<span id="cb6-270"><a href="#cb6-270" aria-hidden="true" tabindex="-1"></a>        results2 <span class="op">=</span> integ(model, nitn<span class="op">=</span>run_nitn, neval<span class="op">=</span>run_neval)</span>
-<span id="cb6-271"><a href="#cb6-271" aria-hidden="true" tabindex="-1"></a>        <span class="co"># combine the results with existing set</span></span>
-<span id="cb6-272"><a href="#cb6-272" aria-hidden="true" tabindex="-1"></a>        results1itn <span class="op">=</span> results1itn<span class="op">+</span>results2.itn_results <span class="co">#existing plus newest</span></span>
-<span id="cb6-273"><a href="#cb6-273" aria-hidden="true" tabindex="-1"></a>        results1<span class="op">=</span>vegas.ravg(results1itn) <span class="co"># this is then passed to while condition to see if more integ() needed</span></span>
-<span id="cb6-274"><a href="#cb6-274" aria-hidden="true" tabindex="-1"></a>        i<span class="op">=</span>i<span class="op">+</span><span class="dv">1</span> <span class="co"># counter to control too many iters</span></span>
-<span id="cb6-275"><a href="#cb6-275" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> i<span class="op">==</span>iMax:</span>
-<span id="cb6-276"><a href="#cb6-276" aria-hidden="true" tabindex="-1"></a>            success<span class="op">=</span><span class="va">False</span></span>
-<span id="cb6-277"><a href="#cb6-277" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">list</span>([results1,success])</span>
+<span id="cb6-226"><a href="#cb6-226" aria-hidden="true" tabindex="-1"></a><span class="in">```{python evid_and_a0,include=FALSE,eval=TRUE}</span></span>
+<span id="cb6-227"><a href="#cb6-227" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb6-228"><a href="#cb6-228" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb6-229"><a href="#cb6-229" aria-hidden="true" tabindex="-1"></a><span class="co">#from jax import config</span></span>
+<span id="cb6-230"><a href="#cb6-230" aria-hidden="true" tabindex="-1"></a><span class="co">#config.update("jax_enable_x64", True)  ## if turn this on then vegas need np.array() in function return values</span></span>
+<span id="cb6-231"><a href="#cb6-231" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> jax.numpy <span class="im">as</span> jnp</span>
+<span id="cb6-232"><a href="#cb6-232" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> jax</span>
+<span id="cb6-233"><a href="#cb6-233" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> vegas</span>
+<span id="cb6-234"><a href="#cb6-234" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
+<span id="cb6-235"><a href="#cb6-235" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gvar</span>
+<span id="cb6-236"><a href="#cb6-236" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> mlx </span>
+<span id="cb6-237"><a href="#cb6-237" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> mlx.core <span class="im">as</span> mx</span>
+<span id="cb6-238"><a href="#cb6-238" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-239"><a href="#cb6-239" aria-hidden="true" tabindex="-1"></a><span class="co">## The data.frame passed is now a panda df needs converted to mlx</span></span>
+<span id="cb6-240"><a href="#cb6-240" aria-hidden="true" tabindex="-1"></a>y_data<span class="op">=</span>mx.array(thedata.iloc[:, <span class="dv">0</span>].to_numpy(), dtype<span class="op">=</span>mx.float32)[:,<span class="va">None</span>]</span>
+<span id="cb6-241"><a href="#cb6-241" aria-hidden="true" tabindex="-1"></a>k_vec<span class="op">=</span>mx.array(thedata.iloc[:, <span class="dv">1</span>].to_numpy())<span class="op">-</span><span class="dv">1</span></span>
+<span id="cb6-242"><a href="#cb6-242" aria-hidden="true" tabindex="-1"></a>T_vec<span class="op">=</span>mx.array(thedata.iloc[:, <span class="dv">2</span>].to_numpy(), dtype<span class="op">=</span>mx.float32)[:,<span class="va">None</span>]</span>
+<span id="cb6-243"><a href="#cb6-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-244"><a href="#cb6-244" aria-hidden="true" tabindex="-1"></a><span class="co">#### ------------------------------------------------------------------------------------------------</span></span>
+<span id="cb6-245"><a href="#cb6-245" aria-hidden="true" tabindex="-1"></a><span class="co">#### 1. DEFINE HELPER FUNCTIONS - STATS FUNCTIONS ARE LATER</span></span>
+<span id="cb6-246"><a href="#cb6-246" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> converged(vegasresult, reltol, Qtol):</span>
+<span id="cb6-247"><a href="#cb6-247" aria-hidden="true" tabindex="-1"></a>    res <span class="op">=</span> vegasresult <span class="co"># note this is results object OR vegas.ravg object - both have necessary members</span></span>
+<span id="cb6-248"><a href="#cb6-248" aria-hidden="true" tabindex="-1"></a>    <span class="co"># This returns True if the condition is met, False otherwise</span></span>
+<span id="cb6-249"><a href="#cb6-249" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (<span class="dv">100</span> <span class="op">*</span> (gvar.sdev(res) <span class="op">/</span> gvar.mean(res)) <span class="op">&lt;</span> reltol) <span class="kw">and</span> (res.Q <span class="op">&gt;</span> Qtol)</span>
+<span id="cb6-250"><a href="#cb6-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-251"><a href="#cb6-251" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> runIters(integ,model,warm_nitn,warm_neval,run_nitn,run_neval,iMax,errTol,Qtol,verbose<span class="op">=</span><span class="va">False</span>):</span>
+<span id="cb6-252"><a href="#cb6-252" aria-hidden="true" tabindex="-1"></a>    <span class="co"># RUN VEGAS to hit a given accuracy level AND checks Q</span></span>
+<span id="cb6-253"><a href="#cb6-253" aria-hidden="true" tabindex="-1"></a>    <span class="co"># this runs warmup and sets of iters until specified error is met, 100*sdev/mean &lt; errTol</span></span>
+<span id="cb6-254"><a href="#cb6-254" aria-hidden="true" tabindex="-1"></a>    <span class="co"># e.g. errTol = 0.1 is sd is less than 0.1% of mean</span></span>
+<span id="cb6-255"><a href="#cb6-255" aria-hidden="true" tabindex="-1"></a>    <span class="co"># returns a list comprising of integ() object and a boolean, boolean is to check accuracy was hit</span></span>
+<span id="cb6-256"><a href="#cb6-256" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Warmup grid - do not store results with rest as early grid selection</span></span>
+<span id="cb6-257"><a href="#cb6-257" aria-hidden="true" tabindex="-1"></a>    res_warmup <span class="op">=</span> integ(model, nitn<span class="op">=</span>warm_nitn, neval<span class="op">=</span>warm_neval)</span>
+<span id="cb6-258"><a href="#cb6-258" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Production (Stable Integration)</span></span>
+<span id="cb6-259"><a href="#cb6-259" aria-hidden="true" tabindex="-1"></a>    results1 <span class="op">=</span> integ(model, nitn<span class="op">=</span>run_nitn, neval<span class="op">=</span>run_neval)</span>
+<span id="cb6-260"><a href="#cb6-260" aria-hidden="true" tabindex="-1"></a>    <span class="co"># now check if the desired accuracy is achieved and Q is not too low</span></span>
+<span id="cb6-261"><a href="#cb6-261" aria-hidden="true" tabindex="-1"></a>    i<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb6-262"><a href="#cb6-262" aria-hidden="true" tabindex="-1"></a>    results1itn<span class="op">=</span>results1.itn_results <span class="co"># pull out just iters as array</span></span>
+<span id="cb6-263"><a href="#cb6-263" aria-hidden="true" tabindex="-1"></a>    success <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb6-264"><a href="#cb6-264" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> (<span class="kw">not</span> converged(results1,errTol,Qtol)) <span class="kw">and</span> i<span class="op">&lt;</span>iMax:</span>
+<span id="cb6-265"><a href="#cb6-265" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> verbose:</span>
+<span id="cb6-266"><a href="#cb6-266" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"cumulative iterations=</span><span class="sc">{</span>i<span class="op">*</span>run_nitn<span class="op">+</span>run_nitn<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb6-267"><a href="#cb6-267" aria-hidden="true" tabindex="-1"></a>        <span class="co"># not converged yet so run another set of iterations - each updates grid</span></span>
+<span id="cb6-268"><a href="#cb6-268" aria-hidden="true" tabindex="-1"></a>        results2 <span class="op">=</span> integ(model, nitn<span class="op">=</span>run_nitn, neval<span class="op">=</span>run_neval)</span>
+<span id="cb6-269"><a href="#cb6-269" aria-hidden="true" tabindex="-1"></a>        <span class="co"># combine the results with existing set</span></span>
+<span id="cb6-270"><a href="#cb6-270" aria-hidden="true" tabindex="-1"></a>        results1itn <span class="op">=</span> results1itn<span class="op">+</span>results2.itn_results <span class="co">#existing plus newest</span></span>
+<span id="cb6-271"><a href="#cb6-271" aria-hidden="true" tabindex="-1"></a>        results1<span class="op">=</span>vegas.ravg(results1itn) <span class="co"># this is then passed to while condition to see if more integ() needed</span></span>
+<span id="cb6-272"><a href="#cb6-272" aria-hidden="true" tabindex="-1"></a>        i<span class="op">=</span>i<span class="op">+</span><span class="dv">1</span> <span class="co"># counter to control too many iters</span></span>
+<span id="cb6-273"><a href="#cb6-273" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> i<span class="op">==</span>iMax:</span>
+<span id="cb6-274"><a href="#cb6-274" aria-hidden="true" tabindex="-1"></a>            success<span class="op">=</span><span class="va">False</span></span>
+<span id="cb6-275"><a href="#cb6-275" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">list</span>([results1,success])</span>
+<span id="cb6-276"><a href="#cb6-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-277"><a href="#cb6-277" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb6-278"><a href="#cb6-278" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-279"><a href="#cb6-279" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-279"><a href="#cb6-279" aria-hidden="true" tabindex="-1"></a>To use direct integration in Vegas the key parts are:</span>
 <span id="cb6-280"><a href="#cb6-280" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-281"><a href="#cb6-281" aria-hidden="true" tabindex="-1"></a>To use direct integration in Vegas the key parts are:</span>
-<span id="cb6-282"><a href="#cb6-282" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-283"><a href="#cb6-283" aria-hidden="true" tabindex="-1"></a><span class="ss">-  </span>define the prior density functions</span>
-<span id="cb6-284"><a href="#cb6-284" aria-hidden="true" tabindex="-1"></a><span class="ss">-  </span>define the log likelihood + log priors</span>
+<span id="cb6-281"><a href="#cb6-281" aria-hidden="true" tabindex="-1"></a><span class="ss">-  </span>define the prior density functions</span>
+<span id="cb6-282"><a href="#cb6-282" aria-hidden="true" tabindex="-1"></a><span class="ss">-  </span>define the log likelihood + log priors</span>
+<span id="cb6-283"><a href="#cb6-283" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-284"><a href="#cb6-284" aria-hidden="true" tabindex="-1"></a>In addition, we also implement a **change of variables** to deal with the range of integration going to $\infty$. This means we integrate over transformed variables (see below) which have finite bounds. As we are changing variables then this requires the usual Jacobian adjustment to the function being integrated to ensure the volume being computed is equivalent to that on the original scale.</span>
 <span id="cb6-285"><a href="#cb6-285" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-286"><a href="#cb6-286" aria-hidden="true" tabindex="-1"></a>In addition, we also implement a **change of variables** to deal with the range of integration going to $\infty$. This means we integrate over transformed variables (see below) which have finite bounds. As we are changing variables then this requires the usual Jacobian adjustment to the function being integrated to ensure the volume being computed is equivalent to that on the original scale.</span>
-<span id="cb6-287"><a href="#cb6-287" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-288"><a href="#cb6-288" aria-hidden="true" tabindex="-1"></a>To map a variable $t\in(-1,1)$ to $x\in(-\infty,\infty)$ we can use the following function and it's Jacobian (J):</span>
-<span id="cb6-289"><a href="#cb6-289" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb6-290"><a href="#cb6-290" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
-<span id="cb6-291"><a href="#cb6-291" aria-hidden="true" tabindex="-1"></a>x&amp;=&amp;\frac{t}{1-t^2} <span class="sc">\\</span></span>
-<span id="cb6-292"><a href="#cb6-292" aria-hidden="true" tabindex="-1"></a><span class="sc">\\</span></span>
-<span id="cb6-293"><a href="#cb6-293" aria-hidden="true" tabindex="-1"></a>\enspace\text{where } \quad\enspace J &amp;=&amp; \frac{1+t^2}{(1-t^2)^2}</span>
-<span id="cb6-294"><a href="#cb6-294" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
-<span id="cb6-295"><a href="#cb6-295" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb6-286"><a href="#cb6-286" aria-hidden="true" tabindex="-1"></a>To map a variable $t\in(-1,1)$ to $x\in(-\infty,\infty)$ we can use the following function and it's Jacobian (J):</span>
+<span id="cb6-287"><a href="#cb6-287" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb6-288"><a href="#cb6-288" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
+<span id="cb6-289"><a href="#cb6-289" aria-hidden="true" tabindex="-1"></a>x&amp;=&amp;\frac{t}{1-t^2} <span class="sc">\\</span></span>
+<span id="cb6-290"><a href="#cb6-290" aria-hidden="true" tabindex="-1"></a><span class="sc">\\</span></span>
+<span id="cb6-291"><a href="#cb6-291" aria-hidden="true" tabindex="-1"></a>\enspace\text{where } \quad\enspace J &amp;=&amp; \frac{1+t^2}{(1-t^2)^2}</span>
+<span id="cb6-292"><a href="#cb6-292" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
+<span id="cb6-293"><a href="#cb6-293" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb6-294"><a href="#cb6-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-295"><a href="#cb6-295" aria-hidden="true" tabindex="-1"></a>The function below <span class="in">`compute_log_lik(theta, y,T)`</span> is necessary to compute the overall standardization constant - the constant which ensures the posterior density integrates to unity - and the integration here is over all parameters in the model. We work in log scale as much as possible and a scaling ``trick'' is used to help avoid numerical overflow. These technical numerical details can be found in the full quarto file.  </span>
 <span id="cb6-296"><a href="#cb6-296" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-297"><a href="#cb6-297" aria-hidden="true" tabindex="-1"></a>The function below <span class="in">`compute_log_lik(theta, y,T)`</span> is necessary to compute the overall standardization constant - the constant which ensures the posterior density integrates to unity - and the integration here is over all parameters in the model. We work in log scale as much as possible and a scaling ``trick'' is used to help avoid numerical overflow. These technical numerical details can be found in the full quarto file.  </span>
-<span id="cb6-298"><a href="#cb6-298" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-299"><a href="#cb6-299" aria-hidden="true" tabindex="-1"></a><span class="in">```{python sixvarjaco_a,include=TRUE,eval=TRUE}</span></span>
+<span id="cb6-297"><a href="#cb6-297" aria-hidden="true" tabindex="-1"></a><span class="in">```{python sixvarjaco_a,include=TRUE,eval=TRUE}</span></span>
+<span id="cb6-298"><a href="#cb6-298" aria-hidden="true" tabindex="-1"></a><span class="co">#### ------------------------------------------------------------------------------------------------</span></span>
+<span id="cb6-299"><a href="#cb6-299" aria-hidden="true" tabindex="-1"></a><span class="co">#### 2. DEFINE STATS FUNCTIONS </span></span>
 <span id="cb6-300"><a href="#cb6-300" aria-hidden="true" tabindex="-1"></a><span class="co">#### ------------------------------------------------------------------------------------------------</span></span>
-<span id="cb6-301"><a href="#cb6-301" aria-hidden="true" tabindex="-1"></a><span class="co">#### 2. DEFINE STATS FUNCTIONS </span></span>
-<span id="cb6-302"><a href="#cb6-302" aria-hidden="true" tabindex="-1"></a><span class="co">#### ------------------------------------------------------------------------------------------------</span></span>
-<span id="cb6-303"><a href="#cb6-303" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-304"><a href="#cb6-304" aria-hidden="true" tabindex="-1"></a><span class="at">@mx.compile</span></span>
-<span id="cb6-305"><a href="#cb6-305" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mx_half_normal_logpdf(x, sigma):</span>
-<span id="cb6-306"><a href="#cb6-306" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Log-constant: log(sqrt(2) / sqrt(pi))</span></span>
-<span id="cb6-307"><a href="#cb6-307" aria-hidden="true" tabindex="-1"></a>    log_const <span class="op">=</span> <span class="fl">0.5</span><span class="op">*</span>(mx.log(<span class="fl">2.0</span>) <span class="op">-</span> mx.log(mx.pi)) <span class="op">-</span> mx.log(sigma)</span>
-<span id="cb6-308"><a href="#cb6-308" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Log-exponent term</span></span>
-<span id="cb6-309"><a href="#cb6-309" aria-hidden="true" tabindex="-1"></a>    log_exp <span class="op">=</span> <span class="op">-</span>((x<span class="op">*</span>x) <span class="op">/</span> (<span class="fl">2.0</span> <span class="op">*</span> sigma<span class="op">*</span>sigma))</span>
-<span id="cb6-310"><a href="#cb6-310" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> log_const<span class="op">+</span>log_exp</span>
-<span id="cb6-311"><a href="#cb6-311" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-312"><a href="#cb6-312" aria-hidden="true" tabindex="-1"></a><span class="at">@mx.compile</span></span>
-<span id="cb6-313"><a href="#cb6-313" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mx_norm_logpdf(x, loc, scale):</span>
-<span id="cb6-314"><a href="#cb6-314" aria-hidden="true" tabindex="-1"></a>    <span class="co"># -0.5 * ((x - loc) / scale)**2 - log(scale) - 0.5 * log(2 * pi)</span></span>
-<span id="cb6-315"><a href="#cb6-315" aria-hidden="true" tabindex="-1"></a>    log_var <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span> <span class="op">*</span> ((x <span class="op">-</span> loc) <span class="op">/</span> scale)<span class="op">**</span><span class="dv">2</span></span>
-<span id="cb6-316"><a href="#cb6-316" aria-hidden="true" tabindex="-1"></a>    log_const <span class="op">=</span> <span class="op">-</span>mx.log(scale) <span class="op">-</span> <span class="fl">0.5</span> <span class="op">*</span> math.log(<span class="dv">2</span> <span class="op">*</span> math.pi)</span>
-<span id="cb6-317"><a href="#cb6-317" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> log_var <span class="op">+</span> log_const</span>
-<span id="cb6-318"><a href="#cb6-318" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-319"><a href="#cb6-319" aria-hidden="true" tabindex="-1"></a><span class="co">### SETUP LIKELIHOOD*PRIOR </span></span>
-<span id="cb6-320"><a href="#cb6-320" aria-hidden="true" tabindex="-1"></a><span class="at">@mx.compile</span></span>
-<span id="cb6-321"><a href="#cb6-321" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_log_lik(theta, y,T):</span>
-<span id="cb6-322"><a href="#cb6-322" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"shape1={x.shape}\n")</span></span>
-<span id="cb6-323"><a href="#cb6-323" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb6-324"><a href="#cb6-324" aria-hidden="true" tabindex="-1"></a><span class="co">    mu0 ~ normal(0, 2.5);    // vectorized normal priors for hierarchical means (specify SD in normal distn)</span></span>
-<span id="cb6-325"><a href="#cb6-325" aria-hidden="true" tabindex="-1"></a><span class="co">    sigma0 ~ normal(0, 2.5);       // vectorized half-normal priors for hierarchical SDs (specify SD in normal distn)</span></span>
-<span id="cb6-326"><a href="#cb6-326" aria-hidden="true" tabindex="-1"></a><span class="co">    mu1 ~ normal(0, 2.5);    // vectorized normal priors for hierarchical means (specify SD in normal distn)</span></span>
-<span id="cb6-327"><a href="#cb6-327" aria-hidden="true" tabindex="-1"></a><span class="co">    sigma1 ~ normal(0, 2.5);</span></span>
-<span id="cb6-328"><a href="#cb6-328" aria-hidden="true" tabindex="-1"></a><span class="co">    a0 ~ normal(mu0,sigma0)</span></span>
-<span id="cb6-329"><a href="#cb6-329" aria-hidden="true" tabindex="-1"></a><span class="co">    a1 ~ normal(mu1,sigma1)</span></span>
+<span id="cb6-301"><a href="#cb6-301" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-302"><a href="#cb6-302" aria-hidden="true" tabindex="-1"></a><span class="at">@mx.compile</span></span>
+<span id="cb6-303"><a href="#cb6-303" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mx_half_normal_logpdf(x, sigma):</span>
+<span id="cb6-304"><a href="#cb6-304" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Log-constant: log(sqrt(2) / sqrt(pi))</span></span>
+<span id="cb6-305"><a href="#cb6-305" aria-hidden="true" tabindex="-1"></a>    log_const <span class="op">=</span> <span class="fl">0.5</span><span class="op">*</span>(mx.log(<span class="fl">2.0</span>) <span class="op">-</span> mx.log(mx.pi)) <span class="op">-</span> mx.log(sigma)</span>
+<span id="cb6-306"><a href="#cb6-306" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Log-exponent term</span></span>
+<span id="cb6-307"><a href="#cb6-307" aria-hidden="true" tabindex="-1"></a>    log_exp <span class="op">=</span> <span class="op">-</span>((x<span class="op">*</span>x) <span class="op">/</span> (<span class="fl">2.0</span> <span class="op">*</span> sigma<span class="op">*</span>sigma))</span>
+<span id="cb6-308"><a href="#cb6-308" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> log_const<span class="op">+</span>log_exp</span>
+<span id="cb6-309"><a href="#cb6-309" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-310"><a href="#cb6-310" aria-hidden="true" tabindex="-1"></a><span class="at">@mx.compile</span></span>
+<span id="cb6-311"><a href="#cb6-311" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mx_norm_logpdf(x, loc, scale):</span>
+<span id="cb6-312"><a href="#cb6-312" aria-hidden="true" tabindex="-1"></a>    <span class="co"># -0.5 * ((x - loc) / scale)**2 - log(scale) - 0.5 * log(2 * pi)</span></span>
+<span id="cb6-313"><a href="#cb6-313" aria-hidden="true" tabindex="-1"></a>    log_var <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span> <span class="op">*</span> ((x <span class="op">-</span> loc) <span class="op">/</span> scale)<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb6-314"><a href="#cb6-314" aria-hidden="true" tabindex="-1"></a>    log_const <span class="op">=</span> <span class="op">-</span>mx.log(scale) <span class="op">-</span> <span class="fl">0.5</span> <span class="op">*</span> math.log(<span class="dv">2</span> <span class="op">*</span> math.pi)</span>
+<span id="cb6-315"><a href="#cb6-315" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> log_var <span class="op">+</span> log_const</span>
+<span id="cb6-316"><a href="#cb6-316" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-317"><a href="#cb6-317" aria-hidden="true" tabindex="-1"></a><span class="co">### SETUP LIKELIHOOD*PRIOR </span></span>
+<span id="cb6-318"><a href="#cb6-318" aria-hidden="true" tabindex="-1"></a><span class="at">@mx.compile</span></span>
+<span id="cb6-319"><a href="#cb6-319" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_log_lik(theta, y,T):</span>
+<span id="cb6-320"><a href="#cb6-320" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"shape1={x.shape}\n")</span></span>
+<span id="cb6-321"><a href="#cb6-321" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb6-322"><a href="#cb6-322" aria-hidden="true" tabindex="-1"></a><span class="co">    mu0 ~ normal(0, 2.5);    // vectorized normal priors for hierarchical means (specify SD in normal distn)</span></span>
+<span id="cb6-323"><a href="#cb6-323" aria-hidden="true" tabindex="-1"></a><span class="co">    sigma0 ~ normal(0, 2.5);       // vectorized half-normal priors for hierarchical SDs (specify SD in normal distn)</span></span>
+<span id="cb6-324"><a href="#cb6-324" aria-hidden="true" tabindex="-1"></a><span class="co">    mu1 ~ normal(0, 2.5);    // vectorized normal priors for hierarchical means (specify SD in normal distn)</span></span>
+<span id="cb6-325"><a href="#cb6-325" aria-hidden="true" tabindex="-1"></a><span class="co">    sigma1 ~ normal(0, 2.5);</span></span>
+<span id="cb6-326"><a href="#cb6-326" aria-hidden="true" tabindex="-1"></a><span class="co">    a0 ~ normal(mu0,sigma0)</span></span>
+<span id="cb6-327"><a href="#cb6-327" aria-hidden="true" tabindex="-1"></a><span class="co">    a1 ~ normal(mu1,sigma1)</span></span>
+<span id="cb6-328"><a href="#cb6-328" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb6-329"><a href="#cb6-329" aria-hidden="true" tabindex="-1"></a><span class="co">    logL + logpdf(a0|mu0,sigma0) + logpdf(a1|mu1,sigma1) + logpdf(mu0) + logpdf(m1) + logpdf(sigma0) + logpdf(sigma1)</span></span>
 <span id="cb6-330"><a href="#cb6-330" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
-<span id="cb6-331"><a href="#cb6-331" aria-hidden="true" tabindex="-1"></a><span class="co">    logL + logpdf(a0|mu0,sigma0) + logpdf(a1|mu1,sigma1) + logpdf(mu0) + logpdf(m1) + logpdf(sigma0) + logpdf(sigma1)</span></span>
-<span id="cb6-332"><a href="#cb6-332" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
-<span id="cb6-333"><a href="#cb6-333" aria-hidden="true" tabindex="-1"></a><span class="co">    logL = sum_i^n ( y_i*(a0+a1*T_i) - log(1+ exp(a0+a1*T_i) )  )</span></span>
-<span id="cb6-334"><a href="#cb6-334" aria-hidden="true" tabindex="-1"></a><span class="co">    logpdf(a0|mu0,sigma0) = jax.scipy.stats.norm.logpdf(a0,loc=mu0,scale=sigma0)</span></span>
-<span id="cb6-335"><a href="#cb6-335" aria-hidden="true" tabindex="-1"></a><span class="co">    logpdf(a1|mu1,sigma1) = jax.scipy.stats.norm.logpdf(a1,loc=mu1,scale=sigma1)</span></span>
-<span id="cb6-336"><a href="#cb6-336" aria-hidden="true" tabindex="-1"></a><span class="co">    logpdf(mu0) = jax.scipy.stats.norm.logpdf(mu0,loc=0.,scale=2.5)</span></span>
-<span id="cb6-337"><a href="#cb6-337" aria-hidden="true" tabindex="-1"></a><span class="co">    logpdf(mu1) = jax.scipy.stats.norm.logpdf(mu1,loc=0.,scale=2.5)</span></span>
-<span id="cb6-338"><a href="#cb6-338" aria-hidden="true" tabindex="-1"></a><span class="co">    logpdf(sigma0) = half_normal_logpdf(sigma0, 2.5)</span></span>
-<span id="cb6-339"><a href="#cb6-339" aria-hidden="true" tabindex="-1"></a><span class="co">    logpdf(sigma1) = half_normal_logpdf(sigma1, 2.5)</span></span>
-<span id="cb6-340"><a href="#cb6-340" aria-hidden="true" tabindex="-1"></a><span class="co">    Expects x to have shape (batch_size, DIM).</span></span>
-<span id="cb6-341"><a href="#cb6-341" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
-<span id="cb6-342"><a href="#cb6-342" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb6-343"><a href="#cb6-343" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"shape={theta.shape}\n")</span></span>
-<span id="cb6-344"><a href="#cb6-344" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"shape={theta.shape}\n")</span></span>
-<span id="cb6-345"><a href="#cb6-345" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb6-346"><a href="#cb6-346" aria-hidden="true" tabindex="-1"></a>    theta0<span class="op">=</span>mx.clip(theta[<span class="dv">0</span>,:],<span class="op">-</span><span class="fl">0.99999</span>, <span class="fl">0.99999</span>)</span>
-<span id="cb6-347"><a href="#cb6-347" aria-hidden="true" tabindex="-1"></a>    theta1<span class="op">=</span>mx.clip(theta[<span class="dv">1</span>,:],<span class="op">-</span><span class="fl">0.99999</span>, <span class="fl">0.99999</span>)</span>
-<span id="cb6-348"><a href="#cb6-348" aria-hidden="true" tabindex="-1"></a>    theta2<span class="op">=</span>mx.clip(theta[<span class="dv">2</span>,:],<span class="op">-</span><span class="fl">0.99999</span>, <span class="fl">0.99999</span>)</span>
-<span id="cb6-349"><a href="#cb6-349" aria-hidden="true" tabindex="-1"></a>    theta3<span class="op">=</span>mx.clip(theta[<span class="dv">3</span>,:],<span class="op">-</span><span class="fl">0.99999</span>, <span class="fl">0.99999</span>)</span>
-<span id="cb6-350"><a href="#cb6-350" aria-hidden="true" tabindex="-1"></a>    theta4<span class="op">=</span>mx.clip(theta[<span class="dv">4</span>,:],<span class="fl">0.00001</span>, <span class="fl">0.99999</span>)</span>
-<span id="cb6-351"><a href="#cb6-351" aria-hidden="true" tabindex="-1"></a>    theta5<span class="op">=</span>mx.clip(theta[<span class="dv">5</span>,:],<span class="fl">0.00001</span>, <span class="fl">0.99999</span>)</span>
-<span id="cb6-352"><a href="#cb6-352" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb6-353"><a href="#cb6-353" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb6-354"><a href="#cb6-354" aria-hidden="true" tabindex="-1"></a>    jacobianL <span class="op">=</span> (  mx.log1p(mx.power(theta0,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>mx.log1p(<span class="op">-</span>mx.power(theta0,<span class="dv">2</span>)) </span>
-<span id="cb6-355"><a href="#cb6-355" aria-hidden="true" tabindex="-1"></a>                 <span class="op">+</span> mx.log1p(mx.power(theta1,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>mx.log1p(<span class="op">-</span>mx.power(theta1,<span class="dv">2</span>))</span>
-<span id="cb6-356"><a href="#cb6-356" aria-hidden="true" tabindex="-1"></a>                 <span class="op">+</span> mx.log1p(mx.power(theta2,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>mx.log1p(<span class="op">-</span>mx.power(theta2,<span class="dv">2</span>))</span>
-<span id="cb6-357"><a href="#cb6-357" aria-hidden="true" tabindex="-1"></a>                 <span class="op">+</span> mx.log1p(mx.power(theta3,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>mx.log1p(<span class="op">-</span>mx.power(theta3,<span class="dv">2</span>))</span>
-<span id="cb6-358"><a href="#cb6-358" aria-hidden="true" tabindex="-1"></a>                 <span class="op">+</span> mx.log1p(mx.power(theta4,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>mx.log1p(<span class="op">-</span>mx.power(theta4,<span class="dv">2</span>))</span>
-<span id="cb6-359"><a href="#cb6-359" aria-hidden="true" tabindex="-1"></a>                 <span class="op">+</span> mx.log1p(mx.power(theta5,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>mx.log1p(<span class="op">-</span>mx.power(theta5,<span class="dv">2</span>))</span>
-<span id="cb6-360"><a href="#cb6-360" aria-hidden="true" tabindex="-1"></a>                 )</span>
-<span id="cb6-361"><a href="#cb6-361" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"jacobian={jacobianL}\n")             </span></span>
-<span id="cb6-362"><a href="#cb6-362" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-363"><a href="#cb6-363" aria-hidden="true" tabindex="-1"></a>    a0<span class="op">=</span>theta0<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>mx.power(theta0,<span class="dv">2</span>))</span>
-<span id="cb6-364"><a href="#cb6-364" aria-hidden="true" tabindex="-1"></a>    a1<span class="op">=</span>theta1<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>mx.power(theta1,<span class="dv">2</span>))</span>
-<span id="cb6-365"><a href="#cb6-365" aria-hidden="true" tabindex="-1"></a>    mu0<span class="op">=</span>theta2<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>mx.power(theta2,<span class="dv">2</span>))</span>
-<span id="cb6-366"><a href="#cb6-366" aria-hidden="true" tabindex="-1"></a>    mu1<span class="op">=</span>theta3<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>mx.power(theta3,<span class="dv">2</span>))</span>
-<span id="cb6-367"><a href="#cb6-367" aria-hidden="true" tabindex="-1"></a>    sigma0<span class="op">=</span>theta4<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>mx.power(theta4,<span class="dv">2</span>))</span>
-<span id="cb6-368"><a href="#cb6-368" aria-hidden="true" tabindex="-1"></a>    sigma1<span class="op">=</span>theta5<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>mx.power(theta5,<span class="dv">2</span>))</span>
-<span id="cb6-369"><a href="#cb6-369" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"a0={a0} a1={a1} mu0={mu0} mu1={mu1} sigma0={sigma0} sigma1={sigma1}\n")</span></span>
-<span id="cb6-370"><a href="#cb6-370" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb6-371"><a href="#cb6-371" aria-hidden="true" tabindex="-1"></a>    eta<span class="op">=</span>a0<span class="op">+</span>a1<span class="op">*</span>T <span class="co"># (10,3) where T_vec = (3,) and (10,1) broadcast to (10,3)  </span></span>
-<span id="cb6-372"><a href="#cb6-372" aria-hidden="true" tabindex="-1"></a>    <span class="co"># y_data*eta - mx.log(1+mx.exp(eta)) this is (10,3) - want col sums, so collapse over rows</span></span>
-<span id="cb6-373"><a href="#cb6-373" aria-hidden="true" tabindex="-1"></a>    logL <span class="op">=</span> mx.<span class="bu">sum</span>(y<span class="op">*</span>eta <span class="op">-</span> mx.log1p(mx.exp(eta)),axis<span class="op">=</span><span class="dv">0</span>) <span class="co">#</span></span>
-<span id="cb6-374"><a href="#cb6-374" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"logL={logL}\n")</span></span>
-<span id="cb6-375"><a href="#cb6-375" aria-hidden="true" tabindex="-1"></a>    <span class="co"># now add the priors</span></span>
-<span id="cb6-376"><a href="#cb6-376" aria-hidden="true" tabindex="-1"></a>    <span class="co"># simple N(0,sd=10)</span></span>
-<span id="cb6-377"><a href="#cb6-377" aria-hidden="true" tabindex="-1"></a>    prior_a0 <span class="op">=</span> mx_norm_logpdf(a0,loc<span class="op">=</span>mu0,scale<span class="op">=</span>sigma0)</span>
-<span id="cb6-378"><a href="#cb6-378" aria-hidden="true" tabindex="-1"></a>    prior_a1 <span class="op">=</span> mx_norm_logpdf(a1,loc<span class="op">=</span>mu1,scale<span class="op">=</span>sigma1)</span>
-<span id="cb6-379"><a href="#cb6-379" aria-hidden="true" tabindex="-1"></a>    prior_mu0 <span class="op">=</span> mx_norm_logpdf(mu0,loc<span class="op">=</span><span class="fl">0.</span>,scale<span class="op">=</span><span class="fl">2.5</span>)</span>
-<span id="cb6-380"><a href="#cb6-380" aria-hidden="true" tabindex="-1"></a>    prior_mu1 <span class="op">=</span> mx_norm_logpdf(mu1,loc<span class="op">=</span><span class="fl">0.</span>,scale<span class="op">=</span><span class="fl">2.5</span>)</span>
-<span id="cb6-381"><a href="#cb6-381" aria-hidden="true" tabindex="-1"></a>    prior_sigma0 <span class="op">=</span> mx_half_normal_logpdf(sigma0, <span class="fl">2.5</span>)</span>
-<span id="cb6-382"><a href="#cb6-382" aria-hidden="true" tabindex="-1"></a>    prior_sigma1 <span class="op">=</span> mx_half_normal_logpdf(sigma1, <span class="fl">2.5</span>)</span>
-<span id="cb6-383"><a href="#cb6-383" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb6-384"><a href="#cb6-384" aria-hidden="true" tabindex="-1"></a>    logDens <span class="op">=</span> logL <span class="op">+</span> prior_a0 <span class="op">+</span> prior_a1 <span class="op">+</span> prior_mu0 <span class="op">+</span> prior_mu1 <span class="op">+</span> prior_sigma0 <span class="op">+</span> prior_sigma1</span>
-<span id="cb6-385"><a href="#cb6-385" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"logDens={logDens}\n")</span></span>
-<span id="cb6-386"><a href="#cb6-386" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (logDens <span class="op">+</span> jacobianL) <span class="co"># this will be (3,)</span></span>
-<span id="cb6-387"><a href="#cb6-387" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb6-388"><a href="#cb6-388" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-331"><a href="#cb6-331" aria-hidden="true" tabindex="-1"></a><span class="co">    logL = sum_i^n ( y_i*(a0+a1*T_i) - log(1+ exp(a0+a1*T_i) )  )</span></span>
+<span id="cb6-332"><a href="#cb6-332" aria-hidden="true" tabindex="-1"></a><span class="co">    logpdf(a0|mu0,sigma0) = jax.scipy.stats.norm.logpdf(a0,loc=mu0,scale=sigma0)</span></span>
+<span id="cb6-333"><a href="#cb6-333" aria-hidden="true" tabindex="-1"></a><span class="co">    logpdf(a1|mu1,sigma1) = jax.scipy.stats.norm.logpdf(a1,loc=mu1,scale=sigma1)</span></span>
+<span id="cb6-334"><a href="#cb6-334" aria-hidden="true" tabindex="-1"></a><span class="co">    logpdf(mu0) = jax.scipy.stats.norm.logpdf(mu0,loc=0.,scale=2.5)</span></span>
+<span id="cb6-335"><a href="#cb6-335" aria-hidden="true" tabindex="-1"></a><span class="co">    logpdf(mu1) = jax.scipy.stats.norm.logpdf(mu1,loc=0.,scale=2.5)</span></span>
+<span id="cb6-336"><a href="#cb6-336" aria-hidden="true" tabindex="-1"></a><span class="co">    logpdf(sigma0) = half_normal_logpdf(sigma0, 2.5)</span></span>
+<span id="cb6-337"><a href="#cb6-337" aria-hidden="true" tabindex="-1"></a><span class="co">    logpdf(sigma1) = half_normal_logpdf(sigma1, 2.5)</span></span>
+<span id="cb6-338"><a href="#cb6-338" aria-hidden="true" tabindex="-1"></a><span class="co">    Expects x to have shape (batch_size, DIM).</span></span>
+<span id="cb6-339"><a href="#cb6-339" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb6-340"><a href="#cb6-340" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb6-341"><a href="#cb6-341" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"shape={theta.shape}\n")</span></span>
+<span id="cb6-342"><a href="#cb6-342" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"shape={theta.shape}\n")</span></span>
+<span id="cb6-343"><a href="#cb6-343" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-344"><a href="#cb6-344" aria-hidden="true" tabindex="-1"></a>    theta0<span class="op">=</span>mx.clip(theta[<span class="dv">0</span>,:],<span class="op">-</span><span class="fl">0.99999</span>, <span class="fl">0.99999</span>)</span>
+<span id="cb6-345"><a href="#cb6-345" aria-hidden="true" tabindex="-1"></a>    theta1<span class="op">=</span>mx.clip(theta[<span class="dv">1</span>,:],<span class="op">-</span><span class="fl">0.99999</span>, <span class="fl">0.99999</span>)</span>
+<span id="cb6-346"><a href="#cb6-346" aria-hidden="true" tabindex="-1"></a>    theta2<span class="op">=</span>mx.clip(theta[<span class="dv">2</span>,:],<span class="op">-</span><span class="fl">0.99999</span>, <span class="fl">0.99999</span>)</span>
+<span id="cb6-347"><a href="#cb6-347" aria-hidden="true" tabindex="-1"></a>    theta3<span class="op">=</span>mx.clip(theta[<span class="dv">3</span>,:],<span class="op">-</span><span class="fl">0.99999</span>, <span class="fl">0.99999</span>)</span>
+<span id="cb6-348"><a href="#cb6-348" aria-hidden="true" tabindex="-1"></a>    theta4<span class="op">=</span>mx.clip(theta[<span class="dv">4</span>,:],<span class="fl">0.00001</span>, <span class="fl">0.99999</span>)</span>
+<span id="cb6-349"><a href="#cb6-349" aria-hidden="true" tabindex="-1"></a>    theta5<span class="op">=</span>mx.clip(theta[<span class="dv">5</span>,:],<span class="fl">0.00001</span>, <span class="fl">0.99999</span>)</span>
+<span id="cb6-350"><a href="#cb6-350" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-351"><a href="#cb6-351" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-352"><a href="#cb6-352" aria-hidden="true" tabindex="-1"></a>    jacobianL <span class="op">=</span> (  mx.log1p(mx.power(theta0,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>mx.log1p(<span class="op">-</span>mx.power(theta0,<span class="dv">2</span>)) </span>
+<span id="cb6-353"><a href="#cb6-353" aria-hidden="true" tabindex="-1"></a>                 <span class="op">+</span> mx.log1p(mx.power(theta1,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>mx.log1p(<span class="op">-</span>mx.power(theta1,<span class="dv">2</span>))</span>
+<span id="cb6-354"><a href="#cb6-354" aria-hidden="true" tabindex="-1"></a>                 <span class="op">+</span> mx.log1p(mx.power(theta2,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>mx.log1p(<span class="op">-</span>mx.power(theta2,<span class="dv">2</span>))</span>
+<span id="cb6-355"><a href="#cb6-355" aria-hidden="true" tabindex="-1"></a>                 <span class="op">+</span> mx.log1p(mx.power(theta3,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>mx.log1p(<span class="op">-</span>mx.power(theta3,<span class="dv">2</span>))</span>
+<span id="cb6-356"><a href="#cb6-356" aria-hidden="true" tabindex="-1"></a>                 <span class="op">+</span> mx.log1p(mx.power(theta4,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>mx.log1p(<span class="op">-</span>mx.power(theta4,<span class="dv">2</span>))</span>
+<span id="cb6-357"><a href="#cb6-357" aria-hidden="true" tabindex="-1"></a>                 <span class="op">+</span> mx.log1p(mx.power(theta5,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>mx.log1p(<span class="op">-</span>mx.power(theta5,<span class="dv">2</span>))</span>
+<span id="cb6-358"><a href="#cb6-358" aria-hidden="true" tabindex="-1"></a>                 )</span>
+<span id="cb6-359"><a href="#cb6-359" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"jacobian={jacobianL}\n")             </span></span>
+<span id="cb6-360"><a href="#cb6-360" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-361"><a href="#cb6-361" aria-hidden="true" tabindex="-1"></a>    a0<span class="op">=</span>theta0<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>mx.power(theta0,<span class="dv">2</span>))</span>
+<span id="cb6-362"><a href="#cb6-362" aria-hidden="true" tabindex="-1"></a>    a1<span class="op">=</span>theta1<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>mx.power(theta1,<span class="dv">2</span>))</span>
+<span id="cb6-363"><a href="#cb6-363" aria-hidden="true" tabindex="-1"></a>    mu0<span class="op">=</span>theta2<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>mx.power(theta2,<span class="dv">2</span>))</span>
+<span id="cb6-364"><a href="#cb6-364" aria-hidden="true" tabindex="-1"></a>    mu1<span class="op">=</span>theta3<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>mx.power(theta3,<span class="dv">2</span>))</span>
+<span id="cb6-365"><a href="#cb6-365" aria-hidden="true" tabindex="-1"></a>    sigma0<span class="op">=</span>theta4<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>mx.power(theta4,<span class="dv">2</span>))</span>
+<span id="cb6-366"><a href="#cb6-366" aria-hidden="true" tabindex="-1"></a>    sigma1<span class="op">=</span>theta5<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>mx.power(theta5,<span class="dv">2</span>))</span>
+<span id="cb6-367"><a href="#cb6-367" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"a0={a0} a1={a1} mu0={mu0} mu1={mu1} sigma0={sigma0} sigma1={sigma1}\n")</span></span>
+<span id="cb6-368"><a href="#cb6-368" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-369"><a href="#cb6-369" aria-hidden="true" tabindex="-1"></a>    eta<span class="op">=</span>a0<span class="op">+</span>a1<span class="op">*</span>T <span class="co"># (10,3) where T_vec = (3,) and (10,1) broadcast to (10,3)  </span></span>
+<span id="cb6-370"><a href="#cb6-370" aria-hidden="true" tabindex="-1"></a>    <span class="co"># y_data*eta - mx.log(1+mx.exp(eta)) this is (10,3) - want col sums, so collapse over rows</span></span>
+<span id="cb6-371"><a href="#cb6-371" aria-hidden="true" tabindex="-1"></a>    logL <span class="op">=</span> mx.<span class="bu">sum</span>(y<span class="op">*</span>eta <span class="op">-</span> mx.log1p(mx.exp(eta)),axis<span class="op">=</span><span class="dv">0</span>) <span class="co">#</span></span>
+<span id="cb6-372"><a href="#cb6-372" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"logL={logL}\n")</span></span>
+<span id="cb6-373"><a href="#cb6-373" aria-hidden="true" tabindex="-1"></a>    <span class="co"># now add the priors</span></span>
+<span id="cb6-374"><a href="#cb6-374" aria-hidden="true" tabindex="-1"></a>    <span class="co"># simple N(0,sd=10)</span></span>
+<span id="cb6-375"><a href="#cb6-375" aria-hidden="true" tabindex="-1"></a>    prior_a0 <span class="op">=</span> mx_norm_logpdf(a0,loc<span class="op">=</span>mu0,scale<span class="op">=</span>sigma0)</span>
+<span id="cb6-376"><a href="#cb6-376" aria-hidden="true" tabindex="-1"></a>    prior_a1 <span class="op">=</span> mx_norm_logpdf(a1,loc<span class="op">=</span>mu1,scale<span class="op">=</span>sigma1)</span>
+<span id="cb6-377"><a href="#cb6-377" aria-hidden="true" tabindex="-1"></a>    prior_mu0 <span class="op">=</span> mx_norm_logpdf(mu0,loc<span class="op">=</span><span class="fl">0.</span>,scale<span class="op">=</span><span class="fl">2.5</span>)</span>
+<span id="cb6-378"><a href="#cb6-378" aria-hidden="true" tabindex="-1"></a>    prior_mu1 <span class="op">=</span> mx_norm_logpdf(mu1,loc<span class="op">=</span><span class="fl">0.</span>,scale<span class="op">=</span><span class="fl">2.5</span>)</span>
+<span id="cb6-379"><a href="#cb6-379" aria-hidden="true" tabindex="-1"></a>    prior_sigma0 <span class="op">=</span> mx_half_normal_logpdf(sigma0, <span class="fl">2.5</span>)</span>
+<span id="cb6-380"><a href="#cb6-380" aria-hidden="true" tabindex="-1"></a>    prior_sigma1 <span class="op">=</span> mx_half_normal_logpdf(sigma1, <span class="fl">2.5</span>)</span>
+<span id="cb6-381"><a href="#cb6-381" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-382"><a href="#cb6-382" aria-hidden="true" tabindex="-1"></a>    logDens <span class="op">=</span> logL <span class="op">+</span> prior_a0 <span class="op">+</span> prior_a1 <span class="op">+</span> prior_mu0 <span class="op">+</span> prior_mu1 <span class="op">+</span> prior_sigma0 <span class="op">+</span> prior_sigma1</span>
+<span id="cb6-383"><a href="#cb6-383" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"logDens={logDens}\n")</span></span>
+<span id="cb6-384"><a href="#cb6-384" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (logDens <span class="op">+</span> jacobianL) <span class="co"># this will be (3,)</span></span>
+<span id="cb6-385"><a href="#cb6-385" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-386"><a href="#cb6-386" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-387"><a href="#cb6-387" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-388"><a href="#cb6-388" aria-hidden="true" tabindex="-1"></a><span class="in">```{python sixvarjaco_b,include=FALSE,eval=TRUE}</span></span>
 <span id="cb6-389"><a href="#cb6-389" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-390"><a href="#cb6-390" aria-hidden="true" tabindex="-1"></a><span class="in">```{python sixvarjaco_b,include=FALSE,eval=TRUE}</span></span>
-<span id="cb6-391"><a href="#cb6-391" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-392"><a href="#cb6-392" aria-hidden="true" tabindex="-1"></a><span class="at">@mx.compile</span></span>
-<span id="cb6-393"><a href="#cb6-393" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_log_lik2(theta, y,T,a0):</span>
-<span id="cb6-394"><a href="#cb6-394" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"shape1={x.shape}\n")</span></span>
-<span id="cb6-395"><a href="#cb6-395" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb6-396"><a href="#cb6-396" aria-hidden="true" tabindex="-1"></a><span class="co">    as above but we integrate out theta1-theta5 for fixed theta0</span></span>
-<span id="cb6-397"><a href="#cb6-397" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
-<span id="cb6-398"><a href="#cb6-398" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb6-399"><a href="#cb6-399" aria-hidden="true" tabindex="-1"></a>    <span class="co"># theta0idx=NA # Not needed as pass in function as not marginalizing this (index for a0 transformed)</span></span>
-<span id="cb6-400"><a href="#cb6-400" aria-hidden="true" tabindex="-1"></a>    theta1_idx<span class="op">=</span><span class="dv">0</span> <span class="co"># index for a1 - logit treatment effect transformed</span></span>
-<span id="cb6-401"><a href="#cb6-401" aria-hidden="true" tabindex="-1"></a>    theta2_idx<span class="op">=</span><span class="dv">1</span> <span class="co"># index for mu transformed</span></span>
-<span id="cb6-402"><a href="#cb6-402" aria-hidden="true" tabindex="-1"></a>    theta3_idx<span class="op">=</span><span class="dv">2</span> <span class="co"># index for m1 transformed</span></span>
-<span id="cb6-403"><a href="#cb6-403" aria-hidden="true" tabindex="-1"></a>    theta4_idx<span class="op">=</span><span class="dv">3</span> <span class="co"># index for sigma0 transformed</span></span>
-<span id="cb6-404"><a href="#cb6-404" aria-hidden="true" tabindex="-1"></a>    theta5_idx<span class="op">=</span><span class="dv">4</span> <span class="co"># index for sigma1 transformed</span></span>
-<span id="cb6-405"><a href="#cb6-405" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb6-406"><a href="#cb6-406" aria-hidden="true" tabindex="-1"></a>    theta1<span class="op">=</span>mx.clip(theta[theta1_idx,:],<span class="op">-</span><span class="fl">0.99999</span>, <span class="fl">0.99999</span>)</span>
-<span id="cb6-407"><a href="#cb6-407" aria-hidden="true" tabindex="-1"></a>    theta2<span class="op">=</span>mx.clip(theta[theta2_idx,:],<span class="op">-</span><span class="fl">0.99999</span>, <span class="fl">0.99999</span>)</span>
-<span id="cb6-408"><a href="#cb6-408" aria-hidden="true" tabindex="-1"></a>    theta3<span class="op">=</span>mx.clip(theta[theta3_idx,:],<span class="op">-</span><span class="fl">0.99999</span>, <span class="fl">0.99999</span>)</span>
-<span id="cb6-409"><a href="#cb6-409" aria-hidden="true" tabindex="-1"></a>    theta4<span class="op">=</span>mx.clip(theta[theta4_idx,:],<span class="fl">0.00001</span>, <span class="fl">0.99999</span>)</span>
-<span id="cb6-410"><a href="#cb6-410" aria-hidden="true" tabindex="-1"></a>    theta5<span class="op">=</span>mx.clip(theta[theta5_idx,:],<span class="fl">0.00001</span>, <span class="fl">0.99999</span>)</span>
-<span id="cb6-411"><a href="#cb6-411" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb6-412"><a href="#cb6-412" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb6-413"><a href="#cb6-413" aria-hidden="true" tabindex="-1"></a>    jacobianL <span class="op">=</span> (  mx.log(<span class="dv">1</span><span class="op">+</span>mx.power(theta1,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>mx.log(<span class="dv">1</span><span class="op">-</span>mx.power(theta1,<span class="dv">2</span>))</span>
-<span id="cb6-414"><a href="#cb6-414" aria-hidden="true" tabindex="-1"></a>                 <span class="op">+</span> mx.log(<span class="dv">1</span><span class="op">+</span>mx.power(theta2,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>mx.log(<span class="dv">1</span><span class="op">-</span>mx.power(theta2,<span class="dv">2</span>))</span>
-<span id="cb6-415"><a href="#cb6-415" aria-hidden="true" tabindex="-1"></a>                 <span class="op">+</span> mx.log(<span class="dv">1</span><span class="op">+</span>mx.power(theta3,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>mx.log(<span class="dv">1</span><span class="op">-</span>mx.power(theta3,<span class="dv">2</span>))</span>
-<span id="cb6-416"><a href="#cb6-416" aria-hidden="true" tabindex="-1"></a>                 <span class="op">+</span> mx.log(<span class="dv">1</span><span class="op">+</span>mx.power(theta4,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>mx.log(<span class="dv">1</span><span class="op">-</span>mx.power(theta4,<span class="dv">2</span>))</span>
-<span id="cb6-417"><a href="#cb6-417" aria-hidden="true" tabindex="-1"></a>                 <span class="op">+</span> mx.log(<span class="dv">1</span><span class="op">+</span>mx.power(theta5,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>mx.log(<span class="dv">1</span><span class="op">-</span>mx.power(theta5,<span class="dv">2</span>))</span>
-<span id="cb6-418"><a href="#cb6-418" aria-hidden="true" tabindex="-1"></a>                 )</span>
-<span id="cb6-419"><a href="#cb6-419" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"jacobian={jacobianL}\n")             </span></span>
-<span id="cb6-420"><a href="#cb6-420" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-421"><a href="#cb6-421" aria-hidden="true" tabindex="-1"></a>    <span class="co"># a0 is fixed and passed into likelihood</span></span>
-<span id="cb6-422"><a href="#cb6-422" aria-hidden="true" tabindex="-1"></a>    a1<span class="op">=</span>theta1<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>mx.power(theta1,<span class="dv">2</span>))</span>
-<span id="cb6-423"><a href="#cb6-423" aria-hidden="true" tabindex="-1"></a>    mu0<span class="op">=</span>theta2<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>mx.power(theta2,<span class="dv">2</span>))</span>
-<span id="cb6-424"><a href="#cb6-424" aria-hidden="true" tabindex="-1"></a>    mu1<span class="op">=</span>theta3<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>mx.power(theta3,<span class="dv">2</span>))</span>
-<span id="cb6-425"><a href="#cb6-425" aria-hidden="true" tabindex="-1"></a>    sigma0<span class="op">=</span>theta4<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>mx.power(theta4,<span class="dv">2</span>))</span>
-<span id="cb6-426"><a href="#cb6-426" aria-hidden="true" tabindex="-1"></a>    sigma1<span class="op">=</span>theta5<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>mx.power(theta5,<span class="dv">2</span>))</span>
-<span id="cb6-427"><a href="#cb6-427" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"a0={a0} a1={a1} mu0={mu0} mu1={mu1} sigma0={sigma0} sigma1={sigma1}\n")</span></span>
-<span id="cb6-428"><a href="#cb6-428" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb6-429"><a href="#cb6-429" aria-hidden="true" tabindex="-1"></a>    eta<span class="op">=</span>a0<span class="op">+</span>a1<span class="op">*</span>T <span class="co"># (10,3) where T_vec = (3,) and (10,1) broadcast to (10,3)  </span></span>
-<span id="cb6-430"><a href="#cb6-430" aria-hidden="true" tabindex="-1"></a>    <span class="co"># y_data*eta - mx.log(1+mx.exp(eta)) this is (10,3) - want col sums, so collapse over rows</span></span>
-<span id="cb6-431"><a href="#cb6-431" aria-hidden="true" tabindex="-1"></a>    logL <span class="op">=</span> mx.<span class="bu">sum</span>(y<span class="op">*</span>eta <span class="op">-</span> mx.log(<span class="dv">1</span><span class="op">+</span>mx.exp(eta)),axis<span class="op">=</span><span class="dv">0</span>) <span class="co">#</span></span>
-<span id="cb6-432"><a href="#cb6-432" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"logL={logL}\n")</span></span>
-<span id="cb6-433"><a href="#cb6-433" aria-hidden="true" tabindex="-1"></a>    <span class="co"># now add the priors</span></span>
-<span id="cb6-434"><a href="#cb6-434" aria-hidden="true" tabindex="-1"></a>    <span class="co"># simple N(0,sd=10)</span></span>
-<span id="cb6-435"><a href="#cb6-435" aria-hidden="true" tabindex="-1"></a>    prior_a0 <span class="op">=</span> mx_norm_logpdf(a0,loc<span class="op">=</span>mu0,scale<span class="op">=</span>sigma0)</span>
-<span id="cb6-436"><a href="#cb6-436" aria-hidden="true" tabindex="-1"></a>    prior_a1 <span class="op">=</span> mx_norm_logpdf(a1,loc<span class="op">=</span>mu1,scale<span class="op">=</span>sigma1)</span>
-<span id="cb6-437"><a href="#cb6-437" aria-hidden="true" tabindex="-1"></a>    prior_mu0 <span class="op">=</span> mx_norm_logpdf(mu0,loc<span class="op">=</span><span class="fl">0.</span>,scale<span class="op">=</span><span class="fl">2.5</span>)</span>
-<span id="cb6-438"><a href="#cb6-438" aria-hidden="true" tabindex="-1"></a>    prior_mu1 <span class="op">=</span> mx_norm_logpdf(mu1,loc<span class="op">=</span><span class="fl">0.</span>,scale<span class="op">=</span><span class="fl">2.5</span>)</span>
-<span id="cb6-439"><a href="#cb6-439" aria-hidden="true" tabindex="-1"></a>    prior_sigma0 <span class="op">=</span> mx_half_normal_logpdf(sigma0, <span class="fl">2.5</span>)</span>
-<span id="cb6-440"><a href="#cb6-440" aria-hidden="true" tabindex="-1"></a>    prior_sigma1 <span class="op">=</span> mx_half_normal_logpdf(sigma1, <span class="fl">2.5</span>)</span>
-<span id="cb6-441"><a href="#cb6-441" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb6-442"><a href="#cb6-442" aria-hidden="true" tabindex="-1"></a>    logDens <span class="op">=</span> logL <span class="op">+</span> prior_a0 <span class="op">+</span> prior_a1 <span class="op">+</span> prior_mu0 <span class="op">+</span> prior_mu1 <span class="op">+</span> prior_sigma0 <span class="op">+</span> prior_sigma1</span>
-<span id="cb6-443"><a href="#cb6-443" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"logDens={logDens}\n")</span></span>
-<span id="cb6-444"><a href="#cb6-444" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (logDens <span class="op">+</span> jacobianL) <span class="co"># this will be (3,)</span></span>
-<span id="cb6-445"><a href="#cb6-445" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-446"><a href="#cb6-446" aria-hidden="true" tabindex="-1"></a><span class="co"># Evidence</span></span>
-<span id="cb6-447"><a href="#cb6-447" aria-hidden="true" tabindex="-1"></a><span class="co"># Setup Vegas with a Shifting Logic</span></span>
-<span id="cb6-448"><a href="#cb6-448" aria-hidden="true" tabindex="-1"></a><span class="at">@vegas.rbatchintegrand</span></span>
-<span id="cb6-449"><a href="#cb6-449" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> StableLikelihood:</span>
-<span id="cb6-450"><a href="#cb6-450" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, y, T):</span>
-<span id="cb6-451"><a href="#cb6-451" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.y <span class="op">=</span> y</span>
-<span id="cb6-452"><a href="#cb6-452" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.T <span class="op">=</span> T</span>
-<span id="cb6-453"><a href="#cb6-453" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.l_max <span class="op">=</span> <span class="fl">0.0</span> <span class="co"># Will be updated after warm-up</span></span>
-<span id="cb6-454"><a href="#cb6-454" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-455"><a href="#cb6-455" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__call__</span>(<span class="va">self</span>, theta):</span>
-<span id="cb6-456"><a href="#cb6-456" aria-hidden="true" tabindex="-1"></a>        theta_mx <span class="op">=</span> mx.array(theta)</span>
-<span id="cb6-457"><a href="#cb6-457" aria-hidden="true" tabindex="-1"></a>        log_lik <span class="op">=</span> compute_log_lik(theta_mx, <span class="va">self</span>.y,<span class="va">self</span>.T)</span>
-<span id="cb6-458"><a href="#cb6-458" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb6-459"><a href="#cb6-459" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Shift by the maximum found so far</span></span>
-<span id="cb6-460"><a href="#cb6-460" aria-hidden="true" tabindex="-1"></a>        <span class="co"># This keeps the result near 1.0 instead of 1e-300</span></span>
-<span id="cb6-461"><a href="#cb6-461" aria-hidden="true" tabindex="-1"></a>        <span class="co">## return np.array(jnp.exp(log_lik - self.l_max)) # needt this is using x64 - vegas expects np</span></span>
-<span id="cb6-462"><a href="#cb6-462" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> mx.exp(log_lik <span class="op">-</span> <span class="va">self</span>.l_max)</span>
-<span id="cb6-463"><a href="#cb6-463" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-464"><a href="#cb6-464" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-465"><a href="#cb6-465" aria-hidden="true" tabindex="-1"></a><span class="co"># MARGINAL a0 </span></span>
-<span id="cb6-466"><a href="#cb6-466" aria-hidden="true" tabindex="-1"></a><span class="co"># Setup Vegas with a Shifting Logic</span></span>
-<span id="cb6-467"><a href="#cb6-467" aria-hidden="true" tabindex="-1"></a><span class="at">@vegas.rbatchintegrand</span></span>
-<span id="cb6-468"><a href="#cb6-468" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> StableLikelihood2:</span>
-<span id="cb6-469"><a href="#cb6-469" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, y, T,a0):</span>
-<span id="cb6-470"><a href="#cb6-470" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.y <span class="op">=</span> y</span>
-<span id="cb6-471"><a href="#cb6-471" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.T <span class="op">=</span> T</span>
-<span id="cb6-472"><a href="#cb6-472" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.l_max <span class="op">=</span> <span class="fl">0.0</span> <span class="co"># Will be updated after warm-up</span></span>
-<span id="cb6-473"><a href="#cb6-473" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.a0 <span class="op">=</span> a0 <span class="co"># random variable which we want to compute density value for</span></span>
-<span id="cb6-474"><a href="#cb6-474" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-475"><a href="#cb6-475" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__call__</span>(<span class="va">self</span>, theta):</span>
-<span id="cb6-476"><a href="#cb6-476" aria-hidden="true" tabindex="-1"></a>        theta_mx <span class="op">=</span> mx.array(theta)</span>
-<span id="cb6-477"><a href="#cb6-477" aria-hidden="true" tabindex="-1"></a>        log_lik <span class="op">=</span> compute_log_lik2(theta_mx, <span class="va">self</span>.y,<span class="va">self</span>.T, <span class="va">self</span>.a0)</span>
-<span id="cb6-478"><a href="#cb6-478" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb6-479"><a href="#cb6-479" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Shift by the maximum found so far</span></span>
-<span id="cb6-480"><a href="#cb6-480" aria-hidden="true" tabindex="-1"></a>        <span class="co"># This keeps the result near 1.0 instead of 1e-300</span></span>
-<span id="cb6-481"><a href="#cb6-481" aria-hidden="true" tabindex="-1"></a>        <span class="co">## return np.array(jnp.exp(log_lik - self.l_max)) # needt this is using x64 - vegas expects np</span></span>
-<span id="cb6-482"><a href="#cb6-482" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> mx.exp(log_lik <span class="op">-</span> <span class="va">self</span>.l_max)</span>
-<span id="cb6-483"><a href="#cb6-483" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-390"><a href="#cb6-390" aria-hidden="true" tabindex="-1"></a><span class="at">@mx.compile</span></span>
+<span id="cb6-391"><a href="#cb6-391" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_log_lik2(theta, y,T,a0):</span>
+<span id="cb6-392"><a href="#cb6-392" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"shape1={x.shape}\n")</span></span>
+<span id="cb6-393"><a href="#cb6-393" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb6-394"><a href="#cb6-394" aria-hidden="true" tabindex="-1"></a><span class="co">    as above but we integrate out theta1-theta5 for fixed theta0</span></span>
+<span id="cb6-395"><a href="#cb6-395" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb6-396"><a href="#cb6-396" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb6-397"><a href="#cb6-397" aria-hidden="true" tabindex="-1"></a>    <span class="co"># theta0idx=NA # Not needed as pass in function as not marginalizing this (index for a0 transformed)</span></span>
+<span id="cb6-398"><a href="#cb6-398" aria-hidden="true" tabindex="-1"></a>    theta1_idx<span class="op">=</span><span class="dv">0</span> <span class="co"># index for a1 - logit treatment effect transformed</span></span>
+<span id="cb6-399"><a href="#cb6-399" aria-hidden="true" tabindex="-1"></a>    theta2_idx<span class="op">=</span><span class="dv">1</span> <span class="co"># index for mu transformed</span></span>
+<span id="cb6-400"><a href="#cb6-400" aria-hidden="true" tabindex="-1"></a>    theta3_idx<span class="op">=</span><span class="dv">2</span> <span class="co"># index for m1 transformed</span></span>
+<span id="cb6-401"><a href="#cb6-401" aria-hidden="true" tabindex="-1"></a>    theta4_idx<span class="op">=</span><span class="dv">3</span> <span class="co"># index for sigma0 transformed</span></span>
+<span id="cb6-402"><a href="#cb6-402" aria-hidden="true" tabindex="-1"></a>    theta5_idx<span class="op">=</span><span class="dv">4</span> <span class="co"># index for sigma1 transformed</span></span>
+<span id="cb6-403"><a href="#cb6-403" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-404"><a href="#cb6-404" aria-hidden="true" tabindex="-1"></a>    theta1<span class="op">=</span>mx.clip(theta[theta1_idx,:],<span class="op">-</span><span class="fl">0.99999</span>, <span class="fl">0.99999</span>)</span>
+<span id="cb6-405"><a href="#cb6-405" aria-hidden="true" tabindex="-1"></a>    theta2<span class="op">=</span>mx.clip(theta[theta2_idx,:],<span class="op">-</span><span class="fl">0.99999</span>, <span class="fl">0.99999</span>)</span>
+<span id="cb6-406"><a href="#cb6-406" aria-hidden="true" tabindex="-1"></a>    theta3<span class="op">=</span>mx.clip(theta[theta3_idx,:],<span class="op">-</span><span class="fl">0.99999</span>, <span class="fl">0.99999</span>)</span>
+<span id="cb6-407"><a href="#cb6-407" aria-hidden="true" tabindex="-1"></a>    theta4<span class="op">=</span>mx.clip(theta[theta4_idx,:],<span class="fl">0.00001</span>, <span class="fl">0.99999</span>)</span>
+<span id="cb6-408"><a href="#cb6-408" aria-hidden="true" tabindex="-1"></a>    theta5<span class="op">=</span>mx.clip(theta[theta5_idx,:],<span class="fl">0.00001</span>, <span class="fl">0.99999</span>)</span>
+<span id="cb6-409"><a href="#cb6-409" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-410"><a href="#cb6-410" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-411"><a href="#cb6-411" aria-hidden="true" tabindex="-1"></a>    jacobianL <span class="op">=</span> (  mx.log(<span class="dv">1</span><span class="op">+</span>mx.power(theta1,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>mx.log(<span class="dv">1</span><span class="op">-</span>mx.power(theta1,<span class="dv">2</span>))</span>
+<span id="cb6-412"><a href="#cb6-412" aria-hidden="true" tabindex="-1"></a>                 <span class="op">+</span> mx.log(<span class="dv">1</span><span class="op">+</span>mx.power(theta2,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>mx.log(<span class="dv">1</span><span class="op">-</span>mx.power(theta2,<span class="dv">2</span>))</span>
+<span id="cb6-413"><a href="#cb6-413" aria-hidden="true" tabindex="-1"></a>                 <span class="op">+</span> mx.log(<span class="dv">1</span><span class="op">+</span>mx.power(theta3,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>mx.log(<span class="dv">1</span><span class="op">-</span>mx.power(theta3,<span class="dv">2</span>))</span>
+<span id="cb6-414"><a href="#cb6-414" aria-hidden="true" tabindex="-1"></a>                 <span class="op">+</span> mx.log(<span class="dv">1</span><span class="op">+</span>mx.power(theta4,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>mx.log(<span class="dv">1</span><span class="op">-</span>mx.power(theta4,<span class="dv">2</span>))</span>
+<span id="cb6-415"><a href="#cb6-415" aria-hidden="true" tabindex="-1"></a>                 <span class="op">+</span> mx.log(<span class="dv">1</span><span class="op">+</span>mx.power(theta5,<span class="dv">2</span>)) <span class="op">-</span> <span class="fl">2.0</span><span class="op">*</span>mx.log(<span class="dv">1</span><span class="op">-</span>mx.power(theta5,<span class="dv">2</span>))</span>
+<span id="cb6-416"><a href="#cb6-416" aria-hidden="true" tabindex="-1"></a>                 )</span>
+<span id="cb6-417"><a href="#cb6-417" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"jacobian={jacobianL}\n")             </span></span>
+<span id="cb6-418"><a href="#cb6-418" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-419"><a href="#cb6-419" aria-hidden="true" tabindex="-1"></a>    <span class="co"># a0 is fixed and passed into likelihood</span></span>
+<span id="cb6-420"><a href="#cb6-420" aria-hidden="true" tabindex="-1"></a>    a1<span class="op">=</span>theta1<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>mx.power(theta1,<span class="dv">2</span>))</span>
+<span id="cb6-421"><a href="#cb6-421" aria-hidden="true" tabindex="-1"></a>    mu0<span class="op">=</span>theta2<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>mx.power(theta2,<span class="dv">2</span>))</span>
+<span id="cb6-422"><a href="#cb6-422" aria-hidden="true" tabindex="-1"></a>    mu1<span class="op">=</span>theta3<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>mx.power(theta3,<span class="dv">2</span>))</span>
+<span id="cb6-423"><a href="#cb6-423" aria-hidden="true" tabindex="-1"></a>    sigma0<span class="op">=</span>theta4<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>mx.power(theta4,<span class="dv">2</span>))</span>
+<span id="cb6-424"><a href="#cb6-424" aria-hidden="true" tabindex="-1"></a>    sigma1<span class="op">=</span>theta5<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>mx.power(theta5,<span class="dv">2</span>))</span>
+<span id="cb6-425"><a href="#cb6-425" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"a0={a0} a1={a1} mu0={mu0} mu1={mu1} sigma0={sigma0} sigma1={sigma1}\n")</span></span>
+<span id="cb6-426"><a href="#cb6-426" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-427"><a href="#cb6-427" aria-hidden="true" tabindex="-1"></a>    eta<span class="op">=</span>a0<span class="op">+</span>a1<span class="op">*</span>T <span class="co"># (10,3) where T_vec = (3,) and (10,1) broadcast to (10,3)  </span></span>
+<span id="cb6-428"><a href="#cb6-428" aria-hidden="true" tabindex="-1"></a>    <span class="co"># y_data*eta - mx.log(1+mx.exp(eta)) this is (10,3) - want col sums, so collapse over rows</span></span>
+<span id="cb6-429"><a href="#cb6-429" aria-hidden="true" tabindex="-1"></a>    logL <span class="op">=</span> mx.<span class="bu">sum</span>(y<span class="op">*</span>eta <span class="op">-</span> mx.log(<span class="dv">1</span><span class="op">+</span>mx.exp(eta)),axis<span class="op">=</span><span class="dv">0</span>) <span class="co">#</span></span>
+<span id="cb6-430"><a href="#cb6-430" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"logL={logL}\n")</span></span>
+<span id="cb6-431"><a href="#cb6-431" aria-hidden="true" tabindex="-1"></a>    <span class="co"># now add the priors</span></span>
+<span id="cb6-432"><a href="#cb6-432" aria-hidden="true" tabindex="-1"></a>    <span class="co"># simple N(0,sd=10)</span></span>
+<span id="cb6-433"><a href="#cb6-433" aria-hidden="true" tabindex="-1"></a>    prior_a0 <span class="op">=</span> mx_norm_logpdf(a0,loc<span class="op">=</span>mu0,scale<span class="op">=</span>sigma0)</span>
+<span id="cb6-434"><a href="#cb6-434" aria-hidden="true" tabindex="-1"></a>    prior_a1 <span class="op">=</span> mx_norm_logpdf(a1,loc<span class="op">=</span>mu1,scale<span class="op">=</span>sigma1)</span>
+<span id="cb6-435"><a href="#cb6-435" aria-hidden="true" tabindex="-1"></a>    prior_mu0 <span class="op">=</span> mx_norm_logpdf(mu0,loc<span class="op">=</span><span class="fl">0.</span>,scale<span class="op">=</span><span class="fl">2.5</span>)</span>
+<span id="cb6-436"><a href="#cb6-436" aria-hidden="true" tabindex="-1"></a>    prior_mu1 <span class="op">=</span> mx_norm_logpdf(mu1,loc<span class="op">=</span><span class="fl">0.</span>,scale<span class="op">=</span><span class="fl">2.5</span>)</span>
+<span id="cb6-437"><a href="#cb6-437" aria-hidden="true" tabindex="-1"></a>    prior_sigma0 <span class="op">=</span> mx_half_normal_logpdf(sigma0, <span class="fl">2.5</span>)</span>
+<span id="cb6-438"><a href="#cb6-438" aria-hidden="true" tabindex="-1"></a>    prior_sigma1 <span class="op">=</span> mx_half_normal_logpdf(sigma1, <span class="fl">2.5</span>)</span>
+<span id="cb6-439"><a href="#cb6-439" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-440"><a href="#cb6-440" aria-hidden="true" tabindex="-1"></a>    logDens <span class="op">=</span> logL <span class="op">+</span> prior_a0 <span class="op">+</span> prior_a1 <span class="op">+</span> prior_mu0 <span class="op">+</span> prior_mu1 <span class="op">+</span> prior_sigma0 <span class="op">+</span> prior_sigma1</span>
+<span id="cb6-441"><a href="#cb6-441" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"logDens={logDens}\n")</span></span>
+<span id="cb6-442"><a href="#cb6-442" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (logDens <span class="op">+</span> jacobianL) <span class="co"># this will be (3,)</span></span>
+<span id="cb6-443"><a href="#cb6-443" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-444"><a href="#cb6-444" aria-hidden="true" tabindex="-1"></a><span class="co"># Evidence</span></span>
+<span id="cb6-445"><a href="#cb6-445" aria-hidden="true" tabindex="-1"></a><span class="co"># Setup Vegas with a Shifting Logic</span></span>
+<span id="cb6-446"><a href="#cb6-446" aria-hidden="true" tabindex="-1"></a><span class="at">@vegas.rbatchintegrand</span></span>
+<span id="cb6-447"><a href="#cb6-447" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> StableLikelihood:</span>
+<span id="cb6-448"><a href="#cb6-448" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, y, T):</span>
+<span id="cb6-449"><a href="#cb6-449" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.y <span class="op">=</span> y</span>
+<span id="cb6-450"><a href="#cb6-450" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.T <span class="op">=</span> T</span>
+<span id="cb6-451"><a href="#cb6-451" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.l_max <span class="op">=</span> <span class="fl">0.0</span> <span class="co"># Will be updated after warm-up</span></span>
+<span id="cb6-452"><a href="#cb6-452" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-453"><a href="#cb6-453" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__call__</span>(<span class="va">self</span>, theta):</span>
+<span id="cb6-454"><a href="#cb6-454" aria-hidden="true" tabindex="-1"></a>        theta_mx <span class="op">=</span> mx.array(theta)</span>
+<span id="cb6-455"><a href="#cb6-455" aria-hidden="true" tabindex="-1"></a>        log_lik <span class="op">=</span> compute_log_lik(theta_mx, <span class="va">self</span>.y,<span class="va">self</span>.T)</span>
+<span id="cb6-456"><a href="#cb6-456" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb6-457"><a href="#cb6-457" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Shift by the maximum found so far</span></span>
+<span id="cb6-458"><a href="#cb6-458" aria-hidden="true" tabindex="-1"></a>        <span class="co"># This keeps the result near 1.0 instead of 1e-300</span></span>
+<span id="cb6-459"><a href="#cb6-459" aria-hidden="true" tabindex="-1"></a>        <span class="co">## return np.array(jnp.exp(log_lik - self.l_max)) # needt this is using x64 - vegas expects np</span></span>
+<span id="cb6-460"><a href="#cb6-460" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> mx.exp(log_lik <span class="op">-</span> <span class="va">self</span>.l_max)</span>
+<span id="cb6-461"><a href="#cb6-461" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-462"><a href="#cb6-462" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-463"><a href="#cb6-463" aria-hidden="true" tabindex="-1"></a><span class="co"># MARGINAL a0 </span></span>
+<span id="cb6-464"><a href="#cb6-464" aria-hidden="true" tabindex="-1"></a><span class="co"># Setup Vegas with a Shifting Logic</span></span>
+<span id="cb6-465"><a href="#cb6-465" aria-hidden="true" tabindex="-1"></a><span class="at">@vegas.rbatchintegrand</span></span>
+<span id="cb6-466"><a href="#cb6-466" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> StableLikelihood2:</span>
+<span id="cb6-467"><a href="#cb6-467" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, y, T,a0):</span>
+<span id="cb6-468"><a href="#cb6-468" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.y <span class="op">=</span> y</span>
+<span id="cb6-469"><a href="#cb6-469" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.T <span class="op">=</span> T</span>
+<span id="cb6-470"><a href="#cb6-470" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.l_max <span class="op">=</span> <span class="fl">0.0</span> <span class="co"># Will be updated after warm-up</span></span>
+<span id="cb6-471"><a href="#cb6-471" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.a0 <span class="op">=</span> a0 <span class="co"># random variable which we want to compute density value for</span></span>
+<span id="cb6-472"><a href="#cb6-472" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-473"><a href="#cb6-473" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__call__</span>(<span class="va">self</span>, theta):</span>
+<span id="cb6-474"><a href="#cb6-474" aria-hidden="true" tabindex="-1"></a>        theta_mx <span class="op">=</span> mx.array(theta)</span>
+<span id="cb6-475"><a href="#cb6-475" aria-hidden="true" tabindex="-1"></a>        log_lik <span class="op">=</span> compute_log_lik2(theta_mx, <span class="va">self</span>.y,<span class="va">self</span>.T, <span class="va">self</span>.a0)</span>
+<span id="cb6-476"><a href="#cb6-476" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb6-477"><a href="#cb6-477" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Shift by the maximum found so far</span></span>
+<span id="cb6-478"><a href="#cb6-478" aria-hidden="true" tabindex="-1"></a>        <span class="co"># This keeps the result near 1.0 instead of 1e-300</span></span>
+<span id="cb6-479"><a href="#cb6-479" aria-hidden="true" tabindex="-1"></a>        <span class="co">## return np.array(jnp.exp(log_lik - self.l_max)) # needt this is using x64 - vegas expects np</span></span>
+<span id="cb6-480"><a href="#cb6-480" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> mx.exp(log_lik <span class="op">-</span> <span class="va">self</span>.l_max)</span>
+<span id="cb6-481"><a href="#cb6-481" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-482"><a href="#cb6-482" aria-hidden="true" tabindex="-1"></a><span class="co">#### ------------------------------------------------------------------------------------------------</span></span>
+<span id="cb6-483"><a href="#cb6-483" aria-hidden="true" tabindex="-1"></a><span class="co">#### 3. Compute evidence integrate over all parameters</span></span>
 <span id="cb6-484"><a href="#cb6-484" aria-hidden="true" tabindex="-1"></a><span class="co">#### ------------------------------------------------------------------------------------------------</span></span>
-<span id="cb6-485"><a href="#cb6-485" aria-hidden="true" tabindex="-1"></a><span class="co">#### 3. Compute evidence integrate over all parameters</span></span>
-<span id="cb6-486"><a href="#cb6-486" aria-hidden="true" tabindex="-1"></a><span class="co">#### ------------------------------------------------------------------------------------------------</span></span>
-<span id="cb6-487"><a href="#cb6-487" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> StableLikelihood(y<span class="op">=</span>y_data,T<span class="op">=</span>T_vec)</span>
-<span id="cb6-488"><a href="#cb6-488" aria-hidden="true" tabindex="-1"></a>start <span class="op">=</span> jnp.array([<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="fl">0.0001</span>,<span class="fl">0.0001</span>],dtype<span class="op">=</span>jnp.float32) <span class="co"># a0 a1</span></span>
-<span id="cb6-489"><a href="#cb6-489" aria-hidden="true" tabindex="-1"></a>stop <span class="op">=</span> jnp.array([<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>],dtype<span class="op">=</span>jnp.float32)   <span class="co"># a0 a1</span></span>
-<span id="cb6-490"><a href="#cb6-490" aria-hidden="true" tabindex="-1"></a>searchPts<span class="op">=</span>mx.array(np.array(jnp.transpose(jnp.linspace(start, stop, <span class="dv">1000</span>))), dtype<span class="op">=</span>mx.float32)</span>
-<span id="cb6-491"><a href="#cb6-491" aria-hidden="true" tabindex="-1"></a>model.l_max<span class="op">=</span>mx.<span class="bu">max</span>(compute_log_lik(searchPts, model.y,model.T))</span>
-<span id="cb6-492"><a href="#cb6-492" aria-hidden="true" tabindex="-1"></a><span class="co">#explicitly set seed</span></span>
-<span id="cb6-493"><a href="#cb6-493" aria-hidden="true" tabindex="-1"></a>gvar.ranseed(<span class="dv">99990</span>)</span>
-<span id="cb6-494"><a href="#cb6-494" aria-hidden="true" tabindex="-1"></a>integ <span class="op">=</span> vegas.Integrator(mx.array([[<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>],[<span class="fl">0.0001</span>,<span class="dv">1</span>],[<span class="fl">0.0001</span>,<span class="dv">1</span>]],dtype<span class="op">=</span>mx.float32))</span>
-<span id="cb6-495"><a href="#cb6-495" aria-hidden="true" tabindex="-1"></a><span class="co">#integ.map.grid.base[0,0:5] grid typically 1000 bins</span></span>
-<span id="cb6-496"><a href="#cb6-496" aria-hidden="true" tabindex="-1"></a>result<span class="op">=</span>runIters(integ,model,warm_nitn<span class="op">=</span><span class="dv">10</span>,warm_neval<span class="op">=</span><span class="dv">100000</span>,run_nitn<span class="op">=</span><span class="dv">10</span>,run_neval<span class="op">=</span><span class="dv">100000</span>,iMax<span class="op">=</span><span class="dv">20</span>,errTol<span class="op">=</span><span class="fl">0.1</span>,Qtol<span class="op">=</span><span class="fl">0.15</span>)</span>
-<span id="cb6-497"><a href="#cb6-497" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> result[<span class="dv">1</span>]:</span>
-<span id="cb6-498"><a href="#cb6-498" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"1. warning: Integrand did not achieve target accuracy</span><span class="ch">\n</span><span class="ss">"</span>)</span>
-<span id="cb6-499"><a href="#cb6-499" aria-hidden="true" tabindex="-1"></a>result<span class="op">=</span>result[<span class="dv">0</span>] <span class="co"># overwrite with vegas object</span></span>
-<span id="cb6-500"><a href="#cb6-500" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"final weighted I=</span><span class="sc">{</span>result<span class="sc">.</span>mean<span class="sc">}</span><span class="ch">\n</span><span class="ss">final sdev=</span><span class="sc">{</span>result<span class="sc">.</span>sdev<span class="sc">}</span><span class="ch">\n</span><span class="ss">final rel error (%)=</span><span class="sc">{</span><span class="dv">100</span><span class="op">*</span>result<span class="sc">.</span>sdev<span class="op">/</span>result<span class="sc">.</span>mean<span class="sc">}</span><span class="ch">\n</span><span class="ss">final Q=</span><span class="sc">{</span>result<span class="sc">.</span>Q<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
-<span id="cb6-501"><a href="#cb6-501" aria-hidden="true" tabindex="-1"></a><span class="co"># Final Log-Evidence Calculation</span></span>
-<span id="cb6-502"><a href="#cb6-502" aria-hidden="true" tabindex="-1"></a><span class="co"># log(I) = l_max + log(scaled_integral)</span></span>
-<span id="cb6-503"><a href="#cb6-503" aria-hidden="true" tabindex="-1"></a>log_evidence <span class="op">=</span> model.l_max <span class="op">+</span> mx.log(gvar.mean(result))</span>
-<span id="cb6-504"><a href="#cb6-504" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Log Evidence: </span><span class="sc">{</span>log_evidence<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb6-505"><a href="#cb6-505" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-485"><a href="#cb6-485" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> StableLikelihood(y<span class="op">=</span>y_data,T<span class="op">=</span>T_vec)</span>
+<span id="cb6-486"><a href="#cb6-486" aria-hidden="true" tabindex="-1"></a>start <span class="op">=</span> jnp.array([<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="fl">0.0001</span>,<span class="fl">0.0001</span>],dtype<span class="op">=</span>jnp.float32) <span class="co"># a0 a1</span></span>
+<span id="cb6-487"><a href="#cb6-487" aria-hidden="true" tabindex="-1"></a>stop <span class="op">=</span> jnp.array([<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>],dtype<span class="op">=</span>jnp.float32)   <span class="co"># a0 a1</span></span>
+<span id="cb6-488"><a href="#cb6-488" aria-hidden="true" tabindex="-1"></a>searchPts<span class="op">=</span>mx.array(np.array(jnp.transpose(jnp.linspace(start, stop, <span class="dv">1000</span>))), dtype<span class="op">=</span>mx.float32)</span>
+<span id="cb6-489"><a href="#cb6-489" aria-hidden="true" tabindex="-1"></a>model.l_max<span class="op">=</span>mx.<span class="bu">max</span>(compute_log_lik(searchPts, model.y,model.T))</span>
+<span id="cb6-490"><a href="#cb6-490" aria-hidden="true" tabindex="-1"></a><span class="co">#explicitly set seed</span></span>
+<span id="cb6-491"><a href="#cb6-491" aria-hidden="true" tabindex="-1"></a>gvar.ranseed(<span class="dv">99990</span>)</span>
+<span id="cb6-492"><a href="#cb6-492" aria-hidden="true" tabindex="-1"></a>integ <span class="op">=</span> vegas.Integrator(mx.array([[<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>],[<span class="fl">0.0001</span>,<span class="dv">1</span>],[<span class="fl">0.0001</span>,<span class="dv">1</span>]],dtype<span class="op">=</span>mx.float32))</span>
+<span id="cb6-493"><a href="#cb6-493" aria-hidden="true" tabindex="-1"></a><span class="co">#integ.map.grid.base[0,0:5] grid typically 1000 bins</span></span>
+<span id="cb6-494"><a href="#cb6-494" aria-hidden="true" tabindex="-1"></a>result<span class="op">=</span>runIters(integ,model,warm_nitn<span class="op">=</span><span class="dv">10</span>,warm_neval<span class="op">=</span><span class="dv">100000</span>,run_nitn<span class="op">=</span><span class="dv">10</span>,run_neval<span class="op">=</span><span class="dv">100000</span>,iMax<span class="op">=</span><span class="dv">20</span>,errTol<span class="op">=</span><span class="fl">0.1</span>,Qtol<span class="op">=</span><span class="fl">0.15</span>)</span>
+<span id="cb6-495"><a href="#cb6-495" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> result[<span class="dv">1</span>]:</span>
+<span id="cb6-496"><a href="#cb6-496" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"1. warning: Integrand did not achieve target accuracy</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb6-497"><a href="#cb6-497" aria-hidden="true" tabindex="-1"></a>result<span class="op">=</span>result[<span class="dv">0</span>] <span class="co"># overwrite with vegas object</span></span>
+<span id="cb6-498"><a href="#cb6-498" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"final weighted I=</span><span class="sc">{</span>result<span class="sc">.</span>mean<span class="sc">}</span><span class="ch">\n</span><span class="ss">final sdev=</span><span class="sc">{</span>result<span class="sc">.</span>sdev<span class="sc">}</span><span class="ch">\n</span><span class="ss">final rel error (%)=</span><span class="sc">{</span><span class="dv">100</span><span class="op">*</span>result<span class="sc">.</span>sdev<span class="op">/</span>result<span class="sc">.</span>mean<span class="sc">}</span><span class="ch">\n</span><span class="ss">final Q=</span><span class="sc">{</span>result<span class="sc">.</span>Q<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb6-499"><a href="#cb6-499" aria-hidden="true" tabindex="-1"></a><span class="co"># Final Log-Evidence Calculation</span></span>
+<span id="cb6-500"><a href="#cb6-500" aria-hidden="true" tabindex="-1"></a><span class="co"># log(I) = l_max + log(scaled_integral)</span></span>
+<span id="cb6-501"><a href="#cb6-501" aria-hidden="true" tabindex="-1"></a>log_evidence <span class="op">=</span> model.l_max <span class="op">+</span> mx.log(gvar.mean(result))</span>
+<span id="cb6-502"><a href="#cb6-502" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Log Evidence: </span><span class="sc">{</span>log_evidence<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-503"><a href="#cb6-503" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-504"><a href="#cb6-504" aria-hidden="true" tabindex="-1"></a><span class="co">#### ------------------------------------------------------------------------------------------------</span></span>
+<span id="cb6-505"><a href="#cb6-505" aria-hidden="true" tabindex="-1"></a><span class="co">#### 4. Compute marginal posterior for parameter a0</span></span>
 <span id="cb6-506"><a href="#cb6-506" aria-hidden="true" tabindex="-1"></a><span class="co">#### ------------------------------------------------------------------------------------------------</span></span>
-<span id="cb6-507"><a href="#cb6-507" aria-hidden="true" tabindex="-1"></a><span class="co">#### 4. Compute marginal posterior for parameter a0</span></span>
-<span id="cb6-508"><a href="#cb6-508" aria-hidden="true" tabindex="-1"></a><span class="co">#### ------------------------------------------------------------------------------------------------</span></span>
-<span id="cb6-509"><a href="#cb6-509" aria-hidden="true" tabindex="-1"></a><span class="co">#explicitly set seed</span></span>
-<span id="cb6-510"><a href="#cb6-510" aria-hidden="true" tabindex="-1"></a>gvar.ranseed(<span class="dv">99991</span>)</span>
-<span id="cb6-511"><a href="#cb6-511" aria-hidden="true" tabindex="-1"></a><span class="co">## Set range and grid for a0 = logit intercept. This needs improved to find bookends and better grid</span></span>
-<span id="cb6-512"><a href="#cb6-512" aria-hidden="true" tabindex="-1"></a>Ngrid<span class="op">=</span><span class="dv">50</span></span>
-<span id="cb6-513"><a href="#cb6-513" aria-hidden="true" tabindex="-1"></a>a0<span class="op">=</span> mx.array(np.array(jnp.linspace(<span class="op">-</span><span class="fl">2.5</span>,<span class="op">-</span><span class="fl">0.0</span>,Ngrid,dtype<span class="op">=</span>jnp.float32)), dtype<span class="op">=</span>mx.float32)</span>
-<span id="cb6-514"><a href="#cb6-514" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-515"><a href="#cb6-515" aria-hidden="true" tabindex="-1"></a>prob_dens<span class="op">=</span>np.ones([Ngrid],dtype<span class="op">=</span>np.float32) <span class="co"># storage for density values</span></span>
-<span id="cb6-516"><a href="#cb6-516" aria-hidden="true" tabindex="-1"></a>start <span class="op">=</span> jnp.array([<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="fl">0.0001</span>,<span class="fl">0.0001</span>],dtype<span class="op">=</span>jnp.float32) <span class="co"># a0 a1</span></span>
-<span id="cb6-517"><a href="#cb6-517" aria-hidden="true" tabindex="-1"></a>stop <span class="op">=</span> jnp.array([<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>],dtype<span class="op">=</span>jnp.float32)   <span class="co"># a0 a1</span></span>
-<span id="cb6-518"><a href="#cb6-518" aria-hidden="true" tabindex="-1"></a>searchPts<span class="op">=</span>mx.array(np.array(jnp.transpose(jnp.linspace(start, stop, <span class="dv">1000</span>))), dtype<span class="op">=</span>mx.float32)</span>
-<span id="cb6-519"><a href="#cb6-519" aria-hidden="true" tabindex="-1"></a>i<span class="op">=</span><span class="dv">0</span></span>
-<span id="cb6-520"><a href="#cb6-520" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x <span class="kw">in</span> a0: <span class="co"># for each value of rv a0 find density value</span></span>
-<span id="cb6-521"><a href="#cb6-521" aria-hidden="true" tabindex="-1"></a>  model <span class="op">=</span> StableLikelihood2(y<span class="op">=</span>y_data,T<span class="op">=</span>T_vec,a0<span class="op">=</span>x)</span>
-<span id="cb6-522"><a href="#cb6-522" aria-hidden="true" tabindex="-1"></a>  model.l_max<span class="op">=</span>mx.<span class="bu">max</span>(compute_log_lik2(searchPts, model.y,model.T,model.a0))</span>
-<span id="cb6-523"><a href="#cb6-523" aria-hidden="true" tabindex="-1"></a>  integ <span class="op">=</span> vegas.Integrator(mx.array([[<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>],[<span class="fl">0.0001</span>,<span class="dv">1</span>],[<span class="fl">0.0001</span>,<span class="dv">1</span>]],dtype<span class="op">=</span>mx.float32))</span>
-<span id="cb6-524"><a href="#cb6-524" aria-hidden="true" tabindex="-1"></a>  result<span class="op">=</span>runIters(integ,model,warm_nitn<span class="op">=</span><span class="dv">10</span>,warm_neval<span class="op">=</span><span class="dv">50000</span>,run_nitn<span class="op">=</span><span class="dv">10</span>,run_neval<span class="op">=</span><span class="dv">50000</span>,iMax<span class="op">=</span><span class="dv">20</span>,errTol<span class="op">=</span><span class="fl">1.0</span>,Qtol<span class="op">=</span><span class="fl">0.15</span>,verbose<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb6-525"><a href="#cb6-525" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="kw">not</span> result[<span class="dv">1</span>]:</span>
-<span id="cb6-526"><a href="#cb6-526" aria-hidden="true" tabindex="-1"></a>      <span class="bu">print</span>(<span class="ss">f"1. warning: Integrand at a0=</span><span class="sc">{</span>x<span class="sc">}</span><span class="ss"> did not achieve target accuracy or Q tolerance</span><span class="ch">\n</span><span class="ss">"</span>)</span>
-<span id="cb6-527"><a href="#cb6-527" aria-hidden="true" tabindex="-1"></a>  result<span class="op">=</span>result[<span class="dv">0</span>] <span class="co"># overwrite with vegas object</span></span>
-<span id="cb6-528"><a href="#cb6-528" aria-hidden="true" tabindex="-1"></a>  marg_a0 <span class="op">=</span> model.l_max <span class="op">+</span> mx.log(gvar.mean(result)) <span class="co"># this is the correct unscaled I</span></span>
-<span id="cb6-529"><a href="#cb6-529" aria-hidden="true" tabindex="-1"></a>  prob_dens[[i]]<span class="op">=</span>mx.array(mx.exp(marg_a0<span class="op">-</span>log_evidence))</span>
-<span id="cb6-530"><a href="#cb6-530" aria-hidden="true" tabindex="-1"></a>  i<span class="op">=</span>i<span class="op">+</span><span class="dv">1</span></span>
-<span id="cb6-531"><a href="#cb6-531" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-532"><a href="#cb6-532" aria-hidden="true" tabindex="-1"></a><span class="co"># copy to numpy to can then access from R directly</span></span>
-<span id="cb6-533"><a href="#cb6-533" aria-hidden="true" tabindex="-1"></a>a0np<span class="op">=</span> np.array(a0)</span>
-<span id="cb6-534"><a href="#cb6-534" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-507"><a href="#cb6-507" aria-hidden="true" tabindex="-1"></a><span class="co">#explicitly set seed</span></span>
+<span id="cb6-508"><a href="#cb6-508" aria-hidden="true" tabindex="-1"></a>gvar.ranseed(<span class="dv">99991</span>)</span>
+<span id="cb6-509"><a href="#cb6-509" aria-hidden="true" tabindex="-1"></a><span class="co">## Set range and grid for a0 = logit intercept. This needs improved to find bookends and better grid</span></span>
+<span id="cb6-510"><a href="#cb6-510" aria-hidden="true" tabindex="-1"></a>Ngrid<span class="op">=</span><span class="dv">50</span></span>
+<span id="cb6-511"><a href="#cb6-511" aria-hidden="true" tabindex="-1"></a>a0<span class="op">=</span> mx.array(np.array(jnp.linspace(<span class="op">-</span><span class="fl">2.5</span>,<span class="op">-</span><span class="fl">0.0</span>,Ngrid,dtype<span class="op">=</span>jnp.float32)), dtype<span class="op">=</span>mx.float32)</span>
+<span id="cb6-512"><a href="#cb6-512" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-513"><a href="#cb6-513" aria-hidden="true" tabindex="-1"></a>prob_dens<span class="op">=</span>np.ones([Ngrid],dtype<span class="op">=</span>np.float32) <span class="co"># storage for density values</span></span>
+<span id="cb6-514"><a href="#cb6-514" aria-hidden="true" tabindex="-1"></a>start <span class="op">=</span> jnp.array([<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="fl">0.0001</span>,<span class="fl">0.0001</span>],dtype<span class="op">=</span>jnp.float32) <span class="co"># a0 a1</span></span>
+<span id="cb6-515"><a href="#cb6-515" aria-hidden="true" tabindex="-1"></a>stop <span class="op">=</span> jnp.array([<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>],dtype<span class="op">=</span>jnp.float32)   <span class="co"># a0 a1</span></span>
+<span id="cb6-516"><a href="#cb6-516" aria-hidden="true" tabindex="-1"></a>searchPts<span class="op">=</span>mx.array(np.array(jnp.transpose(jnp.linspace(start, stop, <span class="dv">1000</span>))), dtype<span class="op">=</span>mx.float32)</span>
+<span id="cb6-517"><a href="#cb6-517" aria-hidden="true" tabindex="-1"></a>i<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb6-518"><a href="#cb6-518" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x <span class="kw">in</span> a0: <span class="co"># for each value of rv a0 find density value</span></span>
+<span id="cb6-519"><a href="#cb6-519" aria-hidden="true" tabindex="-1"></a>  model <span class="op">=</span> StableLikelihood2(y<span class="op">=</span>y_data,T<span class="op">=</span>T_vec,a0<span class="op">=</span>x)</span>
+<span id="cb6-520"><a href="#cb6-520" aria-hidden="true" tabindex="-1"></a>  model.l_max<span class="op">=</span>mx.<span class="bu">max</span>(compute_log_lik2(searchPts, model.y,model.T,model.a0))</span>
+<span id="cb6-521"><a href="#cb6-521" aria-hidden="true" tabindex="-1"></a>  integ <span class="op">=</span> vegas.Integrator(mx.array([[<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>],[<span class="fl">0.0001</span>,<span class="dv">1</span>],[<span class="fl">0.0001</span>,<span class="dv">1</span>]],dtype<span class="op">=</span>mx.float32))</span>
+<span id="cb6-522"><a href="#cb6-522" aria-hidden="true" tabindex="-1"></a>  result<span class="op">=</span>runIters(integ,model,warm_nitn<span class="op">=</span><span class="dv">10</span>,warm_neval<span class="op">=</span><span class="dv">50000</span>,run_nitn<span class="op">=</span><span class="dv">10</span>,run_neval<span class="op">=</span><span class="dv">50000</span>,iMax<span class="op">=</span><span class="dv">20</span>,errTol<span class="op">=</span><span class="fl">1.0</span>,Qtol<span class="op">=</span><span class="fl">0.15</span>,verbose<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb6-523"><a href="#cb6-523" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="kw">not</span> result[<span class="dv">1</span>]:</span>
+<span id="cb6-524"><a href="#cb6-524" aria-hidden="true" tabindex="-1"></a>      <span class="bu">print</span>(<span class="ss">f"1. warning: Integrand at a0=</span><span class="sc">{</span>x<span class="sc">}</span><span class="ss"> did not achieve target accuracy or Q tolerance</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb6-525"><a href="#cb6-525" aria-hidden="true" tabindex="-1"></a>  result<span class="op">=</span>result[<span class="dv">0</span>] <span class="co"># overwrite with vegas object</span></span>
+<span id="cb6-526"><a href="#cb6-526" aria-hidden="true" tabindex="-1"></a>  marg_a0 <span class="op">=</span> model.l_max <span class="op">+</span> mx.log(gvar.mean(result)) <span class="co"># this is the correct unscaled I</span></span>
+<span id="cb6-527"><a href="#cb6-527" aria-hidden="true" tabindex="-1"></a>  prob_dens[[i]]<span class="op">=</span>mx.array(mx.exp(marg_a0<span class="op">-</span>log_evidence))</span>
+<span id="cb6-528"><a href="#cb6-528" aria-hidden="true" tabindex="-1"></a>  i<span class="op">=</span>i<span class="op">+</span><span class="dv">1</span></span>
+<span id="cb6-529"><a href="#cb6-529" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-530"><a href="#cb6-530" aria-hidden="true" tabindex="-1"></a><span class="co"># copy to numpy to can then access from R directly</span></span>
+<span id="cb6-531"><a href="#cb6-531" aria-hidden="true" tabindex="-1"></a>a0np<span class="op">=</span> np.array(a0)</span>
+<span id="cb6-532"><a href="#cb6-532" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-533"><a href="#cb6-533" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-534"><a href="#cb6-534" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb6-535"><a href="#cb6-535" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-536"><a href="#cb6-536" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb6-537"><a href="#cb6-537" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-536"><a href="#cb6-536" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-537"><a href="#cb6-537" aria-hidden="true" tabindex="-1"></a><span class="fu">### Plots of comparisons</span></span>
 <span id="cb6-538"><a href="#cb6-538" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-539"><a href="#cb6-539" aria-hidden="true" tabindex="-1"></a><span class="fu">### Plots of comparisons</span></span>
-<span id="cb6-540"><a href="#cb6-540" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-541"><a href="#cb6-541" aria-hidden="true" tabindex="-1"></a><span class="in">```{r compare, echo=FALSE, eval=TRUE}</span></span>
-<span id="cb6-542"><a href="#cb6-542" aria-hidden="true" tabindex="-1"></a><span class="co">#png("precomputed/vg2_TFP_stan_comp.png")</span></span>
-<span id="cb6-543"><a href="#cb6-543" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span>
-<span id="cb6-544"><a href="#cb6-544" aria-hidden="true" tabindex="-1"></a><span class="co">#plot(density(extract(stan_fit_2,"mu0")$mu0),main="mu0")</span></span>
-<span id="cb6-545"><a href="#cb6-545" aria-hidden="true" tabindex="-1"></a><span class="co">#plot(density(extract(stan_fit_2,"beta[1,1]")$"beta[1,1]"),main="beta[1,1]")</span></span>
-<span id="cb6-546"><a href="#cb6-546" aria-hidden="true" tabindex="-1"></a><span class="co">#lines(density(c(py$samplesflat[[1]])),col="red")</span></span>
-<span id="cb6-547"><a href="#cb6-547" aria-hidden="true" tabindex="-1"></a><span class="co">#dev.off()</span></span>
-<span id="cb6-548"><a href="#cb6-548" aria-hidden="true" tabindex="-1"></a><span class="co">#print(summary(stan_fit_2))</span></span>
-<span id="cb6-549"><a href="#cb6-549" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-550"><a href="#cb6-550" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-551"><a href="#cb6-551" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(<span class="fu">extract</span>(stan_fit_2,<span class="st">"beta[1,1]"</span>)<span class="sc">$</span><span class="st">"beta[1,1]"</span>),<span class="at">main=</span><span class="st">"beta[1,1]"</span>,<span class="at">col=</span><span class="st">"blue"</span>,<span class="at">lwd=</span><span class="dv">2</span>)</span>
-<span id="cb6-552"><a href="#cb6-552" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(py<span class="sc">$</span>a0np,py<span class="sc">$</span>prob_dens,<span class="at">col=</span><span class="st">"brown"</span>,<span class="at">pch=</span><span class="dv">21</span>,<span class="at">bg=</span><span class="st">"brown"</span>)</span>
-<span id="cb6-553"><a href="#cb6-553" aria-hidden="true" tabindex="-1"></a>f_interp <span class="ot">&lt;-</span> <span class="fu">splinefun</span>(py<span class="sc">$</span>a0np, py<span class="sc">$</span>prob_dens, <span class="at">method =</span> <span class="st">"fmm"</span>)</span>
-<span id="cb6-554"><a href="#cb6-554" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(py<span class="sc">$</span>a0np,<span class="fu">f_interp</span>(py<span class="sc">$</span>a0np),<span class="at">col=</span><span class="st">"magenta"</span>)</span>
-<span id="cb6-555"><a href="#cb6-555" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-556"><a href="#cb6-556" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb6-539"><a href="#cb6-539" aria-hidden="true" tabindex="-1"></a><span class="in">```{r compare, echo=FALSE, eval=TRUE}</span></span>
+<span id="cb6-540"><a href="#cb6-540" aria-hidden="true" tabindex="-1"></a><span class="co">#png("precomputed/vg2_TFP_stan_comp.png")</span></span>
+<span id="cb6-541"><a href="#cb6-541" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb6-542"><a href="#cb6-542" aria-hidden="true" tabindex="-1"></a><span class="co">#plot(density(extract(stan_fit_2,"mu0")$mu0),main="mu0")</span></span>
+<span id="cb6-543"><a href="#cb6-543" aria-hidden="true" tabindex="-1"></a><span class="co">#plot(density(extract(stan_fit_2,"beta[1,1]")$"beta[1,1]"),main="beta[1,1]")</span></span>
+<span id="cb6-544"><a href="#cb6-544" aria-hidden="true" tabindex="-1"></a><span class="co">#lines(density(c(py$samplesflat[[1]])),col="red")</span></span>
+<span id="cb6-545"><a href="#cb6-545" aria-hidden="true" tabindex="-1"></a><span class="co">#dev.off()</span></span>
+<span id="cb6-546"><a href="#cb6-546" aria-hidden="true" tabindex="-1"></a><span class="co">#print(summary(stan_fit_2))</span></span>
+<span id="cb6-547"><a href="#cb6-547" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-548"><a href="#cb6-548" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-549"><a href="#cb6-549" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(<span class="fu">extract</span>(stan_fit_2,<span class="st">"beta[1,1]"</span>)<span class="sc">$</span><span class="st">"beta[1,1]"</span>),<span class="at">main=</span><span class="st">"beta[1,1]"</span>,<span class="at">col=</span><span class="st">"blue"</span>,<span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb6-550"><a href="#cb6-550" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(py<span class="sc">$</span>a0np,py<span class="sc">$</span>prob_dens,<span class="at">col=</span><span class="st">"brown"</span>,<span class="at">pch=</span><span class="dv">21</span>,<span class="at">bg=</span><span class="st">"brown"</span>)</span>
+<span id="cb6-551"><a href="#cb6-551" aria-hidden="true" tabindex="-1"></a>f_interp <span class="ot">&lt;-</span> <span class="fu">splinefun</span>(py<span class="sc">$</span>a0np, py<span class="sc">$</span>prob_dens, <span class="at">method =</span> <span class="st">"fmm"</span>)</span>
+<span id="cb6-552"><a href="#cb6-552" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(py<span class="sc">$</span>a0np,<span class="fu">f_interp</span>(py<span class="sc">$</span>a0np),<span class="at">col=</span><span class="st">"magenta"</span>)</span>
+<span id="cb6-553"><a href="#cb6-553" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-554"><a href="#cb6-554" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

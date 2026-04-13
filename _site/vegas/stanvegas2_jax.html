@@ -176,20 +176,20 @@ window.Quarto = {
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
-    <a class="dropdown-item" href="../vegas/stanvegas1_mlx.html">
- <span class="dropdown-text">Ex.1.1a: BHM Logistic Stan vs Vegas MLX</span></a>
-  </li>  
-        <li>
     <a class="dropdown-item" href="../vegas/stanvegas1_jax.html">
- <span class="dropdown-text">Ex.1.1b: BHM Logistic Stan vs Vegas JAX</span></a>
+ <span class="dropdown-text">Ex.1.1a: BHM Logistic Stan vs Vegas(JAX)</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../vegas/stanvegas2_mlx.html">
- <span class="dropdown-text">Ex.1.2a: BHM Basket Logistic Stan vs Vegas MLX</span></a>
+    <a class="dropdown-item" href="../vegas/stanvegas1_mlx.html">
+ <span class="dropdown-text">Ex.1.1b: BHM Logistic Stan vs Vegas(MLX)</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../vegas/stanvegas2_jax.html">
- <span class="dropdown-text">Ex.1.2b: BHM Basket Logistic Stan vs Vegas MLX</span></a>
+ <span class="dropdown-text">Ex.1.2a: BHM Basket Logistic Stan vs Vegas(JAX)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../vegas/stanvegas2_mlx.html">
+ <span class="dropdown-text">Ex.1.2b: BHM Basket Logistic Stan vs Vegas(MLX)</span></a>
   </li>  
     </ul>
   </li>
@@ -257,12 +257,12 @@ window.Quarto = {
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/Your-Org-Name/tf-clinical-site"> <i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/GSK-Biostatistics/vignettes-asia"> <i class="bi bi-github" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://linkedin.com/in/yourprofile"> <i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/company/gsk"> <i class="bi bi-linkedin" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -364,7 +364,7 @@ $$
 </ul>
 <p>The basket ID is currently set fixed at 1, denoting there is only one basket in this trial, i.e.&nbsp;a classical two arm randomized trial design. Baskets will be added in other vignettes.</p>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Prepare model inputs</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">99999</span>)</span>
@@ -400,7 +400,7 @@ $$
 <h2 class="anchored" data-anchor-id="rstan">RStan</h2>
 <p>The RStan workflow is somewhat more compact than the TFP equivalent, where TFP requires more lower level details to be specified whereas these are dealt with behind the scences in RStan. The nodel definition This is somewhat simplified for ease of use, e.g.&nbsp;hard coded hyperparameters.</p>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Stan model</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  BHM_stan_1 <span class="ot">&lt;-</span> <span class="st">"data {</span></span>
@@ -445,7 +445,7 @@ $$
 <section id="setup-and-run-sampler" class="level3">
 <h3 class="anchored" data-anchor-id="setup-and-run-sampler">Setup and run sampler</h3>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Create list with input values for Stan model</span></span>
@@ -490,7 +490,7 @@ $$
 <section id="summarize-results" class="level3">
 <h3 class="anchored" data-anchor-id="summarize-results">Summarize results</h3>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bayesplot)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">color_scheme_set</span>(<span class="st">"viridisA"</span>)</span>
@@ -507,7 +507,7 @@ $$
 </div>
 </div>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bayesplot)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">color_scheme_set</span>(<span class="st">"viridisA"</span>)</span>
@@ -528,7 +528,7 @@ $$
 <section id="now-for-the-vegas-equivalent-model---overall-constant-of-integration" class="level2">
 <h2 class="anchored" data-anchor-id="now-for-the-vegas-equivalent-model---overall-constant-of-integration">Now for the vegas Equivalent Model - overall constant of integration</h2>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -1059,7 +1059,7 @@ $$
 </details>
 </div>
 <div class="cell">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(py<span class="sc">$</span>a00np,py<span class="sc">$</span>prob_dens,<span class="at">type=</span><span class="st">"p"</span>)</span>
@@ -1545,7 +1545,7 @@ $$
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "BHM Basket Trial Logistic Regression Vegas JAX v RStan"</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "BHM Basket Trial Logistic Regression Vegas v RStan"</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="an">output:</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">  rmarkdown::html_vignette:</span></span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
@@ -1573,7 +1573,7 @@ $$
 <span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="fu">## Quick start</span></span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>This vignette uses identical approach as in vignette basket1.qmd but now compares results of the estimated posterior density for the intercept term from direct integration with results from MCMC via Stan.</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>This vignette compares the same Bayesian hierarchical model fitted first with Rstan and then with Vegas, and is similar the previous vignette for a logistic regression but extened to a basket trial design scenario with two baskets. Only key snippets and outputs are shown below. The full vignette is available <span class="co">[</span><span class="ot">here</span><span class="co">](https://raw.githubusercontent.com/GSK-Biostatistics/vignettes-asia/refs/heads/main/vegas/stanvegas2_jax.qmd)</span>. For the equivalent vignette but which uses Apple's MLX framework to run the computation's on a GPU see <span class="co">[</span><span class="ot">here</span><span class="co">](https://raw.githubusercontent.com/GSK-Biostatistics/vignettes-asia/refs/heads/main/vegas/stanvegas2_mlx.qmd)</span>. A GPU can offer a considerable reduction in computational time.</span>
 <span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a><span class="fu">### Model Formulation</span></span>
 <span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a></span>
