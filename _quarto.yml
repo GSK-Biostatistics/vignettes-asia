@@ -29,14 +29,14 @@ website:
           #  file: vegas/bern1.qmd
           #- text: "Ex.1.2: BHM Logistic Vegas Intro"
           #  file: vegas/basket1.qmd
-          - text: "Ex.1.1a: BHM Logistic Stan vs Vegas MLX"
-            file: vegas/stanvegas1_mlx.qmd
-          - text: "Ex.1.1b: BHM Logistic Stan vs Vegas JAX"
+          - text: "Ex.1.1a: BHM Logistic Stan vs Vegas(JAX)"
             file: vegas/stanvegas1_jax.qmd
-          - text: "Ex.1.2a: BHM Basket Logistic Stan vs Vegas MLX"
-            file: vegas/stanvegas2_mlx.qmd
-          - text: "Ex.1.2b: BHM Basket Logistic Stan vs Vegas MLX"
+          - text: "Ex.1.1b: BHM Logistic Stan vs Vegas(MLX)"
+            file: vegas/stanvegas1_mlx.qmd
+          - text: "Ex.1.2a: BHM Basket Logistic Stan vs Vegas(JAX)"
             file: vegas/stanvegas2_jax.qmd
+          - text: "Ex.1.2b: BHM Basket Logistic Stan vs Vegas(MLX)"
+            file: vegas/stanvegas2_mlx.qmd
 
       - text: "Bayesian Tensorflow"
         icon: bezier2 # Bootstrap icon for strategy/flow
@@ -70,9 +70,9 @@ website:
 
     right:
       - icon: github
-        href: https://github.com/Your-Org-Name/tf-clinical-site
+        href: https://github.com/GSK-Biostatistics/vignettes-asia
       - icon: linkedin
-        href: https://linkedin.com/in/yourprofile
+        href: https://www.linkedin.com/company/gsk
 
   # --- SIDEBAR (Appears only in Vignettes section) ---
   sidebar:
