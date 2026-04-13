@@ -99,7 +99,7 @@ format:
     css: styles.css
     toc: true
     toc-location: right
-    code-fold: show         # Hides code by default, allows user to expand
+    code-fold: true         # Hides code by default, allows user to expand
     code-copy: true         # Adds a copy button to code blocks
     code-tools: true        # Adds 'View Source' button
 
