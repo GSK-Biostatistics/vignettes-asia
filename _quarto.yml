@@ -53,14 +53,14 @@ website:
           - text: "Ex.1.3: Negative Binomial Regression"
             file: tfp/intro_neg_bin_tfp_stan.qmd
 
-      - text: "Machine Learning"
-        icon: cpu # Icon for computing/TensorFlow
-        menu:
-          - text: "Graphical Neural Networks"
-            file: ml/ml_gnn_building_blocks.qmd
-          - text: "---" # Separator line
-          - text: "Basic example from TF GNN"
-            file: ml/ml_gnn_example1.qmd
+      #- text: "Machine Learning"
+      #  icon: cpu # Icon for computing/TensorFlow
+      #  menu:
+      #    - text: "Graphical Neural Networks"
+      #      file: ml/ml_gnn_building_blocks.qmd
+      #    - text: "---" # Separator line
+      #    - text: "Basic example from TF GNN"
+      #      file: ml/ml_gnn_example1.qmd
 
       - text: "LLMs"
         icon: stars
