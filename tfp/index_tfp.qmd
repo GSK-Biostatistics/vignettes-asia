@@ -39,7 +39,7 @@ d <- tfd_binomial(total_count = 7, probs = 0.3) # if this works then tensorflow 
 On Windows the key part is to have a suitable Python installation and also that RStudio can locate this. Once this is in place then the installation process is as above for the Linux case. 
 
 ### Advanced: Installation of separate Python venv
-To run the live Graphical Neural Network (GNN) vignette requires a separate Python venv to be setup because some tensorflow spin-off projects, such as TF-GNN, have strict compatibility requirements. Library versions likely need hardcoded as pip will not choose suitable combinations. The instructions below setup an appropriate venv for running the GNN vignette. The list of package versions in this gnn is given in the repo as a requirements.txt file. [here](https://raw.githubusercontent.com/GSK-Biostatistics/vignettes-asia/refs/heads/main/ml/requirements.txt). 
+To run the live Graphical Neural Network (GNN) vignette requires a separate Python venv to be setup because some tensorflow spin-off projects, such as TF-GNN, have strict compatibility requirements. Library versions likely need hardcoded as pip will not choose suitable combinations. The instructions below setup an appropriate venv for running the GNN vignette. The list of package versions in this gnn is given in the repo as a requirements.txt file  [here](https://raw.githubusercontent.com/GSK-Biostatistics/vignettes-asia/refs/heads/main/ml/requirements.txt). 
 ```bash
 # in bash
 python3 -m venv gnn
