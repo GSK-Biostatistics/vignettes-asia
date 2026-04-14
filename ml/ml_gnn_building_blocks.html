@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Bayesian Inference using Vegas and RStan – Asia</title>
+<title>tf_gnn_buildingblocks – Asia</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -255,10 +255,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#running-the-vignettes" id="toc-running-the-vignettes" class="nav-link active" data-scroll-target="#running-the-vignettes">Running the Vignettes</a>
-  <ul class="collapse">
-  <li><a href="#installation-details-and-requirements" id="toc-installation-details-and-requirements" class="nav-link" data-scroll-target="#installation-details-and-requirements">Installation details and requirements</a></li>
-  </ul></li>
+  <li><a href="#graphical-neural-network-model" id="toc-graphical-neural-network-model" class="nav-link active" data-scroll-target="#graphical-neural-network-model">Graphical Neural Network Model</a></li>
+  <li><a href="#the-end" id="toc-the-end" class="nav-link" data-scroll-target="#the-end">the end</a></li>
   </ul>
 </nav>
     </div>
@@ -267,7 +265,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Bayesian Inference using Vegas and RStan</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title">tf_gnn_buildingblocks</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -284,45 +282,100 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>This is a collection of quarto vignettes demonstrating how to perform Bayesian inference via numerical integration, as opposed to MCMC sampling. While MCMC sampling is the default approach in Bayesian modelling, using alternative computational methodologies can be attractive from a quality control and assurance perspective, especially in a regulatory setting.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#library(tfclinical)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ragg)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reticulate)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">use_virtualenv</span>(<span class="st">"/Users/work/gnn"</span>, <span class="at">required =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Set the device to 'png' (which both R and Python understand)</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">dev =</span> <span class="st">"png"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Tell R to use ragg as the default engine for all png devices</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">device =</span> <span class="cf">function</span>(...) ragg<span class="sc">::</span><span class="fu">agg_png</span>(...))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<section id="graphical-neural-network-model" class="level2">
+<h2 class="anchored" data-anchor-id="graphical-neural-network-model">Graphical Neural Network Model</h2>
+<p>Needs compatible versions (installed via pip in venv hard coding versions):</p>
 <ul>
-<li>Direct integration is fast, especially if a GPU is available, and feasible for many situations encountered in clinical trial design</li>
-<li>These vignettes explain the practical aspects of what is needed for a statistician to get this method working with their own design or model</li>
-<li>As sample sizes increase, e.g., high hundreds of thousands of patients, this approach may become numerically unstable and MCMC is preferred</li>
-</ul>
-<p>The <a href="https://github.com/gplepage/vegas">Vegas</a> library is used which is long standing and features in <a href="https://www.gnu.org/software/gsl/">GNU GSL</a>, and is developed and maintained by the author of the methodology, with a recent update to the methodology called vegas+. The latest version of the Vegas library supports <a href="https://docs.jax.dev/en/latest/">JAX</a> and <a href="https://mlx-framework.org">MLX</a> computational frameworks which allow parallelization across CPUs and GPUs. The MLX variant is specific to Apple Silicon M-series processors. A substantial speed-up may be obtained when a GPU is available.</p>
-<p>The vignettes mix and match R and Python code blocks in <a href="https://https://posit.co">RStudio</a> Results from <a href="https://mc-stan.org/rstan/">RStan</a> feature in many of these for comparison, being the mostly widely used Bayesian modelling library.</p>
-<!-- Markov chain Monte Carlo (MCMC) sampling is the default approach for most Bayesian modelling, made accessible via tools such as [RStan](https://mc-stan.org/rstan/). A drawback of MCMC is that considerable effort is needed, especially in clinical trials and regulated environments, to demonstrate that results are numerically robust. MCMC can also be computationally challenging especially in tasks such as computing operating characteristics for Bayesian clinical trial designs as models may need to be fitted many times. An alternative to MCMC is direct approaches such as numerical integration, e.g. [Vegas](https://github.com/gplepage/vegas). Historically, direct integration has not been computationally practical for all but the simplest models. The development of new general purpose computation frameworks such as [JAX](https://docs.jax.dev/en/latest/) and [MLX](https://mlx-framework.org) makes direct integration attractive beyond only the simplest models as the core calculations are often readily parallelization with thousands of evaluations done simulateneously, for example on a GPU.  -->
-<section id="running-the-vignettes" class="level2">
-<h2 class="anchored" data-anchor-id="running-the-vignettes">Running the Vignettes</h2>
-<!--  url needs updated -->
-<p>The raw quarto files are available on GSK GitHub <a href="https://github.com/GSK-Biostatistics/vignettes-asia">here</a></p>
-<section id="installation-details-and-requirements" class="level3">
-<h3 class="anchored" data-anchor-id="installation-details-and-requirements">Installation details and requirements</h3>
-<!-- <to be updated - this is tensorflow - vegas and jax could be added but a bit of a hack> -->
-<p>The vignettes use RStudio and mix and match Python and R and so RStudio must have a working Python installation available (e.g.&nbsp;via <a href="https://cran.r-project.org/web/packages/reticulate/index.html">reticulate</a>).</p>
+<li>Python: 3.11.14</li>
+<li>Name: tf_keras
 <ul>
-<li><p>The simplest option is to install reticulate from CRAN and ensure reticulate is able to locate a Python installation. This method is built into the vignettes.</p></li>
-<li><p>The most flexible approach is to manually create a python virtualenv via the RStudio terminal and load it into the R session using reticulate as needed.</p></li>
+<li>Version: 2.16.0</li>
+</ul></li>
+<li>Name: tensorflow
+<ul>
+<li>Version: 2.16.2</li>
+</ul></li>
+<li>Name: tensorflow-gnn
+<ul>
+<li>Version: 1.0.3</li>
+</ul></li>
+<li>Python: 3.13.1</li>
+<li>Name: tf_keras
+<ul>
+<li>Version: 2.20.1</li>
+</ul></li>
+<li>Name: tensorflow
+<ul>
+<li>Version: 2.20.0</li>
+</ul></li>
+<li>Name: tensorflow-gnn
+<ul>
+<li>Version: 1.0.3</li>
+</ul></li>
 </ul>
-<section id="advanced-installation-of-separate-python-venv" class="level4">
-<h4 class="anchored" data-anchor-id="advanced-installation-of-separate-python-venv">Advanced: installation of separate Python venv</h4>
-<p>The instructions below setup an appropriate venv</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in bash or terminal in RStudio </span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> venv myvenv</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> myvenv/bin/activate  <span class="co"># Windows uses myvenv\Scripts\activate</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># now install via pip the specific library versions needed</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install numpy pandas jax vegas math gvar scipy</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The second part is to instruct <a href="https://rstudio.github.io/reticulate/">reticulate</a> to use this Python venv rather than one of the existing (or default) virtualenv environments.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in RStudio console</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reticulate)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">use_virtualenv</span>(<span class="st">"/mydir/myvenv"</span>, <span class="at">required =</span> <span class="cn">TRUE</span>) <span class="co"># tell R to use the python interpreter and libraries in here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create data set</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># simply structure - variance is function of mean</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># covariance function of both means</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># some zero entries</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1001</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>ndim<span class="ot">&lt;-</span><span class="dv">10</span> <span class="co"># number of variables for each patient</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>mu<span class="ot">&lt;-</span><span class="fu">sample</span>(<span class="fu">seq</span>(<span class="dv">4</span>,<span class="dv">20</span>,<span class="at">len=</span><span class="dv">20</span>),ndim)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>Sigma<span class="ot">&lt;-</span><span class="fu">matrix</span>(<span class="at">data=</span><span class="dv">0</span>,<span class="at">ncol=</span>ndim,<span class="at">nrow=</span>ndim,<span class="at">byrow=</span><span class="cn">TRUE</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(Sigma)){</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(j <span class="cf">in</span> i<span class="sc">:</span><span class="fu">ncol</span>(Sigma)){</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(i<span class="sc">==</span>j){Sigma[i,j]<span class="ot">&lt;-</span>(<span class="fl">0.2</span><span class="sc">*</span>mu[i])<span class="sc">^</span><span class="dv">2</span> <span class="co">#sd is 20% of mean</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span>{ </span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>           <span class="cf">if</span>(<span class="fu">runif</span>(<span class="dv">1</span>)<span class="sc">&gt;</span><span class="fl">0.0</span>){</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>             Sigma[i,j]<span class="ot">&lt;-</span>Sigma[j,i]<span class="ot">&lt;-</span>(<span class="fl">0.2</span><span class="sc">*</span>mu[i]<span class="sc">*</span><span class="fl">0.2</span><span class="sc">*</span>mu[j])</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>                             }</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>          }</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>thedata<span class="ot">&lt;-</span><span class="fu">mvrnorm</span>(<span class="at">n=</span><span class="dv">5</span>,<span class="at">mu=</span>mu,<span class="at">Sigma=</span>Sigma)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>        </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>os.environ[<span class="st">"TF_USE_LEGACY_KERAS"</span>] <span class="op">=</span> <span class="st">"1"</span>  <span class="co"># For TF2.16+.</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow <span class="im">as</span> tf</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow_gnn <span class="im">as</span> tfgnn</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Running TF-GNN </span><span class="sc">{</span>tfgnn<span class="sc">.</span>__version__<span class="sc">}</span><span class="ss"> with TensorFlow </span><span class="sc">{</span>tf<span class="sc">.</span>__version__<span class="sc">}</span><span class="ss">.'</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Running TF-GNN 1.0.0 with TensorFlow 2.16.2.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="the-end" class="level2">
+<h2 class="anchored" data-anchor-id="the-end">the end</h2>
 
 
 <!-- -->
 
-</section>
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -777,53 +830,117 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Bayesian Inference using Vegas and RStan"</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>This is a collection of quarto vignettes demonstrating how to perform Bayesian inference via numerical integration, as opposed to MCMC sampling. While MCMC sampling is the default approach in Bayesian modelling, using alternative computational methodologies can be attractive from a quality control and assurance perspective, especially in a regulatory setting.   </span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Direct integration is fast, especially if a GPU is available, and feasible for many situations encountered in clinical trial design</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>These vignettes explain the practical aspects of what is needed for a statistician to get this method working with their own design or model </span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>As sample sizes increase, e.g., high hundreds of thousands of patients, this approach may become numerically unstable and MCMC is preferred</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>The <span class="co">[</span><span class="ot">Vegas</span><span class="co">](https://github.com/gplepage/vegas)</span> library is used which is long standing and features in <span class="co">[</span><span class="ot">GNU GSL</span><span class="co">](https://www.gnu.org/software/gsl/)</span>, and is developed and maintained by the author of the methodology, with a recent update to the methodology called vegas+. The latest version of the Vegas library supports <span class="co">[</span><span class="ot">JAX</span><span class="co">](https://docs.jax.dev/en/latest/)</span> and <span class="co">[</span><span class="ot">MLX</span><span class="co">](https://mlx-framework.org)</span> computational frameworks which allow parallelization across CPUs and GPUs. The MLX variant is specific to Apple Silicon M-series processors. A substantial speed-up may be obtained when a GPU is available.</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>The vignettes mix and match R and Python code blocks in <span class="co">[</span><span class="ot">RStudio</span><span class="co">](https://https://posit.co)</span> Results from <span class="co">[</span><span class="ot">RStan</span><span class="co">](https://mc-stan.org/rstan/)</span> feature in many of these for comparison, being the mostly widely used Bayesian modelling library.</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Markov chain Monte Carlo (MCMC) sampling is the default approach for most Bayesian modelling, made accessible via tools such as [RStan](https://mc-stan.org/rstan/). A drawback of MCMC is that considerable effort is needed, especially in clinical trials and regulated environments, to demonstrate that results are numerically robust. MCMC can also be computationally challenging especially in tasks such as computing operating characteristics for Bayesian clinical trial designs as models may need to be fitted many times. An alternative to MCMC is direct approaches such as numerical integration, e.g. [Vegas](https://github.com/gplepage/vegas). Historically, direct integration has not been computationally practical for all but the simplest models. The development of new general purpose computation frameworks such as [JAX](https://docs.jax.dev/en/latest/) and [MLX](https://mlx-framework.org) makes direct integration attractive beyond only the simplest models as the core calculations are often readily parallelization with thousands of evaluations done simulateneously, for example on a GPU.  --&gt;</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="fu">## Running the Vignettes </span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--  url needs updated --&gt;</span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>The raw quarto files are available on GSK GitHub <span class="co">[</span><span class="ot">here</span><span class="co">](https://github.com/GSK-Biostatistics/vignettes-asia)</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="fu">### Installation details and requirements</span></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- &lt;to be updated - this is tensorflow - vegas and jax could be added but a bit of a hack&gt; --&gt;</span></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>The vignettes use RStudio and mix and match Python and R and so RStudio must have a working Python installation available (e.g. via <span class="co">[</span><span class="ot">reticulate</span><span class="co">](https://cran.r-project.org/web/packages/reticulate/index.html)</span>). </span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The simplest option is to install reticulate from CRAN and ensure reticulate is able to locate a Python installation. This method is built into the vignettes.   </span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The most flexible approach is to manually create a python virtualenv via the RStudio terminal and load it into the R session using reticulate as needed.   </span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Advanced: installation of separate Python venv</span></span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>The instructions below setup an appropriate venv </span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a><span class="co"># in bash or terminal in RStudio </span></span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> venv myvenv</span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> myvenv/bin/activate  <span class="co"># Windows uses myvenv\Scripts\activate</span></span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a><span class="co"># now install via pip the specific library versions needed</span></span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install numpy pandas jax vegas math gvar scipy</span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>The second part is to instruct <span class="co">[</span><span class="ot">reticulate</span><span class="co">](https://rstudio.github.io/reticulate/)</span> to use this Python venv rather than one of the existing (or default) virtualenv environments. </span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a><span class="co"># in RStudio console</span></span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reticulate)</span>
-<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a><span class="fu">use_virtualenv</span>(<span class="st">"/mydir/myvenv"</span>, <span class="at">required =</span> <span class="cn">TRUE</span>) <span class="co"># tell R to use the python interpreter and libraries in here</span></span>
-<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "tf_gnn_buildingblocks"</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="an">output:</span><span class="co"> </span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">  rmarkdown::html_vignette:</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">    toc_depth: 2</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">    number_sections: true</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="an">vignette:</span><span class="co"> &gt;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">  %\VignetteIndexEntry{tf_gnn_example}</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">  %\VignetteEngine{knitr::rmarkdown}</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">  %\VignetteEncoding{UTF-8}</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, include = FALSE}</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">collapse =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">comment =</span> <span class="st">"#&gt;"</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if running on GitHub Actions</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co"># This is important as otherwise Github will attempt to build this and it's missing the python libraries and will fail</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co">#on_github &lt;- Sys.getenv("GITHUB_ACTIONS") == "true"</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="co"># If on GitHub, set eval = FALSE for all subsequent chunks</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="co">#knitr::opts_chunk$set(eval = !on_github)</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup, eval=TRUE}</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="co">#library(tfclinical)</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ragg)</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reticulate)</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="fu">use_virtualenv</span>(<span class="st">"/Users/work/gnn"</span>, <span class="at">required =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Set the device to 'png' (which both R and Python understand)</span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">dev =</span> <span class="st">"png"</span>)</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Tell R to use ragg as the default engine for all png devices</span></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">device =</span> <span class="cf">function</span>(...) ragg<span class="sc">::</span><span class="fu">agg_png</span>(...))</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a><span class="fu">## Graphical Neural Network Model</span></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>Needs compatible versions (installed via pip in venv hard coding versions):</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Python: 3.11.14</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Name: tf_keras</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>Version: 2.16.0</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Name: tensorflow</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>Version: 2.16.2</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Name: tensorflow-gnn</span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>Version: 1.0.3</span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Python: 3.13.1</span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Name: tf_keras</span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>Version: 2.20.1</span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Name: tensorflow</span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>Version: 2.20.0</span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Name: tensorflow-gnn</span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>Version: 1.0.3</span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: "rsetup"</span></span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: true</span></span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a><span class="co"># create data set</span></span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a><span class="co"># simply structure - variance is function of mean</span></span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a><span class="co"># covariance function of both means</span></span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a><span class="co"># some zero entries</span></span>
+<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1001</span>)</span>
+<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a>ndim<span class="ot">&lt;-</span><span class="dv">10</span> <span class="co"># number of variables for each patient</span></span>
+<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a>mu<span class="ot">&lt;-</span><span class="fu">sample</span>(<span class="fu">seq</span>(<span class="dv">4</span>,<span class="dv">20</span>,<span class="at">len=</span><span class="dv">20</span>),ndim)</span>
+<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a>Sigma<span class="ot">&lt;-</span><span class="fu">matrix</span>(<span class="at">data=</span><span class="dv">0</span>,<span class="at">ncol=</span>ndim,<span class="at">nrow=</span>ndim,<span class="at">byrow=</span><span class="cn">TRUE</span>)</span>
+<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(Sigma)){</span>
+<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(j <span class="cf">in</span> i<span class="sc">:</span><span class="fu">ncol</span>(Sigma)){</span>
+<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(i<span class="sc">==</span>j){Sigma[i,j]<span class="ot">&lt;-</span>(<span class="fl">0.2</span><span class="sc">*</span>mu[i])<span class="sc">^</span><span class="dv">2</span> <span class="co">#sd is 20% of mean</span></span>
+<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span>{ </span>
+<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a>           <span class="cf">if</span>(<span class="fu">runif</span>(<span class="dv">1</span>)<span class="sc">&gt;</span><span class="fl">0.0</span>){</span>
+<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a>             Sigma[i,j]<span class="ot">&lt;-</span>Sigma[j,i]<span class="ot">&lt;-</span>(<span class="fl">0.2</span><span class="sc">*</span>mu[i]<span class="sc">*</span><span class="fl">0.2</span><span class="sc">*</span>mu[j])</span>
+<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a>                             }</span>
+<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a>          }</span>
+<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a>thedata<span class="ot">&lt;-</span><span class="fu">mvrnorm</span>(<span class="at">n=</span><span class="dv">5</span>,<span class="at">mu=</span>mu,<span class="at">Sigma=</span>Sigma)</span>
+<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-92"><a href="#cb4-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-97"><a href="#cb4-97" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb4-98"><a href="#cb4-98" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: "py1"</span></span>
+<span id="cb4-99"><a href="#cb4-99" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: true</span></span>
+<span id="cb4-100"><a href="#cb4-100" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb4-101"><a href="#cb4-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-102"><a href="#cb4-102" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb4-103"><a href="#cb4-103" aria-hidden="true" tabindex="-1"></a>os.environ[<span class="st">"TF_USE_LEGACY_KERAS"</span>] <span class="op">=</span> <span class="st">"1"</span>  <span class="co"># For TF2.16+.</span></span>
+<span id="cb4-104"><a href="#cb4-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-105"><a href="#cb4-105" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb4-106"><a href="#cb4-106" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb4-107"><a href="#cb4-107" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow <span class="im">as</span> tf</span>
+<span id="cb4-108"><a href="#cb4-108" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow_gnn <span class="im">as</span> tfgnn</span>
+<span id="cb4-109"><a href="#cb4-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-110"><a href="#cb4-110" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Running TF-GNN </span><span class="sc">{</span>tfgnn<span class="sc">.</span>__version__<span class="sc">}</span><span class="ss"> with TensorFlow </span><span class="sc">{</span>tf<span class="sc">.</span>__version__<span class="sc">}</span><span class="ss">.'</span>)</span>
+<span id="cb4-111"><a href="#cb4-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-112"><a href="#cb4-112" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-113"><a href="#cb4-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-114"><a href="#cb4-114" aria-hidden="true" tabindex="-1"></a><span class="fu">## the end</span></span>
+</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
