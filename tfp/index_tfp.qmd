@@ -39,13 +39,13 @@ d <- tfd_binomial(total_count = 7, probs = 0.3) # if this works then tensorflow 
 On Windows the key part is to have a suitable Python installation and also that RStudio can locate this. Once this is in place then the installation process is as above for the Linux case. 
 
 ### Advanced: Installation of separate Python venv
-To run the live Graphical Neural Network (GNN) vignette requires a separate Python venv to be setup because some tensorflow spin-off projects, such as TF-GNN, have strict compatibility requirements. Library versions likely need hardcoded as pip will not choose suitable combinations. The instructions below setup an appropriate venv for running the GNN vignette (only tested on MacOS).
+To run the live Graphical Neural Network (GNN) vignette requires a separate Python venv to be setup because some tensorflow spin-off projects, such as TF-GNN, have strict compatibility requirements. Library versions likely need hardcoded as pip will not choose suitable combinations. The instructions below setup an appropriate venv for running the GNN vignette. The list of package versions in this gnn is given in the repo as a requirements.txt file. [here](https://raw.githubusercontent.com/GSK-Biostatistics/vignettes-asia/refs/heads/main/ml/requirements.txt). 
 ```bash
 # in bash
 python3 -m venv gnn
 source gnn/bin/activate
-# now install via pip the specific library versions needed
-pip install tensorflow==2.16.2 tf_keras==2.16.0 tensorflow-gnn
+# now install via pip the specific library versions needed via requirements.txt file
+pip install -r requirements.txt
 ```
 The second part below in the R Console is to instruct [reticulate](https://rstudio.github.io/reticulate/) to use this Python venv rather than one of the existing virtualenv environments, otherwise reticulate may use, e.g. the tensorflow venv created when doing the above install, which will likely not contain a compatible tensorflow version.
 ```r
