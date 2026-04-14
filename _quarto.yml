@@ -56,10 +56,10 @@ website:
       - text: "Machine Learning"
         icon: cpu # Icon for computing/TensorFlow
         menu:
-          - text: "Graphical Neural Networks"
-            file: ml/ml_gnn_building_blocks.qmd
-          - text: "---" # Separator line
-          - text: "Basic example from TF GNN"
+        #  - text: "Graphical Neural Networks"
+        #    file: ml/ml_gnn_building_blocks.qmd
+        #  - text: "---" # Separator line
+          - text: "Graphical Neural Networks - Basic example"
             file: ml/ml_gnn_example1.qmd
 
       - text: "LLMs"
