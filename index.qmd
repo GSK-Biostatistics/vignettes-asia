@@ -17,13 +17,13 @@ Bayesian trial designs are a feature of modern drug development, with major Heal
 
 - [Tensorflow Probability](https://www.tensorflow.org/probability) - newer library for MCMC estimation
 
-
-## 2. GenAI and LLM Assistance in Drug Development
-Large language models (LLMs) are changing the way statisticians and clinical programmers work. Effectively using LLMs and GenAI is becoming an essential skill, especially learning how to drive these new tools to produce high quality outputs while saving effort overall. This is a new and rapdily evolving area. 
-
-
-## 3. Machine Learning for Exploring Complex Data
+## 2. Machine Learning for Exploring Complex Data
 Vignettes exploring new modelling methodologies, such as [Graphical Neural Networks](https://blog.tensorflow.org/2024/02/graph-neural-networks-in-tensorflow.html) (GNN) are new tools and the go-to option for modelling in certain drug discovery tasks, such as properties of new molecules. This is a general methodology with wide application across clinical research for prediction and clustering. 
+
+<!--
+## 3. GenAI and LLM Assistance in Drug Development
+Large language models (LLMs) are changing the way statisticians and clinical programmers work. Effectively using LLMs and GenAI is becoming an essential skill, especially learning how to drive these new tools to produce high quality outputs while saving effort overall. This is a new and rapdily evolving area. 
+-->
 
 
 

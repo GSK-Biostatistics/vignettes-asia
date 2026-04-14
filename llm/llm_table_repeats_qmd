@@ -1,5 +1,5 @@
 ---
-title: "llm_table_repeats"
+title: "GenAI and Vibe Coding for Clinical Trial Reporting"
 output: 
   rmarkdown::html_vignette:
     toc: true
@@ -11,6 +11,10 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+## Introduction
+GenAI tools, including intelligent coding assistants/vibe coding, have considerable potential for reducing effort in clinical trial reporting where much of the activity is reasonably well standardized and intelligent tools can extrapolate to ad-hoc outputs, reducing manual coding effort and/or validation. 
+
+This vignette shows a very simple example of giving an LLM a ``textual template of a shell'' and asking it to create R code which generates the tabular output for a data set.  
 
 ```{r}
 #| label: "rsetup"

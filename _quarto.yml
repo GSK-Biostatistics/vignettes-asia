@@ -62,11 +62,11 @@ website:
           - text: "Graphical Neural Networks - Basic example"
             file: ml/ml_gnn_example1.qmd
 
-      - text: "LLMs"
-        icon: stars
-        menu:
-          - text: "Prompt Engineering for Biostatistics"
-            file: llm/llm_table_repeats.qmd
+      #- text: "LLMs"
+      #  icon: stars
+      #  menu:
+      #    - text: "Prompt Engineering for Biostatistics"
+      #      file: llm/llm_table_repeats.qmd
 
     right:
       - icon: github
