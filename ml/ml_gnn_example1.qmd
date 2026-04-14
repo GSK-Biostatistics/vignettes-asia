@@ -1,5 +1,5 @@
 ---
-title: "tf_gnn_example"
+title: "Tensorflow GNN Example - MUTAG Molecule Data"
 output: 
   rmarkdown::html_vignette:
     toc: true
@@ -42,24 +42,8 @@ options(device = function(...) ragg::agg_png(...))
 
 Graphical Neural Networks are increasingly finding application in drug development beyond their historical major use case of prediction and classification of new potential drug molecules. Newer applications include extending to electronic patient records for prediction of future disease outcomes.
 
-This example is ported from the [original on Tensorflow GNN github site](https://colab.research.google.com/github/tensorflow/gnn/blob/master/examples/notebooks/intro_mutag_example.ipynb). Unlike other vignettes, a custom Python setup is required here for reticulate so as ensure correct version compatibility of tensorflow and tensorflow-gnn. See installation guide under advanced.
+This example is ported from the [original on Tensorflow GNN github site](https://colab.research.google.com/github/tensorflow/gnn/blob/master/examples/notebooks/intro_mutag_example.ipynb). The modelling objective here is to predict a classification for each molecule structure, for example is a given molecule structure more likely to be mutagenic or not. Unlike other vignettes, a custom Python setup is required here for reticulate so as ensure correct version compatibility of tensorflow and tensorflow-gnn. See the [installation guide](https://gsk-biostatistics.github.io/vignettes-asia/tfp/index_tfp.html).
 
-Needs compatible versions (installed via pip in venv hard coding versions):
-
--   Python: 3.11.14
--   Name: tf_keras
-    -   Version: 2.16.0
--   Name: tensorflow
-    -   Version: 2.16.2
--   Name: tensorflow-gnn
-    -   Version: 1.0.3
--   Python: 3.13.1
--   Name: tf_keras
-    -   Version: 2.20.1
--   Name: tensorflow
-    -   Version: 2.20.0
--   Name: tensorflow-gnn
-    -   Version: 1.0.3
 
 ```{python chunkpy1,include=TRUE, echo=TRUE,eval=TRUE}
 import os
@@ -377,6 +361,4 @@ for k, hist in history.history.items():
 
 ```
 
-
-
-## the end
+ß
