@@ -57,7 +57,6 @@ $$
 \beta_{0,1} &\sim \text{Normal}(\mu_0, \sigma_0) \\
 \beta_{1,0} &\sim \text{Normal}(\mu_1, \sigma_1) \\
 \beta_{1,1} &\sim \text{Normal}(\mu_1, \sigma_1) \\
-
 \end{aligned}
 $$
 
