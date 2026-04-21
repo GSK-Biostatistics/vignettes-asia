@@ -33,6 +33,8 @@ website:
             file: vegas/stanvegas1_jax.qmd
           - text: "Ex.1.1b: BHM Logistic Stan vs Vegas(MLX)"
             file: vegas/stanvegas1_mlx.qmd
+          - text: "Ex.1.1c: BHM Logistic Stan vs Genz-Malik(MLX)"
+            file: vegas/genzmalikD6_mlx.qmd  
           - text: "Ex.1.2a: BHM Basket Logistic Stan vs Vegas(JAX)"
             file: vegas/stanvegas2_jax.qmd
           - text: "Ex.1.2b: BHM Basket Logistic Stan vs Vegas(MLX)"

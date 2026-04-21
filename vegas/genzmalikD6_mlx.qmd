@@ -1,0 +1,887 @@
+---
+title: "Logistic BHM - Genz-Malik MLX"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+vignette: >
+  %\VignetteIndexEntry{Two-arm trial TFP v RStan}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+# Check if running on GitHub Actions
+# This is important as otherwise Github will attempt to build this and it's missing the python libraries and will fail
+#on_github <- Sys.getenv("GITHUB_ACTIONS") == "true"
+
+# If on GitHub, set eval = FALSE for all subsequent chunks
+#knitr::opts_chunk$set(eval = !on_github)
+
+```
+
+### Quickstart
+This vignette estimates a Bayesian Hierarchical Model (logistic regression) via a combined vegas and adaptive cubature (Genz-Malik) using Apple Silicon MLX, which offloads the cubature function evaluations as batch computation onto the GPU. This makes the computation considerably more feasible. An attraction of Genz-Malik is that it uses explicit error control. 
+
+### Model Formulation
+
+The model implemented here in a non-centered parameterization is this (e.g. for MCMC via a Hamiltonian sampler to improve sampling):
+
+$$
+\begin{aligned}
+\mu_0 &\sim \text{Normal}(0, 2.5)\\
+\sigma_0 &\sim \text{Half-Normal}(0, 2.5) \\
+\mu_1 &\sim \text{Normal}(0, 2.5) \\
+\sigma_1 &\sim \text{Half-Normal}(0, 2.5) \\
+\tilde{\theta}_j &\sim \text{Normal}(0, 1)\quad\enspace\text{for}\enspace{j=1,2}  \\
+\beta_0 &= \mu_0 + \sigma_0 \tilde{\theta}_1 \\
+\beta_1 &= \mu_1 + \sigma_1 \tilde{\theta}_2 \\
+\text{logit(}{p_i}) &= \beta_0 + \beta_1 z_i\quad\quad\enspace\enspace\text{for}\enspace{i=1,\dots,N}  \\
+y_i &\sim \text{Bernoulli}(p_i)
+\end{aligned}
+$$
+When using direct integration (not MCMC) we don't need the non-centered parameterization:
+
+$$
+\begin{aligned}
+\beta_0 &\sim \text{Normal}(\mu_0, \sigma_0) \\
+\beta_1 &\sim \text{Normal}(\mu_1, \sigma_1) \\
+\end{aligned}
+$$
+
+```{r rsetup, include=FALSE,eval=TRUE}
+if(Sys.info()["sysname"]=="Darwin" && Sys.info()["machine"]=="arm64"){
+  cat("MacOS and Apple ARM detected\n")
+  } else {cat("WARNING: This vignette is for MLX (Apple ARM Platform)")}
+library(reticulate)
+# use built-in reticulate environment - can use custom if desired - see use_virtualenv
+install_if_missing <- function(packages) {
+  for (pkg in packages) {
+    if (!reticulate::py_module_available(pkg)) {
+      reticulate::py_install(pkg)
+    }
+  }
+}
+install_if_missing(c("numpy","pandas","jax","vegas","gvar","mlx"))
+#use_virtualenv("/mnt/myvenv") # or use custom venv
+```
+
+## Data set
+
+The R chunk below creates a simple dataset of three cols:
+
+-   a binary response variable y (0/1 = non-responder/responder),
+-   a (dummy) basket ID variable (=1)
+-   a binary treatment variable (0/1 = control/test treatment)
+
+The basket ID is currently set fixed at 1, denoting there is only one basket in this trial, i.e. a classical two arm randomized trial design. Baskets will be added in other vignettes.
+
+```{r datasets, include=FALSE,eval=TRUE}
+### Prepare model inputs
+set.seed(99999)
+# Set up data
+rr_k_ctrl <- c(0.20)        # control response rate for each basket
+rr_k_trt <- c(0.40)         # treatment response rate for each basket
+
+K<-length(rr_k_ctrl)        # number of baskets
+
+N_k_ctrl <- rep(100, K)     # number of control participants per basket
+N_k_trt <- rep(100, K)      # number of treatment participants per basket
+N_k <- N_k_ctrl + N_k_trt   # number of participants per basket (both arms combined)
+N <- sum(N_k)               # total sample size
+k_vec <- rep(1:K, N_k)      # N x 1 vector of basket indicators (1 to K)
+
+z_vec<-NULL;
+y<-NULL;
+for(i in 1:K){ # for each basket repeat 0-control 1-trt according to the specifc Ns
+  z_vec<-c(z_vec,rep(0:1,c(N_k_ctrl[i],N_k_trt[i]))) # treatment/control indicator
+  y<-c(y,
+       c(rbinom(N_k_ctrl[i],1,rr_k_ctrl[i]), # bernoulli for control
+         rbinom(N_k_trt[i],1,rr_k_trt[i]))) #           for trt
+}
+
+thedata<-data.frame(y,basketID=k_vec,Treatment=z_vec)
+
+py$thedata<-r_to_py(thedata) # THE KEY LINE - makes data available to Python
+                             # this is converted into a pandas dataframe object in Python
+```
+
+```{python vegas_constant,include=FALSE,eval=TRUE}
+## this just loads in library into python sessions and make R objects available
+import numpy as np
+import pandas as pd
+#from jax import config
+#config.update("jax_enable_x64", True)  ## if turn this on then vegas need np.array() in function return values
+import jax.numpy as jnp
+import jax
+import vegas
+import math
+import gvar
+import mlx 
+import mlx.core as mx
+
+## The data.frame passed is now a panda df needs converted to mlx
+y_data=mx.array(thedata.iloc[:, 0].to_numpy(), dtype=mx.float32)[:,None]
+k_vec=mx.array(thedata.iloc[:, 1].to_numpy())-1
+T_vec=mx.array(thedata.iloc[:, 2].to_numpy(), dtype=mx.float32)[:,None]
+```
+
+
+## Direct Integration
+If we need to integrate out random variables that are unbounded on the real line then it is arguably best practice to implement a change of variables to map this into a bounded region, with standard transformations available (see below). This requires computation of the necessary Jacobian. For direct integration we need to:
+
+-  define the prior density functions
+-  define the log likelihood + log priors
+-  define the log Jacobian
+
+To map a variable $t\in(-1,1)$ to $x\in(-\infty,\infty)$ we can use the following function and it's Jacobian (J):
+$$
+\begin{aligned}
+x&=&\frac{t}{1-t^2} \\
+\\
+\enspace\text{where } \quad\enspace J &=& \frac{1+t^2}{(1-t^2)^2}
+\end{aligned}
+$$
+
+The function below `compute_log_lik6D(theta, y,T,mymax,flag=False)` is necessary to compute the overall standardization constant for the BHM, the so-call ``evidence'' - the constant which ensures the full multi-dimensional posterior density integrates to unity - and the integration here is over all parameters in the model. We work in log scale as much as possible and a scaling ``trick'' is used to help avoid numerical overflow. These technical numerical details can be found in the full quarto file.  
+
+To aid with numerical precision (and note we are using 32-bit as some computations are sent to GPU, and 32-bit has a far narrower floating point range than 64-bit) we use a location shift where we subtract a constant from all the log likelihood values to avoid numerical underflow. This constant is the max value of the log likelihood evaluated over a wide grid, it doesn't need to be exact, but it is used to anchor the log likelihood values to around 0.0 on log scale so we retain the largest relative values (those which contribute most to the integral). This shift extends the data that direct integration can be used with, with a move to 64-bit (and no GPU) the fall back when this fails. Only 32-bit is shown here.   
+
+## Key Mathematical Functions
+
+```{python definelogpost,include=TRUE,eval=TRUE}
+#### ------------------------------------------------------------------------------------------------
+#### 2. DEFINE STATS FUNCTIONS 
+#### ------------------------------------------------------------------------------------------------
+
+## PRIOR density defn
+@mx.compile
+def mx_half_normal_logpdf(x, sigma):
+    # Log-constant: log(sqrt(2) / sqrt(pi))
+    log_const = 0.5*(mx.log(2.0) - mx.log(mx.pi)) - mx.log(sigma)
+    # Log-exponent term
+    log_exp = -((x*x) / (2.0 * sigma*sigma))
+    return log_const+log_exp
+
+## PRIOR density defn
+@mx.compile
+def mx_norm_logpdf(x, loc, scale):
+    # -0.5 * ((x - loc) / scale)**2 - log(scale) - 0.5 * log(2 * pi)
+    log_var = -0.5 * ((x - loc) / scale)**2
+    log_const = -mx.log(scale) - 0.5 * math.log(2 * math.pi)
+    return log_var + log_const
+
+### LIKELIHOOD*PRIOR 
+@mx.compile
+def compute_log_lik6D(theta, y,T,mymax,flag=False): # using variable flag to enable one function defn for each of Vegas and Genz-Malik
+    if flag:
+      theta=mx.transpose(theta) #Genz-Malik
+    
+    """
+    mu0 ~ normal(0, 2.5);    // vectorized normal priors for hierarchical means (specify SD in normal distn)
+    sigma0 ~ normal(0, 2.5);       // vectorized half-normal priors for hierarchical SDs (specify SD in normal distn)
+    mu1 ~ normal(0, 2.5);    // vectorized normal priors for hierarchical means (specify SD in normal distn)
+    sigma1 ~ normal(0, 2.5);
+    a0 ~ normal(mu0,sigma0)
+    a1 ~ normal(mu1,sigma1)
+    
+    logL + logpdf(a0|mu0,sigma0) + logpdf(a1|mu1,sigma1) + logpdf(mu0) + logpdf(m1) + logpdf(sigma0) + logpdf(sigma1)
+    
+    logL = sum_i^n ( y_i*(a0+a1*T_i) - log(1+ exp(a0+a1*T_i) )  )
+    logpdf(a0|mu0,sigma0) = jax.scipy.stats.norm.logpdf(a0,loc=mu0,scale=sigma0)
+    logpdf(a1|mu1,sigma1) = jax.scipy.stats.norm.logpdf(a1,loc=mu1,scale=sigma1)
+    logpdf(mu0) = jax.scipy.stats.norm.logpdf(mu0,loc=0.,scale=2.5)
+    logpdf(mu1) = jax.scipy.stats.norm.logpdf(mu1,loc=0.,scale=2.5)
+    logpdf(sigma0) = half_normal_logpdf(sigma0, 2.5)
+    logpdf(sigma1) = half_normal_logpdf(sigma1, 2.5)
+    Expects x to have shape (batch_size, DIM).
+    
+    """
+    ## clipping to avoid misbehavour very close to boundary
+    theta0=mx.clip(theta[0,:],-0.99999, 0.99999)
+    theta1=mx.clip(theta[1,:],-0.99999, 0.99999)
+    theta2=mx.clip(theta[2,:],-0.99999, 0.99999)
+    theta3=mx.clip(theta[3,:],-0.99999, 0.99999)
+    theta4=mx.clip(theta[4,:],0.00001, 0.99999)
+    theta5=mx.clip(theta[5,:],0.00001, 0.99999)
+    
+    
+    jacobianL = (  mx.log1p(mx.power(theta0,2)) - 2.0*mx.log1p(-mx.power(theta0,2)) 
+                 + mx.log1p(mx.power(theta1,2)) - 2.0*mx.log1p(-mx.power(theta1,2))
+                 + mx.log1p(mx.power(theta2,2)) - 2.0*mx.log1p(-mx.power(theta2,2))
+                 + mx.log1p(mx.power(theta3,2)) - 2.0*mx.log1p(-mx.power(theta3,2))
+                 + mx.log1p(mx.power(theta4,2)) - 2.0*mx.log1p(-mx.power(theta4,2))
+                 + mx.log1p(mx.power(theta5,2)) - 2.0*mx.log1p(-mx.power(theta5,2))
+                 )
+
+    a0=theta0/(1-mx.power(theta0,2))
+    a1=theta1/(1-mx.power(theta1,2))
+    mu0=theta2/(1-mx.power(theta2,2))
+    mu1=theta3/(1-mx.power(theta3,2))
+    sigma0=theta4/(1-mx.power(theta4,2))
+    sigma1=theta5/(1-mx.power(theta5,2))
+    
+    eta=a0+a1*T # (10,3) where T_vec = (3,) and (10,1) broadcast to (10,3)  
+    # y_data*eta - mx.log(1+mx.exp(eta)) this is (10,3) - want col sums, so collapse over rows
+    logL = mx.sum(y*eta - mx.log1p(mx.exp(eta)),axis=0) #
+    
+    # now add the priors
+    # simple N(0,sd=10)
+    prior_a0 = mx_norm_logpdf(a0,loc=mu0,scale=sigma0)
+    prior_a1 = mx_norm_logpdf(a1,loc=mu1,scale=sigma1)
+    prior_mu0 = mx_norm_logpdf(mu0,loc=0.,scale=2.5)
+    prior_mu1 = mx_norm_logpdf(mu1,loc=0.,scale=2.5)
+    prior_sigma0 = mx_half_normal_logpdf(sigma0, 2.5)
+    prior_sigma1 = mx_half_normal_logpdf(sigma1, 2.5)
+    
+    logDens = logL + prior_a0 + prior_a1 + prior_mu0 + prior_mu1 + prior_sigma0 + prior_sigma1
+    
+    if flag:
+      return mx.exp(logDens + jacobianL - mymax) # Genz-Malik
+    else: return (logDens + jacobianL) # Vegas
+  
+```
+
+## Integration using Vegas
+Compute the 6D standardization constant from the BHM using (only) Vegas. This is for checking against the Genz-Malik value.
+
+```{python sixvarjaco_b,include=TRUE,eval=TRUE}
+# 2. Setup Vegas with a Shifting Logic
+@vegas.rbatchintegrand
+class StableLikelihood:
+    def __init__(self, y, T):
+        self.y = y
+        self.T = T
+        self.l_max = 0.0 # Will be updated after warm-up
+        self.flag=False
+
+    def __call__(self, theta):
+        theta_mx = mx.array(theta)
+        log_lik = compute_log_lik6D(theta_mx, self.y,self.T,self.l_max,self.flag)
+        
+        # Shift by the maximum found so far
+        # This keeps the result near 1.0 instead of 1e-300
+        ## return np.array(jnp.exp(log_lik - self.l_max)) # needt this is using x64 - vegas expects np
+        return mx.exp(log_lik - self.l_max)
+
+model = StableLikelihood(y=y_data,T=T_vec)
+
+## evaluation function over a grid to get the max value for the location shift
+start = jnp.array([-1,-1,-1,-1,0.0001,0.0001],dtype=jnp.float32) # a0 a1
+stop = jnp.array([1,1,1,1,1,1],dtype=jnp.float32)   # a0 a1
+searchPts=mx.array(np.array(jnp.transpose(jnp.linspace(start, stop, 1000))), dtype=mx.float32)
+
+model.l_max=mx.max(compute_log_lik6D(searchPts, model.y,model.T,model.l_max,model.flag))
+
+#explicitly set seed
+gvar.ranseed(99990)
+
+integ = vegas.Integrator(mx.array([[-1, 1],[-1,1],[-1,1],[-1,1],[0.0001,1],[0.0001,1]],dtype=mx.float32))
+# STAGE 1: Warm-up
+res_warmup = integ(model, nitn=10, neval=10000)
+# STAGE 2: Production (Stable Integration)
+result = integ(model, nitn=10, neval=50000)
+
+# 5. Output results
+print(f"\nIntegration Results:")
+print(result.summary())
+print(f"Result: {result.mean:.8f} +/- {result.sdev:.8f}")
+print(f"Q-value: {result.Q:.2f} (should be close to 0.5 for a good fit)")
+
+# STAGE 3: Final Log-Evidence Calculation
+# log(I) = l_max + log(scaled_integral)
+log_evidence = model.l_max + mx.log(result.mean)
+
+print(f"Vegas Computed Log Evidence (6D constant of integration): {log_evidence}")
+
+
+```
+
+
+## Integration using Genz-Malik Cubature 
+This uses Genz-Malik cubature with some variations: it offloads evaluation of multiple subdivisions into batches to the GPU for speed; and runs Vegas for a few iterations to get an initial adaptive grid and uses that as the starting point to avoid wasteful initial subdivisions.
+
+```{python genz,include=FALSE,eval=TRUE}
+import mlx.core as mx
+import numpy as np
+import heapq
+import itertools
+import time
+import mlx 
+
+# 1. Genz-Malik Setup Functions
+def get_genz_malik_rule(n):
+    """
+    Generates relative nodes and weights for Genz-Malik Degree 7 rule in n dimensions.
+    """
+    lam2 = np.sqrt(9/70)
+    lam4 = np.sqrt(9/10)
+    lam5 = np.sqrt(9/19)
+
+    nodes = [[0.0] * n] # Center (1 point)
+
+    for i in range(n): # Axial lam2 (2n points)
+        p1, p2 = [0.0] * n, [0.0] * n
+        p1[i], p2[i] = lam2, -lam2
+        nodes.extend([p1, p2])
+
+    for i in range(n): # Axial lam4 (2n points)
+        p1, p2 = [0.0] * n, [0.0] * n
+        p1[i], p2[i] = lam4, -lam4
+        nodes.extend([p1, p2])
+
+    for i, j in itertools.combinations(range(n), 2): # Cross lam4 (2n(n-1) points)
+        for si, sj in [(1.0, 1.0), (1.0, -1.0), (-1.0, 1.0), (-1.0, -1.0)]:
+            p = [0.0] * n
+            p[i], p[j] = si * lam4, sj * lam4
+            nodes.append(p)
+
+    for signs in itertools.product([1.0, -1.0], repeat=n): # Diagonal lam5 (2^n points)
+        nodes.append([s * lam5 for s in signs])
+
+    rel_pts = mx.array(nodes)
+    num_points = rel_pts.shape[0]
+
+    # Degree 7 Weights
+    w1 = (12824 - 9120*n + 400*n**2) / 19683
+    w2, w4 = 980 / 6561, 200 / 19683
+    w3, w5 = (1820 - 400*n) / 19683, 6859 / (19683 * 2**n)
+    weights_7 = mx.array([w1] + [w2]*(2*n) + [w3]*(2*n) + [w4]*(2*n*(n-1)) + [w5]*(2**n))
+
+    # Degree 5 Weights (for error estimation)
+    we1 = (729 - 950*n + 50*n**2) / 729
+    we2, we4 = 245 / 486, 25 / 729
+    we3, we5 = (265 - 100*n) / 1458, 0.0
+    weights_5 = mx.array([we1] + [we2]*(2*n) + [we3]*(2*n) + [we4]*(2*n*(n-1)) + [we5]*(2**n))
+
+    return rel_pts, weights_7, weights_5
+
+# 2. Vectorized Evaluation Function
+def evaluate_batch_gpu(f_gpu, m, h, rel_pts, weights_7, weights_5, n, *args, **kwargs):
+    """
+    Vectorized evaluation of a batch of regions.
+    """
+    num_points = rel_pts.shape[0]
+    # Point generation using broadcasting
+    pts = m[:, None, :] + rel_pts[None, :, :] * h[:, None, :]
+    
+    # Flatten for integrand evaluation
+    pts_flat = mx.reshape(pts, (-1, n))
+    vals_flat = f_gpu(pts_flat, *args, **kwargs)
+    vals = mx.reshape(vals_flat, (-1, num_points))
+    
+    # Volume calculation
+    volumes = mx.prod(2.0 * h, axis=1)
+    
+    # Calculate integrals
+    i7 = mx.sum(vals * weights_7, axis=1) * volumes
+    i5 = mx.sum(vals * weights_5, axis=1) * volumes
+    errs = mx.abs(i7 - i5)
+    
+    return i7, errs
+
+# 3. Adaptive Integration Function
+def adaptive_integration(f_gpu, initial_grid=None, bounds=None, tol=1e-5, batch_size=1024,verbose=True, *args, **kwargs):
+    """
+    Generic dimension-agnostic adaptive integration.
+    """
+    if initial_grid is not None:
+        # initial_grid shape (N, 2, n_dim)
+        lows = initial_grid[:, 0, :]
+        highs = initial_grid[:, 1, :]
+        n_dim = lows.shape[1]
+    else:
+        # bounds is [[low...], [high...]]
+        low_vec = np.array(bounds[0])
+        high_vec = np.array(bounds[1])
+        lows = np.array([low_vec])
+        highs = np.array([high_vec])
+        n_dim = low_vec.shape[0]
+
+    # Get Genz-Malik rule
+    rel_pts, weights_7, weights_5 = get_genz_malik_rule(n_dim)
+    
+    # Pre-compile the evaluation logic for specific rule and function
+    @mx.compile
+    def compiled_eval(m_mx, h_mx):
+        return evaluate_batch_gpu(f_gpu, m_mx, h_mx, rel_pts, weights_7, weights_5, n_dim, *args, **kwargs)
+
+    # Initial m and h
+    m_init_np = (lows + highs) / 2
+    h_init_np = (highs - lows) / 2
+    
+    # Initial Evaluation
+    m_mx = mx.array(m_init_np.tolist())
+    h_mx = mx.array(h_init_np.tolist())
+    i7_batch, err_batch = compiled_eval(m_mx, h_mx)
+    mx.eval(i7_batch, err_batch)
+    
+    i7_np = np.array(i7_batch)
+    err_np = np.array(err_batch)
+    
+    total_integral = np.sum(i7_np)
+    total_error = np.sum(err_np)
+    
+    # Queue stores: (-error, center_list, halfwidth_list, integral)
+    queue = []
+    for i in range(len(m_init_np)):
+        heapq.heappush(queue, (-err_np[i], m_init_np[i].tolist(), h_init_np[i].tolist(), i7_np[i]))
+    
+    start_time = time.time()
+    iterations = 0
+    
+    if verbose:
+      print(f"Starting {n_dim}D Adaptive Integration")
+    
+    #while total_error > tol and len(queue) > 0:
+    while (total_error > tol or iterations<10) and len(queue) > 0: # to ensure at least 10 steps to avoid accepting first estimate
+        iterations += 1
+        
+        curr_batch_size = min(len(queue), batch_size)
+        m_list, h_list, p_ints, p_errs = [], [], 0.0, 0.0
+        
+        for _ in range(curr_batch_size):
+            e_neg, m_c, h_c, i_c = heapq.heappop(queue)
+            m_list.append(m_c)
+            h_list.append(h_c)
+            p_ints += i_c
+            p_errs += (-e_neg)
+            
+        m_arr = np.array(m_list)
+        h_arr = np.array(h_list)
+        split_dims = np.argmax(h_arr, axis=1)
+        
+        m_children, h_children = [], []
+        for i in range(curr_batch_size):
+            d = split_dims[i]
+            h_new = h_arr[i].copy()
+            h_new[d] /= 2
+            
+            m1, m2 = m_arr[i].copy(), m_arr[i].copy()
+            m1[d] -= h_new[d]
+            m2[d] += h_new[d]
+            
+            m_children.append(m1.tolist()); m_children.append(m2.tolist())
+            h_children.append(h_new.tolist()); h_children.append(h_new.tolist())
+            
+        m_mx = mx.array(m_children)
+        h_mx = mx.array(h_children)
+        i7_gpu, err_gpu = compiled_eval(m_mx, h_mx)
+        
+        mx.eval(i7_gpu, err_gpu)
+        i7_cpu = np.array(i7_gpu)
+        err_cpu = np.array(err_gpu)
+        
+        total_integral -= p_ints
+        total_error -= p_errs
+        
+        for i in range(len(m_children)):
+            integral, error = i7_cpu[i], err_cpu[i]
+            total_integral += integral
+            total_error += error
+            heapq.heappush(queue, (-error, m_children[i], h_children[i], integral))
+        
+        if verbose:
+          if iterations % 100 == 0:
+            print(f"Iteration {iterations:5d} | Regions: {len(queue):8d} | Total Err: {total_error:.4e} | Integral: {total_integral:.6f}")
+        
+        ## new hack
+        if iterations==10:
+           tol=total_integral/25.0 # make tolerance a scale of integral value after 10 iters
+           #tol=total_integral/50.0                         # using /25 so error is 4% of integral value - a hack
+           if verbose:
+             print(f"target error={tol}\n")
+        
+        if iterations == 5000:
+           printf(f"hit max limit of 5000 iterations so breaking\n")
+           break
+            
+    if verbose:
+      print(f"\n--- {n_dim}D Integration Summary ---")
+      print(f"Total Iterations: {iterations}")
+      print(f"Final Integral:   {total_integral:.12e}")
+      print(f"Final Error:      {total_error:.4e}")
+      print(f"Time Taken:       {time.time() - start_time:.2f}s")
+    
+    return total_integral
+
+## this function maps the 1001 N-dim axis points from Vegas into the sparser grid of hypercubes sampled by Vegas
+def convert_vegas_to_stratified_regions(integ_loc, neval_target=None):
+    """
+    Extracts the stratified integration boxes from a trained vegas integrator.
+    This uses the full resolution of the 1001 grid nodes but avoids the 
+    Cartesian explosion by following vegas's internal stratification logic.
+    
+    Parameters:
+    -----------
+    integ : vegas.Integrator
+        The trained integrator (after warm-up).
+    neval_target : int
+        Desired number of regions. If None, uses the integrator's setting.
+        
+    Returns:
+    --------
+    np.ndarray
+        Array of shape (num_regions, 2, dim)
+    """
+    amap = integ_loc.map
+    n_dim = amap.dim
+    
+    # nstrat is an attribute of the Integrator, not the AdaptiveMap
+    nstrat = integ_loc.nstrat
+    num_regions = np.prod(nstrat)
+    
+    #print(f"Extracting stratified grid: {nstrat} divisions per dim.")
+    #print(f"Generating {num_regions:,} high-resolution regions.")
+
+    # Get the physical bin boundaries (the 1001 nodes per axis)
+    raw_grid = np.array(integ.map.grid) 
+    n_bins_total = raw_grid.shape[1] - 1
+    
+    # Prepare indices for each dimension's strata
+    strata_indices = [np.arange(n) for n in nstrat]
+    
+    regions = []
+    # Cartesian product of strata indices (NOT the 1000 bins)
+    for idx_tuple in itertools.product(*strata_indices):
+        low_vec = []
+        high_vec = []
+        for d, s_idx in enumerate(idx_tuple):
+            # Map stratum index to the high-res grid node index
+            # Stratum i spans from node (i * 1000/nstrat) to ((i+1) * 1000/nstrat)
+            start_node = int(round(s_idx * n_bins_total / nstrat[d]))
+            end_node = int(round((s_idx + 1) * n_bins_total / nstrat[d]))
+            
+            low_vec.append(raw_grid[d][start_node])
+            high_vec.append(raw_grid[d][end_node])
+            
+        regions.append([low_vec, high_vec])
+        
+    return np.array(regions)
+
+
+```
+
+
+```{python genz_res,include=TRUE,eval=TRUE}
+
+# Integration bounds - not used, as using Vegas to prime the grid
+bounds = [[-1.,-1,-1.,-1.,0.001,0.001], [1.0,1.0,1.0,1.0,1.0,1.0]]
+
+ndim = 6
+gvar.ranseed(99990)
+integ2 = vegas.Integrator(mx.array([[-1, 1],[-1,1],[-1,1],[-1,1],[0.0001,1],[0.0001,1]],dtype=mx.float32))
+# STAGE 1: Warm-up
+res_warmup = integ2(model, nitn=10, neval=50000)
+#vegas_grid=np.array(integ2.map.extract_grid()) 
+
+vegas_conv_grid=convert_vegas_to_stratified_regions(integ2)
+
+result2 = adaptive_integration(
+        f_gpu=compute_log_lik6D, 
+        initial_grid=vegas_conv_grid, # replace with bounds=bounds to use standard approach without Vegas grid
+        tol=1e+02, # this is not actually used currently. using relative error of 4% of integrand after 10 iterations
+        batch_size=1024*1,
+        y=y_data,
+        T=T_vec,
+        mymax=model.l_max,# using from above model
+        flag=True
+        )
+
+log_evidence2 = model.l_max + mx.log(result2)    
+print(f"Genz-Malik log_evidence2 (6D constant of integration using Genz-Malik)={log_evidence2}\n")
+
+```
+
+## Marginal posterior for a0
+Similar to above but now integrate out 5D posterior density, i.e. a 6D posterior where first dimension is fixed - this is the variable we want to get the marginal posterior. 
+
+```{python genz_a0,include=TRUE,eval=TRUE}
+
+@mx.compile
+def compute_log_lik5D(theta, y,T,mymax,a0,flag=False):
+    if flag:
+      theta=mx.transpose(theta)
+    
+    #print(f"shape1={x.shape}\n")
+    """
+    as above but we integrate out theta1-theta5 for fixed theta0
+    
+    """
+    # theta0idx=NA # Not needed as pass in function as not marginalizing this (index for a0 transformed)
+    theta1_idx=0 # index for a1 - logit treatment effect transformed
+    theta2_idx=1 # index for mu transformed
+    theta3_idx=2 # index for m1 transformed
+    theta4_idx=3 # index for sigma0 transformed
+    theta5_idx=4 # index for sigma1 transformed
+    
+    theta1=mx.clip(theta[theta1_idx,:],-0.99999, 0.99999)
+    theta2=mx.clip(theta[theta2_idx,:],-0.99999, 0.99999)
+    theta3=mx.clip(theta[theta3_idx,:],-0.99999, 0.99999)
+    theta4=mx.clip(theta[theta4_idx,:],0.00001, 0.99999)
+    theta5=mx.clip(theta[theta5_idx,:],0.00001, 0.99999)
+    
+    
+    jacobianL = (  mx.log(1+mx.power(theta1,2)) - 2.0*mx.log(1-mx.power(theta1,2))
+                 + mx.log(1+mx.power(theta2,2)) - 2.0*mx.log(1-mx.power(theta2,2))
+                 + mx.log(1+mx.power(theta3,2)) - 2.0*mx.log(1-mx.power(theta3,2))
+                 + mx.log(1+mx.power(theta4,2)) - 2.0*mx.log(1-mx.power(theta4,2))
+                 + mx.log(1+mx.power(theta5,2)) - 2.0*mx.log(1-mx.power(theta5,2))
+                 )
+    #print(f"jacobian={jacobianL}\n")             
+
+    # a0 is fixed and passed into likelihood
+    a1=theta1/(1-mx.power(theta1,2))
+    mu0=theta2/(1-mx.power(theta2,2))
+    mu1=theta3/(1-mx.power(theta3,2))
+    sigma0=theta4/(1-mx.power(theta4,2))
+    sigma1=theta5/(1-mx.power(theta5,2))
+    #print(f"a0={a0} a1={a1} mu0={mu0} mu1={mu1} sigma0={sigma0} sigma1={sigma1}\n")
+    
+    eta=a0+a1*T # (10,3) where T_vec = (3,) and (10,1) broadcast to (10,3)  
+    # y_data*eta - mx.log(1+mx.exp(eta)) this is (10,3) - want col sums, so collapse over rows
+    logL = mx.sum(y*eta - mx.log(1+mx.exp(eta)),axis=0) #
+    #print(f"logL={logL}\n")
+    # now add the priors
+    # simple N(0,sd=10)
+    prior_a0 = mx_norm_logpdf(a0,loc=mu0,scale=sigma0)
+    prior_a1 = mx_norm_logpdf(a1,loc=mu1,scale=sigma1)
+    prior_mu0 = mx_norm_logpdf(mu0,loc=0.,scale=2.5)
+    prior_mu1 = mx_norm_logpdf(mu1,loc=0.,scale=2.5)
+    prior_sigma0 = mx_half_normal_logpdf(sigma0, 2.5)
+    prior_sigma1 = mx_half_normal_logpdf(sigma1, 2.5)
+    
+    logDens = logL + prior_a0 + prior_a1 + prior_mu0 + prior_mu1 + prior_sigma0 + prior_sigma1
+    #print(f"logDens={logDens}\n")
+    if flag:
+      return mx.exp(logDens + jacobianL - mymax) # this will be (3,)
+    else: return (logDens + jacobianL) # this will be (3,)
+
+
+# MARGINAL a0 
+# Setup Vegas with a Shifting Logic
+@vegas.rbatchintegrand
+class StableLikelihood2:
+    def __init__(self, y, T,a0):
+        self.y = y
+        self.T = T
+        self.l_max = 0.0 # Will be updated after warm-up
+        self.flag=False
+        self.a0 = a0 # random variable which we want to compute density value for
+
+    def __call__(self, theta):
+        theta_mx = mx.array(theta)
+        #log_lik = compute_log_lik2(theta_mx, self.y,self.T, self.a0)
+        log_lik = compute_log_lik5D(theta_mx, self.y,self.T,self.l_max,self.a0,self.flag)
+        
+        # Shift by the maximum found so far
+        # This keeps the result near 1.0 instead of 1e-300
+        ## return np.array(jnp.exp(log_lik - self.l_max)) # needt this is using x64 - vegas expects np
+        return mx.exp(log_lik - self.l_max)
+
+# TEST one interval at one value for a0
+if False:
+  gvar.ranseed(99991)
+  a0=-1.25
+  start = jnp.array([-1,-1,-1,0.0001,0.0001],dtype=jnp.float32) # a0 a1
+  stop = jnp.array([1,1,1,1,1],dtype=jnp.float32)   # a0 a1
+  searchPts=mx.array(np.array(jnp.transpose(jnp.linspace(start, stop, 1000))), dtype=mx.float32)
+  model3 = StableLikelihood2(y=y_data,T=T_vec,a0=a0)
+  model3.l_max=mx.max(compute_log_lik5D(searchPts, model3.y,model3.T,model3.l_max,model3.a0,model3.flag))
+  mymax=model3.l_max
+  integ3 = vegas.Integrator(mx.array([[-1, 1],[-1,1],[-1,1],[0.0001,1],[0.0001,1]],dtype=mx.float32))
+  # STAGE 1: Warm-up
+  res_warmup = integ3(model3, nitn=10, neval=50000)
+  #vegas_gri5d=np.array(integ.map.extract_grid()) 
+  vegas_conv_grid2=convert_vegas_to_stratified_regions(integ3)
+
+  result3 = adaptive_integration(
+        f_gpu=compute_log_lik5D, 
+        initial_grid=vegas_conv_grid2,
+        tol=1e-03, 
+        batch_size=1024*1,
+        y=y_data,
+        T=T_vec,
+        mymax=mymax,
+        a0= a0,
+        flag=True
+        )
+        
+  marg_a0 = mymax + mx.log(result3)   # model.l_max + mx.log(gvar.mean(result))
+  print(f"log_evidence={log_evidence}\n")
+
+  myprobden=mx.array(mx.exp(marg_a0-log_evidence))
+  print(f"den value at a0={a0} = {myprobden}\n")
+
+```
+
+Compute marginal density for parameter $a_0$ over a simple grid then plot it.
+
+```{python genz_00,include=TRUE,eval=TRUE}
+
+##############################################################
+gvar.ranseed(99991)
+## Set range and grid for a0 = logit intercept. This needs improved to find bookends and better grid
+Ngrid=50
+a0= mx.array(np.array(jnp.linspace(-2.5,-0.0,Ngrid,dtype=jnp.float32)), dtype=mx.float32)
+
+prob_dens=np.ones([Ngrid],dtype=np.float32) # storage for density values
+start = jnp.array([-1,-1,-1,0.0001,0.0001],dtype=jnp.float32) # a0 a1
+stop = jnp.array([1,1,1,1,1],dtype=jnp.float32)   # a0 a1
+searchPts=mx.array(np.array(jnp.transpose(jnp.linspace(start, stop, 100000))), dtype=mx.float32)
+i=0
+for x in a0: # for each value of rv a0 find density value
+  print(f"a0={x}")
+  model3 = StableLikelihood2(y=y_data,T=T_vec,a0=x)
+  model3.l_max=mx.max(compute_log_lik5D(searchPts, model3.y,model3.T,model3.l_max,model3.a0,model3.flag))
+  mymax=model3.l_max
+  #print(f"mymx={mymax} a0={model3.a0}\n")
+  integ3 = vegas.Integrator(mx.array([[-1, 1],[-1,1],[-1,1],[0.0001,1],[0.0001,1]],dtype=mx.float32))
+  # STAGE 1: Warm-up
+  res_warmup = integ3(model3, nitn=10, neval=50000)
+  vegas_conv_grid2=convert_vegas_to_stratified_regions(integ3)
+  result3 = adaptive_integration(
+        f_gpu=compute_log_lik5D, 
+        initial_grid=vegas_conv_grid2,
+        tol=1e-03, 
+        batch_size=1024*2,
+        verbose=False,
+        y=y_data,
+        T=T_vec,
+        mymax=mymax,
+        a0= x,
+        flag=True
+        )
+  
+  marg_a0 = mymax + mx.log(result3)
+  prob_dens[[i]]=mx.array(mx.exp(marg_a0-log_evidence))
+  i=i+1
+
+# copy to numpy to can then access from R directly
+a0np= np.array(a0)
+
+
+
+```
+
+
+```{r compare2, echo=FALSE, eval=TRUE}
+par(mfrow=c(1,1))
+
+#plot(density(extract(stan_fit_2,"beta[1,1]")$"beta[1,1]"),main="beta[1,1]",col="blue",lwd=2)
+plot(py$a0np,py$prob_dens,col="brown",pch=21,bg="brown")
+f_interp <- splinefun(py$a0np, py$prob_dens, method = "fmm")
+lines(py$a0np,f_interp(py$a0np),col="magenta")
+
+```
+
+```{r stanmodeldef,include=TRUE,echo=TRUE,eval=TRUE}
+library(rstan)
+library(bayesplot)
+library(ggplot2)
+
+### Stan model
+  BHM_stan_1 <- "data {
+  int<lower = 0> K;                     // number of baskets (K >= 2)
+  int<lower = 0> N;                     // total number of participants
+  //int<lower = 0, upper = N> N_k[K];     // K x 1 vector of basket sample sizes
+  int<lower = 0, upper = N> N_k;
+  int<lower = 1, upper = K> k_vec[N];   // N x 1 vector of basket indicators
+  int<lower = 0, upper = 1> z_vec[N];   // N x 1 vector of treatment indicators for active treatment arm
+  int<lower = 0, upper = 1> y[N];       // N x 1 vector of binary responses
+}
+parameters {
+  matrix[K,2] beta_tr;                  // K x 2 matrix of transformed regression coefficients
+  real mu1;                              // scalar of hierarchical mean (log odds ratio)
+  real<lower = 0> sigma1;                  // scalar of hierarchical SD (log odds ratio)
+  real mu0;                              // scalar of hierarchical mean (log odds ratio)
+  real<lower = 0> sigma0;                  // scalar of hierarchical SD (log odds ratio)
+
+}
+transformed parameters {
+  matrix[K,2] beta;                     // K x 2 matrix of regression coefficients (without transformation)
+  // Calculate beta coefs using transformed betas (leads to better mixing)
+  for (k in 1:K){
+    beta[k,1] = mu0 + sigma0 * beta_tr[k,1];
+    beta[k,2] = mu1 + sigma1 * beta_tr[k,2];
+  }
+
+}
+model {
+  mu0 ~ normal(0, 2.5);    // vectorized normal priors for hierarchical means (specify SD in normal distn)
+  sigma0 ~ normal(0, 2.5);       // vectorized half-normal priors for hierarchical SDs (specify SD in normal distn)
+  mu1 ~ normal(0, 2.5);    // vectorized normal priors for hierarchical means (specify SD in normal distn)
+  sigma1 ~ normal(0, 2.5);       // vectorized half-normal priors for hierarchical SDs (specify SD in normal distn)
+  beta_tr[,1] ~ normal(0, 1);  // vectorized normal prior for the log odds for the control arm
+  beta_tr[,2] ~ normal(0, 1);  // vectorized normal prior for the log odds ratios
+  for (i in 1:N)
+    y[i] ~ bernoulli_logit(beta[k_vec[i], 1] + beta[k_vec[i], 2] * z_vec[i]);
+}
+"
+
+```
+
+```{r stansample,echo=TRUE,results='hide',eval=TRUE}
+
+# Create list with input values for Stan model
+data_input_1 <- list(
+  K = K,                # number of subgroups
+  N = N,                # total sample size
+  N_k = N_k,            # sample size per basket
+  k_vec = k_vec,        # N x 1 vector of subgroup indicators
+  z_vec = z_vec,        # N x 1 vector of active treatment arm indicators
+  y = y                 # N x 1 vector of binary responses
+  )
+
+
+
+### Compile and fit model
+options(mc.cores = parallel::detectCores())
+# Compile model (only run the line below once for a simulation study - compilation not dependent on any
+# simulation inputs as defined by scenarios or on simulated data)
+stan_mod_1 <- stan_model(model_code = BHM_stan_1)
+# Fit model
+nsamps <- 30000       # number of posterior samples (after removing burn-in) per chain
+nburnin <- 1000       # number of burn-in samples to remove at beginning of each chain
+nchains <- 4          # number of chains
+BHM_pars_1 <- c("mu0", "sigma0","mu1", "sigma1", "beta","beta_tr")     # parameters to sample
+start_time <- Sys.time()
+stan_fit_2 <- sampling(stan_mod_1, data = data_input_1, pars = BHM_pars_1,
+                       iter = nsamps + nburnin, warmup = nburnin, chains = nchains)
+end_time <- Sys.time()
+end_time - start_time
+post_draws_2 <- as.matrix(stan_fit_2)           # posterior samples of each parameter
+
+```
+
+```{r compare, echo=FALSE, eval=TRUE}
+library(ggplot2)
+library(rstan)
+
+# 1. Prepare the Stan data
+stan_samples <- extract(stan_fit_2, "beta[1,1]")$`beta[1,1]`
+df_stan <- data.frame(beta = stan_samples)
+
+# 2. Prepare the reference points (from Python object 'py')
+df_ref <- data.frame(x = py$a0np, y = py$prob_dens)
+
+# 3. Create the plot
+ggplot(df_stan, aes(x = beta)) +
+  # Density line for Stan samples
+  geom_density(color = "blue", linewidth = 1) +
+  # Reference points
+  geom_point(data = df_ref, aes(x = x, y = y), 
+             color = "brown", fill = "brown", shape = 21, size = 2) +
+  # Labels and Theme
+  labs(title = "beta[1,1]", x = "Value", y = "Density") +
+  theme_minimal()
+#f_interp <- splinefun(py$a0np, py$prob_dens, method = "fmm")
+#lines(py$a0np,f_interp(py$a0np),col="magenta")
+```
+
