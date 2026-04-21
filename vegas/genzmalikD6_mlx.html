@@ -77,7 +77,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-597446f535d69fe60b6ccf961eeef060.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-bbce703c07f8126ecf98ab77168f93ec.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -277,7 +277,7 @@ window.Quarto = {
   <li><a href="#key-mathematical-functions" id="toc-key-mathematical-functions" class="nav-link" data-scroll-target="#key-mathematical-functions">Key Mathematical Functions</a></li>
   <li><a href="#integration-using-vegas" id="toc-integration-using-vegas" class="nav-link" data-scroll-target="#integration-using-vegas">Integration using Vegas</a></li>
   <li><a href="#integration-using-genz-malik-cubature" id="toc-integration-using-genz-malik-cubature" class="nav-link" data-scroll-target="#integration-using-genz-malik-cubature">Integration using Genz-Malik Cubature</a></li>
-  <li><a href="#marginal-posterior-for-a0" id="toc-marginal-posterior-for-a0" class="nav-link" data-scroll-target="#marginal-posterior-for-a0">Marginal posterior for a0</a></li>
+  <li><a href="#marginal-posterior-for-beta_0" id="toc-marginal-posterior-for-beta_0" class="nav-link" data-scroll-target="#marginal-posterior-for-beta_0">Marginal posterior for <span class="math inline">\(\beta_0\)</span></a></li>
   </ul>
 </nav>
     </div>
@@ -569,7 +569,7 @@ x&amp;=&amp;\frac{t}{1-t^2} \\
 <span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Total Iterations: 187</span></span>
 <span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Final Integral:   3.421312255859e+03</span></span>
 <span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Final Error:      1.3438e+02</span></span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Time Taken:       1.99s</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Time Taken:       2.03s</span></span>
 <span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>log_evidence2 <span class="op">=</span> model.l_max <span class="op">+</span> mx.log(result2)    </span>
 <span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Genz-Malik log_evidence2 (6D constant of integration using Genz-Malik)=</span><span class="sc">{</span>log_evidence2<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
@@ -577,8 +577,8 @@ x&amp;=&amp;\frac{t}{1-t^2} \\
 </details>
 </div>
 </section>
-<section id="marginal-posterior-for-a0" class="level2">
-<h2 class="anchored" data-anchor-id="marginal-posterior-for-a0">Marginal posterior for a0</h2>
+<section id="marginal-posterior-for-beta_0" class="level2">
+<h2 class="anchored" data-anchor-id="marginal-posterior-for-beta_0">Marginal posterior for <span class="math inline">\(\beta_0\)</span></h2>
 <p>Similar to above but now integrate out 5D posterior density, i.e.&nbsp;a 6D posterior where first dimension is fixed - this is the variable we want to get the marginal posterior.</p>
 <div class="cell">
 <details open="" class="code-fold">
@@ -1976,8 +1976,8 @@ x&amp;=&amp;\frac{t}{1-t^2} \\
 <span id="cb8-599"><a href="#cb8-599" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-600"><a href="#cb8-600" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb8-601"><a href="#cb8-601" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-602"><a href="#cb8-602" aria-hidden="true" tabindex="-1"></a><span class="fu">## Marginal posterior for a0</span></span>
-<span id="cb8-603"><a href="#cb8-603" aria-hidden="true" tabindex="-1"></a>Similar to above but now integrate out 5D posterior density, i.e. a 6D posterior where first dimension is fixed - this is the variable we want to get the marginal posterior. </span>
+<span id="cb8-602"><a href="#cb8-602" aria-hidden="true" tabindex="-1"></a><span class="fu">## Marginal posterior for $\beta_0$</span></span>
+<span id="cb8-603"><a href="#cb8-603" aria-hidden="true" tabindex="-1"></a>Similar to above but now integrate out 5D posterior density, i.e. a 6D posterior where first dimension is fixed - this is the variable we want to get the marginal posterior. Note in the R code the parameters is called <span class="in">`a0`</span>.</span>
 <span id="cb8-604"><a href="#cb8-604" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-605"><a href="#cb8-605" aria-hidden="true" tabindex="-1"></a><span class="in">```{python genz_a0,include=TRUE,eval=TRUE}</span></span>
 <span id="cb8-606"><a href="#cb8-606" aria-hidden="true" tabindex="-1"></a></span>
@@ -2158,109 +2158,112 @@ x&amp;=&amp;\frac{t}{1-t^2} \\
 <span id="cb8-781"><a href="#cb8-781" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-782"><a href="#cb8-782" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb8-783"><a href="#cb8-783" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-784"><a href="#cb8-784" aria-hidden="true" tabindex="-1"></a><span class="in">```{r stanmodeldef,include=TRUE,echo=TRUE,eval=TRUE}</span></span>
-<span id="cb8-785"><a href="#cb8-785" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstan)</span>
-<span id="cb8-786"><a href="#cb8-786" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bayesplot)</span>
-<span id="cb8-787"><a href="#cb8-787" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb8-788"><a href="#cb8-788" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-789"><a href="#cb8-789" aria-hidden="true" tabindex="-1"></a><span class="do">### Stan model</span></span>
-<span id="cb8-790"><a href="#cb8-790" aria-hidden="true" tabindex="-1"></a>  BHM_stan_1 <span class="ot">&lt;-</span> <span class="st">"data {</span></span>
-<span id="cb8-791"><a href="#cb8-791" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 0&gt; K;                     // number of baskets (K &gt;= 2)</span></span>
-<span id="cb8-792"><a href="#cb8-792" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 0&gt; N;                     // total number of participants</span></span>
-<span id="cb8-793"><a href="#cb8-793" aria-hidden="true" tabindex="-1"></a><span class="st">  //int&lt;lower = 0, upper = N&gt; N_k[K];     // K x 1 vector of basket sample sizes</span></span>
-<span id="cb8-794"><a href="#cb8-794" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 0, upper = N&gt; N_k;</span></span>
-<span id="cb8-795"><a href="#cb8-795" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 1, upper = K&gt; k_vec[N];   // N x 1 vector of basket indicators</span></span>
-<span id="cb8-796"><a href="#cb8-796" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 0, upper = 1&gt; z_vec[N];   // N x 1 vector of treatment indicators for active treatment arm</span></span>
-<span id="cb8-797"><a href="#cb8-797" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 0, upper = 1&gt; y[N];       // N x 1 vector of binary responses</span></span>
-<span id="cb8-798"><a href="#cb8-798" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb8-799"><a href="#cb8-799" aria-hidden="true" tabindex="-1"></a><span class="st">parameters {</span></span>
-<span id="cb8-800"><a href="#cb8-800" aria-hidden="true" tabindex="-1"></a><span class="st">  matrix[K,2] beta_tr;                  // K x 2 matrix of transformed regression coefficients</span></span>
-<span id="cb8-801"><a href="#cb8-801" aria-hidden="true" tabindex="-1"></a><span class="st">  real mu1;                              // scalar of hierarchical mean (log odds ratio)</span></span>
-<span id="cb8-802"><a href="#cb8-802" aria-hidden="true" tabindex="-1"></a><span class="st">  real&lt;lower = 0&gt; sigma1;                  // scalar of hierarchical SD (log odds ratio)</span></span>
-<span id="cb8-803"><a href="#cb8-803" aria-hidden="true" tabindex="-1"></a><span class="st">  real mu0;                              // scalar of hierarchical mean (log odds ratio)</span></span>
-<span id="cb8-804"><a href="#cb8-804" aria-hidden="true" tabindex="-1"></a><span class="st">  real&lt;lower = 0&gt; sigma0;                  // scalar of hierarchical SD (log odds ratio)</span></span>
-<span id="cb8-805"><a href="#cb8-805" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-806"><a href="#cb8-806" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb8-807"><a href="#cb8-807" aria-hidden="true" tabindex="-1"></a><span class="st">transformed parameters {</span></span>
-<span id="cb8-808"><a href="#cb8-808" aria-hidden="true" tabindex="-1"></a><span class="st">  matrix[K,2] beta;                     // K x 2 matrix of regression coefficients (without transformation)</span></span>
-<span id="cb8-809"><a href="#cb8-809" aria-hidden="true" tabindex="-1"></a><span class="st">  // Calculate beta coefs using transformed betas (leads to better mixing)</span></span>
-<span id="cb8-810"><a href="#cb8-810" aria-hidden="true" tabindex="-1"></a><span class="st">  for (k in 1:K){</span></span>
-<span id="cb8-811"><a href="#cb8-811" aria-hidden="true" tabindex="-1"></a><span class="st">    beta[k,1] = mu0 + sigma0 * beta_tr[k,1];</span></span>
-<span id="cb8-812"><a href="#cb8-812" aria-hidden="true" tabindex="-1"></a><span class="st">    beta[k,2] = mu1 + sigma1 * beta_tr[k,2];</span></span>
-<span id="cb8-813"><a href="#cb8-813" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
-<span id="cb8-814"><a href="#cb8-814" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-815"><a href="#cb8-815" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb8-816"><a href="#cb8-816" aria-hidden="true" tabindex="-1"></a><span class="st">model {</span></span>
-<span id="cb8-817"><a href="#cb8-817" aria-hidden="true" tabindex="-1"></a><span class="st">  mu0 ~ normal(0, 2.5);    // vectorized normal priors for hierarchical means (specify SD in normal distn)</span></span>
-<span id="cb8-818"><a href="#cb8-818" aria-hidden="true" tabindex="-1"></a><span class="st">  sigma0 ~ normal(0, 2.5);       // vectorized half-normal priors for hierarchical SDs (specify SD in normal distn)</span></span>
-<span id="cb8-819"><a href="#cb8-819" aria-hidden="true" tabindex="-1"></a><span class="st">  mu1 ~ normal(0, 2.5);    // vectorized normal priors for hierarchical means (specify SD in normal distn)</span></span>
-<span id="cb8-820"><a href="#cb8-820" aria-hidden="true" tabindex="-1"></a><span class="st">  sigma1 ~ normal(0, 2.5);       // vectorized half-normal priors for hierarchical SDs (specify SD in normal distn)</span></span>
-<span id="cb8-821"><a href="#cb8-821" aria-hidden="true" tabindex="-1"></a><span class="st">  beta_tr[,1] ~ normal(0, 1);  // vectorized normal prior for the log odds for the control arm</span></span>
-<span id="cb8-822"><a href="#cb8-822" aria-hidden="true" tabindex="-1"></a><span class="st">  beta_tr[,2] ~ normal(0, 1);  // vectorized normal prior for the log odds ratios</span></span>
-<span id="cb8-823"><a href="#cb8-823" aria-hidden="true" tabindex="-1"></a><span class="st">  for (i in 1:N)</span></span>
-<span id="cb8-824"><a href="#cb8-824" aria-hidden="true" tabindex="-1"></a><span class="st">    y[i] ~ bernoulli_logit(beta[k_vec[i], 1] + beta[k_vec[i], 2] * z_vec[i]);</span></span>
-<span id="cb8-825"><a href="#cb8-825" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb8-826"><a href="#cb8-826" aria-hidden="true" tabindex="-1"></a><span class="st">"</span></span>
-<span id="cb8-827"><a href="#cb8-827" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-828"><a href="#cb8-828" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-829"><a href="#cb8-829" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-830"><a href="#cb8-830" aria-hidden="true" tabindex="-1"></a><span class="in">```{r stansample,echo=TRUE,results='hide',eval=TRUE}</span></span>
-<span id="cb8-831"><a href="#cb8-831" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-832"><a href="#cb8-832" aria-hidden="true" tabindex="-1"></a><span class="co"># Create list with input values for Stan model</span></span>
-<span id="cb8-833"><a href="#cb8-833" aria-hidden="true" tabindex="-1"></a>data_input_1 <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb8-834"><a href="#cb8-834" aria-hidden="true" tabindex="-1"></a>  <span class="at">K =</span> K,                <span class="co"># number of subgroups</span></span>
-<span id="cb8-835"><a href="#cb8-835" aria-hidden="true" tabindex="-1"></a>  <span class="at">N =</span> N,                <span class="co"># total sample size</span></span>
-<span id="cb8-836"><a href="#cb8-836" aria-hidden="true" tabindex="-1"></a>  <span class="at">N_k =</span> N_k,            <span class="co"># sample size per basket</span></span>
-<span id="cb8-837"><a href="#cb8-837" aria-hidden="true" tabindex="-1"></a>  <span class="at">k_vec =</span> k_vec,        <span class="co"># N x 1 vector of subgroup indicators</span></span>
-<span id="cb8-838"><a href="#cb8-838" aria-hidden="true" tabindex="-1"></a>  <span class="at">z_vec =</span> z_vec,        <span class="co"># N x 1 vector of active treatment arm indicators</span></span>
-<span id="cb8-839"><a href="#cb8-839" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> y                 <span class="co"># N x 1 vector of binary responses</span></span>
-<span id="cb8-840"><a href="#cb8-840" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb8-841"><a href="#cb8-841" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-842"><a href="#cb8-842" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-843"><a href="#cb8-843" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-844"><a href="#cb8-844" aria-hidden="true" tabindex="-1"></a><span class="do">### Compile and fit model</span></span>
-<span id="cb8-845"><a href="#cb8-845" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">mc.cores =</span> parallel<span class="sc">::</span><span class="fu">detectCores</span>())</span>
-<span id="cb8-846"><a href="#cb8-846" aria-hidden="true" tabindex="-1"></a><span class="co"># Compile model (only run the line below once for a simulation study - compilation not dependent on any</span></span>
-<span id="cb8-847"><a href="#cb8-847" aria-hidden="true" tabindex="-1"></a><span class="co"># simulation inputs as defined by scenarios or on simulated data)</span></span>
-<span id="cb8-848"><a href="#cb8-848" aria-hidden="true" tabindex="-1"></a>stan_mod_1 <span class="ot">&lt;-</span> <span class="fu">stan_model</span>(<span class="at">model_code =</span> BHM_stan_1)</span>
-<span id="cb8-849"><a href="#cb8-849" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit model</span></span>
-<span id="cb8-850"><a href="#cb8-850" aria-hidden="true" tabindex="-1"></a>nsamps <span class="ot">&lt;-</span> <span class="dv">30000</span>       <span class="co"># number of posterior samples (after removing burn-in) per chain</span></span>
-<span id="cb8-851"><a href="#cb8-851" aria-hidden="true" tabindex="-1"></a>nburnin <span class="ot">&lt;-</span> <span class="dv">1000</span>       <span class="co"># number of burn-in samples to remove at beginning of each chain</span></span>
-<span id="cb8-852"><a href="#cb8-852" aria-hidden="true" tabindex="-1"></a>nchains <span class="ot">&lt;-</span> <span class="dv">4</span>          <span class="co"># number of chains</span></span>
-<span id="cb8-853"><a href="#cb8-853" aria-hidden="true" tabindex="-1"></a>BHM_pars_1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"mu0"</span>, <span class="st">"sigma0"</span>,<span class="st">"mu1"</span>, <span class="st">"sigma1"</span>, <span class="st">"beta"</span>,<span class="st">"beta_tr"</span>)     <span class="co"># parameters to sample</span></span>
-<span id="cb8-854"><a href="#cb8-854" aria-hidden="true" tabindex="-1"></a>start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
-<span id="cb8-855"><a href="#cb8-855" aria-hidden="true" tabindex="-1"></a>stan_fit_2 <span class="ot">&lt;-</span> <span class="fu">sampling</span>(stan_mod_1, <span class="at">data =</span> data_input_1, <span class="at">pars =</span> BHM_pars_1,</span>
-<span id="cb8-856"><a href="#cb8-856" aria-hidden="true" tabindex="-1"></a>                       <span class="at">iter =</span> nsamps <span class="sc">+</span> nburnin, <span class="at">warmup =</span> nburnin, <span class="at">chains =</span> nchains)</span>
-<span id="cb8-857"><a href="#cb8-857" aria-hidden="true" tabindex="-1"></a>end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
-<span id="cb8-858"><a href="#cb8-858" aria-hidden="true" tabindex="-1"></a>end_time <span class="sc">-</span> start_time</span>
-<span id="cb8-859"><a href="#cb8-859" aria-hidden="true" tabindex="-1"></a>post_draws_2 <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(stan_fit_2)           <span class="co"># posterior samples of each parameter</span></span>
-<span id="cb8-860"><a href="#cb8-860" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-861"><a href="#cb8-861" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-862"><a href="#cb8-862" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-863"><a href="#cb8-863" aria-hidden="true" tabindex="-1"></a><span class="in">```{r compare, echo=FALSE, eval=TRUE}</span></span>
-<span id="cb8-864"><a href="#cb8-864" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb8-865"><a href="#cb8-865" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstan)</span>
-<span id="cb8-866"><a href="#cb8-866" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-867"><a href="#cb8-867" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Prepare the Stan data</span></span>
-<span id="cb8-868"><a href="#cb8-868" aria-hidden="true" tabindex="-1"></a>stan_samples <span class="ot">&lt;-</span> <span class="fu">extract</span>(stan_fit_2, <span class="st">"beta[1,1]"</span>)<span class="sc">$</span><span class="st">`</span><span class="at">beta[1,1]</span><span class="st">`</span></span>
-<span id="cb8-869"><a href="#cb8-869" aria-hidden="true" tabindex="-1"></a>df_stan <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">beta =</span> stan_samples)</span>
-<span id="cb8-870"><a href="#cb8-870" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-871"><a href="#cb8-871" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Prepare the reference points (from Python object 'py')</span></span>
-<span id="cb8-872"><a href="#cb8-872" aria-hidden="true" tabindex="-1"></a>df_ref <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> py<span class="sc">$</span>a0np, <span class="at">y =</span> py<span class="sc">$</span>prob_dens)</span>
+<span id="cb8-784"><a href="#cb8-784" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fit BHM Model using Stan via MCMC</span></span>
+<span id="cb8-785"><a href="#cb8-785" aria-hidden="true" tabindex="-1"></a>Same model as above but using standard approach of MCMC and this uses the non-centered parameterization to aid in MCMC sampling. </span>
+<span id="cb8-786"><a href="#cb8-786" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-787"><a href="#cb8-787" aria-hidden="true" tabindex="-1"></a><span class="in">```{r stanmodeldef,include=TRUE,echo=TRUE,eval=TRUE}</span></span>
+<span id="cb8-788"><a href="#cb8-788" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstan)</span>
+<span id="cb8-789"><a href="#cb8-789" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bayesplot)</span>
+<span id="cb8-790"><a href="#cb8-790" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb8-791"><a href="#cb8-791" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-792"><a href="#cb8-792" aria-hidden="true" tabindex="-1"></a><span class="do">### Stan model</span></span>
+<span id="cb8-793"><a href="#cb8-793" aria-hidden="true" tabindex="-1"></a>  BHM_stan_1 <span class="ot">&lt;-</span> <span class="st">"data {</span></span>
+<span id="cb8-794"><a href="#cb8-794" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 0&gt; K;                     // number of baskets (K &gt;= 2)</span></span>
+<span id="cb8-795"><a href="#cb8-795" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 0&gt; N;                     // total number of participants</span></span>
+<span id="cb8-796"><a href="#cb8-796" aria-hidden="true" tabindex="-1"></a><span class="st">  //int&lt;lower = 0, upper = N&gt; N_k[K];     // K x 1 vector of basket sample sizes</span></span>
+<span id="cb8-797"><a href="#cb8-797" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 0, upper = N&gt; N_k;</span></span>
+<span id="cb8-798"><a href="#cb8-798" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 1, upper = K&gt; k_vec[N];   // N x 1 vector of basket indicators</span></span>
+<span id="cb8-799"><a href="#cb8-799" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 0, upper = 1&gt; z_vec[N];   // N x 1 vector of treatment indicators for active treatment arm</span></span>
+<span id="cb8-800"><a href="#cb8-800" aria-hidden="true" tabindex="-1"></a><span class="st">  int&lt;lower = 0, upper = 1&gt; y[N];       // N x 1 vector of binary responses</span></span>
+<span id="cb8-801"><a href="#cb8-801" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb8-802"><a href="#cb8-802" aria-hidden="true" tabindex="-1"></a><span class="st">parameters {</span></span>
+<span id="cb8-803"><a href="#cb8-803" aria-hidden="true" tabindex="-1"></a><span class="st">  matrix[K,2] beta_tr;                  // K x 2 matrix of transformed regression coefficients</span></span>
+<span id="cb8-804"><a href="#cb8-804" aria-hidden="true" tabindex="-1"></a><span class="st">  real mu1;                              // scalar of hierarchical mean (log odds ratio)</span></span>
+<span id="cb8-805"><a href="#cb8-805" aria-hidden="true" tabindex="-1"></a><span class="st">  real&lt;lower = 0&gt; sigma1;                  // scalar of hierarchical SD (log odds ratio)</span></span>
+<span id="cb8-806"><a href="#cb8-806" aria-hidden="true" tabindex="-1"></a><span class="st">  real mu0;                              // scalar of hierarchical mean (log odds ratio)</span></span>
+<span id="cb8-807"><a href="#cb8-807" aria-hidden="true" tabindex="-1"></a><span class="st">  real&lt;lower = 0&gt; sigma0;                  // scalar of hierarchical SD (log odds ratio)</span></span>
+<span id="cb8-808"><a href="#cb8-808" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-809"><a href="#cb8-809" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb8-810"><a href="#cb8-810" aria-hidden="true" tabindex="-1"></a><span class="st">transformed parameters {</span></span>
+<span id="cb8-811"><a href="#cb8-811" aria-hidden="true" tabindex="-1"></a><span class="st">  matrix[K,2] beta;                     // K x 2 matrix of regression coefficients (without transformation)</span></span>
+<span id="cb8-812"><a href="#cb8-812" aria-hidden="true" tabindex="-1"></a><span class="st">  // Calculate beta coefs using transformed betas (leads to better mixing)</span></span>
+<span id="cb8-813"><a href="#cb8-813" aria-hidden="true" tabindex="-1"></a><span class="st">  for (k in 1:K){</span></span>
+<span id="cb8-814"><a href="#cb8-814" aria-hidden="true" tabindex="-1"></a><span class="st">    beta[k,1] = mu0 + sigma0 * beta_tr[k,1];</span></span>
+<span id="cb8-815"><a href="#cb8-815" aria-hidden="true" tabindex="-1"></a><span class="st">    beta[k,2] = mu1 + sigma1 * beta_tr[k,2];</span></span>
+<span id="cb8-816"><a href="#cb8-816" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb8-817"><a href="#cb8-817" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-818"><a href="#cb8-818" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb8-819"><a href="#cb8-819" aria-hidden="true" tabindex="-1"></a><span class="st">model {</span></span>
+<span id="cb8-820"><a href="#cb8-820" aria-hidden="true" tabindex="-1"></a><span class="st">  mu0 ~ normal(0, 2.5);    // vectorized normal priors for hierarchical means (specify SD in normal distn)</span></span>
+<span id="cb8-821"><a href="#cb8-821" aria-hidden="true" tabindex="-1"></a><span class="st">  sigma0 ~ normal(0, 2.5);       // vectorized half-normal priors for hierarchical SDs (specify SD in normal distn)</span></span>
+<span id="cb8-822"><a href="#cb8-822" aria-hidden="true" tabindex="-1"></a><span class="st">  mu1 ~ normal(0, 2.5);    // vectorized normal priors for hierarchical means (specify SD in normal distn)</span></span>
+<span id="cb8-823"><a href="#cb8-823" aria-hidden="true" tabindex="-1"></a><span class="st">  sigma1 ~ normal(0, 2.5);       // vectorized half-normal priors for hierarchical SDs (specify SD in normal distn)</span></span>
+<span id="cb8-824"><a href="#cb8-824" aria-hidden="true" tabindex="-1"></a><span class="st">  beta_tr[,1] ~ normal(0, 1);  // vectorized normal prior for the log odds for the control arm</span></span>
+<span id="cb8-825"><a href="#cb8-825" aria-hidden="true" tabindex="-1"></a><span class="st">  beta_tr[,2] ~ normal(0, 1);  // vectorized normal prior for the log odds ratios</span></span>
+<span id="cb8-826"><a href="#cb8-826" aria-hidden="true" tabindex="-1"></a><span class="st">  for (i in 1:N)</span></span>
+<span id="cb8-827"><a href="#cb8-827" aria-hidden="true" tabindex="-1"></a><span class="st">    y[i] ~ bernoulli_logit(beta[k_vec[i], 1] + beta[k_vec[i], 2] * z_vec[i]);</span></span>
+<span id="cb8-828"><a href="#cb8-828" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb8-829"><a href="#cb8-829" aria-hidden="true" tabindex="-1"></a><span class="st">"</span></span>
+<span id="cb8-830"><a href="#cb8-830" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-831"><a href="#cb8-831" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-832"><a href="#cb8-832" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-833"><a href="#cb8-833" aria-hidden="true" tabindex="-1"></a><span class="in">```{r stansample,echo=TRUE,results='hide',eval=TRUE}</span></span>
+<span id="cb8-834"><a href="#cb8-834" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-835"><a href="#cb8-835" aria-hidden="true" tabindex="-1"></a><span class="co"># Create list with input values for Stan model</span></span>
+<span id="cb8-836"><a href="#cb8-836" aria-hidden="true" tabindex="-1"></a>data_input_1 <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb8-837"><a href="#cb8-837" aria-hidden="true" tabindex="-1"></a>  <span class="at">K =</span> K,                <span class="co"># number of subgroups</span></span>
+<span id="cb8-838"><a href="#cb8-838" aria-hidden="true" tabindex="-1"></a>  <span class="at">N =</span> N,                <span class="co"># total sample size</span></span>
+<span id="cb8-839"><a href="#cb8-839" aria-hidden="true" tabindex="-1"></a>  <span class="at">N_k =</span> N_k,            <span class="co"># sample size per basket</span></span>
+<span id="cb8-840"><a href="#cb8-840" aria-hidden="true" tabindex="-1"></a>  <span class="at">k_vec =</span> k_vec,        <span class="co"># N x 1 vector of subgroup indicators</span></span>
+<span id="cb8-841"><a href="#cb8-841" aria-hidden="true" tabindex="-1"></a>  <span class="at">z_vec =</span> z_vec,        <span class="co"># N x 1 vector of active treatment arm indicators</span></span>
+<span id="cb8-842"><a href="#cb8-842" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> y                 <span class="co"># N x 1 vector of binary responses</span></span>
+<span id="cb8-843"><a href="#cb8-843" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb8-844"><a href="#cb8-844" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-845"><a href="#cb8-845" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-846"><a href="#cb8-846" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-847"><a href="#cb8-847" aria-hidden="true" tabindex="-1"></a><span class="do">### Compile and fit model</span></span>
+<span id="cb8-848"><a href="#cb8-848" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">mc.cores =</span> parallel<span class="sc">::</span><span class="fu">detectCores</span>())</span>
+<span id="cb8-849"><a href="#cb8-849" aria-hidden="true" tabindex="-1"></a><span class="co"># Compile model (only run the line below once for a simulation study - compilation not dependent on any</span></span>
+<span id="cb8-850"><a href="#cb8-850" aria-hidden="true" tabindex="-1"></a><span class="co"># simulation inputs as defined by scenarios or on simulated data)</span></span>
+<span id="cb8-851"><a href="#cb8-851" aria-hidden="true" tabindex="-1"></a>stan_mod_1 <span class="ot">&lt;-</span> <span class="fu">stan_model</span>(<span class="at">model_code =</span> BHM_stan_1)</span>
+<span id="cb8-852"><a href="#cb8-852" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit model</span></span>
+<span id="cb8-853"><a href="#cb8-853" aria-hidden="true" tabindex="-1"></a>nsamps <span class="ot">&lt;-</span> <span class="dv">30000</span>       <span class="co"># number of posterior samples (after removing burn-in) per chain</span></span>
+<span id="cb8-854"><a href="#cb8-854" aria-hidden="true" tabindex="-1"></a>nburnin <span class="ot">&lt;-</span> <span class="dv">1000</span>       <span class="co"># number of burn-in samples to remove at beginning of each chain</span></span>
+<span id="cb8-855"><a href="#cb8-855" aria-hidden="true" tabindex="-1"></a>nchains <span class="ot">&lt;-</span> <span class="dv">4</span>          <span class="co"># number of chains</span></span>
+<span id="cb8-856"><a href="#cb8-856" aria-hidden="true" tabindex="-1"></a>BHM_pars_1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"mu0"</span>, <span class="st">"sigma0"</span>,<span class="st">"mu1"</span>, <span class="st">"sigma1"</span>, <span class="st">"beta"</span>,<span class="st">"beta_tr"</span>)     <span class="co"># parameters to sample</span></span>
+<span id="cb8-857"><a href="#cb8-857" aria-hidden="true" tabindex="-1"></a>start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb8-858"><a href="#cb8-858" aria-hidden="true" tabindex="-1"></a>stan_fit_2 <span class="ot">&lt;-</span> <span class="fu">sampling</span>(stan_mod_1, <span class="at">data =</span> data_input_1, <span class="at">pars =</span> BHM_pars_1,</span>
+<span id="cb8-859"><a href="#cb8-859" aria-hidden="true" tabindex="-1"></a>                       <span class="at">iter =</span> nsamps <span class="sc">+</span> nburnin, <span class="at">warmup =</span> nburnin, <span class="at">chains =</span> nchains)</span>
+<span id="cb8-860"><a href="#cb8-860" aria-hidden="true" tabindex="-1"></a>end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb8-861"><a href="#cb8-861" aria-hidden="true" tabindex="-1"></a>end_time <span class="sc">-</span> start_time</span>
+<span id="cb8-862"><a href="#cb8-862" aria-hidden="true" tabindex="-1"></a>post_draws_2 <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(stan_fit_2)           <span class="co"># posterior samples of each parameter</span></span>
+<span id="cb8-863"><a href="#cb8-863" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-864"><a href="#cb8-864" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-865"><a href="#cb8-865" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-866"><a href="#cb8-866" aria-hidden="true" tabindex="-1"></a><span class="in">```{r compare, echo=FALSE, eval=TRUE}</span></span>
+<span id="cb8-867"><a href="#cb8-867" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb8-868"><a href="#cb8-868" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstan)</span>
+<span id="cb8-869"><a href="#cb8-869" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-870"><a href="#cb8-870" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Prepare the Stan data</span></span>
+<span id="cb8-871"><a href="#cb8-871" aria-hidden="true" tabindex="-1"></a>stan_samples <span class="ot">&lt;-</span> <span class="fu">extract</span>(stan_fit_2, <span class="st">"beta[1,1]"</span>)<span class="sc">$</span><span class="st">`</span><span class="at">beta[1,1]</span><span class="st">`</span></span>
+<span id="cb8-872"><a href="#cb8-872" aria-hidden="true" tabindex="-1"></a>df_stan <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">beta =</span> stan_samples)</span>
 <span id="cb8-873"><a href="#cb8-873" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-874"><a href="#cb8-874" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Create the plot</span></span>
-<span id="cb8-875"><a href="#cb8-875" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_stan, <span class="fu">aes</span>(<span class="at">x =</span> beta)) <span class="sc">+</span></span>
-<span id="cb8-876"><a href="#cb8-876" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Density line for Stan samples</span></span>
-<span id="cb8-877"><a href="#cb8-877" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb8-878"><a href="#cb8-878" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Reference points</span></span>
-<span id="cb8-879"><a href="#cb8-879" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> df_ref, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), </span>
-<span id="cb8-880"><a href="#cb8-880" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">"brown"</span>, <span class="at">fill =</span> <span class="st">"brown"</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb8-881"><a href="#cb8-881" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Labels and Theme</span></span>
-<span id="cb8-882"><a href="#cb8-882" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"beta[1,1]"</span>, <span class="at">x =</span> <span class="st">"Value"</span>, <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
-<span id="cb8-883"><a href="#cb8-883" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
-<span id="cb8-884"><a href="#cb8-884" aria-hidden="true" tabindex="-1"></a><span class="co">#f_interp &lt;- splinefun(py$a0np, py$prob_dens, method = "fmm")</span></span>
-<span id="cb8-885"><a href="#cb8-885" aria-hidden="true" tabindex="-1"></a><span class="co">#lines(py$a0np,f_interp(py$a0np),col="magenta")</span></span>
-<span id="cb8-886"><a href="#cb8-886" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb8-874"><a href="#cb8-874" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Prepare the reference points (from Python object 'py')</span></span>
+<span id="cb8-875"><a href="#cb8-875" aria-hidden="true" tabindex="-1"></a>df_ref <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> py<span class="sc">$</span>a0np, <span class="at">y =</span> py<span class="sc">$</span>prob_dens)</span>
+<span id="cb8-876"><a href="#cb8-876" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-877"><a href="#cb8-877" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Create the plot</span></span>
+<span id="cb8-878"><a href="#cb8-878" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_stan, <span class="fu">aes</span>(<span class="at">x =</span> beta)) <span class="sc">+</span></span>
+<span id="cb8-879"><a href="#cb8-879" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Density line for Stan samples</span></span>
+<span id="cb8-880"><a href="#cb8-880" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb8-881"><a href="#cb8-881" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Reference points</span></span>
+<span id="cb8-882"><a href="#cb8-882" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> df_ref, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), </span>
+<span id="cb8-883"><a href="#cb8-883" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">"brown"</span>, <span class="at">fill =</span> <span class="st">"brown"</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb8-884"><a href="#cb8-884" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Labels and Theme</span></span>
+<span id="cb8-885"><a href="#cb8-885" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"beta[1,1]"</span>, <span class="at">x =</span> <span class="st">"Value"</span>, <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
+<span id="cb8-886"><a href="#cb8-886" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb8-887"><a href="#cb8-887" aria-hidden="true" tabindex="-1"></a><span class="co">#f_interp &lt;- splinefun(py$a0np, py$prob_dens, method = "fmm")</span></span>
+<span id="cb8-888"><a href="#cb8-888" aria-hidden="true" tabindex="-1"></a><span class="co">#lines(py$a0np,f_interp(py$a0np),col="magenta")</span></span>
+<span id="cb8-889"><a href="#cb8-889" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
