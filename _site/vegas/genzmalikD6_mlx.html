@@ -275,7 +275,7 @@ window.Quarto = {
   <li><a href="#key-mathematical-functions" id="toc-key-mathematical-functions" class="nav-link" data-scroll-target="#key-mathematical-functions">Key Mathematical Functions</a></li>
   <li><a href="#integration-using-vegas" id="toc-integration-using-vegas" class="nav-link" data-scroll-target="#integration-using-vegas">Integration using Vegas</a></li>
   <li><a href="#integration-using-genz-malik-cubature" id="toc-integration-using-genz-malik-cubature" class="nav-link" data-scroll-target="#integration-using-genz-malik-cubature">Integration using Genz-Malik Cubature</a></li>
-  <li><a href="#marginal-posterior-for-a0" id="toc-marginal-posterior-for-a0" class="nav-link" data-scroll-target="#marginal-posterior-for-a0">Marginal posterior for a0</a></li>
+  <li><a href="#marginal-posterior-for-beta_0" id="toc-marginal-posterior-for-beta_0" class="nav-link" data-scroll-target="#marginal-posterior-for-beta_0">Marginal posterior for <span class="math inline">\(\beta_0\)</span></a></li>
   </ul>
 </nav>
     </div>
@@ -567,7 +567,7 @@ x&amp;=&amp;\frac{t}{1-t^2} \\
 <span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Total Iterations: 187</span></span>
 <span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Final Integral:   3.421312255859e+03</span></span>
 <span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Final Error:      1.3438e+02</span></span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Time Taken:       1.99s</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Time Taken:       2.03s</span></span>
 <span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>log_evidence2 <span class="op">=</span> model.l_max <span class="op">+</span> mx.log(result2)    </span>
 <span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Genz-Malik log_evidence2 (6D constant of integration using Genz-Malik)=</span><span class="sc">{</span>log_evidence2<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
@@ -575,8 +575,8 @@ x&amp;=&amp;\frac{t}{1-t^2} \\
 </details>
 </div>
 </section>
-<section id="marginal-posterior-for-a0" class="level2">
-<h2 class="anchored" data-anchor-id="marginal-posterior-for-a0">Marginal posterior for a0</h2>
+<section id="marginal-posterior-for-beta_0" class="level2">
+<h2 class="anchored" data-anchor-id="marginal-posterior-for-beta_0">Marginal posterior for <span class="math inline">\(\beta_0\)</span></h2>
 <p>Similar to above but now integrate out 5D posterior density, i.e.&nbsp;a 6D posterior where first dimension is fixed - this is the variable we want to get the marginal posterior.</p>
 <div class="cell">
 <details open="" class="code-fold">
@@ -1974,7 +1974,7 @@ x&amp;=&amp;\frac{t}{1-t^2} \\
 <span id="cb8-599"><a href="#cb8-599" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-600"><a href="#cb8-600" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb8-601"><a href="#cb8-601" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-602"><a href="#cb8-602" aria-hidden="true" tabindex="-1"></a><span class="fu">## Marginal posterior for a0</span></span>
+<span id="cb8-602"><a href="#cb8-602" aria-hidden="true" tabindex="-1"></a><span class="fu">## Marginal posterior for $\beta_0$</span></span>
 <span id="cb8-603"><a href="#cb8-603" aria-hidden="true" tabindex="-1"></a>Similar to above but now integrate out 5D posterior density, i.e. a 6D posterior where first dimension is fixed - this is the variable we want to get the marginal posterior. </span>
 <span id="cb8-604"><a href="#cb8-604" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-605"><a href="#cb8-605" aria-hidden="true" tabindex="-1"></a><span class="in">```{python genz_a0,include=TRUE,eval=TRUE}</span></span>

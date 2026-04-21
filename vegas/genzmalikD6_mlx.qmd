@@ -599,8 +599,8 @@ print(f"Genz-Malik log_evidence2 (6D constant of integration using Genz-Malik)={
 
 ```
 
-## Marginal posterior for a0
-Similar to above but now integrate out 5D posterior density, i.e. a 6D posterior where first dimension is fixed - this is the variable we want to get the marginal posterior. 
+## Marginal posterior for $\beta_0$
+Similar to above but now integrate out 5D posterior density, i.e. a 6D posterior where first dimension is fixed - this is the variable we want to get the marginal posterior. Note in the R code the parameters is called `a0`.
 
 ```{python genz_a0,include=TRUE,eval=TRUE}
 
@@ -780,6 +780,9 @@ f_interp <- splinefun(py$a0np, py$prob_dens, method = "fmm")
 lines(py$a0np,f_interp(py$a0np),col="magenta")
 
 ```
+
+## Fit BHM Model using Stan via MCMC
+Same model as above but using standard approach of MCMC and this uses the non-centered parameterization to aid in MCMC sampling. 
 
 ```{r stanmodeldef,include=TRUE,echo=TRUE,eval=TRUE}
 library(rstan)
