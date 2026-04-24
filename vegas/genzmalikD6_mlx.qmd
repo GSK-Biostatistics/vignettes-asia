@@ -68,8 +68,8 @@ install_if_missing <- function(packages) {
     }
   }
 }
-install_if_missing(c("numpy","pandas","jax","vegas","gvar","mlx"))
-#use_virtualenv("/mnt/myvenv") # or use custom venv
+#install_if_missing(c("numpy","pandas","jax","vegas","gvar","mlx"))
+use_virtualenv("/Users/gogol/py_env/bayes") # or use custom venv
 ```
 
 ## Data set

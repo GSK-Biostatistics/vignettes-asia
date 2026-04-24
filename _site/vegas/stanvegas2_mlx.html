@@ -184,6 +184,10 @@ window.Quarto = {
  <span class="dropdown-text">Ex.1.1b: BHM Logistic Stan vs Vegas(MLX)</span></a>
   </li>  
         <li>
+    <a class="dropdown-item" href="../vegas/genzmalikD6_mlx.html">
+ <span class="dropdown-text">Ex.1.1c: BHM Logistic Stan vs Genz-Malik(MLX)</span></a>
+  </li>  
+        <li>
     <a class="dropdown-item" href="../vegas/stanvegas2_jax.html">
  <span class="dropdown-text">Ex.1.2a: BHM Basket Logistic Stan vs Vegas(JAX)</span></a>
   </li>  
@@ -454,16 +458,13 @@ y_i &amp;\sim \text{Bernoulli}(p_i)
 <span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
 <span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>stan_fit_2 <span class="ot">&lt;-</span> <span class="fu">sampling</span>(stan_mod_1, <span class="at">data =</span> data_input_1, <span class="at">pars =</span> BHM_pars_1,</span>
 <span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>                       <span class="at">iter =</span> nsamps <span class="sc">+</span> nburnin, <span class="at">warmup =</span> nburnin, <span class="at">chains =</span> nchains)</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: There were 2242 divergent transitions after warmup. See</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: There were 1396 divergent transitions after warmup. See</span></span>
 <span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; https://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup</span></span>
 <span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; to find out why this is a problem and how to eliminate them.</span></span>
 <span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: Examine the pairs() plot to diagnose sampling problems</span></span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.</span></span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Running the chains for more iterations may help. See</span></span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; https://mc-stan.org/misc/warnings.html#tail-ess</span></span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>end_time <span class="sc">-</span> start_time</span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>post_draws_2 <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(stan_fit_2)           <span class="co"># posterior samples of each parameter</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>end_time <span class="sc">-</span> start_time</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>post_draws_2 <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(stan_fit_2)           <span class="co"># posterior samples of each parameter</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
@@ -1600,8 +1601,8 @@ y_i &amp;\sim \text{Bernoulli}(p_i)
 <span id="cb8-74"><a href="#cb8-74" aria-hidden="true" tabindex="-1"></a>    }</span>
 <span id="cb8-75"><a href="#cb8-75" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb8-76"><a href="#cb8-76" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb8-77"><a href="#cb8-77" aria-hidden="true" tabindex="-1"></a><span class="fu">install_if_missing</span>(<span class="fu">c</span>(<span class="st">"numpy"</span>,<span class="st">"pandas"</span>,<span class="st">"jax"</span>,<span class="st">"vegas"</span>,<span class="st">"gvar"</span>,<span class="st">"mlx"</span>))</span>
-<span id="cb8-78"><a href="#cb8-78" aria-hidden="true" tabindex="-1"></a><span class="co">#use_virtualenv("/mnt/myvenv") # or use custom venv</span></span>
+<span id="cb8-77"><a href="#cb8-77" aria-hidden="true" tabindex="-1"></a><span class="co">#install_if_missing(c("numpy","pandas","jax","vegas","gvar","mlx"))</span></span>
+<span id="cb8-78"><a href="#cb8-78" aria-hidden="true" tabindex="-1"></a><span class="fu">use_virtualenv</span>(<span class="st">"/Users/gogol/py_env/bayes"</span>) <span class="co"># or use custom venv</span></span>
 <span id="cb8-79"><a href="#cb8-79" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstan)</span>
 <span id="cb8-80"><a href="#cb8-80" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bayesplot)</span>
 <span id="cb8-81"><a href="#cb8-81" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
