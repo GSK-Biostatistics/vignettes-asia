@@ -1,0 +1,525 @@
+---
+title: "Logistic BHM - RStan v JAGS v Nimble - 1"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+vignette: >
+  %\VignetteIndexEntry{Two-arm trial TFP v RStan}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+# Check if running on GitHub Actions
+# This is important as otherwise Github will attempt to build this and it's missing the python libraries and will fail
+#on_github <- Sys.getenv("GITHUB_ACTIONS") == "true"
+
+# If on GitHub, set eval = FALSE for all subsequent chunks
+#knitr::opts_chunk$set(eval = !on_github)
+
+```
+
+### Quickstart
+This vignette compares the same Bayesian hierarchical model fitted first with Rstan and then with Vegas. The model is a logistic regression. Only key snippets and outputs are shown below. The full vignette is available [here](https://raw.githubusercontent.com/GSK-Biostatistics/vignettes-asia/refs/heads/main/vegas/stanvegas1_jax.qmd). For the equivalent vignette but which uses Apple's MLX framework to run the computation's on a GPU see [here](https://raw.githubusercontent.com/GSK-Biostatistics/vignettes-asia/refs/heads/main/vegas/stanvegas1_mlx.qmd). If available the latter approach is preferred as considerably computationally faster.
+
+### Model Formulation
+
+The model implemented here is a non-centered parameterization (helps improve MCMC sampling) for a logistic model.
+
+$$
+\begin{aligned}
+\mu_0 &\sim \text{Normal}(0, 2.5)\\
+\sigma_0 &\sim \text{Half-Normal}(0, 2.5) \\
+\mu_1 &\sim \text{Normal}(0, 2.5) \\
+\sigma_1 &\sim \text{Half-Normal}(0, 2.5) \\
+\tilde{\theta}_j &\sim \text{Normal}(0, 1)\quad\enspace\text{for}\enspace{j=1,2}  \\
+\beta_0 &= \mu_0 + \sigma_0 \tilde{\theta}_1 \\
+\beta_1 &= \mu_1 + \sigma_1 \tilde{\theta}_2 \\
+\text{logit(}{p_i}) &= \beta_0 + \beta_1 z_i\quad\quad\enspace\enspace\text{for}\enspace{i=1,\dots,N}  \\
+y_i &\sim \text{Bernoulli}(p_i)
+\end{aligned}
+$$
+
+
+```{r rsetup, include=FALSE,eval=TRUE}
+library(rstan)
+library(rjags)
+library(coda)
+library(nimble)
+library(nimbleHMC)
+library(nimbleSCR)
+library(bayesplot)
+library(ggplot2)
+library(kableExtra)
+```
+
+## Data set
+
+The R chunk below creates a simple dataset of three cols:
+
+-   a binary response variable y (0/1 = non-responder/responder),
+-   a (dummy) basket ID variable (=1)
+-   a binary treatment variable (0/1 = control/test treatment)
+
+The basket ID is currently set fixed at 1, denoting there is only one basket in this trial, i.e. a classical two arm randomized trial design. Baskets will be added in other vignettes.
+
+```{r datasets, include=TRUE,eval=TRUE}
+### Prepare model inputs
+set.seed(99999)
+# Set up data
+rr_k_ctrl <- c(0.20)        # control response rate for each basket
+rr_k_trt <- c(0.40)         # treatment response rate for each basket
+
+K<-length(rr_k_ctrl)        # number of baskets
+
+N_k_ctrl <- rep(100, K)     # number of control participants per basket
+N_k_trt <- rep(100, K)      # number of treatment participants per basket
+N_k <- N_k_ctrl + N_k_trt   # number of participants per basket (both arms combined)
+N <- sum(N_k)               # total sample size
+k_vec <- rep(1:K, N_k)      # N x 1 vector of basket indicators (1 to K)
+
+z_vec<-NULL;
+y<-NULL;
+for(i in 1:K){ # for each basket repeat 0-control 1-trt according to the specifc Ns
+  z_vec<-c(z_vec,rep(0:1,c(N_k_ctrl[i],N_k_trt[i]))) # treatment/control indicator
+  y<-c(y,
+       c(rbinom(N_k_ctrl[i],1,rr_k_ctrl[i]), # bernoulli for control
+         rbinom(N_k_trt[i],1,rr_k_trt[i]))) #           for trt
+}
+
+thedata<-data.frame(y,basketID=k_vec,Treatment=z_vec)
+
+```
+
+
+```{r datasetsQ, include=TRUE,eval=TRUE}
+my_table1_object <- head(thedata) %>%
+  kable() %>%
+  kable_styling(full_width = F) %>%
+  column_spec(1, bold = F)#, color = "blue")
+
+my_table1_object
+
+```
+
+## RStan
+
+The code for implementing the above model is RStan is given below. 
+
+```{r stanmodeldef,include=TRUE,echo=TRUE,eval=TRUE}
+### Stan model
+  BHM_stan_1 <- "data {
+  int<lower = 0> K;                     // number of baskets (K >= 2)
+  int<lower = 0> N;                     // total number of participants
+  //int<lower = 0, upper = N> N_k[K];     // K x 1 vector of basket sample sizes
+  int<lower = 0, upper = N> N_k;
+  int<lower = 1, upper = K> k_vec[N];   // N x 1 vector of basket indicators
+  int<lower = 0, upper = 1> z_vec[N];   // N x 1 vector of treatment indicators for active treatment arm
+  int<lower = 0, upper = 1> y[N];       // N x 1 vector of binary responses
+}
+parameters {
+  matrix[K,2] beta_tr;                  // K x 2 matrix of transformed regression coefficients
+  real mu1;                              // scalar of hierarchical mean (log odds ratio)
+  real<lower = 0> sigma1;                  // scalar of hierarchical SD (log odds ratio)
+  real mu0;                              // scalar of hierarchical mean (log odds ratio)
+  real<lower = 0> sigma0;                  // scalar of hierarchical SD (log odds ratio)
+
+}
+transformed parameters {
+  matrix[K,2] beta;                     // K x 2 matrix of regression coefficients (without transformation)
+  // Calculate beta coefs using transformed betas (leads to better mixing)
+  for (k in 1:K){
+    beta[k,1] = mu0 + sigma0 * beta_tr[k,1];
+    beta[k,2] = mu1 + sigma1 * beta_tr[k,2];
+  }
+
+}
+model {
+  mu0 ~ normal(0, 2.5);    // vectorized normal priors for hierarchical means (specify SD in normal distn)
+  sigma0 ~ normal(0, 2.5);       // vectorized half-normal priors for hierarchical SDs (specify SD in normal distn)
+  mu1 ~ normal(0, 2.5);    // vectorized normal priors for hierarchical means (specify SD in normal distn)
+  sigma1 ~ normal(0, 2.5);       // vectorized half-normal priors for hierarchical SDs (specify SD in normal distn)
+  beta_tr[,1] ~ normal(0, 1);  // vectorized normal prior for the log odds for the control arm
+  beta_tr[,2] ~ normal(0, 1);  // vectorized normal prior for the log odds ratios
+  for (i in 1:N)
+    y[i] ~ bernoulli_logit(beta[k_vec[i], 1] + beta[k_vec[i], 2] * z_vec[i]);
+}
+"
+
+```
+
+
+
+```{r stansample,echo=TRUE,include=FALSE,results='hide',eval=TRUE}
+
+# Create list with input values for Stan model
+data_input_1 <- list(
+  K = K,                # number of subgroups
+  N = N,                # total sample size
+  N_k = N_k,            # sample size per basket
+  k_vec = k_vec,        # N x 1 vector of subgroup indicators
+  z_vec = z_vec,        # N x 1 vector of active treatment arm indicators
+  y = y                 # N x 1 vector of binary responses
+  )
+
+
+
+### Compile and fit model
+options(mc.cores = parallel::detectCores())
+# Compile model (only run the line below once for a simulation study - compilation not dependent on any
+# simulation inputs as defined by scenarios or on simulated data)
+stan_mod_1 <- stan_model(model_code = BHM_stan_1)
+# Fit model
+nsamps <- 30000       # number of posterior samples (after removing burn-in) per chain
+nburnin <- 1000       # number of burn-in samples to remove at beginning of each chain
+nchains <- 4          # number of chains
+BHM_pars_1 <- c("mu0", "sigma0","mu1", "sigma1", "beta","beta_tr")     # parameters to sample
+start_time <- Sys.time()
+stan_fit_2 <- sampling(stan_mod_1, data = data_input_1, pars = BHM_pars_1,
+                       iter = nsamps + nburnin, warmup = nburnin, chains = nchains)
+end_time <- Sys.time()
+end_time - start_time
+post_draws_2 <- as.matrix(stan_fit_2)           # posterior samples of each parameter
+
+```
+
+### Diagnostics
+```{r}
+# Log posterior
+lp_fit_2 <- log_posterior(stan_fit_2)
+head(lp_fit_2)
+
+#Nuts patterns
+np_fit_2 <- nuts_params(stan_fit_2)
+head(np_fit_2)
+
+#mcmc parcoord
+color_scheme_set("darkgray")
+posterior_fit_2 <- as.array(stan_fit_2)
+mcmc_parcoord(posterior_fit_2, np = np_fit_2)
+
+
+
+```
+
+### Summarize results
+
+```{r stanresults,fig.width=10, fig.height=6, out.width="100%",eval=TRUE}
+library(bayesplot)
+color_scheme_set("viridisA")
+p<-mcmc_trace(stan_fit_2,"mu0")
+#ggsave("precomputed/vg2_traceplot1_stan.png", p)
+print(p)
+
+plot(stan_fit_2)
+```
+
+
+## JAGS
+
+```{r}
+BHM_jags_1 <- "
+model {
+# Likelihood
+  for (i in 1:N) {
+    logit(p[i]) <- beta0[k_vec[i]] + beta1[k_vec[i]] * z_vec[i]
+    y[i] ~ dbern(p[i])
+  }
+
+  # Hierarchical priors (non-centered)
+  for (k in 1:K) {
+    theta0[k] ~ dnorm(0, 1)
+    theta1[k] ~ dnorm(0, 1)
+
+    beta0[k] <- mu0 + sigma0 * theta0[k]
+    beta1[k] <- mu1 + sigma1 * theta1[k]
+  }
+
+  # Hyperpriors
+  tau <- 1 / (2.5^2)
+
+  mu0 ~ dnorm(0, tau)
+  mu1 ~ dnorm(0, tau)
+
+  sigma0 ~ dnorm(0, tau) T(0,)
+  sigma1 ~ dnorm(0, tau) T(0,)
+  }
+"
+bhm_jags_mod <- jags.model(
+  textConnection(BHM_jags_1),
+  data = data_input_1,
+  n.chains = 4,
+  n.adapt = 10000
+)
+
+update(bhm_jags_mod, 10000)
+
+jags_mod_sim = coda.samples(model = bhm_jags_mod,
+                       variable.names = "mu0",
+                       n.iter = 10000, thin =10)
+
+summary(jags_mod_sim)
+
+plot(jags_mod_sim)
+```
+### JAGS (centred)
+
+```{r}
+BHM_jags_2 <- "
+model {
+
+  for (i in 1:N) {
+    logit(p[i]) <- beta0[k_vec[i]] + beta1[k_vec[i]] * z_vec[i]
+    y[i] ~ dbern(p[i])
+  }
+
+  for (k in 1:K) {
+    beta0[k] ~ dnorm(mu0, tau0)
+    beta1[k] ~ dnorm(mu1, tau1)
+  }
+
+  tau0 <- 1 / (sigma0^2)
+  tau1 <- 1 / (sigma1^2)
+
+  tau_mu <- 1 / (2.5^2)
+
+  mu0 ~ dnorm(0, tau_mu)
+  mu1 ~ dnorm(0, tau_mu)
+
+  sigma0 ~ dunif(0, 3)
+  sigma1 ~ dunif(0, 3)
+}"
+
+bhm_jags_mod <- jags.model(
+  textConnection(BHM_jags_2),
+  data = data_input_1,
+  n.chains = 4,
+  n.adapt = 10000
+)
+
+update(bhm_jags_mod, 10000)
+
+jags_mod_sim = coda.samples(model = bhm_jags_mod,
+                       variable.names = "mu0",
+                       n.iter = 10000, thin =10)
+
+summary(jags_mod_sim)
+
+plot(jags_mod_sim)
+```
+
+
+### NIMBLE with default sampler
+
+```{r}
+nimble_code_1 <- nimbleCode({  
+
+  for (i in 1:N) {
+    # Define the linear predictor separately
+    p[i] <- ilogit(mu0 + sigma0 * beta0_tr[k_vec[i]] + 
+                  (mu1 + sigma1 * beta1_tr[k_vec[i]]) * z_vec[i])
+    y[i] ~ dbern(p[i])
+  }
+
+  for (k in 1:K) {
+    beta0_tr[k] ~ dnorm(0, 1)
+    beta1_tr[k] ~ dnorm(0, 1)
+  }
+
+  tau0 <- 1 / (sigma0^2)
+  tau1 <- 1 / (sigma1^2)
+
+  tau<- 1 / (2.5^2)
+
+  mu0 ~ dnorm(0, tau)
+  mu1 ~ dnorm(0, tau)
+
+  # sigma0 ~ dunif(0, 1)
+  # sigma1 ~ dunif(0, 1)
+  
+  #Trying Half-Cauchy for the sigma parameters
+  sigma0 ~ T(dt(0, 1, 1), 0, ) #(A t-distribution with 1 degree of freedom is a Cauchy)
+  sigma1 ~ T(dt(0, 1, 1), 0, )
+  }
+
+) 
+
+#Initial values
+
+inits <- list(
+  mu0 = 0,
+  mu1 = 0,
+  sigma0 = 1,
+  sigma1 = 1,
+  beta0 = rep(0, data_input_1$K),
+  beta1 = rep(0, data_input_1$K)
+)
+
+# Build model
+K_val <- data_input_1$K
+N_val <- data_input_1$N
+
+model <- nimbleModel(
+  nimble_code_1,
+  # Ensure k_vec is in constants, not data
+  constants = list(
+    N = N_val,
+    K = K_val,
+    k_vec = data_input_1$k_vec,
+    z_vec = data_input_1$z_vec
+  ),
+  data = list(
+    y = data_input_1$y
+  ),
+  inits = inits,
+  dimensions = list(
+    beta0_tr = c(K_val), 
+    beta1_tr = c(K_val),
+    k_vec = c(N_val)    # This is often the missing piece!
+  )
+)
+
+#Configure the default sampler
+# NIMBLE automatically detects conjugacy (Gibbs) and assigns 
+# Adaptive Metropolis to non-conjugate parameters.
+mcmcConf <- configureMCMC(model)
+
+#Build MCMC
+mcmc <- buildMCMC(mcmcConf)
+
+# Compile
+Cmodel <- compileNimble(model)
+
+# Build and compile HMC sampler
+Cmcmc <- compileNimble(mcmc, project = model)
+
+# Run the sampler
+
+samples <- runMCMC(
+  Cmcmc,
+  niter = 20000,
+  nburnin = 5000,
+  thin = 1,
+  nchains = 2,
+  samplesAsCodaMCMC = TRUE
+)
+
+# Diagnosis
+
+library(coda)
+
+plot(samples)
+summary(samples)
+gelman.diag(samples)
+effectiveSize(samples)
+
+```
+
+
+### NIMBLE with HMC
+
+```{r}
+nimble_code_1 <- nimbleCode({  
+
+  for (i in 1:N) {
+    # Define the linear predictor separately
+    p[i] <- ilogit(mu0 + sigma0 * beta0_tr[k_vec[i]] + 
+                  (mu1 + sigma1 * beta1_tr[k_vec[i]]) * z_vec[i])
+    y[i] ~ dbern(p[i])
+  }
+
+  for (k in 1:K) {
+    beta0_tr[k] ~ dnorm(0, 1)
+    beta1_tr[k] ~ dnorm(0, 1)
+  }
+
+  tau0 <- 1 / (sigma0^2)
+  tau1 <- 1 / (sigma1^2)
+
+  tau_mu <- 1 / (2.5^2)
+
+  mu0 ~ dnorm(0, tau_mu)
+  mu1 ~ dnorm(0, tau_mu)
+
+  sigma0 ~ dunif(0, 3)
+  sigma1 ~ dunif(0, 3)
+  }
+
+) 
+
+#Initial values
+
+inits <- list(
+  mu0 = 0,
+  mu1 = 0,
+  sigma0 = 1,
+  sigma1 = 1,
+  beta0 = rep(0, data_input_1$K),
+  beta1 = rep(0, data_input_1$K)
+)
+
+# Build model
+K_val <- data_input_1$K
+N_val <- data_input_1$N
+
+model <- nimbleModel(
+  nimble_code_1,
+  # Ensure k_vec is in constants, not data
+  constants = list(
+    N = N_val,
+    K = K_val,
+    k_vec = data_input_1$k_vec,
+    z_vec = data_input_1$z_vec
+  ),
+  data = list(
+    y = data_input_1$y
+  ),
+  inits = inits,
+  dimensions = list(
+    beta0_tr = c(K_val), 
+    beta1_tr = c(K_val),
+    k_vec = c(N_val)    # This is often the missing piece!
+  ),
+  buildDerivs = TRUE
+)
+
+# Compile
+Cmodel <- compileNimble(model)
+
+# Key step: Configure HMC
+
+conf <- configureHMC(model)
+conf$printSamplers()
+
+# Build and compile HMC sampler
+Rmcmc <- buildMCMC(conf)
+Cmcmc <- compileNimble(Rmcmc, project = model)
+
+# Run the sampler
+
+samples <- runMCMC(
+  Cmcmc,
+  niter = 20000,
+  nburnin = 5000,
+  thin = 1,
+  nchains = 2,
+  samplesAsCodaMCMC = TRUE
+)
+
+# Diagnosis
+
+library(coda)
+
+plot(samples)
+summary(samples)
+gelman.diag(samples)
+effectiveSize(samples)
+
+```
