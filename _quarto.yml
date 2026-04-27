@@ -76,9 +76,9 @@ website:
          # - text: "Getting Started"
           #  file: tfp/index_tfp.qmd
         - text: "---" # Separator line
-        - text: "Ex.1.1 BHM Logistic Stan vs JAGS vs Nimble"
+        - text: "Ex.1.1 BHM Logistic: Stan vs JAGS vs Nimble"
           file: jags_nimble/stan_jags_nimble1.qmd
-        - text: "Ex.1.2 BHM Basken Stan vs JAGS vs Nimble"
+        - text: "Ex.1.2 BHM Basket: Stan vs JAGS vs Nimble"
           file: jags_nimble/stan_jags_nimble2.qmd
       
 
