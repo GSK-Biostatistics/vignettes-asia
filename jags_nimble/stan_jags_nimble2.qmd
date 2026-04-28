@@ -1,5 +1,5 @@
 ---
-title: "Logistic BHM - RStan v JAGS v Nimble - 1"
+title: "BHM Basket Trial Logistic Regression - RStan v JAGS v Nimble"
 output:
   rmarkdown::html_vignette:
     toc: true
@@ -27,7 +27,7 @@ knitr::opts_chunk$set(
 ```
 
 ## Quick start
-This vignette compares the same Bayesian hierarchical model fitted first with Rstan and then with Vegas, and is similar the previous vignette for a logistic regression but extened to a basket trial design scenario with two baskets. Only key snippets and outputs are shown below. The full vignette is available [here](https://raw.githubusercontent.com/GSK-Biostatistics/vignettes-asia/refs/heads/main/vegas/stanvegas2_jax.qmd). For the equivalent vignette but which uses Apple's MLX framework to run the computation's on a GPU see [here](https://raw.githubusercontent.com/GSK-Biostatistics/vignettes-asia/refs/heads/main/vegas/stanvegas2_mlx.qmd). A GPU can offer a considerable reduction in computational time.
+This vignette compares the same Bayesian hierarchical model fitted with Rstan, JAGS and Nimble, and is similar the previous vignette for a logistic regression but extened to a basket trial design scenario with two baskets. Only key snippets and outputs are shown below. The full vignette is available at [here](https://raw.githubusercontent.com/GSK-Biostatistics/vignettes-asia/refs/heads/main/jags_nimble/stan_jags_nimble2.qmd.qmd). 
 
 ### Model Formulation
 
@@ -202,7 +202,7 @@ beta_stan <- extract(stan_fit_2,"beta[1,1]")$"beta[1,1]"
 ```
 
 ### Diagnostics
-```{r}
+```{r, standiag, eval=TRUE, include=FALSE}
 # Log posterior
 lp_fit_2 <- log_posterior(stan_fit_2)
 head(lp_fit_2)
@@ -238,7 +238,7 @@ plot(stan_fit_2)
 
 ### JAGS
 
-```{r}
+```{r, jagsmod, include=FALSE,results='hide',eval=TRUE}
 BHM_jags_2 <- "
 model {
 for (i in 1:N) {
@@ -293,7 +293,7 @@ beta_jags <- mat_jags[, "beta[1,1]"]
 
 ### NIMBLE with default sampler
 
-```{r}
+```{r, nimblemod, include=TRUE, results='hide',eval=TRUE}
 nimble_code_1 <- nimbleCode({  
 
   for (i in 1:N) {
@@ -408,7 +408,7 @@ beta_nimble1 <- all_samples[, "beta[1, 1]"]
 
 ### NIMBLE with HMC
 
-```{r}
+```{r, nimblehmc, include=TRUE, results='hide',eval=TRUE}
 nimble_code_1 <- nimbleCode({  
 
   for (i in 1:N) {
@@ -519,7 +519,7 @@ beta_nimble2 <- all_samples[, "beta[1, 1]"]
 
 ### Plot and compare
 
-```{r, plot_res}
+```{r, plot_res, plot_res, eval=TRUE, include=TRUE}
 df <- data.frame(
   value = c(beta_stan, beta_jags, beta_nimble1, beta_nimble2),
   source = factor(rep(
