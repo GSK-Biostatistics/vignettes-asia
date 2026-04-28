@@ -1,71 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://GSK-Biostatistics.github.io/vignettes-asia/index.html</loc>
-    <lastmod>2026-04-27T10:47:26.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://GSK-Biostatistics.github.io/vignettes-asia/vegas/index_vegas.html</loc>
-    <lastmod>2026-04-27T10:47:26.004Z</lastmod>
-  </url>
-  <url>
-    <loc>https://GSK-Biostatistics.github.io/vignettes-asia/vegas/stanvegas2_mlx.html</loc>
-    <lastmod>2026-04-27T10:47:26.004Z</lastmod>
-  </url>
-  <url>
-    <loc>https://GSK-Biostatistics.github.io/vignettes-asia/vegas/stanvegas2_jax.html</loc>
-    <lastmod>2026-04-27T10:47:26.004Z</lastmod>
-  </url>
-  <url>
-    <loc>https://GSK-Biostatistics.github.io/vignettes-asia/tfp/intro_model_build.html</loc>
-    <lastmod>2026-04-27T10:47:26.003Z</lastmod>
-  </url>
-  <url>
-    <loc>https://GSK-Biostatistics.github.io/vignettes-asia/tfp/intro_neg_bin_tfp_stan.html</loc>
-    <lastmod>2026-04-27T10:47:26.003Z</lastmod>
-  </url>
-  <url>
-    <loc>https://GSK-Biostatistics.github.io/vignettes-asia/tfp/intro_2armstan.html</loc>
-    <lastmod>2026-04-27T10:47:26.003Z</lastmod>
-  </url>
-  <url>
-    <loc>https://GSK-Biostatistics.github.io/vignettes-asia/jags_nimble/stan_jags_nimble1.html</loc>
-    <lastmod>2026-04-27T10:47:26.002Z</lastmod>
-  </url>
-  <url>
-    <loc>https://GSK-Biostatistics.github.io/vignettes-asia/jags_nimble/stan_jags_nimble.html</loc>
-    <lastmod>2026-04-27T10:47:26.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://GSK-Biostatistics.github.io/vignettes-asia/jags_nimble/stan_jags_nimble2.html</loc>
-    <lastmod>2026-04-27T10:47:26.002Z</lastmod>
-  </url>
-  <url>
     <loc>https://GSK-Biostatistics.github.io/vignettes-asia/ml/ml_gnn_example1.html</loc>
-    <lastmod>2026-04-27T10:47:26.002Z</lastmod>
-  </url>
-  <url>
-    <loc>https://GSK-Biostatistics.github.io/vignettes-asia/tfp/index_tfp.html</loc>
-    <lastmod>2026-04-27T10:47:26.002Z</lastmod>
-  </url>
-  <url>
-    <loc>https://GSK-Biostatistics.github.io/vignettes-asia/tfp/intro_normal_tf_stan.html</loc>
-    <lastmod>2026-04-27T10:47:26.003Z</lastmod>
-  </url>
-  <url>
-    <loc>https://GSK-Biostatistics.github.io/vignettes-asia/vegas/stanvegas1_mlx.html</loc>
-    <lastmod>2026-04-27T10:47:26.004Z</lastmod>
+    <lastmod>2026-04-28T02:25:16.894Z</lastmod>
   </url>
   <url>
     <loc>https://GSK-Biostatistics.github.io/vignettes-asia/vegas/stanvegas1_jax.html</loc>
-    <lastmod>2026-04-27T10:47:26.004Z</lastmod>
+    <lastmod>2026-04-28T02:25:16.896Z</lastmod>
   </url>
   <url>
-    <loc>https://GSK-Biostatistics.github.io/vignettes-asia/vegas/genzmalikD6_mlx.html</loc>
-    <lastmod>2026-04-27T10:47:26.003Z</lastmod>
+    <loc>https://GSK-Biostatistics.github.io/vignettes-asia/vegas/stanvegas2_jax.html</loc>
+    <lastmod>2026-04-28T02:25:16.896Z</lastmod>
+  </url>
+  <url>
+    <loc>https://GSK-Biostatistics.github.io/vignettes-asia/vegas/stanvegas1_mlx.html</loc>
+    <lastmod>2026-04-28T02:25:16.896Z</lastmod>
   </url>
   <url>
     <loc>https://GSK-Biostatistics.github.io/vignettes-asia/about.html</loc>
-    <lastmod>2026-04-27T10:47:26.000Z</lastmod>
+    <lastmod>2026-04-28T02:25:16.893Z</lastmod>
+  </url>
+  <url>
+    <loc>https://GSK-Biostatistics.github.io/vignettes-asia/jags_nimble/stan_jags_nimble2.html</loc>
+    <lastmod>2026-04-28T02:25:16.894Z</lastmod>
+  </url>
+  <url>
+    <loc>https://GSK-Biostatistics.github.io/vignettes-asia/tfp/intro_neg_bin_tfp_stan.html</loc>
+    <lastmod>2026-04-28T02:25:16.895Z</lastmod>
+  </url>
+  <url>
+    <loc>https://GSK-Biostatistics.github.io/vignettes-asia/tfp/intro_model_build.html</loc>
+    <lastmod>2026-04-28T02:25:16.895Z</lastmod>
+  </url>
+  <url>
+    <loc>https://GSK-Biostatistics.github.io/vignettes-asia/tfp/intro_normal_tf_stan.html</loc>
+    <lastmod>2026-04-28T02:25:16.895Z</lastmod>
+  </url>
+  <url>
+    <loc>https://GSK-Biostatistics.github.io/vignettes-asia/tfp/index_tfp.html</loc>
+    <lastmod>2026-04-28T02:25:16.895Z</lastmod>
+  </url>
+  <url>
+    <loc>https://GSK-Biostatistics.github.io/vignettes-asia/tfp/intro_2armstan.html</loc>
+    <lastmod>2026-04-28T02:25:16.895Z</lastmod>
+  </url>
+  <url>
+    <loc>https://GSK-Biostatistics.github.io/vignettes-asia/jags_nimble/stan_jags_nimble1.html</loc>
+    <lastmod>2026-04-28T02:25:16.894Z</lastmod>
+  </url>
+  <url>
+    <loc>https://GSK-Biostatistics.github.io/vignettes-asia/jags_nimble/stan_jags_nimble.html</loc>
+    <lastmod>2026-04-28T02:25:16.893Z</lastmod>
+  </url>
+  <url>
+    <loc>https://GSK-Biostatistics.github.io/vignettes-asia/vegas/index_vegas.html</loc>
+    <lastmod>2026-04-28T02:25:16.896Z</lastmod>
+  </url>
+  <url>
+    <loc>https://GSK-Biostatistics.github.io/vignettes-asia/vegas/stanvegas2_mlx.html</loc>
+    <lastmod>2026-04-28T02:25:16.896Z</lastmod>
+  </url>
+  <url>
+    <loc>https://GSK-Biostatistics.github.io/vignettes-asia/vegas/genzmalikD6_mlx.html</loc>
+    <lastmod>2026-04-28T02:25:16.895Z</lastmod>
+  </url>
+  <url>
+    <loc>https://GSK-Biostatistics.github.io/vignettes-asia/index.html</loc>
+    <lastmod>2026-04-28T02:25:16.893Z</lastmod>
   </url>
 </urlset>
