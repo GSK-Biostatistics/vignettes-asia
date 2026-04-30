@@ -1,0 +1,625 @@
+---
+title: "exnex_test"
+format: html
+editor: visual
+---
+
+### Data preparation
+
+```{r}
+### Prepare model inputs
+set.seed(99999)
+# Set up data
+rr_k_ctrl <- c(0.15,0.15, 0.20, 0.20)        # control response rate for each basket
+rr_k_trt <- c(0.30,0.30, 0.50, 0.50)         # treatment response rate for each basket
+
+K<-length(rr_k_ctrl)        # number of baskets
+
+N_k_ctrl <- rep(50, K)     # number of control participants per basket
+N_k_trt <- rep(50, K)      # number of treatment participants per basket
+N_k <- N_k_ctrl + N_k_trt   # number of participants per basket (both arms combined)
+N <- sum(N_k)               # total sample size
+k_vec <- rep(1:K, N_k)      # N x 1 vector of basket indicators (1 to K)
+
+z_vec<-NULL;
+y<-NULL;
+for(i in 1:K){ # for each basket repeat 0-control 1-trt according to the specifc Ns
+  z_vec<-c(z_vec,rep(0:1,c(N_k_ctrl[i],N_k_trt[i]))) # treatment/control indicator
+  y<-c(y,
+       c(rbinom(N_k_ctrl[i],1,rr_k_ctrl[i]), # bernoulli for control
+         rbinom(N_k_trt[i],1,rr_k_trt[i]))) #           for trt
+}
+
+thedata<-data.frame(y,basketID=k_vec,Treatment=z_vec)
+
+```
+
+### EXNEX Stan
+
+Centered parametirization
+
+```{r}
+EXNEX_stan_1 <- "data {
+  int<lower = 1> K;                   // number of baskets
+  int<lower = 1> N;                   // total number of participants
+  array[N] int<lower = 1, upper = K> k_vec;   // basket index per subject
+  array[N] int<lower = 0, upper = 1> z_vec;   // treatment indicator (1=active)
+  array[N] int<lower = 0, upper = 1> y;       // binary response
+
+  // Mixture weights: EX vs NEX (must sum to 1)
+  simplex[2] pMix;                    // pMix[1]=Pr(EX), pMix[2]=Pr(NEX)
+
+  
+}
+
+parameters {
+  // Basket-specific parameters used in the likelihood
+  vector[K] beta0;                    // intercepts (control log-odds)
+  vector[K] beta1;                    // treatment effects (log-OR)
+
+  // EX hierarchical hyperparameters
+  real mu0;
+  real<lower=0> sigma0;
+  real mu1;
+  real<lower=0> sigma1;
+  
+  // NEX priors 
+  real nex_mu0;                       // NEX mean for control-arm log-odds (intercept)
+  real<lower=0> nex_sigma0;           // NEX SD for control-arm log-odds
+  real nex_mu1;                       // NEX mean for treatment effect (log-OR)
+  real<lower=0> nex_sigma1;           // NEX SD for treatment effect
+}
+
+model {
+  // EX hyperpriors
+  mu0 ~ normal(0, 1);
+  sigma0 ~ normal(0, 10);            // half-normal due to <lower=0>
+  mu1 ~ normal(0, 1);
+  sigma1 ~ normal(0, 10);            // half-normal due to <lower=0>
+  
+  // NEX hyperpriors
+  nex_mu0 ~ normal(0, 1);
+  nex_sigma0 ~ normal(0, 2.5);            // half-normal due to <lower=0>
+  nex_mu1 ~ normal(0, 1);
+  nex_sigma1 ~ normal(0, 2.5);            // half-normal due to <lower=0>
+
+  // EX/NEX mixture prior for each basket's (beta0[k], beta1[k])
+
+  for (k in 1:K) {
+    real lp_ex =
+      normal_lpdf(beta0[k] | mu0, sigma0) +
+      normal_lpdf(beta1[k] | mu1, sigma1);
+
+    real lp_nex =
+      normal_lpdf(beta0[k] | nex_mu0, nex_sigma0) +
+      normal_lpdf(beta1[k] | nex_mu1, nex_sigma1);
+
+    target += log_mix(pMix[1], lp_ex, lp_nex);
+  }
+
+  // Likelihood
+  for (i in 1:N) {
+    y[i] ~ bernoulli_logit(beta0[k_vec[i]] + beta1[k_vec[i]] * z_vec[i]);
+  }
+}
+
+generated quantities {
+  // Posterior responsibilities Pr(EX|...) and Pr(NEX|...) per basket
+  matrix[K, 2] post_prob;
+
+  // A draw of the latent class label (like dcat) per basket
+  array[K] int<lower=1, upper=2> class_k;   // 1=EX, 2=NEX
+
+  // Optional: implied response probabilities under control/active per basket
+  vector[K] p_control;
+  vector[K] p_active;
+
+  for (k in 1:K) {
+    real lp_ex =
+      log(pMix[1]) +
+      normal_lpdf(beta0[k] | mu0, sigma0) +
+      normal_lpdf(beta1[k] | mu1, sigma1);
+
+    real lp_nex =
+      log(pMix[2]) +
+      normal_lpdf(beta0[k] | nex_mu0, nex_sigma0) +
+      normal_lpdf(beta1[k] | nex_mu1, nex_sigma1);
+
+    // convert to probabilities
+    {
+      vector[2] lp;
+      vector[2] pr;
+      lp[1] = lp_ex;
+      lp[2] = lp_nex;
+      pr = softmax(lp);
+
+      post_prob[k, 1] = pr[1];
+      post_prob[k, 2] = pr[2];
+      class_k[k] = categorical_rng(pr);
+    }
+
+    p_control[k] = inv_logit(beta0[k]);
+    p_active[k]  = inv_logit(beta0[k] + beta1[k]);
+  }
+}"
+```
+
+```{r rsetup, include=FALSE,eval=TRUE}
+library(rstan)
+library(bayesplot)
+library(ggplot2)
+library(kableExtra)
+```
+
+###Setup and run sampler
+
+```{r}
+# Create list with input values for Stan model
+data_input_1 <- list(
+  K = K,                # number of subgroups
+  N = N,                # total sample size
+  N_k = N_k,            # sample size per basket
+  k_vec = k_vec,        # N x 1 vector of subgroup indicators
+  z_vec = z_vec,        # N x 1 vector of active treatment arm indicators
+  y = y,                 # N x 1 vector of binary responses
+  pMix = c(0.5, 0.5)
+  )
+
+
+
+### Compile and fit model
+options(mc.cores = parallel::detectCores())
+# Compile model (only run the line below once for a simulation study - compilation not dependent on any
+# simulation inputs as defined by scenarios or on simulated data)
+stan_mod_1 <- stan_model(model_code = EXNEX_stan_1)
+# Fit model
+nsamps <- 30000       # number of posterior samples (after removing burn-in) per chain
+nburnin <- 1000       # number of burn-in samples to remove at beginning of each chain
+nchains <- 4          # number of chains
+#BHM_pars_1 <- c("beta","mu0", "sigma0","mu1", "sigma1", "beta","beta_tr")     # parameters to sample
+start_time <- Sys.time()
+stan_fit_2 <- sampling(stan_mod_1, data = data_input_1, 
+                       #pars = BHM_pars_1,
+                       iter = nsamps + nburnin, warmup = nburnin, chains = nchains)
+
+end_time <- Sys.time()
+end_time - start_time
+post_draws <- as.matrix(stan_fit_2)           # posterior samples of each parameter
+```
+
+```{r}
+EXNEX_stan_2 <- "
+data {
+  int<lower = 1> K;                         // number of baskets
+  int<lower = 1> N;                         // total number of participants
+  array[N] int<lower = 1, upper = K> k_vec; // basket index per subject
+  array[N] int<lower = 0, upper = 1> z_vec; // treatment indicator (1=active)
+  array[N] int<lower = 0, upper = 1> y;     // binary response
+
+  simplex[2] pMix;                          // pMix[1]=Pr(EX), pMix[2]=Pr(NEX)
+}
+
+parameters {
+  // EX hyperparameters
+  real mu0;
+  real<lower=0> sigma0;
+  real mu1;
+  real<lower=0> sigma1;
+
+  // NEX hyperparameters (you made these parameters, not fixed data)
+  real nex_mu0;
+  real<lower=0> nex_sigma0;
+  real nex_mu1;
+  real<lower=0> nex_sigma1;
+
+  // Non-centered (raw) basket-level parameters for EX component
+  vector[K] beta0_ex_raw;
+  vector[K] beta1_ex_raw;
+
+  // Non-centered (raw) basket-level parameters for NEX component
+  vector[K] beta0_nex_raw;
+  vector[K] beta1_nex_raw;
+}
+
+transformed parameters {
+  // Component-specific basket-level coefficients
+  vector[K] beta0_ex = mu0     + sigma0     * beta0_ex_raw;
+  vector[K] beta1_ex = mu1     + sigma1     * beta1_ex_raw;
+
+  vector[K] beta0_nex = nex_mu0 + nex_sigma0 * beta0_nex_raw;
+  vector[K] beta1_nex = nex_mu1 + nex_sigma1 * beta1_nex_raw;
+}
+
+model {
+  // EX hyperpriors
+  mu0 ~ normal(0, 2.5);
+  sigma0 ~ normal(0, 2.5);   // half-normal via <lower=0>
+  mu1 ~ normal(0, 2.5);
+  sigma1 ~ normal(0, 2.5);
+
+  // NEX hyperpriors
+  nex_mu0 ~ normal(0, 1);
+  nex_sigma0 ~ normal(0, 1);
+  nex_mu1 ~ normal(0, 1);
+  nex_sigma1 ~ normal(0, 1);
+
+  // Non-centered raw priors
+  beta0_ex_raw  ~ normal(0, 1);
+  beta1_ex_raw  ~ normal(0, 1);
+  beta0_nex_raw ~ normal(0, 1);
+  beta1_nex_raw ~ normal(0, 1);
+
+  // Basket-level mixture likelihood (marginalized indicator)
+  {
+    vector[K] lp_ex  = rep_vector(0.0, K);
+    vector[K] lp_nex = rep_vector(0.0, K);
+
+    // accumulate log-likelihood contributions per basket under each component
+    for (i in 1:N) {
+      int k = k_vec[i];
+      lp_ex[k]  += bernoulli_logit_lpmf(y[i] | beta0_ex[k]  + beta1_ex[k]  * z_vec[i]);
+      lp_nex[k] += bernoulli_logit_lpmf(y[i] | beta0_nex[k] + beta1_nex[k] * z_vec[i]);
+    }
+
+    // mix at the basket level
+    for (k in 1:K) {
+      target += log_mix(pMix[1], lp_ex[k], lp_nex[k]);
+    }
+  }
+}
+
+generated quantities {
+  matrix[K, 2] post_prob;
+  array[K] int<lower=1, upper=2> class_k;
+
+  vector[K] p_control;
+  vector[K] p_active;
+
+  // recompute per-basket responsibilities using the basket-level likelihood pieces
+  {
+    vector[K] lp_ex  = rep_vector(0.0, K);
+    vector[K] lp_nex = rep_vector(0.0, K);
+
+    for (i in 1:N) {
+      int k = k_vec[i];
+      lp_ex[k]  += bernoulli_logit_lpmf(y[i] | beta0_ex[k]  + beta1_ex[k]  * z_vec[i]);
+      lp_nex[k] += bernoulli_logit_lpmf(y[i] | beta0_nex[k] + beta1_nex[k] * z_vec[i]);
+    }
+
+    for (k in 1:K) {
+      vector[2] lp;
+      vector[2] pr;
+
+      lp[1] = log(pMix[1]) + lp_ex[k];
+      lp[2] = log(pMix[2]) + lp_nex[k];
+      pr = softmax(lp);
+
+      post_prob[k, 1] = pr[1];
+      post_prob[k, 2] = pr[2];
+      class_k[k] = categorical_rng(pr);
+
+      // mixture-averaged control/active response probabilities for basket k
+      p_control[k] = pr[1] * inv_logit(beta0_ex[k]) +
+                     pr[2] * inv_logit(beta0_nex[k]);
+
+      p_active[k]  = pr[1] * inv_logit(beta0_ex[k]  + beta1_ex[k]) +
+                     pr[2] * inv_logit(beta0_nex[k] + beta1_nex[k]);
+    }
+  }
+}
+"
+```
+
+```{r}
+### Compile and fit model
+options(mc.cores = parallel::detectCores())
+# Compile model (only run the line below once for a simulation study - compilation not dependent on any
+# simulation inputs as defined by scenarios or on simulated data)
+stan_mod_1 <- stan_model(model_code = EXNEX_stan_2)
+# Fit model
+nsamps <- 30000       # number of posterior samples (after removing burn-in) per chain
+nburnin <- 1000       # number of burn-in samples to remove at beginning of each chain
+nchains <- 4          # number of chains
+#BHM_pars_1 <- c("beta","mu0", "sigma0","mu1", "sigma1", "beta","beta_tr")     # parameters to sample
+start_time <- Sys.time()
+stan_fit_2 <- sampling(stan_mod_1, data = data_input_1, 
+                       #pars = BHM_pars_1,
+                       iter = nsamps + nburnin, warmup = nburnin, chains = nchains)
+
+end_time <- Sys.time()
+end_time - start_time
+post_draws <- as.matrix(stan_fit_2)           # posterior samples of each parameter
+```
+
+### Non-centered 2
+
+From Jules
+
+```{r}
+
+EXNEX_stan_3 <- "data {
+  int<lower = 1> K;
+  int<lower = 1> N;
+  array[N] int<lower = 1, upper = K> k_vec;
+  array[N] int<lower = 0, upper = 1> z_vec;
+  array[N] int<lower = 0, upper = 1> y;
+
+  simplex[2] pMix;  // pMix[1]=EX, pMix[2]=NEX
+}
+
+parameters {
+  // EX hyperparameters
+  real mu0;
+  real<lower=0> sigma0;
+  real mu1;
+  real<lower=0> sigma1;
+
+  // NEX hyperparameters (if you truly want to estimate them)
+  real nex_mu0;
+  real<lower=0> nex_sigma0;
+  real nex_mu1;
+  real<lower=0> nex_sigma1;
+
+  // non-centered basket effects for EX and NEX
+  vector[K] beta0_ex_raw;
+  vector[K] beta1_ex_raw;
+  vector[K] beta0_nex_raw;
+  vector[K] beta1_nex_raw;
+}
+
+transformed parameters {
+  vector[K] beta0_ex  = mu0      + sigma0      * beta0_ex_raw;
+  vector[K] beta1_ex  = mu1      + sigma1      * beta1_ex_raw;
+  vector[K] beta0_nex = nex_mu0  + nex_sigma0  * beta0_nex_raw;
+  vector[K] beta1_nex = nex_mu1  + nex_sigma1  * beta1_nex_raw;
+}
+
+model {
+  // hyperpriors (yours)
+  mu0 ~ normal(0, 2.5);
+  sigma0 ~ normal(0, 2.5);
+  mu1 ~ normal(0, 2.5);
+  sigma1 ~ normal(0, 2.5);
+
+  nex_mu0 ~ normal(0, 1);
+  nex_sigma0 ~ normal(0, 1);
+  nex_mu1 ~ normal(0, 1);
+  nex_sigma1 ~ normal(0, 1);
+
+  // raw priors
+  beta0_ex_raw  ~ normal(0, 1);
+  beta1_ex_raw  ~ normal(0, 1);
+  beta0_nex_raw ~ normal(0, 1);
+  beta1_nex_raw ~ normal(0, 1);
+
+  // basket-level mixture likelihood
+  {
+    vector[K] lp_ex  = rep_vector(0.0, K);
+    vector[K] lp_nex = rep_vector(0.0, K);
+
+    for (i in 1:N) {
+      int k = k_vec[i];
+      lp_ex[k]  += bernoulli_logit_lpmf(y[i] | beta0_ex[k]  + beta1_ex[k]  * z_vec[i]);
+      lp_nex[k] += bernoulli_logit_lpmf(y[i] | beta0_nex[k] + beta1_nex[k] * z_vec[i]);
+    }
+
+    for (k in 1:K) {
+      target += log_mix(pMix[1], lp_ex[k], lp_nex[k]);
+    }
+  }
+}
+
+generated quantities {
+  matrix[K, 2] post_prob;
+  array[K] int<lower=1, upper=2> class_k;
+
+  vector[K] p_control;
+  vector[K] p_active;
+
+  {
+    vector[K] lp_ex  = rep_vector(0.0, K);
+    vector[K] lp_nex = rep_vector(0.0, K);
+
+    for (i in 1:N) {
+      int k = k_vec[i];
+      lp_ex[k]  += bernoulli_logit_lpmf(y[i] | beta0_ex[k]  + beta1_ex[k]  * z_vec[i]);
+      lp_nex[k] += bernoulli_logit_lpmf(y[i] | beta0_nex[k] + beta1_nex[k] * z_vec[i]);
+    }
+
+    for (k in 1:K) {
+      vector[2] lp;
+      vector[2] pr;
+
+      lp[1] = log(pMix[1]) + lp_ex[k];
+      lp[2] = log(pMix[2]) + lp_nex[k];
+      pr = softmax(lp);
+
+      post_prob[k,1] = pr[1];
+      post_prob[k,2] = pr[2];
+      class_k[k] = categorical_rng(pr);
+
+      // mixture-averaged probabilities (optional)
+      p_control[k] =
+        pr[1] * inv_logit(beta0_ex[k]) +
+        pr[2] * inv_logit(beta0_nex[k]);
+
+      p_active[k] =
+        pr[1] * inv_logit(beta0_ex[k] + beta1_ex[k]) +
+        pr[2] * inv_logit(beta0_nex[k] + beta1_nex[k]);
+    }
+  }
+}"
+
+```
+
+```{r}
+
+### Compile and fit model
+options(mc.cores = parallel::detectCores())
+# Compile model (only run the line below once for a simulation study - compilation not dependent on any
+# simulation inputs as defined by scenarios or on simulated data)
+stan_mod_1 <- stan_model(model_code = EXNEX_stan_3)
+# Fit model
+nsamps <- 30000       # number of posterior samples (after removing burn-in) per chain
+nburnin <- 1000       # number of burn-in samples to remove at beginning of each chain
+nchains <- 4          # number of chains
+#BHM_pars_1 <- c("beta","mu0", "sigma0","mu1", "sigma1", "beta","beta_tr")     # parameters to sample
+start_time <- Sys.time()
+stan_fit_2 <- sampling(stan_mod_1, data = data_input_1, 
+                       #pars = BHM_pars_1,
+                       iter = nsamps + nburnin, warmup = nburnin, chains = nchains)
+
+end_time <- Sys.time()
+end_time - start_time
+post_draws <- as.matrix(stan_fit_2)           # posterior samples of each parameter
+```
+
+### 
+
+```{r}
+
+test_model1 <- "
+data {
+  int<lower=1> K;
+  int<lower=1> N;
+  array[N] int<lower=1, upper=K> k_vec;
+  array[N] int<lower=0, upper=1> z_vec;
+  array[N] int<lower=0, upper=1> y;
+
+
+  // fixed NEX priors, stratum-specific
+  vector[K] nex_mu0;
+  vector<lower=0>[K] nex_sigma0;
+  vector[K] nex_mu1;
+  vector<lower=0>[K] nex_sigma1;
+}
+
+parameters {
+  vector<lower=0, upper=1>[K] pi; // Mixture prob
+  // EX hyperparameters
+  real mu0;
+  real<lower=0> sigma0;
+  real mu1;
+  real<lower=0> sigma1;
+
+  // non-centered stratum parameters for each component
+  vector[K] beta0_ex_raw;
+  vector[K] beta1_ex_raw;
+  vector[K] beta0_nex_raw;
+  vector[K] beta1_nex_raw;
+}
+
+transformed parameters {
+  vector[K] beta0_ex  = mu0 + sigma0 * beta0_ex_raw;
+  vector[K] beta1_ex  = mu1 + sigma1 * beta1_ex_raw;
+
+  // NEX: no pooling; each stratum uses its fixed mean/sd
+  vector[K] beta0_nex = nex_mu0 + nex_sigma0 .* beta0_nex_raw;
+  vector[K] beta1_nex = nex_mu1 + nex_sigma1 .* beta1_nex_raw;
+}
+
+model {
+  pi ~ beta(50, 50);
+  // EX hyperpriors (example; tune as desired)
+  mu0 ~ normal(0, 10);
+  sigma0 ~ normal(0, 1);
+  mu1 ~ normal(0, 10);
+  sigma1 ~ normal(0, 1);
+
+  // raw priors (non-centered)
+  beta0_ex_raw  ~ normal(0, 1);
+  beta1_ex_raw  ~ normal(0, 1);
+  beta0_nex_raw ~ normal(0, 1);
+  beta1_nex_raw ~ normal(0, 1);
+
+  // stratum-level mixture likelihood
+  {
+    vector[K] ll_ex  = rep_vector(0.0, K);
+    vector[K] ll_nex = rep_vector(0.0, K);
+
+    for (i in 1:N) {
+      int k = k_vec[i];
+      ll_ex[k]  += bernoulli_logit_lpmf(y[i] | beta0_ex[k]  + beta1_ex[k]  * z_vec[i]);
+      ll_nex[k] += bernoulli_logit_lpmf(y[i] | beta0_nex[k] + beta1_nex[k] * z_vec[i]);
+    }
+
+    for (k in 1:K)
+      target += log_mix(pi[K], ll_ex[k], ll_nex[k]);
+  }
+}
+
+generated quantities {
+  // posterior responsibility per stratum + stratum arm probabilities
+  matrix[K, 2] post_prob;
+  vector[K] p_control;
+  vector[K] p_treat;
+
+  {
+    vector[K] ll_ex  = rep_vector(0.0, K);
+    vector[K] ll_nex = rep_vector(0.0, K);
+
+    for (i in 1:N) {
+      int k = k_vec[i];
+      ll_ex[k]  += bernoulli_logit_lpmf(y[i] | beta0_ex[k]  + beta1_ex[k]  * z_vec[i]);
+      ll_nex[k] += bernoulli_logit_lpmf(y[i] | beta0_nex[k] + beta1_nex[k] * z_vec[i]);
+    }
+
+    for (k in 1:K) {
+      vector[2] lp = [ log(pMix[1]) + ll_ex[k],  log(pMix[2]) + ll_nex[k] ]';
+      vector[2] pr = softmax(lp);
+
+      post_prob[k,1] = pr[1];
+      post_prob[k,2] = pr[2];
+
+      // mixture-averaged arm probabilities
+      p_control[k] =
+        pr[1] * inv_logit(beta0_ex[k]) +
+        pr[2] * inv_logit(beta0_nex[k]);
+
+      p_treat[k] =
+        pr[1] * inv_logit(beta0_ex[k] + beta1_ex[k]) +
+        pr[2] * inv_logit(beta0_nex[k] + beta1_nex[k]);
+    }
+  }
+}"
+
+```
+
+###Setup and run sampler
+
+```{r}
+# Create list with input values for Stan model
+data_input_1 <- list(
+  K = K,                # number of subgroups
+  N = N,                # total sample size
+  N_k = N_k,            # sample size per basket
+  k_vec = k_vec,        # N x 1 vector of subgroup indicators
+  z_vec = z_vec,        # N x 1 vector of active treatment arm indicators
+  y = y,                 # N x 1 vector of binary responses
+  nex_mu0 = c(0, 0, 0, 0),
+  nex_sigma0 = c(5, 5, 5, 5),
+  nex_mu1 = c(0, 0, 0, 0),
+  nex_sigma1 = c(5, 5, 5, 5)
+  )
+
+
+
+### Compile and fit model
+options(mc.cores = parallel::detectCores())
+# Compile model (only run the line below once for a simulation study - compilation not dependent on any
+# simulation inputs as defined by scenarios or on simulated data)
+stan_mod_1 <- stan_model(model_code = test_model1)
+# Fit model
+nsamps <- 30000       # number of posterior samples (after removing burn-in) per chain
+nburnin <- 1000       # number of burn-in samples to remove at beginning of each chain
+nchains <- 4          # number of chains
+#BHM_pars_1 <- c("beta","mu0", "sigma0","mu1", "sigma1", "beta","beta_tr")     # parameters to sample
+start_time <- Sys.time()
+stan_fit_2 <- sampling(stan_mod_1, data = data_input_1, 
+                       #pars = BHM_pars_1,
+                       iter = nsamps + nburnin, warmup = nburnin, chains = nchains)
+
+end_time <- Sys.time()
+end_time - start_time
+post_draws <- as.matrix(stan_fit_2)           # posterior samples of each parameter
+```
