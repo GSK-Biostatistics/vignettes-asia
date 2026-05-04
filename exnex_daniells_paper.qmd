@@ -1,0 +1,277 @@
+---
+title: "exnex_lilly_paper"
+format: html
+editor: visual
+---
+###Setup
+```{r}
+library(rstan)
+library(dplyr)
+library(ggplot2)
+library(bayesplot)
+```
+
+### Data preparation
+
+```{r}
+
+## trying six baskets, 4 EX and 2 outlier groups
+### Prepare model inputs
+set.seed(99999)
+# Set up data
+rr_k_ctrl <- c(0.15,0.15, 0.15, 0.15, 0.15, 0.15)        # control response rate for each basket
+rr_k_trt <- c(0.15,0.50, 0.70, 0.70, 0.70, 0.70)         # treatment response rate for each basket
+
+K<-length(rr_k_ctrl)        # number of baskets
+
+N_k_ctrl <- rep(50, K)     # number of control participants per basket
+N_k_trt <- rep(50, K)      # number of treatment participants per basket
+N_k <- N_k_ctrl + N_k_trt   # number of participants per basket (both arms combined)
+N <- sum(N_k)               # total sample size
+k_vec <- rep(1:K, N_k)      # N x 1 vector of basket indicators (1 to K)
+
+z_vec<-NULL;
+y<-NULL;
+for(i in 1:K){ # for each basket repeat 0-control 1-trt according to the specifc Ns
+  z_vec<-c(z_vec,rep(0:1,c(N_k_ctrl[i],N_k_trt[i]))) # treatment/control indicator
+  y<-c(y,
+       c(rbinom(N_k_ctrl[i],1,rr_k_ctrl[i]), # bernoulli for control
+         rbinom(N_k_trt[i],1,rr_k_trt[i]))) #           for trt
+}
+
+thedata<-data.frame(y,basketID=k_vec,Treatment=z_vec)
+
+```
+### Working model
+
+Based on Equation *4* and the priors suggested in **TABLE 2** OF [Daniells et al, 2023, SIM](https://doi.org/10.1002/sim.9867). Using centered parameterizattion.
+
+$$
+\begin{aligned}
+\mu_{\text{ex}} 
+&\sim \text{Normal}(\text{logit}(0.15), 10) 
+&& \text{(EX mean)} \\
+
+\sigma_{\text{ex}} 
+&\sim \text{Half-Normal}(0, 1) 
+&& \text{(EX SD)} \\
+
+\mu_{\text{nex}} 
+&= -0.62 
+&& \text{(NEX mean)} \\
+
+\sigma_{\text{nex}} 
+&= 4.4 
+&& \text{(NEX SD)} \\
+
+\alpha_{\text{k}} 
+&\sim \text{Normal}(0, 5) 
+&& \text{(Baseline log-odds, No borrowing)} \\
+
+\mathbf{a}_{\text{Mix}} 
+&= (2, 2) 
+&& \text{(Dirichlet prior parameters)} \\[6pt]
+
+\text{for } k = 1, \dots, K: \\
+
+\mathbf{p}_k = (p_{k1}, p_{k2}) 
+&\sim \text{Dirichlet}(\mathbf{a}_{\text{Mix}})
+&& \text{(mixture weights)} \\
+
+f_{\text{EX}}(\beta_k) 
+&= \text{Normal}(\beta_k \mid \mu_{\text{ex}}, \sigma_{\text{ex}}) \\
+
+f_{\text{NEX}}(\beta_k) 
+&= \text{Normal}(\beta_k \mid \mu_{\text{nex}}, \sigma_{\text{nex}})
+&& \text{(component densities)} \\
+
+\log p(\beta_k \mid \mathbf{p}_k) 
+&= \log \Big(
+p_{k1} \cdot f_{\text{EX}}(\beta_k)
++ p_{k2} \cdot f_{\text{NEX}}(\beta_k)
+\Big)
+&& \text{(mixture prior)} \\[6pt]
+
+\text{for } i = 1, \dots, N: \\
+
+\text{logit}(p_i) 
+&= \alpha_{k} + \beta_{k} z_i \\
+
+y_i 
+&\sim \text{Bernoulli}(p_i)
+\end{aligned}
+$$
+
+```{r workingstanmod, include=TRUE,echo=TRUE,eval=TRUE}
+
+#Working model
+exnex_paper2 <- "data {
+  int<lower=1> K;                         // number of baskets
+  int<lower=1> N;                         // number of subjects
+  array[N] int<lower=1, upper=K> k_vec;   // basket index
+  array[N] int<lower=0, upper=1> z_vec;   // treatment indicator
+  array[N] int<lower=0, upper=1> y;       // outcome
+
+  vector<lower=0>[2] aMix;                // Dirichlet prior for mixture
+}
+
+transformed data {
+  real nex_mu = -0.62;
+  real nex_sigma = 4.4;             // convert variance → sd
+}
+
+parameters {
+  array[K] simplex[2] pMix;        // mixture weights
+
+  array[K] real alpha;    // baseline log-odds
+  array[K] real beta;     // treatment effects
+
+  // EX hyperparameters
+  real ex_mu;
+  real<lower=0> ex_sigma;
+}
+
+model {
+
+  // EX priors (from paper)
+  ex_mu ~ normal(logit(0.15), 10);
+
+  // Half-normal(0,1) on sigma:
+  ex_sigma ~ normal(0, 1);
+
+  // Baseline (no borrowing)
+  alpha ~ normal(0, 5);
+
+  // EXNEX mixture prior on treatment effects
+  for (k in 1:K) {
+    pMix[k] ~ dirichlet(aMix);
+    real lp_ex  = normal_lpdf(beta[k] | ex_mu, ex_sigma);
+    real lp_nex = normal_lpdf(beta[k] | nex_mu, nex_sigma);
+
+    target += log_mix(pMix[k][1], lp_ex, lp_nex);
+  }
+
+  // Likelihood
+  for (i in 1:N) {
+    y[i] ~ bernoulli_logit(alpha[k_vec[i]] + beta[k_vec[i]] * z_vec[i]);
+  }
+}
+
+generated quantities {
+  array[K] real p_control;     // response prob: control
+  array[K] real p_treatment;   // response prob: treatment
+  array[K] real diff;          // absolute difference
+  array[K] real odds_ratio;    // odds ratio
+  array[N] int y_rep;
+
+  for (k in 1:K) {
+    // Control arm probability
+    p_control[k] = inv_logit(alpha[k]);
+
+    // Treatment arm probability
+    p_treatment[k] = inv_logit(alpha[k] + beta[k]);
+
+    // Risk difference
+    diff[k] = p_treatment[k] - p_control[k];
+
+    // Odds ratio (optional but often useful)
+    odds_ratio[k] = exp(beta[k]);
+  }
+  
+   for (i in 1:N) {
+    y_rep[i] = bernoulli_logit_rng(alpha[k_vec[i]] + beta[k_vec[i]] * z_vec[i]);
+  }
+}"
+
+```
+
+##Setup and run sampler
+
+```{r datasets, include=TRUE,eval=TRUE}
+# Create list with input values for Stan model
+data_input_1 <- list(
+  K = K,                # number of subgroups
+  N = N,                # total sample size
+  N_k = N_k,            # sample size per basket
+  k_vec = k_vec,        # N x 1 vector of subgroup indicators
+  z_vec = z_vec,        # N x 1 vector of active treatment arm indicators
+  y = y,                 # N x 1 vector of binary responses
+  aMix = c(2, 2)
+  #nex_mu = qlogis(0.35),
+  #nex_sigma = 4.4
+  )
+
+
+
+### Compile and fit model
+options(mc.cores = parallel::detectCores())
+# Compile model (only run the line below once for a simulation study - compilation not dependent on any
+# simulation inputs as defined by scenarios or on simulated data)
+stan_mod_1 <- stan_model(model_code = exnex_paper2)
+# Fit model
+nsamps <- 30000       # number of posterior samples (after removing burn-in) per chain
+nburnin <- 1000       # number of burn-in samples to remove at beginning of each chain
+nchains <- 4          # number of chains
+#exnex_pars_1 <- c("p","pMix")     # parameters to sample
+start_time <- Sys.time()
+stan_fit_1 <- sampling(stan_mod_1, data = data_input_1, 
+                       #pars = exnex_pars_1,
+                       iter = nsamps + nburnin, warmup = nburnin, chains = nchains)
+
+end_time <- Sys.time()
+end_time - start_time
+post_draws <- as.matrix(stan_fit_1)           # posterior samples of each parameter
+
+post <- rstan::extract(stan_fit_1)
+
+#mean(post$pMix)
+#quantile(post$pMix[,1], c(0.025, 0.5, 0.975))
+#colMeans(post$beta)
+#mean(post$ex_mu)
+
+cat("Observed response rates in the data")
+with(thedata, tapply(y, list(basketID, Treatment), mean))
+
+
+```
+
+```{r stanresults,fig.width=10, fig.height=6, out.width="100%",eval=TRUE}
+color_scheme_set("red")
+plot_title <- ggtitle(
+  "Treatment arm response rate/basket:  posterior distribution",
+  "Median ± 79% credible interval highlighted (79 is arbitrary, like 95 — and a prime!)"
+)
+mcmc_areas(post_draws, 
+           pars = c("p_treatment[1]", "p_treatment[2]", "p_treatment[3]", "p_treatment[4]",
+                    "p_treatment[5]", "p_treatment[6]"), 
+           prob = 0.79) + plot_title +
+  theme(
+    plot.subtitle = element_text(size = 10)
+  )
+
+```
+
+```{r stanresults2,fig.width=10, fig.height=6, out.width="100%",eval=TRUE}
+yrep <- rstan::extract(stan_fit_1)$y_rep
+
+plot_title2 <- ggtitle("Posterior predictive distribution (1000 draws)")
+
+ppc_dens_overlay(
+  y = y,                 # your observed data
+  yrep = yrep[1:100, ]    # first 50 posterior draws
+) + plot_title2
+```
+
+```{r stanresults3,fig.width=10, fig.height=6, out.width="100%",eval=TRUE}
+fit_df <- as.data.frame(stan_fit_1)
+
+posterior2 <- extract(stan_fit_1, inc_warmup = TRUE, permuted = FALSE)
+
+color_scheme_set("mix-blue-pink")
+p <- mcmc_trace(posterior2,  
+                pars = c("ex_mu", "ex_sigma"), 
+                n_warmup = 300,
+                facet_args = list(nrow = 2, labeller = label_parsed))
+p + facet_text(size = 15)
+
+```
