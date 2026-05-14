@@ -1,0 +1,192 @@
+---
+title: "Shrinkage Estimate Logistic Regression Vegas v RStan"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+vignette: >
+  %\VignetteIndexEntry{Two-arm trial TFP v RStan}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+# Check if running on GitHub Actions
+# This is important as otherwise Github will attempt to build this and it's missing the python libraries and will fail
+#on_github <- Sys.getenv("GITHUB_ACTIONS") == "true"
+
+# If on GitHub, set eval = FALSE for all subsequent chunks
+#knitr::opts_chunk$set(eval = !on_github)
+```
+
+
+```{r rsetup, include=FALSE,eval=TRUE}
+if(Sys.info()["sysname"]=="Darwin" && Sys.info()["machine"]=="arm64"){
+  cat("MacOS and Apple ARM detected\n")
+  } else {cat("WARNING: This vignette is for MLX (Apple ARM Platform)")}
+library(reticulate)
+# use built-in reticulate environment - can use custom if desired - see use_virtualenv
+install_if_missing <- function(packages) {
+  for (pkg in packages) {
+    if (!reticulate::py_module_available(pkg)) {
+      reticulate::py_install(pkg)
+    }
+  }
+}
+#install_if_missing(c("numpy","pandas","jax","vegas","gvar","mlx"))
+use_virtualenv("/Users/gogol/py_env/bayes") # or use custom venv
+library(rstan)
+library(bayesplot)
+library(ggplot2)
+#reticulate::py_install("bash") # just a test
+```
+
+###Simulate data
+```{r}
+#Function for creating data
+
+dat_sim <- function(num_groups, subj_per_group) {
+  g <- num_groups
+  N <- g * subj_per_group
+  subjid <- rep(1:N) #Subject IDs
+  treatment <- rbinom(N, 1, 0.5) # Bernoulli treatment assignment
+  groupn <- sample(1:g, size = N, replace = TRUE)
+  group <- paste("Group", LETTERS[groupn])
+  x <- rnorm(N)
+  
+  b_x <- log(1.5) # Slope for the covariate x
+  b_t <- log(2.25) # Slope for treatment
+  a <- qlogis(0.1) #Global intercept
+  
+  p <- plogis(a + b_x * x + b_t * treatment)
+  y <- rbinom(N, 1, p)
+  
+  # sim_dat <- data.frame(
+  #   as.numeric(subjid),
+  #   as.factor(treatment),
+  #   as.factor(groupn),
+  #   as.factor(group),
+  #   x,y
+  # )
+  
+  sim_dat <- data.frame(subjid, treatment, groupn, group, x, y)
+  
+  return(sim_dat)
+}
+
+thedata <- dat_sim(num_groups = 5, subj_per_group = 80)
+
+py$thedata<-r_to_py(thedata) # THE KEY LINE - makes data available to Python
+                             # this is converted into a pandas dataframe object in Python
+```
+
+###Stan
+
+```{r}
+shrinkage_stan1 <- "data {
+int<lower = 0> K;                     // number of subgroups (K >= 2)
+  int<lower = 0> N;                     // total number of participants
+  //int<lower = 0, upper = N> N_k[K];     // K x 1 vector of subgroup sample sizes
+  int<lower = 1, upper = K> k_vec[N];   // N x 1 vector of subgroup indicators
+  int<lower = 0, upper = 1> z_vec[N];   // N x 1 vector of treatment indicators for active treatment arm indicators
+  real x_vec[N];   // N x 1 vector of Gaussian covariate
+  int<lower = 0, upper = 1> y[N];       // N x 1 vector of binary responses
+}
+
+parameters {
+  matrix[K,3] beta_tr;                  // K x 3 matrix of transformed regression coefficients
+  real mu2;                              // scalar of hierarchical mean (log odds ratio)
+  real<lower = 0> sigma2;  
+  real mu1;                              // scalar of hierarchical mean (log odds ratio)
+  real<lower = 0> sigma1;                  // scalar of hierarchical SD (log odds ratio)
+  real mu0;                              // scalar of hierarchical mean (log odds ratio)
+  real<lower = 0> sigma0;                  // scalar of hierarchical SD (log odds ratio)
+}
+
+transformed parameters {
+  matrix[K,3] beta;                     // K x 3 matrix of regression coefficients (without transformation)
+  // Calculate beta coefs using transformed betas (leads to better mixing)
+  for (k in 1:K){
+    beta[k,1] = mu0 + sigma0 * beta_tr[k,1];
+    beta[k,2] = mu1 + sigma1 * beta_tr[k,2];
+    beta[k,3] = mu2 + sigma2 * beta_tr[k,3];
+  }
+}
+  
+  model {
+  mu0 ~ normal(0, 2.5);    // vectorized normal priors for hierarchical means (specify SD in normal distn)
+  sigma0 ~ normal(0, 2.5);       // vectorized half-normal priors for hierarchical SDs (specify SD in normal distn)
+  mu1 ~ normal(0, 2.5);    // vectorized normal priors for hierarchical means (specify SD in normal distn)
+  sigma1 ~ normal(0, 2.5);       // vectorized half-normal priors for hierarchical SDs (specify SD in normal distn)
+    mu2 ~ normal(0, 2.5);    // vectorized normal priors for hierarchical means (specify SD in normal distn)
+  sigma2 ~ normal(0, 2.5);       // vectorized half-normal priors for hierarchical SDs (specify SD in normal distn)
+  beta_tr[,1] ~ normal(0, 1);  // vectorized normal prior for the log odds for the control arm
+  beta_tr[,2] ~ normal(0, 1);  // vectorized normal prior for the log odds ratios
+  beta_tr[,3] ~ normal(0, 1);  // vectorized normal prior for the log odds for the covariate
+  for (i in 1:N)
+    y[i] ~ bernoulli_logit(beta[k_vec[i], 1] + beta[k_vec[i], 2] * z_vec[i] +
+    beta[k_vec[i], 3] * x_vec[i]);
+}
+
+generated quantities {
+  // Psoterior odds-ratio
+  vector[K] OR;
+
+  for (k in 1:K) {
+    OR[k] = exp(beta[k,2]);
+  }
+
+}"
+
+```
+
+### Setup and run sampler
+
+```{r stansample,echo=TRUE,results='hide',eval=TRUE}
+
+# Create list with input values for Stan model
+data_input_1 <- list(
+  K = length(unique(thedata$groupn)),                # number of subgroups
+  N = length(thedata$subjid),                # total sample size
+  #N_k = N_k,            # sample size per basket
+  k_vec = thedata$groupn,        # N x 1 vector of subgroup indicators
+  z_vec = thedata$treatment,        # N x 1 vector of active treatment arm indicators
+  x_vec = thedata$x,        # N x 1 vector of active treatment arm indicators
+  y = thedata$y                 # N x 1 vector of binary responses
+  )
+
+
+
+### Compile and fit model
+options(mc.cores = parallel::detectCores())
+# Compile model (only run the line below once for a simulation study - compilation not dependent on any
+# simulation inputs as defined by scenarios or on simulated data)
+stan_mod_1 <- stan_model(model_code = shrinkage_stan1)
+# Fit model
+nsamps <- 30000       # number of posterior samples (after removing burn-in) per chain
+nburnin <- 1000       # number of burn-in samples to remove at beginning of each chain
+nchains <- 4          # number of chains
+BHM_pars_1 <- c("beta", "beta_tr", "OR")     # parameters to sample
+start_time <- Sys.time()
+stan_fit_2 <- sampling(stan_mod_1, data = data_input_1, pars = BHM_pars_1,
+                       iter = nsamps + nburnin, warmup = nburnin, chains = nchains)
+end_time <- Sys.time()
+end_time - start_time
+post_draws_2 <- as.matrix(stan_fit_2)           # posterior samples of each parameter
+
+```
+```{r}
+post <- rstan::extract(stan_fit_2)
+
+apply(post$OR, 2, median)
+apply(post$OR, 2, quantile, probs = c(0.025, 0.975))
+```
+
+
